@@ -1,0 +1,197 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	template="/WEB-INF/templates/defaultTemplate.jspx">
+	<ui:define name="content">
+		<ice:form id="RoleEditorForm">
+			<f:loadBundle var="msg" basename="messages" />
+			<ice:panelGrid columns="1"
+			               id="outerDetailFormLayout"
+				           styleClass="Base_WidthFull Base_PageLayoutTable">
+				<ice:outputText value="#{msg.detailRole}" styleClass="Base_TitleText" />
+
+				<ice:panelGroup styleClass="Base_MenuBorder">
+					<ice:panelGrid columns="5">
+						<ice:commandLink styleClass="Base_Btn Base_ArrowLeftButton"
+							             title="#{msg.commonBack}"
+							             immediate="true"
+							             action="#{roleDetail.back}" />
+						<ice:commandLink styleClass="Base_Btn Base_SaveButton"
+							             title="#{msg.commonSave}"
+							             action="#{roleDetail.save}" />
+						<ice:commandLink styleClass="Base_Btn Base_ResetButton"
+							             title="#{msg.commonReset}"
+							             immediate="true"
+							             action="#{roleDetail.reset}" />
+						<ice:commandLink styleClass="Base_Btn Base_HelpButton"
+						                 action="#{help.togglePopup}"
+						                 title="#{msg.commonHelp}"
+						                 rendered="#{roleDetail.helpEnabled}"
+						                 immediate="true">
+							<f:setPropertyActionListener target="#{help.helpGroup}" value="#{roleDetail.helpGroupId}" />
+							<f:setPropertyActionListener target="#{help.origin}" value="roleDetail" />
+						</ice:commandLink>
+						<ice:commandLink styleClass="Base_Btn Base_EditHelpButton"
+							             action="helpEdit"
+							             title="#{msg.commonHelpEditor}"
+							             rendered="#{user.editHelpTextsAllowed}"
+							             immediate="true">
+							<f:setPropertyActionListener target="#{help.helpGroup}" value="#{roleDetail.helpGroupId}" />
+							<f:setPropertyActionListener target="#{help.origin}" value="roleDetail" />
+						</ice:commandLink>
+					</ice:panelGrid>
+				</ice:panelGroup>
+
+				<ice:messages globalOnly="true" layout="table" />
+
+				<ice:panelGroup styleClass="Base_MenuBorder Base_BlockBackground">
+					<ice:panelGrid columns="3"
+					               id="detailFormLayoutRole"
+						           headerClass="Base_PnlHdr "
+						           columnClasses="Base_Width_Column_135 None None">
+
+						<ice:outputLabel value="#{msg.roleRoleId}: (*)" for="RoleId" />
+						<ice:inputText id="RoleId"
+						               value="#{roleDetail.entity.label}"
+							           disabled="#{roleDetail.idEditable ne true}" />
+						<ice:message for="RoleId" />
+
+						<ice:outputLabel value="#{msg.roleDescription}:" for="RoleDescription" />
+						<ice:inputText id="RoleDescription"
+                                       value="#{roleDetail.entity.description}" />
+						<ice:message for="RoleDescription" />
+					</ice:panelGrid>
+				</ice:panelGroup>
+
+
+				<ice:panelCollapsible expanded="true" toggleOnClick="false">
+					<f:facet name="header">
+						<ice:outputText value="#{msg.roleTitelPrincipals}" styleClass="Base_PnlHdr" />
+					</f:facet>
+					<ice:panelGrid columns="1"
+					               id="detailFormLayoutRolePrincipal"
+						           headerClass="Base_PnlHdr">
+						<ice:dataTable id="rolePermissions"
+							           value="#{roleDetail.entity.dbRolePermissions}"
+							           var="rolePermission"
+							           columnClasses="Base_Left Base_Left Base_Center Base_Center Base_Center Base_Center Base_Center">
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText value="#{msg.roleMasterdataType} (*)" />
+								</f:facet>
+								<ice:inputText id="rPEntityType"
+									           value="#{rolePermission.entitytype}"
+									           disabled="true" />
+								<f:facet name="footer">
+									<ice:selectOneListbox size="1"
+									                      id="dbRoleMasterdataType"
+										                  value="#{roleDetail.newRolePermission.entitytype}"
+										                  converter="selectItemConverter">
+										<f:selectItems value="#{roleDetail.entityTypes}" />
+									</ice:selectOneListbox>
+								</f:facet>
+							</ice:column>
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText value="#{msg.rolePermissionId} (*)" />
+								</f:facet>
+								<ice:inputText id="rpEntitiyPerm"
+									           value="#{rolePermission.securityLabel}"
+									           disabled="true" />
+								<f:facet name="footer">
+									<ice:selectOneListbox size="1"
+									                      id="dbRoleSecuirtyLabel"
+										                  value="#{roleDetail.newRolePermission.securityLabel}">
+										<f:selectItems value="#{roleDetail.securityLabels}" />
+									</ice:selectOneListbox>
+								</f:facet>
+							</ice:column>
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText value="#{msg.roleView}" />
+								</f:facet>
+								<ice:selectBooleanCheckbox id="sbRoleViewRight"
+									                       value="#{rolePermission.isView}"
+									                       disabled="true" />
+								<f:facet name="footer">
+									<ice:selectBooleanCheckbox id="sbRoleViewRightNew"
+										                       value="#{roleDetail.newRolePermission.isView}"
+										                       disabled="true" />
+								</f:facet>
+							</ice:column>
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText value="#{msg.roleCreate}" />
+								</f:facet>
+								<ice:selectBooleanCheckbox id="sbRoleCreateRight"
+									                       value="#{rolePermission.isCreate}"
+									                       disabled="true" />
+								<f:facet name="footer">
+									<ice:selectBooleanCheckbox id="sbRoleCreateRightNew"
+										                       value="#{roleDetail.newRolePermission.isCreate}" />
+								</f:facet>
+							</ice:column>
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText value="#{msg.roleEdit}" />
+								</f:facet>
+								<ice:selectBooleanCheckbox id="sbRoleEditRight"
+									                       value="#{rolePermission.isEdit}"
+									                       disabled="true" />
+								<f:facet name="footer">
+									<ice:selectBooleanCheckbox id="sbRoleEditRightNew"
+										                       value="#{roleDetail.newRolePermission.isEdit}"/>
+								</f:facet>
+							</ice:column>
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText value="#{msg.roleDeactivate}" />
+								</f:facet>
+								<ice:selectBooleanCheckbox id="sbRoleDeactivateRight"
+									                       value="#{rolePermission.isDeactivate}"
+									                       disabled="true" />
+								<f:facet name="footer">
+									<ice:selectBooleanCheckbox id="sbRoleDeactivateRightNew"
+										                       value="#{roleDetail.newRolePermission.isDeactivate}" />
+								</f:facet>
+							</ice:column>
+							<ice:column>
+								<f:facet name="header">
+									<ice:outputText value="#{msg.roleApprove}" />
+								</f:facet>
+								<ice:selectBooleanCheckbox id="sbRoleApproveRight"
+									                       value="#{rolePermission.isApprove}"
+									                       disabled="true" />
+								<f:facet name="footer">
+									<ice:selectBooleanCheckbox id="sbRoleApproveRightNew"
+										                       value="#{roleDetail.newRolePermission.isApprove}" />
+								</f:facet>
+							</ice:column>
+							<ice:column>
+								<ice:commandLink styleClass="Base_Btn Base_DeleteButton"
+									             title="#{msg.commonDeleteLine}"
+									             action="#{roleDetail.removeDbRolePermission}"
+									             partialSubmit="true">
+									<f:setPropertyActionListener target="#{roleDetail.activePermission}" value="#{rolePermission}" />
+								</ice:commandLink>
+								<f:facet name="footer">
+									<ice:commandLink styleClass="Base_Btn Base_OkButton"
+										             title="#{msg.commonTakeoverData}"
+										             action="#{roleDetail.addDbRolePermission}">
+									</ice:commandLink>
+								</f:facet>
+							</ice:column>
+						</ice:dataTable>
+					</ice:panelGrid>
+				</ice:panelCollapsible>
+				<ice:outputText value="#{msg.commonFieldRequiredLegend}" styleClass="Base_Legend" />
+			</ice:panelGrid>
+		</ice:form>
+	</ui:define>
+
+	<ui:define name="popups">
+		<ui:include src="../../WEB-INF/templates/helpPopup.jspx" />
+	</ui:define>
+
+</ui:composition>

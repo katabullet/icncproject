@@ -1,0 +1,38 @@
+<ice:panelGroup xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+	<ice:form id="helpPopupForm">
+		<f:loadBundle var="msg" basename="messages" />
+
+		<ice:panelPopup draggable="true"
+		                rendered="#{help.popupRendered}"
+			            visible="#{help.popupRendered}"
+			            styleClass="Base_Popup">
+
+			<f:facet name="header">
+				<ice:panelGrid id="popupHeader"
+				               styleClass="Base_PopupHeader"
+					           cellpadding="0"
+					           cellspacing="0"
+					           columns="3"
+					           columnClasses="Base_PopupIcon,Base_PopupTitle,Base_PopupButton"
+					           >
+					<ice:graphicImage url="images/icon_help.png" />
+					<ice:outputText value="#{msg.commonHelp}" />
+					<ice:commandButton id="popupClose"
+					                   type="button"
+						               image="images/closepopup.gif"
+						               action="#{help.togglePopup}"/>
+				</ice:panelGrid>
+			</f:facet>
+
+			<f:facet name="body">
+				<ice:panelGroup styleClass="Base_PopupBodyContainer">
+					<ice:outputText value="#{help.richContent}" escape="false" />
+				</ice:panelGroup>
+			</f:facet>
+
+		</ice:panelPopup>
+	</ice:form>
+</ice:panelGroup>

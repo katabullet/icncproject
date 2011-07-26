@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>1.2</jsp-version>
+	<short-name>inet</short-name>
+	<uri>http://inet.com/mdm/jsf/tags</uri>
+	<description>Inet-specific tags for MDM-project</description>
+	<tag>
+		<name>validateDatabase</name>
+		<tag-class>inet.module.mdm.jsf.validators.DatabaseValidatorTag</tag-class>
+		<attribute>
+			<name>tableName</name>
+			<required>true</required>
+			<type>java.lang.String</type>
+			<description>Name of the database table to use as input parameter for
+				the ValidationEditor ejb. This property has to be in UPPERCASE!</description>
+		</attribute>
+		<attribute>
+			<name>columnName</name>
+			<required>true</required>
+			<type>java.lang.String</type>
+			<description>Name of the database column to use as input parameter
+				for the ValidationEditor ejb. This property has to be in UPPERCASE!</description>
+		</attribute>
+	</tag>
+	<tag>
+		<name>validateZipCode</name>
+		<tag-class>inet.module.mdm.jsf.validators.ZipCodeValidatorTag</tag-class>
+		<attribute>
+			<name>country</name>
+			<required>true</required>
+			<type>java.lang.String</type>
+			<description>Id of the input component holding the country code.</description>
+		</attribute>
+	</tag>
+</taglib>

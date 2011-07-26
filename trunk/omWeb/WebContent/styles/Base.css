@@ -1,0 +1,408 @@
+.Base_InvalidField { background-color: #FFE9E9 !important; border-color: #981F1F; }
+
+.Base_TitleText { font-size: 16px; font-weight: bold; line-height: 20px; position:center; }
+/* .Base_Title2Text { font-size: 13px; font-weight: bold; line-height: 20px; } */
+
+.Base_WidthFull { width: 100%;}
+
+.Base_DataPanelFst { position: relative; height: 196px !important; }
+
+.Base_Legend { font-style: italic; }
+
+/* table */
+.Base_Table { margin: 0;}
+.Base_Table td { padding: 0; height: 27px; }
+.Base_Table th table { margin-left: auto; margin-right: auto;} /* center table */
+	.Base_Table td span.iceOutTxt { padding: 2px 5px; line-height: 23px; }
+	.Base_Table td.Base_ActionCol { padding: 0px 2px; }
+		.Base_Table td.Base_ActionCol a { margin: 0px 2px; }
+.iceDatTblColHdr, .iceDatTblColHdr1, .iceDatTblColHdr2, .iceDatTblColGrpHdrCol, .iceDatTblFtr {
+	white-space:nowrap;
+	font-family: Arial,Helvetica,sans-serif;
+}
+.Base_TableColumnBorder {border: none}
+
+
+.iceDatTblCol1, .iceDatTblCol2 { white-space: nowrap; }
+.iceCmdSrtHdr { color: #484848; }
+.iceDatTblActvSrtHdr td { color: #484848; font: bold 11px Arial,Helvetica,sans-serif; white-space: nowrap; cursor: pointer; }
+
+/* remove border for Base_Table in PanelDivider */
+.icePnlDvrHor > div > div > table.Base_Table { border-left-style: none; }
+	.icePnlDvrHor > div > div > table.Base_Table > thead > tr > th { border-top: none; }
+	.icePnlDvrHor > div > div > table.Base_Table > tbody > tr { border-left: none; } /* remove left border in chrome */
+	.icePnlDvrHor > div > div > table.Base_Table > thead > tr > :nth-child(1) { border-left: none; }
+	.icePnlDvrHor > div > div > table.Base_Table > tbody > tr > :nth-child(1) { border-left: none; }
+	.icePnlDvrHor > div > div > table.Base_Table > thead > tr > :last-child { border-right: none; }
+	.icePnlDvrHor > div > div > table.Base_Table > tbody > tr > :last-child { border-right: none; }
+
+.icePnlDvrCnt, .icePnlDvrHorCnt, .icePnlDvrHorSpt { border-color: #CCCCCC; }
+.icePnlDvrHorSpt { font-size: 2px; } /* divider-height-fix for ie */
+
+/* messages-tag */
+.iceMsgsInfo, .iceMsgInfo { font-weight: bold; }
+
+.iceMsgsWarn, .iceMsgsError, .iceMsgsFatal, .iceMsgWarn, .iceMsgError, .iceMsgFatal { font-weight: bold; color: #AA0000; }
+
+
+.Base_Label { width: 500px;}
+
+.Base_WarnMsg { font-weight: bold; color: #AA0000; }
+
+/* panelBorder */
+.icePnlBrdrNorth, .icePnlBrdrCenter, .icePnlBrdrSouth {	
+	padding: 0px;
+}
+.icePnlBrdrSouth{
+	/*border-top: 500px solid #FFFFFF;*/
+	border: none;
+	top:35%;
+	left:38%;
+	position:absolute;
+	height:25%;
+	background-color: none;
+}
+
+.icePnlBrdrCenter {
+	width: 0%;
+	background-image: url(../images/hintergrundbild.jpg);
+}
+
+
+/* Panel Header */
+.icePnlClpsblHdr{cursor: default;}
+
+
+.Base_BlockBackground { background-color:  #f5f5f5; padding-bottom: 8px;}
+
+/* basic page layout */
+.Base_PageLayoutTableCol1, .Base_PageLayoutTableCol2 { padding: 3px 0;  }
+
+.Base_MenuBorder, .iceDatTblCol1{ border: 1px solid #D9D9D9; border-radius: 3px; -moz-border-radius: 3px; }
+	.Base_MenuBorder .iceInpTxt, .Base_MenuBorder .iceSelOneMnu { margin: 0; }
+	.Base_MenuRightCol { float: right; margin: 0; line-height: 27px; padding: 1px 5px 1px 2px;}
+
+
+
+
+/* labels */
+.iceOutLbl {
+	font-size: 12px;
+	font-weight: normal;
+	color: #000000;
+
+}
+
+.Base_OutLbl {
+	width: 235px;
+	}
+
+.Base_OutText {
+	font-size: 12px;
+	font-weight: normal;
+	color: #000000;
+	width: 50px;
+}
+
+/* textbox */
+.iceInpTxt {size: 40px;}
+
+.iceSelOneMnu, .iceSelOneLb, .iceSelInpDateInput, .iceSelOneMnu-dis, .iceInpTxt-dis, .iceSelOneLb-dis, .iceInpSecrt-dis, .iceSelInpDateInput-dis {width: 190px;}
+
+
+/* Panel
+
+ .icePnlClpsblHdr div, .icePnlClpsblHdr-dis div, .icePnlClpsblColpsdHdr div, .icePnlClpsblColpsdHdr-dis div   {  background: none} */
+
+/* buttons */
+.Base_Btn {
+	background-color: transparent;
+	border: none;
+	width: 23px;
+	height: 23px;
+	cursor: pointer;
+	display: block;
+}
+
+.Base_Btn_Small {
+	background-color: transparent;
+	border: none;
+	width: 18px;
+	height: 18px;
+	cursor: pointer;
+	display: block;
+}
+
+.Base_ApplyFilterButton { background-image: url(../images/btn_filter_apply_e.png); }
+	a.Base_ApplyFilterButton:hover { background-image: url(../images/btn_filter_apply_h.png); }
+
+.Base_SubmitSingleForApprovalButton { background-image: url("../images/btn_approve_selected_e.png"); }
+	a.Base_SubmitSingleForApprovalButton:hover { background-image: url("../images/btn_approve_selected_h.png"); }
+
+.Base_ArrowLeftButton { background-image: url(../images/btn_arrow_left_e.png); }
+	a.Base_ArrowLeftButton:hover { background-image: url(../images/btn_arrow_left_h.png); }
+
+.Base_CheckedButton { background-image: url("../images/btn_checked_e.png");background-repeat: no-repeat; background-position: center center;}
+	a.Base_CheckedButton:hover { background-image: url("../images/btn_checked_h.png");background-repeat: no-repeat; background-position: center center;}
+
+.Base_EditButton { background-image: url("../images/btn_edit_e.png"); }
+	a.Base_EditButton:hover { background-image: url("../images/btn_edit_h.png"); }
+
+.Base_EditHelpButton { background-image: url("../images/btn_editHelp_e.png"); }
+	a.Base_EditHelpButton:hover { background-image: url("../images/btn_editHelp_h.png"); }
+
+.Base_DeleteButton { background-image: url("../images/btn_delete_e.png"); }
+	a.Base_DeleteButton:hover { background-image: url("../images/btn_delete_h.png"); }
+
+.Base_FilterButton { background-image: url("../images/btn_filter_e.png"); }
+	a.Base_FilterButton:hover { background-image: url("../images/btn_filter_h.png"); }
+
+.Base_HelpButton { background-image: url("../images/btn_help_e.png"); }
+	a.Base_HelpButton:hover { background-image: url("../images/btn_help_h.png"); }
+
+.Base_HistoryButton { background-image: url("../images/btn_history_e.png"); }
+	a.Base_HistoryButton:hover { background-image: url("../images/btn_history_h.png"); }
+
+
+.Base_NewButton { background-image: url("../images/btn_new_e.png"); }
+	a.Base_NewButton:hover { background-image: url("../images/btn_new_h.png"); }
+
+.Base_NewLinesButton { background-image: url("../images/btn_newlines_e.png"); }
+	a.Base_NewLinesButton:hover { background-image: url("../images/btn_newlines_h.png"); }
+
+.Base_DeleteLinesButton { background-image: url("../images/btn_delete_h.png"); }
+	a.Base_DeleteLinesButton:hover { background-image: url("../images/btn_delete_h.png"); }
+
+.Base_ResetButton { background-image: url(../images/btn_reset_e.png); }
+	a.Base_ResetButton:hover { background-image: url(../images/btn_reset_h.png); }
+
+.Base_ResetFilterButton { background-image: url(../images/btn_filter_reset_e.png); }
+	a.Base_ResetFilterButton:hover { background-image: url(../images/btn_filter_reset_h.png); }
+
+.Base_SaveButton { background-image: url("../images/btn_save_e.png"); }
+	a.Base_SaveButton:hover { background-image: url("../images/btn_save_h.png"); }
+
+.Base_UncheckedButton { background-image: url("../images/btn_unchecked_e.png");background-repeat: no-repeat; background-position: center center;}
+	a.Base_UncheckedButton:hover { background-image: url("../images/btn_unchecked_h.png");background-repeat: no-repeat; background-position: center center;}
+
+.Base_OkButton { background-image: url(../images/btn_ok_e.png); }
+	a.Base_OkButton:hover { background-image: url(../images/btn_ok_h.png); }
+
+.Base_InfoButton { background-image: url("../images/btn_releaseinfo_e.gif"); }
+
+
+/* paginator icons */
+.iceCmdLnk .Base_BtnSmall {
+	width: 23px;
+	height: 16px;
+	cursor: pointer;
+	display: block;
+}
+
+.iceCmdLnk-dis .Base_BtnSmall {
+	width: 23px;
+	height: 16px;
+	cursor: default;
+	display: block;
+}
+
+.iceCmdLnk .Base_ArrowLastButton_Small { background-image: url("../images/btn_s_arrow_last_e.png"); }
+	a.iceCmdLnk:hover .Base_ArrowLastButton_Small { background-image: url("../images/btn_s_arrow_last_h.png"); }
+.iceCmdLnk-dis .Base_ArrowLastButton_Small { background-image: url("../images/btn_s_arrow_last_d.png"); }
+
+.iceCmdLnk .Base_ArrowFirstButton_Small { background-image: url("../images/btn_s_arrow_first_e.png"); }
+	a.iceCmdLnk:hover .Base_ArrowFirstButton_Small { background-image: url("../images/btn_s_arrow_first_h.png"); }
+.iceCmdLnk-dis .Base_ArrowFirstButton_Small { background-image: url("../images/btn_s_arrow_first_d.png"); }
+
+.iceCmdLnk .Base_ArrowNextButton_Small { background-image: url("../images/btn_s_arrow_next_e.png"); }
+	a.iceCmdLnk:hover .Base_ArrowNextButton_Small { background-image: url("../images/btn_s_arrow_next_h.png"); }
+.iceCmdLnk-dis .Base_ArrowNextButton_Small { background-image: url("../images/btn_s_arrow_next_d.png"); }
+
+.iceCmdLnk .Base_ArrowPrevButton_Small { background-image: url("../images/btn_s_arrow_prev_e.png"); }
+	a.iceCmdLnk:hover .Base_ArrowPrevButton_Small { background-image: url("../images/btn_s_arrow_prev_h.png"); }
+.iceCmdLnk-dis .Base_ArrowPrevButton_Small { background-image: url("../images/btn_s_arrow_prev_d.png"); }
+
+.iceCmdLnk .Base_ArrowFFButton_Small { background-image: url("../images/btn_s_arrow_ff_e.png"); }
+	a.iceCmdLnk:hover .Base_ArrowFFButton_Small { background-image: url("../images/btn_s_arrow_ff_h.png"); }
+.iceCmdLnk-dis .Base_ArrowFFButton_Small { background-image: url("../images/btn_s_arrow_ff_d.png"); }
+
+.iceCmdLnk .Base_ArrowFRButton_Small { background-image: url("../images/btn_s_arrow_fr_e.png"); }
+	a.iceCmdLnk:hover .Base_ArrowFRButton_Small { background-image: url("../images/btn_s_arrow_fr_h.png"); }
+.iceCmdLnk-dis .Base_ArrowFRButton_Small { background-image: url("../images/btn_s_arrow_fr_d.png"); }
+
+.Base_Valid { background-color: #72e060; }
+.Base_Invalid { background-color: #e39e9e; }
+.Base_Block { background-color: #dedede; }
+
+
+/* entities */
+.entityAdded { background-color: #72E060; height: 85%;}
+.entityModified { background-color: #f5fd76; height: 85%; }
+.entityDeleted { background-color: #e39e9e; height: 85%; }
+
+/* disabled drop-down color: #6A6A6A;*/
+.iceSelOneMnu-dis {	 margin:0 2px; color: #ABABAB; }
+.iceSelMnyCb-dis, .iceSelOneMnu-dis, .iceInpTxt-dis, .iceInpSecrt-dis, .iceSelOneLb-dis, .iceSelInpDateInput-dis { background-color: #ffffff; border: 1px solid #D9D9D9}
+
+/* input-text height fix for ie */
+.iceInpTxt, .iceInpSecrt { height: 21px; size: 50px; width: 190px;}
+
+/* Popup */
+.Base_Popup {
+	z-index: 999;
+	top: 200px;
+	left: 200px;
+	width: 500px;
+	height: 300px;
+	position: absolute;
+	background: #FFFFFF;
+	border: 1px solid #BBBBBB;
+}
+    .Base_PopupHdr { width: 499px; }
+    .Base_PopupBody { padding: 0; }
+    .Base_Popup .icePnlPopHdr { border-color: #BBBBBB; }
+
+.Base_PopupHeader { width: 100%; }
+	.Base_PopupIcon { padding-left: 5px; }
+	.Base_PopupTitle { width: 100% }
+	.Base_PopupButton { text-align: right; padding-right: 4px }
+.Base_PopupBodyContainer { width:480px; height: 251px; overflow:auto; padding: 10px; }
+
+.Base_PopupHeaderButton { width: 100%; float: right;}
+
+.Base_PopupButtonExecute { text-align: right; padding-right: 4px; width:30px; }
+
+.PartnerAddresses_DeleteTabButton { vertical-align: bottom; background-image: url("../images/closepopup.gif"); }
+	a.PartnerAddresses_DeleteTabButton { vertical-align: bottom; background-image: url("../images/closepopup.gif"); }
+
+.PartnerAddresses_AdditionalAddressButton { vertical-align: bottom; background-image: url("../images/btn_newlines_e.png"); }
+	a.PartnerAddresses_AdditionalAddressButton { vertical-align: bottom; background-image: url("../images/btn_newlines_h.png"); }
+
+.PartnerAddress_DeleteLinesButton { vertical-align: bottom; background-image: url("../images/btn_delete_h.png"); }
+	a.PartnerAddress_DeleteLinesButton:hover { vertical-align: bottom; background-image: url("../images/btn_delete_h.png"); }
+
+.PartnerAddress_NewLinesButton { vertical-align: bottom; background-image: url("../images/btn_newlines_e.png"); }
+	a.PartnerAddress_NewLinesButton:hover { vertical-align: bottom; background-image: url("../images/btn_newlines_h.png"); }
+
+.FMPartnerRelation_Table_Header {
+    vertical-align: middle;
+    height: 25px;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+    text-align: left;
+}
+
+.FMPartnerRelation_Table_Col {
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+   line-height: 22px;
+}
+
+
+.Base_PopupTable
+{
+    background-color: white;
+    width: 100%;
+}
+
+.Base_Header
+{
+	text-align:left;
+}
+
+
+.iceCmdLnk {text-decoration:underline}
+
+.Base_PnlHdr { text-align:left;
+               font-size:12px;
+               width: 100% }
+
+.Base_OutputTXT { padding-left:1px; }
+
+.Base_Width_Column_235 { width:10px; display: block; margin: 0 auto}
+
+.Base_Width_Column_30 { width:10px; }
+
+.Base_Width_Column_135 { width:10px; }
+
+
+.Base_Center { text-align: center;}
+
+.Base_Left { text-align: left; }
+
+.Base_Login_Icon {
+	background-image: url(../images/logo_klein.jpg);
+	background-position: right;
+	width: 100%;
+	height: 100px;
+	background-repeat: no-repeat;	
+}
+
+table.LoginContainer {
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	-moz-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 6px;
+	background-color: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	top: 500px;
+}
+
+table.LoginContainer .Title {
+	font-weight: bold;
+	text-align: center;
+	color: #000000;
+	font-height: 4em;
+	font-size: 20px;
+	/*
+	padding-right: 30px;*/
+	padding-left: 50px;
+	
+}
+
+table.LoginContainer .LoginBtn {
+	text-align: center;
+	background: url("../images/btn_shadow.png") repeat-x scroll 1px 1px
+		transparent;
+	border: 1px solid #AAAAAA;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.Base_Text_Center,.PageContainer,.iceMsgsError,.iceMsgError {
+	text-align: center;
+	font-size: 12px;
+}
+
+.icePnlBrdrNorth {
+	border-bottom: 1px solid #D9D9D9;
+	text-align: left;
+}
+
+.Base_ColumnWidth {
+	width: 110px;
+}
+
+
+table.PageContainer {
+	margin: 10px none;
+		
+}
+
+.icePnlGrdCol1{
+padding: 0;
+}
+
+.iceMnuItmLabel{
+color: #364F7C;
+}
+
+.iceSelInpTxtTxt{
+margin: 0;
+width: 190px !important;
+border: 1px solid #D9D9D9;
+height: 21px;
+}
+
+}

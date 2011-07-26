@@ -1,0 +1,201 @@
+.InoculationFrame {
+    z-index: -1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 500px;
+    height: 500px;
+    filter: progid:DXImageTransform.Microsoft.MaskFilter();
+}
+
+.MenuContainer {
+    border: 1px solid #BBB;
+    background-color: #E7E7E7;
+    width: 980px;
+}
+
+.iceMnuBar { padding: 0px; vertical-align: middle; float:right; background-color: transparent; }
+	.iceMnuBarSubMenu, .iceMnuBarVrtSubMenu { width: auto; min-width: 145px; }
+
+.iceMnuBarSubMenu .iceMnuItm a, .iceMnuBarSubMenu .iceMnuItm a:link, .iceMnuBarSubMenu .iceMnuItm a:visited, .iceMnuBarSubMenu .iceMnuItm a:hover {
+	width: auto;
+	min-width: auto;
+}
+
+.iceMnuItmLabel {
+	padding-right: 10px;
+}
+
+.iceMnuBarItem, .iceMnuBarVrtItem { border: 1px solid #888; border-radius: 3px; -moz-border-radius: 3px; background-color:#DEDEDE; float:left;
+	white-space:nowrap; margin-right: 1px;
+}
+	.iceMnuBarItem a { background-image:url("../images/bottom_menu_bg.png"); border-radius: 3px; -moz-border-radius: 3px; }
+	.iceMnuBarItem a, .iceMnuBarItem span, .iceMnuBarItem a:hover { padding:2px 6px; }
+	.iceMnuBarItem a, .iceMnuBarItem span, .iceMnuBarItem a:hover, .iceMnuBarVrtItem a, .iceMnuBarVrtItem span, .iceMnuBarVrtItem a:hover {
+		color: #000;
+	}
+
+.iceMnuItm a { background-color: #fff; }
+	.iceMnuItm a .iceOutTxt { color: #364f7c; }
+
+.iceMnuItm a:hover {
+	background-color: #4D6083; /*#5b6f98; /*#92b1db;*/
+}
+
+.iceMnuItm a, .iceMnuItm a:hover {
+	height:23px;
+	line-height:23px;
+}
+
+/*.iceMnuBar a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    vertical-align: middle;
+    font-family: Arial;
+    font-size: 8px;
+}
+.iceMnuBar a:hover {
+    color: #C1D3FD;
+}
+.iceMnuBarItem {
+    float:left;
+    padding:0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    width: 120px;
+    height: 22px;
+    text-align: center;
+    border: 2px white groove;
+    background-color: #00396B;
+    margin-left:3px;
+}
+.iceMnuBarSubMenu {
+    position:absolute;
+    background-color: #00396B;
+    width:230px;
+    border: none;
+    height: auto;
+    display:block;
+    z-index: 90;
+    margin-left:1px;
+    border: 2px white groove;
+    padding:1px;
+    padding-bottom:4px;
+}
+.iceMnuItm{
+    padding:0px;
+    display:block;
+    height: 17px;
+    background-color: #00396B;
+    margin-left: 10px;
+}
+.iceMnuItm-dis{
+    padding:0px;
+    display:block;
+    height: 17px;
+    background-color: #FFF;
+}
+.iceMnuItmImage{
+    margin: 2px;
+    margin-right: 4px;
+    vertical-align: bottom;
+    float: left;
+    position: absolute;
+}
+.iceMnuBarItemLabel{
+	padding-left: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    display: block;
+    cursor: pointer;
+    vertical-align: bottom;
+    line-height:1.8em;
+}
+.iceMnuItmLabel{
+	padding-left: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    display: block;
+    cursor: pointer;
+    vertical-align: bottom;
+    line-height:1.8em;
+}
+.iceMnuBarSubMenuInd {
+    display:inline;
+    float:right;
+    padding-top: 3px;
+    padding-right: 1px;
+}*/
+
+.Menu_UserDiv {
+    text-align: right;
+    line-height: 25px;
+    vertical-align: middle;
+    padding-right: 5px;
+    margin-top: 2px;
+}
+.Menu_LogoDiv {
+    background-image: url(../images/img_logo.gif);
+    width:980px;
+    height: 56px;
+    margin-bottom: 2px;
+}
+.Menu_UserIdText {
+	margin-right: 30px;
+	font-weight: normal;
+}
+
+/*
+    Classes for the connection status indicator
+*/
+.iceOutConStat {
+    margin-left: 50px;
+    height: 25px;
+    border: none;
+    font-size: .5em;
+    background-color: #E7E7E7;
+    float: left;
+}
+.iceOutConStatInactv {
+    position: absolute;
+    background-image: url(../images/img_connect_idle.gif);
+    background-position: top;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 25px;
+}
+.iceOutConStatActv {
+    position: absolute;
+    background-image: url(../images/img_connect_active.gif);
+    background-position: top;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 25px;
+}
+.iceOutConStatCaution {
+    position: absolute;
+    background-image: url(../images/img_connect_caution.gif);
+    background-position: top;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 25px;
+}
+.iceOutConStatDisconnect {
+    position: absolute;
+    background-image: url(../images/img_connect_disconnected.gif);
+    background-position: top;
+    background-repeat: no-repeat;
+    width: 50px;
+    height: 25px;
+}
+
+.iceOutConStat {
+	margin: 0px;
+}
+
+.iceOutConStatInactv, .iceOutConStatActv, .iceOutConStatCaution, .iceOutConStatDisconnect  {
+	margin-left:10px;
+}

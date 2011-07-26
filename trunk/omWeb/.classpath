@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="source"/>
+	<classpathentry kind="src" path="tests"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="/omEar/build/libraries/jboss-javaee.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/omEar/build/libraries/java_ee_javadocs.zip!/docs/api"/>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="build/libraries/servlet-api.jar"/>
+	<classpathentry kind="lib" path="build/libraries/jboss-web-service.jar"/>
+	<classpathentry kind="lib" path="build/libraries/jsp-api.jar"/>
+	<classpathentry kind="src" path="/omEjb"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="build/libraries/junit.jar"/>
+	<classpathentry kind="lib" path="build/libraries/antlr-2.7.5H3.jar"/>
+	<classpathentry kind="lib" path="/omEar/build/libraries/jsf-api.jar"/>
+	<classpathentry kind="lib" path="/omEar/build/libraries/el-api.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/common"/>
+	<classpathentry kind="lib" path="/omEar/build/libraries/InetJaas.jar"/>
+	<classpathentry kind="src" path="/omClient"/>
+	<classpathentry kind="output" path="classes"/>
+</classpath>

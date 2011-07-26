@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+	<converter>
+		<converter-id>selectItemConverter</converter-id>
+		<converter-class>inet.module.mdm.jsf.converter.DefaultSelectItemConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>identifiedObjectTypeConverter</converter-id>
+		<converter-for-class>inet.module.mdm.parameters.IdentifiedObjectType</converter-for-class>
+		<converter-class>inet.module.mdm.jsf.converter.IdentifiedObjectTypeConverter</converter-class>
+	</converter>
+	<converter>
+		<description>trims a String (deletes leading and trailling blanks)</description>
+		<display-name>TrimStringConverter</display-name>
+		<converter-for-class>java.lang.String</converter-for-class>
+		<converter-class>inet.module.mdm.jsf.converter.TrimStringConverter</converter-class>
+	</converter>
+	<validator>
+		<validator-id>inet.module.mdm.jsf.validators.DatabaseValidator</validator-id>
+		<validator-class>inet.module.mdm.jsf.validators.DatabaseValidator</validator-class>
+		<property>
+			<property-name>tableName</property-name>
+			<property-class>java.lang.String</property-class>
+		</property>
+		<property>
+			<property-name>columnName</property-name>
+			<property-class>java.lang.String</property-class>
+		</property>
+	</validator>
+	<validator>
+		<validator-id>inet.module.mdm.jsf.validators.ZipCodeValidator</validator-id>
+		<validator-class>inet.module.mdm.jsf.validators.ZipCodeValidator</validator-class>
+		<property>
+			<property-name>country</property-name>
+			<property-class>java.lang.String</property-class>
+		</property>
+	</validator>
+	<managed-bean>
+		<managed-bean-name>searchStructureProvider</managed-bean-name>
+		<managed-bean-class>inet.module.mdm.jsf.beans.SearchStructureProvider</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<description>Provides Properties from the mdm.properties</description>
+		<managed-bean-name>properties</managed-bean-name>
+		<managed-bean-class>inet.module.mdm.jsf.beans.PropertiesBean</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>user</managed-bean-name>
+		<managed-bean-class>Login.UserBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<navigation-rule>
+		<display-name>login</display-name>
+		<from-view-id>/login.jspx</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/index.jspx</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>failure</from-outcome>
+			<to-view-id>/login.jspx</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<application>
+		<view-handler>com.icesoft.faces.facelets.D2DFaceletViewHandler</view-handler>
+		<locale-config>
+			<default-locale>de</default-locale>
+			<supported-locale>de</supported-locale>
+			<supported-locale>en</supported-locale>
+		</locale-config>
+		<message-bundle>messages</message-bundle>
+	</application>
+	<lifecycle>
+		<phase-listener>inet.module.mdm.extval.InetStartupListener</phase-listener>
+		<!-- <phase-listener>inet.module.mdm.jsf.phaselistener.ValidationMessagePhaseListener</phase-listener>  -->
+	</lifecycle>
+</faces-config>

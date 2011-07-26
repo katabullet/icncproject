@@ -1,0 +1,47 @@
+<project name="omEar" default="deploy">
+	<property name="earBaseDir" value="EarContent" />
+	<property name="libDir" value="${earBaseDir}/lib" />
+	<property name="targetDir" value="target" />
+	<property name="distDir" value="${targetDir}/dist" />
+	<property name="assembleDir" value="${targetDir}/assemble" />
+	<property name="assembleLibDir" value="${assembleDir}/lib" />
+	<property name="jbossDeployDir" value="C:\Users\test\jboss-eap-5.0\jboss-as\server\default\deploy" />
+	<property name="earName" value="om.ear" />
+
+	<target name="clean">
+		<delete dir="${targetDir}" failonerror="false" />
+	</target>
+
+	<target name="assembleClientJars">
+		<ant dir="../common" antfile="build.xml" target="package" />
+		<ant dir="../omClient" antfile="build.xml" target="package" />
+	</target>
+
+	<target name="assembleEjbJar" depends="assembleClientJars">
+		<ant dir="../omEJB" antfile="build.xml" target="package" />
+	</target>
+
+	<target name="assembleWar" depends="assembleEjbJar">
+		<ant dir="../omWeb" antfile="build.xml" target="package" />
+	</target>
+
+	<target name="assembleEar" depends="clean, assembleWar">
+		<mkdir dir="${assembleLibDir}" />
+		<copy flatten="true" todir="${assembleLibDir}">
+			<fileset dir="${earBaseDir}/lib" />
+		</copy>
+		<copy file="../common/target/dist/common.jar" tofile="${assembleLibDir}/common.jar" />
+		<copy file="../omClient/target/dist/omClient.jar" tofile="${assembleDir}/omClient.jar" />
+		<copy file="../omEJB/target/dist/omEjb.jar" tofile="${assembleDir}/omEjb.jar" />
+		<copy file="../omWeb/target/dist/omWeb.war" tofile="${assembleDir}/omWeb.war" />
+		<copy flatten="true" todir="${assembleDir}/META-INF">
+			<fileset dir="${earBaseDir}/META-INF" />
+		</copy>
+		<mkdir dir="${distDir}" />
+		<jar basedir="${assembleDir}" destfile="${distDir}/${earName}" includes="**/*.*" />
+	</target>
+
+	<target name="deploy" depends="assembleEar">
+		<copy file="${distDir}/${earName}" tofile="${jbossDeployDir}/${earName}" failonerror="false" />
+	</target>
+</project>

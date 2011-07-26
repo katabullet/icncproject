@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	template="/WEB-INF/templates/defaultTemplate.jspx">
+	<ui:define name="content">
+		<ice:form id="overviewForm">
+			<f:loadBundle var="msg" basename="messages" />
+			
+			<ice:panelGroup styleClass="exampleBox tabsetControls panelTabSetContainer">
+
+				<ice:panelGroup id="tabSetTabs"
+                				styleClass="exampleBox panelTabSetContainer">
+    				<ice:panelTabSet id="icePnlTbSet"
+            					selectedIndex="1"
+            					title="Titel des Panel-Tabsets"
+            					summary="Summary des Tabsets">
+
+        				<!-- Panel Tab 1 defined with some basic content -->
+        				<ice:panelTab rendered="true"
+                      			label="Label Tab 1"
+                      			icon=""
+                      			title="Title Tab 1">
+            				<div style="height:200px;">
+                				<ice:outputText
+                        			value="Ausgabetext Tab 1"
+                        			style="font-weight:bold;"/>
+                				<ice:outputText
+                        			value="Beschreibung Ausgabe Tab 1"/>
+                				<br/>
+            				</div>
+        				</ice:panelTab>
+        				
+        				<!-- Panel Tab 2 defined with some basic content -->
+        				<ice:panelTab rendered="true"
+                      			label="Label Tab 2"
+                      			icon=""
+                      			title="Title Tab 2">
+            				<div style="height:150px;">
+                				<ice:outputText
+                        			value="Ausgabetext Tab 2"
+                        			style="font-weight:bold;"/>
+                				<ice:outputText
+                        			value="Beschreibung Ausgabe Tab 2"/>
+                				<br/>
+            				</div>
+        				</ice:panelTab>
+        				
+        				<!-- Panel Tab 3 defined with some basic content -->
+        				<ice:panelTab rendered="true"
+                      			label="Label Tab 3"
+                      			icon=""
+                      			title="Title Tab 3">
+            				<div style="height:150px;">
+                				<ice:outputText
+                        			value="Ausgabetext Tab 3"
+                        			style="font-weight:bold;"/>
+                				<ice:outputText
+                        			value="Beschreibung Ausgabe Tab 3"/>
+                				<br/>
+            				</div>
+        				</ice:panelTab> 
+
+    				</ice:panelTabSet>
+				</ice:panelGroup>
+	
+    		</ice:panelGroup>
+			
+		</ice:form>
+	</ui:define>
+</ui:composition>

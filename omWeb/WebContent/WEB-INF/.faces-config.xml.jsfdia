@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#list.jspx" PATH="/list.jspx"
+  SHAPE="528,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#list.jspx:0" NAME="item" PATH="/list.jspx" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="costCenterDetail::#costCenter#detail.jspx"
+    NAME="output" PATH="/costCenter/detail.jspx"
+    TARGET="rules:#costCenter#detail.jspx" TITLE="costCenterDetail" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="payerDetail::#payer#detail.jspx"
+    NAME="output1" PATH="/payer/detail.jspx"
+    TARGET="rules:#payer#detail.jspx" TITLE="payerDetail" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="help::#helpEdit.jspx" NAME="output2"
+    PATH="/helpEdit.jspx" TARGET="rules:#helpEdit.jspx" TITLE="help" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="generalLedgerNumberDetail::#generalLedgerNumber#detail.jspx"
+    NAME="output3" PATH="/generalLedgerNumber/detail.jspx"
+    TARGET="rules:#generalLedgerNumber#detail.jspx"
+    TITLE="generalLedgerNumberDetail" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#filter.jspx" PATH="/filter.jspx"
+  SHAPE="304,33,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#filter.jspx:0" NAME="item"
+   PATH="/filter.jspx" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="list::#list.jspx" NAME="output"
+    PATH="/list.jspx" TARGET="rules:#list.jspx" TITLE="list" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#login.jspx" PATH="/login.jspx"
+  SHAPE="304,593,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#login.jspx:0" NAME="item" PATH="/login.jspx" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="success::#index.jspx" NAME="output"
+    PATH="/index.jspx" TARGET="rules:#index.jspx" TITLE="success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="failure::#login.jspx" NAME="output1"
+    PATH="/login.jspx" TARGET="rules:#login.jspx" TITLE="failure" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#*" PATH="/*" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#*:0" NAME="item" PATH="/*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="validationList::#validationList.jspx"
+    NAME="output" PATH="/validationList.jspx"
+    TARGET="rules:#validationList.jspx" TITLE="validationList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="approvalList::#approvalList.jspx"
+    NAME="output1" PATH="/approvalList.jspx"
+    TARGET="rules:#approvalList.jspx" TITLE="approvalList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="filter::#filter.jspx" NAME="output2"
+    PATH="/filter.jspx" TARGET="rules:#filter.jspx" TITLE="filter" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index::#index.jspx" NAME="output3"
+    PATH="/index.jspx" TARGET="rules:#index.jspx" TITLE="index" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="list::#list.jspx" NAME="output4"
+    PATH="/list.jspx" TARGET="rules:#list.jspx" TITLE="list" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="loggedOut::#login.jspx" NAME="output5"
+    PATH="/login.jspx" TARGET="rules:#login.jspx" TITLE="loggedOut" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="operationalReporting::#OperationalReporting.jspx" NAME="output6"
+    PATH="/OperationalReporting.jspx"
+    TARGET="rules:#OperationalReporting.jspx"
+    TITLE="operationalReporting" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="historyPriceMatrices::#HistoryPriceMatrices.jspx" NAME="output7"
+    PATH="/HistoryPriceMatrices.jspx"
+    TARGET="rules:#HistoryPriceMatrices.jspx"
+    TITLE="historyPriceMatrices" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#payer#detail.jspx" PATH="/payer/detail.jspx"
+  SHAPE="768,369,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#OperationalReporting.jspx"
+  PATH="/OperationalReporting.jspx" SHAPE="304,737,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#index.jspx" PATH="/index.jspx"
+  SHAPE="528,353,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#generalLedgerNumber#detail.jspx"
+  PATH="/generalLedgerNumber/detail.jspx" SHAPE="768,481,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#HistoryPriceMatrices.jspx"
+  PATH="/HistoryPriceMatrices.jspx" SHAPE="304,849,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#approvalList.jspx" PATH="/approvalList.jspx"
+  SHAPE="304,481,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#costCenter#detail.jspx"
+  PATH="/costCenter/detail.jspx" SHAPE="768,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#validationList.jspx"
+  PATH="/validationList.jspx" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#helpEdit.jspx" PATH="/helpEdit.jspx" model-entity="JSFProcessGroup"/>
+</PROCESS>

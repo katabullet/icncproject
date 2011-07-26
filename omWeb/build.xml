@@ -1,0 +1,83 @@
+<project name="omWeb" default="package">
+	<property name="targetDir" value="target" />
+	<property name="compileDir" value="${targetDir}/WEB-INF/classes" />
+	<property name="jarDir" value="${targetDir}/dist" />
+	<property name="earDir" value="../omEar" />
+	<property name="earLibs" value="${earDir}/EarContent/lib" />
+	<property name="earBuildLibs" value="${earDir}/build/libraries" />
+	<property name="webContentDir" value="WebContent" />
+	<property name="project.antcontrib.dir" value="build/ant/contrib" />
+	<property name="project.svnant.dir" value="build/ant/svn" />
+
+	<path id="classpath">
+		<fileset dir="${earLibs}" includes="*.jar" />
+		<fileset dir="${earBuildLibs}" includes="*.jar" />
+		<fileset dir="build/libraries" includes="*.jar" />
+		<fileset dir="${webContentDir}/WEB-INF/lib" includes="*.jar" />
+		<pathelement path="../omClient/target/classes" />
+		<pathelement path="../common/target/classes" />
+	</path>
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath location="${project.antcontrib.dir}/ant-contrib-1.0b3.jar" />
+    </taskdef>
+
+    <target name="init">
+        <tstamp>
+            <format property="buildTime" pattern="dd.MM.yyyy HH:mm:ss" />
+        </tstamp>
+        <echo>build starts at ${buildTime}</echo>
+
+        <propertyregex property="buildTimeStamp" override="true"
+            input="${buildTimeStamp}"
+            regexp="(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}).*"
+            select="\3.\2.\1 \4:\5:\6" />
+
+        <typedef resource="org/tigris/subversion/svnant/svnantlib.xml">
+            <classpath>
+                <fileset dir="${project.svnant.dir}" includes="*.jar" />
+            </classpath>
+        </typedef>
+
+
+        <property name="buildTimeStamp" value="${buildTime}" />
+        <property name="buildKey" value="${svn.repository.path}" />
+        <property name="buildNumber" value="${svn.revision.max}" />
+        <property name="svnRevision" value="${svn.revision.max}" />
+
+        <echo>number: ${buildKey}-${buildNumber}</echo>
+        <echo>time: ${buildTimeStamp}</echo>
+        <echo>revision: ${svnRevision}</echo>
+        <echo>java-version: ${java.version}</echo>
+    </target>
+
+	<target name="clean" depends="init">
+		<delete dir="${targetDir}" failonerror="false" />
+	</target>
+
+	<target name="compile" depends="clean">
+		<mkdir dir="${compileDir}" />
+		<javac classpathref="classpath" destdir="${compileDir}" srcdir="source" source="1.6" debug="true" encoding="cp1252"/>
+		<copy todir="${compileDir}">
+			<fileset dir="source" excludes="**/*.java" />
+		</copy>
+	</target>
+
+    <target name="buildInfo" depends="init">
+        <copy file="source/BuildInfo.properties" todir="${compileDir}" overwrite="true" />
+        <replace file="${compileDir}/BuildInfo.properties">
+            <replacefilter token="@java.version@" value="${java.version}" />
+            <replacefilter token="@buildTimeStamp@" value="${buildTimeStamp}" />
+            <replacefilter token="@buildKey@" value="${buildKey}" />
+            <replacefilter token="@buildNumber@" value="${buildNumber}" />
+            <replacefilter token="@buildRevision@" value="${svnRevision}" />
+        </replace>
+    </target>
+
+	<target name="package" depends="compile, buildInfo">
+		<mkdir dir="${jarDir}" />
+		<jar basedir="${webContentDir}" jarfile="${jarDir}/omWeb.war" index="true" manifest="WebContent/META-INF/MANIFEST.MF">
+			<fileset dir="${targetDir}" includes="**/*.*" />
+		</jar>
+	</target>
+</project>

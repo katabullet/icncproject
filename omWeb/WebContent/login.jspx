@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	template="/WEB-INF/templates/defaultTemplate.jspx">
+<ice:outputHead>
+	<ice:outputStyle href="./xmlhttp/css/rime/rime.css" />
+	<ice:outputStyle href="./styles/Login.css" />
+	<ice:outputStyle href="./styles/Menu.css" />
+</ice:outputHead>
+
+
+<ice:outputBody id="body" focus="loginForm:username" >
+	<f:loadBundle basename="messages" var="msg"/>
+	<ice:panelBorder id="borderLayout" renderCenter="true"
+		renderNorth="true" width="100%" height="100%" align="left"
+		styleclass="icePnlBrdrNorth">
+		<f:facet name="north">
+			<ice:panelGroup styleClass="Base_Login_Icon" />
+		</f:facet>
+		
+		<f:facet name="center">
+			<ice:panelBorder id="contentLayout" renderCenter="true" 
+				align="center">
+				
+				<f:facet name="south" renderCenter="true">
+					<ice:form id="loginForm">
+
+							<ice:panelGrid columns="1" id="loginLayout"
+								styleClass="LoginContainer">
+								
+								<ice:panelGroup style="height:30px" ></ice:panelGroup>
+								<ice:outputText value="#{msg.loginTitle}" styleClass="Title" />
+									
+									<ice:panelGroup style="height: 30px"></ice:panelGroup>
+									<ice:panelGrid columns="2" columnClasses="Base_ColumnWidth">
+										<ice:outputLabel styleClass="Text" value="#{msg.loginUserName}" for="username"  />
+										<ice:inputText styleClass="Input" id="username" value="#{user.username}"
+											action="#{user.login}" />
+									</ice:panelGrid>
+
+									<ice:panelGroup></ice:panelGroup>
+									<ice:panelGrid columns="2" columnClasses="Base_ColumnWidth">
+										<ice:outputLabel styleClass="Text" value="#{msg.loginPassword }" for="password" />
+										<ice:inputSecret styleClass="Input" id="password" value="#{user.password}"
+											action="#{user.login}" />
+									</ice:panelGrid>
+									
+									<ice:panelGroup style="height: 20px"></ice:panelGroup>
+									<ice:panelGrid styleClass="Base_Text_Center">
+											<ice:commandButton id="loginBtn1" action="#{user.login}"
+											styleClass="LoginBtn" value="#{msg.loginLogin}" /> 
+									</ice:panelGrid>
+							
+									<ice:panelGrid styleClass="Ausrichten">
+										<ice:messages layout="table" errorClass="iceMsgError" styleClass="kumscho"/>
+									</ice:panelGrid>
+									
+									<ice:panelGroup style="height: 20px"></ice:panelGroup>
+									<ice:panelGrid styleClass="Base_Text_Center">
+										<ice:outputText value="#{msg.loginMessage}"
+										styleClass="Base_Text_Center" />
+										<ice:outputLink id="LinkInetPage"
+											value="#{msg.loginWebsite}" target="_blank" styleClass="Base_Text_Center">
+											<ice:outputText value="#{msg.loginWebsite}" styleClass="Base_Text_Center"/>
+										</ice:outputLink>
+									</ice:panelGrid>
+									
+							</ice:panelGrid>
+
+					</ice:form>
+				</f:facet>
+				
+			</ice:panelBorder>
+			
+			
+		</f:facet>
+
+	</ice:panelBorder>
+
+</ice:outputBody>
+</html>

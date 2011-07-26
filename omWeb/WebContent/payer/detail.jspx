@@ -1,0 +1,114 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:inet="http://inet.com/mdm/jsf/tags"
+	template="/WEB-INF/templates/defaultTemplate.jspx">
+	<ui:define name="content">
+		<ice:form id="PayerEditorForm">
+			<f:loadBundle var="msg" basename="messages" />
+			<ice:outputText value="#{detailPayer.validationMessage}"
+				style="color: red;" />
+			<ice:panelGrid columns="1" id="outerDetailFormLayout"
+				styleClass="Base_WidthFull Base_PageLayoutTable">
+				<ice:outputText value="#{msg.detailPayer}"
+					styleClass="Base_TitleText" />
+
+				<ice:panelGroup styleClass="Base_MenuBorder">
+					<ice:panelGrid columns="5">
+						<ice:commandLink styleClass="Base_Btn Base_ArrowLeftButton"
+							title="#{msg.commonBack}"
+							action="#{detailPayer.back}"
+							immediate="true" />
+						<ice:commandLink styleClass="Base_Btn Base_SaveButton"
+							title="#{msg.commonSave}"
+							action="#{detailPayer.save}"
+							rendered="#{detailPayer.editable}" />
+						<ice:commandLink styleClass="Base_Btn Base_ResetButton"
+							title="#{msg.commonReset}"
+							action="#{detailPayer.reset}"
+							immediate="true"
+							rendered="#{detailPayer.editable}" />
+						<ice:commandLink styleClass="Base_Btn Base_HelpButton"
+						                 action="#{help.togglePopup}"
+						                 title="#{msg.commonHelp}"
+						                 rendered="#{detailPayer.helpEnabled}"
+						                 immediate="true">
+							<f:setPropertyActionListener target="#{help.helpGroup}" value="#{detailPayer.helpGroupId}" />
+							<f:setPropertyActionListener target="#{help.origin}" value="#{detailPayer.navigationRuleDetail}" />
+						</ice:commandLink>
+						<ice:commandLink styleClass="Base_Btn Base_EditHelpButton"
+							             action="helpEdit"
+							             title="#{msg.commonHelpEditor}"
+							             rendered="#{user.editHelpTextsAllowed}"
+							             immediate="true">
+							<f:setPropertyActionListener target="#{help.helpGroup}" value="#{detailPayer.helpGroupId}" />
+							<f:setPropertyActionListener target="#{help.origin}" value="#{detailPayer.navigationRuleDetail}" />
+						</ice:commandLink>
+					</ice:panelGrid>
+				</ice:panelGroup>
+
+				<ice:messages globalOnly="true" layout="table" />
+
+				<ice:panelGroup styleClass="Base_MenuBorder Base_BlockBackground">
+					<ice:panelGrid columns="3" id="detailFormLayout"
+						columnClasses="Base_Width_Column_235 None None">
+
+						<ice:outputLabel value="#{msg.commonConsignorId}: (*)"
+							for="consignorId" />
+						 <ice:selectInputText id="consignorId" rows="10" width="180"
+						 immediate="true"
+						  valueChangeListener="#{addressLocations.updateList}"
+							value="#{detailPayer.entity.consignorId}"
+							disabled="#{!detailPayer.idEditable and !detailPayer.entity.initialState or !detailPayer.editable}">
+							<f:selectItems value="#{addressLocations.list}"/>
+						</ice:selectInputText>
+						<ice:message for="consignorId" />
+
+						<ice:outputLabel value="#{msg.commonRecipientId}: (*)"
+							for="recipientId" />
+							<ice:selectInputText id="recipientId" rows="10" width="180"
+						  valueChangeListener="#{addressLocations.updateList}"
+							value="#{detailPayer.entity.recipientId}"
+							disabled="#{!detailPayer.idEditable and !detailPayer.entity.initialState or !detailPayer.editable}">
+							<f:selectItems value="#{addressLocations.list}"/>
+						</ice:selectInputText>
+						<ice:message for="recipientId" />
+
+						<ice:outputLabel value="#{msg.payerPayer}: (*)" for="payer" />
+						<ice:inputText id="payer" partialSubmit="false"
+							value="#{detailPayer.entity.payer}" disabled="#{!detailPayer.editable}">
+							<inet:validateDatabase tableName="PAYER" columnName="PAYER" />
+						</ice:inputText>
+						<ice:message for="payer" />
+
+						<ice:outputLabel value="#{msg.secLabelSecurityLabel}: (*)"
+							for="securityLabel" />
+						<ice:selectOneMenu id="securityLabel"
+							value="#{detailPayer.entity.securityLabel}"
+							disabled="#{!detailPayer.editable}">
+							<f:selectItems value="#{detailPayer.securityLabels}" />
+						</ice:selectOneMenu>
+						<ice:message for="securityLabel" />
+
+
+					
+
+					</ice:panelGrid>
+				</ice:panelGroup>
+				<ice:outputText value="#{msg.commonFieldRequiredLegend}"
+					styleClass="Base_Legend" />
+				<ice:outputLabel value="#{msg.commonComment}" for="comment" />
+				<ice:inputTextarea id="comment"
+					value="#{detailPayer.entity.transaction.comment}" cols="186"
+					maxlength="4000" rows="10" readonly="true" />
+			</ice:panelGrid>
+
+		</ice:form>
+	</ui:define>
+
+	<ui:define name="popups">
+		<ui:include src="../WEB-INF/templates/helpPopup.jspx" />
+	</ui:define>
+
+</ui:composition>

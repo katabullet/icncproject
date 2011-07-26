@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+<ice:outputHead>
+	<ice:outputStyle href="./xmlhttp/css/rime/rime.css" />
+	<ice:outputStyle href="./styles/Base.css" />
+	<ice:outputStyle href="./styles/Menu.css" />
+	<script language="JavaScript" type="text/javascript" src="js/Base.js"></script>
+</ice:outputHead>
+<ice:outputBody>
+	<ice:panelBorder id="borderLayout" renderNorth="true"
+		renderCenter="true" style="width: 974px">
+		<f:facet name="north">
+			<ice:panelGroup>
+				<ice:form id="menuForm">
+					<f:loadBundle var="msg" basename="messages" />
+					<ice:panelGrid border="0" cellpadding="0" cellspacing="0"
+						columns="1">
+						<ice:panelGroup styleClass="MenuContainer">
+							<ice:panelGroup styleClass="Menu_LogoDiv" />
+							<!--<ice:graphicImage styleClass="Base_LogoImage"/>-->
+							<ice:panelGrid cellpadding="0" cellspacing="0" columns="1"
+								width="100%">
+								<ice:menuBar orientation="Horizontal">
+									<!--  styleClass="iNetMenuBar" -->
+									<ice:menuItem value="#{msg.menuMasterdata}"
+										rendered="#{menu.security['masterdata']}">
+										<ice:menuItem value="#{msg.openTransactionsTitle}"
+											action="index" />
+										<ice:menuItem value="#{msg.menuMaterialType}"
+											action="#{list.init}"
+											rendered="#{menu.security['masterdata/MATERIAL_TYPE']}">
+											<f:setPropertyActionListener
+												target="#{list.objectTypeString}" value="MATERIAL_TYPE" />
+											<f:setPropertyActionListener target="#{list.pageTitle}"
+												value="overviewMaterialType" />
+											<f:setPropertyActionListener target="#{transaction.activeTx}"
+												value="#{null}" />
+										</ice:menuItem>
+										<ice:menuItem value="#{msg.menuCostCenter}"
+											action="#{list.init}"
+											rendered="#{menu.security['masterdata/COSTCENTER']}">
+											<f:setPropertyActionListener
+												target="#{list.objectTypeString}" value="COSTCENTER" />
+											<f:setPropertyActionListener target="#{list.pageTitle}"
+												value="overviewCostCenter" />
+											<f:setPropertyActionListener target="#{transaction.activeTx}"
+												value="#{null}" />
+										</ice:menuItem>
+										<ice:menuItem value="#{msg.menuPayer}" action="#{list.init}"
+											rendered="#{menu.security['masterdata/PAYER']}">
+											<f:setPropertyActionListener
+												target="#{list.objectTypeString}" value="PAYER" />
+											<f:setPropertyActionListener target="#{list.pageTitle}"
+												value="overviewPayer" />
+											<f:setPropertyActionListener target="#{transaction.activeTx}"
+												value="#{null}" />
+										</ice:menuItem>
+										<ice:menuItem value="#{msg.menuShipper}" action="#{list.init}"
+											rendered="#{menu.security['masterdata/SHIPPER']}">
+											<f:setPropertyActionListener
+												target="#{list.objectTypeString}" value="SHIPPER" />
+											<f:setPropertyActionListener target="#{list.pageTitle}"
+												value="overviewShipper" />
+											<f:setPropertyActionListener target="#{transaction.activeTx}"
+												value="#{null}" />
+										</ice:menuItem>
+										<ice:menuItem value="#{msg.menuService}" action="#{list.init}"
+											rendered="#{menu.security['masterdata/SERVICE']}">
+											<f:setPropertyActionListener
+												target="#{list.objectTypeString}" value="SERVICE" />
+											<f:setPropertyActionListener target="#{list.pageTitle}"
+												value="overviewService" />
+											<f:setPropertyActionListener target="#{transaction.activeTx}"
+												value="#{null}" />
+										</ice:menuItem>
+										<ice:menuItem value="#{msg.menuFMPartner}"
+											action="#{list.init}"
+											rendered="#{menu.security['masterdata/FMPARTNER']}">
+											<f:setPropertyActionListener
+												target="#{list.objectTypeString}" value="FMPARTNER" />
+											<f:setPropertyActionListener target="#{list.pageTitle}"
+												value="overviewFMPartner" />
+											<f:setPropertyActionListener target="#{transaction.activeTx}"
+												value="#{null}" />
+										</ice:menuItem>
+										<ice:menuItem value="#{msg.menuTSP}" action="#{list.init}"
+											rendered="#{menu.security['masterdata/TSP']}">
+											<f:setPropertyActionListener
+												target="#{list.objectTypeString}" value="TSP" />
+											<f:setPropertyActionListener target="#{list.pageTitle}"
+												value="overviewTSP" />
+											<f:setPropertyActionListener target="#{transaction.activeTx}"
+												value="#{null}" />
+										</ice:menuItem>
+									</ice:menuItem>
+									<ice:menuItem value="#{msg.menuApproval}"
+										rendered="#{menu.security['approval']}">
+										<ice:menuItem value="#{msg.menuMaterialType}"
+											action="#{approvalList.init}"
+											rendered="#{menu.security['approval/MATERIAL_TYPE']}">
+											<f:setPropertyActionListener
+												target="#{approvalList.objectTypeString}"
+												value="MATERIAL_TYPE" />
+											<f:setPropertyActionListener
+												target="#{approvalList.pageTitle}"
+												value="approvalMaterialType" />
+										</ice:menuItem>
+										<ice:menuItem value="#{msg.menuCostCenter}"
+											action="#{approvalList.init}"
+											rendered="#{menu.security['approval/COSTCENTER']}">
+											<f:setPropertyActionListener
+												target="#{approvalList.objectTypeString}" value="COSTCENTER" />
+											<f:setPropertyActionListener
+												target="#{approvalList.pageTitle}"
+												value="approvalCostCenter" />
+										</ice:menuItem>
+										<ice:menuItem value="#{msg.menuPayer}"
+											action="#{approvalList.init}"
+											rendered="#{menu.security['approval/PAYER']}">
+											<f:setPropertyActionListener
+												target="#{approvalList.objectTypeString}" value="PAYER" />
+											<f:setPropertyActionListener
+												target="#{approvalList.pageTitle}" value="approvalPayer" />
+										</ice:menuItem>
+										<ice:menuItem value="#{msg.menuShipper}"
+											action="#{approvalList.init}"
+											rendered="#{menu.security['approval/SHIPPER']}">
+											<f:setPropertyActionListener
+												target="#{approvalList.objectTypeString}" value="SHIPPER" />
+											<f:setPropertyActionListener
+												target="#{approvalList.pageTitle}" value="approvalShipper" />
+										</ice:menuItem>
+										<ice:menuItem value="#{msg.menuService}"
+											action="#{approvalList.init}"
+											rendered="#{menu.security['approval/SERVICE']}">
+											<f:setPropertyActionListener
+												target="#{approvalList.objectTypeString}" value="SERVICE" />
+											<f:setPropertyActionListener
+												target="#{approvalList.pageTitle}" value="approvalService" />
+										</ice:menuItem>
+										<ice:menuItem value="#{msg.menuFMPartner}"
+											action="#{approvalList.init}"
+											rendered="#{menu.security['approval/FMPARTNER']}">
+											<f:setPropertyActionListener
+												target="#{approvalList.objectTypeString}" value="FMPARTNER" />
+											<f:setPropertyActionListener
+												target="#{approvalList.pageTitle}" value="approvalFMPartner" />
+										</ice:menuItem>
+										<ice:menuItem value="#{msg.menuTSP}"
+											action="#{approvalList.init}"
+											rendered="#{menu.security['approval/TSP']}">
+											<f:setPropertyActionListener
+												target="#{approvalList.objectTypeString}" value="TSP" />
+											<f:setPropertyActionListener
+												target="#{approvalList.pageTitle}" value="approvalTsp" />
+										</ice:menuItem>
+									</ice:menuItem>
+									<ice:menuItem value="#{msg.menuMetadata}"
+										rendered="#{menu.security['metadata']}">
+										<!-- <ice:menuItem value="#{msg.validationValidation}"
+											action="#{adminList.init}"
+											rendered="#{user.defineValidationRulesAllowed}" >
+											<f:setPropertyActionListener
+												target="#{adminList.objectTypeString}"
+												value="VALIDATION_RULES" />
+											<f:setPropertyActionListener target="#{adminList.pageTitle}"
+												value="overviewValidationRules" />
+										</ice:menuItem>-->
+									</ice:menuItem>
+									<ice:menuItem value="#{msg.menuExtras}">
+										<!-- <ice:menuItem value="#{msg.menuUserAdmin}"
+											action="#{userList.init}"
+											rendered="#{user.defineUsersAllowed}">
+											<f:setPropertyActionListener
+												target="#{userList.objectTypeString}" value="USER" />
+											<f:setPropertyActionListener target="#{userList.pageTitle}"
+												value="overviewUser" />
+										</ice:menuItem> 
+										<ice:menuItem value="#{msg.menuUserRoles}"
+											action="#{roleList.init}"
+											rendered="#{user.defineRolesAllowed}">
+											<f:setPropertyActionListener
+												target="#{roleList.objectTypeString}" value="DB_ROLE" />
+											<f:setPropertyActionListener target="#{roleList.pageTitle}"
+												value="overviewRole" />
+										</ice:menuItem>
+										<ice:menuItem value="#{msg.secLabelSecurityLabel}"
+											action="#{adminList.init}"
+											rendered="#{user.definePermissionIdsAllowed}">
+											<f:setPropertyActionListener
+												target="#{adminList.objectTypeString}"
+												value="SECURITY_LABEL" />
+											<f:setPropertyActionListener target="#{adminList.pageTitle}"
+												value="overviewSecurityLabel" />
+										</ice:menuItem>-->
+										<ice:menuItem value="#{msg.userPasswordChange}"
+											action="passwordChange" />
+										<!--<ice:menuItem value="#{msg.menuReporting}"
+											link="#{user.linkToOldMdm}" target="_blank"
+											rendered="#{user.linkToOldMMAllowed}" styleClass="iceOutTxt" />-->
+										<ice:menuItem value="#{msg.commonProductVersion}" action="infoButton" />
+									</ice:menuItem>
+									<ice:menuItem value="#{msg.menuLogout}" action="#{user.logout}" />
+								</ice:menuBar>
+								<ice:panelGroup styleClass="Menu_UserDiv">
+									<ice:outputConnectionStatus showPopupOnDisconnect="true" />
+									<ice:outputLabel value="#{msg.commonUser}:" />
+									<ice:outputLabel value="#{user.username}"
+										styleClass="Menu_UserIdText" />
+									<ice:outputLabel value="#{msg.commonClient}:" />
+									<ice:selectOneListbox size="1"
+										value="#{environment.clientName}" partialSubmit="true">
+										<f:selectItems value="#{environment.availableClients}" />
+									</ice:selectOneListbox>
+								</ice:panelGroup>
+							</ice:panelGrid>
+						</ice:panelGroup>
+					</ice:panelGrid>
+				</ice:form>
+			</ice:panelGroup>
+		</f:facet>
+		<f:facet name="center">
+			<ui:insert name="content">Default-Content: Please replace</ui:insert>
+		</f:facet>
+	</ice:panelBorder>
+
+	<ui:insert name="popups" />
+
+</ice:outputBody>
+</html>

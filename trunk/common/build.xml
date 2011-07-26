@@ -1,0 +1,28 @@
+<project name="common" default="package">
+	<property name="targetDir" value="target" />
+	<property name="unweavedDir" value="${targetDir}/classes" />
+	<property name="jarDir" value="${targetDir}/dist" />
+	<property name="libs" value="${basedir}/../common/lib" />
+
+	<path id="classpath">
+		<fileset dir="${libs}" includes="*.jar" />
+		<fileset dir="${basedir}/build/libraries" includes="*.jar" />
+	</path>
+
+	<target name="clean">
+		<delete dir="${basedir}/${targetDir}" failonerror="false" />
+	</target>
+
+	<target name="compile" depends="clean">
+		<echo message="libs=${libs}" />
+		<mkdir dir="${basedir}/${unweavedDir}" />
+		<javac classpathref="classpath" destdir="${unweavedDir}" srcdir="source" source="1.6" debug="true" encoding="cp1252" />
+	</target>
+	<target name="package" depends="compile">
+		<mkdir dir="${basedir}/${jarDir}" />
+		<jar basedir="${basedir}/${unweavedDir}" jarfile="${jarDir}/common.jar" index="true">
+			<fileset dir="source" includes="**/*.xml" />
+			<fileset dir="source" includes="**/*.properties" />
+		</jar>
+	</target>
+</project>

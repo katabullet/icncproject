@@ -1,0 +1,48 @@
+<project name="omEJB" default="package">
+	<property name="targetDir" value="target" />
+	<property name="weavedDir" value="${targetDir}/classes" />
+	<property name="unweavedDir" value="${targetDir}/classes_unweaved" />
+	<property name="jarDir" value="${targetDir}/dist" />
+	<property name="earDir" value="${basedir}/../omEar" />
+	<property name="earLibs" value="${earDir}/EarContent/lib" />
+	<property name="earBuildLibs" value="${earDir}/build/libraries" />
+	<path id="classpath">
+		<fileset dir="${earLibs}" includes="*.jar" />
+		<fileset dir="${earBuildLibs}" includes="*.jar" />
+		<pathelement location="../omClient/target/dist/omClient.jar" />
+	</path>
+	<path id="testClasspath">
+		<path refid="classpath" />
+		<pathelement path="${basedir}/${weavedDir}" />
+		<pathelement path="${basedir}/tests" />
+		<pathelement location="build/libraries/junit.jar" />
+		<pathelement location="build/libraries/org.hamcrest.core_1.1.0.v20090501071000.jar" />
+	</path>
+
+	<target name="clean">
+		<delete dir="${basedir}/${targetDir}" failonerror="false" />
+	</target>
+
+	<target name="compile" depends="clean">
+		<mkdir dir="${basedir}/${unweavedDir}" />
+		<mkdir dir="${basedir}/${weavedDir}" />
+		<javac classpathref="classpath" destdir="${weavedDir}" srcdir="ejbModule" source="1.6" debug="true" encoding="cp1252" />
+	</target>
+	<target name="package" depends="compile">
+		<mkdir dir="${jarDir}" />
+		<jar basedir="${basedir}/${weavedDir}" jarfile="${jarDir}/omEjb.jar" index="true" manifest="ejbModule/META-INF/MANIFEST.MF">
+			<fileset dir="ejbModule" includes="**/*.xml" />
+		</jar>
+	</target>
+	<target name="test" depends="compile">
+		<mkdir dir="${basedir}/${targetDir}/testResults" />
+		<javac classpathref="testClasspath" destdir="${basedir}/${weavedDir}" srcdir="tests" source="1.6" debug="true" />
+		<junit fork="true" haltonfailure="false" haltonerror="false" includeantruntime="true" showoutput="true" printsummary="true">
+			<classpath refid="testClasspath" />
+			<formatter type="xml" />
+			<batchtest fork="true" todir="${basedir}/${targetDir}/testResults">
+				<fileset dir="tests" includes="**/*Suite.java" />
+			</batchtest>
+		</junit>
+	</target>
+</project>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="source"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry exported="true" kind="lib" path="/omEar/build/libraries/jboss-javaee.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/omEar/build/libraries/java_ee_javadocs.zip!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/omEar/build/libraries/commons-collections.jar"/>
+	<classpathentry kind="lib" path="/omEar/build/libraries/dom4j.jar"/>
+	<classpathentry kind="lib" path="/omEar/build/libraries/javassist.jar"/>
+	<classpathentry kind="lib" path="/omEar/build/libraries/jboss-logging-jdk.jar"/>
+	<classpathentry kind="lib" path="/omEar/build/libraries/jboss-logging-log4j.jar"/>
+	<classpathentry kind="lib" path="/omEar/build/libraries/jboss-logging-spi.jar"/>
+	<classpathentry kind="lib" path="/omEar/build/libraries/log4j.jar"/>
+	<classpathentry kind="lib" path="/omEar/build/libraries/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="/omEar/build/libraries/slf4j-api.jar"/>
+	<classpathentry kind="lib" path="/omEar/build/libraries/slf4j-jboss-logging.jar"/>
+	<classpathentry kind="lib" path="build/libraries/junit.jar"/>
+	<classpathentry kind="lib" path="build/libraries/org.hamcrest.core_1.1.0.v20090501071000.jar"/>
+	<classpathentry kind="lib" path="/omEar/EarContent/lib/validation-api-1.0.0.GA.jar"/>
+	<classpathentry kind="lib" path="/omEar/EarContent/lib/hibernate-validator-4.1.0.Final.jar"/>
+	<classpathentry kind="lib" path="/omEar/build/libraries/jsf-api.jar"/>
+	<classpathentry kind="lib" path="/omEar/EarContent/lib/eclipselink.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/D:/appl/aik/eclipse_36/workspaceMDM-1/omEar/build/libraries/eclipselink-javadocs.zip!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/omEar/EarContent/lib/javax.persistence_1.0.0.jar"/>
+	<classpathentry kind="lib" path="/omEar/EarContent/lib/commons-el.jar"/>
+	<classpathentry kind="lib" path="/omEar/build/libraries/el-api.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/common"/>
+	<classpathentry kind="lib" path="/omEar/build/libraries/InetJaas.jar"/>
+	<classpathentry kind="output" path="classes"/>
+</classpath>

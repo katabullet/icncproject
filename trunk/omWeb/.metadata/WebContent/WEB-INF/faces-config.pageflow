@@ -2,12 +2,12 @@
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf128574930122438" configfile="/omWeb/WebContent/WEB-INF/faces-config.xml">
   <nodes xsi:type="pageflow:PFPage" name="ValidationList" x="62" y="60" id="pf12862859421431" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" path="/ValidationList.jspx"/>
   <nodes xsi:type="pageflow:PFPage" name="help" x="576" y="108" id="pf12864538537473" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" path="/help.jspx"/>
-  <nodes xsi:type="pageflow:PFPage" name="index" x="408" y="93" id="pf13115944209950" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf13115944209951" path="/index.jspx"/>
-  <nodes xsi:type="pageflow:PFPage" name="login" x="192" y="72" id="pf13115944209952" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" outlinks="pf13115944209951 pf13115944209953" inlinks="pf13115944209953" path="/login.jspx"/>
-  <links id="pf13115944209951" target="pf13115944209950" source="pf13115944209952" outcome="success"/>
+  <nodes xsi:type="pageflow:PFPage" name="login" x="192" y="72" id="pf13115944209952" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf13115944209953 pf13117461294170" inlinks="pf13115944209953" path="/login.jspx"/>
+  <nodes xsi:type="pageflow:PFPage" name="index" id="pf13117461294171" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf13117461294170" path="/index.jspx"/>
   <links id="pf13115944209953" target="pf13115944209952" source="pf13115944209952" outcome="failure">
     <bendPoints d1Height="-36" d2Height="-36"/>
     <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
     <bendPoints d1Width="-64" d2Width="-64"/>
   </links>
+  <links id="pf13117461294170" target="pf13117461294171" source="pf13115944209952" outcome="success"/>
 </pageflow:Pageflow>

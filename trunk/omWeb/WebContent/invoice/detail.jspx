@@ -5,6 +5,7 @@
 	template="/WEB-INF/templates/defaultTemplate.jspx">
 			<ice:dataTable value="#{invoiceLister.orderList}" var="item">
 				<ice:column>
+					<ice:rowSelector></ice:rowSelector>
 					<f:facet name="header">ID</f:facet>
 					<ice:outputText value="#{item.idInvoice}"/>
 				</ice:column>

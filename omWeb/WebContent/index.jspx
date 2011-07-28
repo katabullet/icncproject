@@ -45,7 +45,24 @@
             				<ice:panelTabSet id="icePnlTbSet" selectedIndex="0" tabPlacement="Bottom">
             					<ice:panelTab label="Rechnungen" labelWidth="237">
 		           					<ice:panelGrid columns="2" columnClasses="Col1 Col2" styleClass="leiste" style="width: 100%">
-		           						<ice:outputLabel value="Test"/>
+										<!-- DataExporter -->
+										<ice:panelGroup styleClass="exampleBox dataScrollingContainer">
+										        <ice:selectOneMenu id="type" value="#{dataExporter.type}" partialSubmit="true"
+										            valueChangeListener="#{dataExporter.typeChangeListener}" >
+										            <f:selectItem itemLabel="Select a type" itemValue=""/>
+										            <f:selectItem itemLabel="MS Excel" itemValue="excel"/>
+										            <f:selectItem itemLabel="CSV (comma separated values)" itemValue="csv"/>
+										        </ice:selectOneMenu>
+										        <br/>
+										       <ice:panelGroup effect="#{dataExporter.changeEffect}" style="width:180px;">
+										            <ice:dataExporter for="filterTable"
+										                label="Click to download #{dataExporter.type} file"
+										                type="#{dataExporter.type}"
+										                popupBlockerLabel="Popup Blocker detected - click here to resume download..."
+										                clickToCreateFileText="Click to create #{dataExporter.type} file "/>
+										       </ice:panelGroup>
+										     </ice:panelGroup>
+										 <!-- Buttons -->
 			           					<ice:panelGrid columns="3" styleClass="buttons">
 				           					<ice:commandButton image="images/btn_new_e.png"/>
 				           					<ice:commandButton image="images/btn_edit_e.png"/>  					  	
@@ -58,6 +75,9 @@
             					<ice:panelTab label="Intervall" labelWidth="237"></ice:panelTab>
             				</ice:panelTabSet>
             			</ice:panelTab>
+            			
+            			
+						
             			<ice:panelTab label="Auftraege" labelWidth="#{sitesBean.tabWidth}"></ice:panelTab>
         				<ice:panelTab label="Kunden" labelWidth="#{sitesBean.tabWidth}"></ice:panelTab>
         				<ice:panelTab label="Auswertungen" labelWidth="#{sitesBean.tabWidth}"></ice:panelTab>

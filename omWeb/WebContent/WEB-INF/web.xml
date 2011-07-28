@@ -58,11 +58,13 @@
     <servlet-class>com.icesoft.faces.webapp.xmlhttp.BlockingServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+<!--   
   <servlet>
     <servlet-name>InitializerServlet</servlet-name>
     <servlet-class>inet.module.mdm.servlets.InitializerServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+ -->  
   <servlet-mapping>
     <servlet-name>Persistent Faces Servlet</servlet-name>
     <url-pattern>*.jspx</url-pattern>

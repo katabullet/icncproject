@@ -6,36 +6,37 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>java:omDS</jta-data-source>
 		<mapping-file>META-INF/orm.xml</mapping-file>
-		<class>iCNC.EntityBeans.TblConcern</class>
-		<class>iCNC.EntityBeans.TblContactperson</class>
-		<class>iCNC.EntityBeans.TblCostcentre</class>
-		<class>iCNC.EntityBeans.TblCustomer</class>
-		<class>iCNC.EntityBeans.TblCustomerstate</class>
-		<class>iCNC.EntityBeans.TblIncometype</class>
-		<class>iCNC.EntityBeans.TblInterval</class>
-		<class>iCNC.EntityBeans.TblInvoice</class>
-		<class>iCNC.EntityBeans.TblOrder</class>
-		<class>iCNC.EntityBeans.TblOrderstate</class>
-		<class>iCNC.EntityBeans.TblProtocol</class>
-		<class>iCNC.EntityBeans.TblSettlement</class>
-		<class>iCNC.EntityBeans.TblUser</class>
-		<class>iCNC.EntityBeans.TblUserrole</class>
+		<class>at.icnc.om.entitybeans.TblConcern</class>
+		<class>at.icnc.om.entitybeans.TblContactperson</class>
+		<class>at.icnc.om.entitybeans.TblCostcentre</class>
+		<class>at.icnc.om.entitybeans.TblCustomer</class>
+		<class>at.icnc.om.entitybeans.TblCustomerstate</class>
+		<class>at.icnc.om.entitybeans.TblIncometype</class>
+		<class>at.icnc.om.entitybeans.TblInterval</class>
+		<class>at.icnc.om.entitybeans.TblInvoice</class>
+		<class>at.icnc.om.entitybeans.TblOrder</class>
+		<class>at.icnc.om.entitybeans.TblOrderstate</class>
+		<class>at.icnc.om.entitybeans.TblProtocol</class>
+		<class>at.icnc.om.entitybeans.TblSettlement</class>
+		<class>at.icnc.om.entitybeans.TblUser</class>
+		<class>at.icnc.om.entitybeans.TblUserrole</class>
+
 		<properties>
 		    <!-- set property "eclipselink.target-database" also for Oracle 11 DB to "Oracle10g".
 		         with the setting "Oracle11" we have troubles with ORA-01461 when updating clob values.
 		      -->
-			<property name="eclipselink.target-database" value="Oracle10g" />
+		    <property name="eclipselink.target-database" value="Oracle10g" />
 			<property name="eclipselink.target-server" value="JBoss" />
 			<property name="eclipselink.weaving" value="static" />
 			<property name="eclipselink.logging.level" value="FINE" />
 			<property name="eclipselink.cache.shared.default" value="false" />
-			<property name="eclipselink.session-event-listener" value="inet.module.mdm.security.VPDEventListener" />
+			<!-- <property name="eclipselink.session-event-listener" value="inet.module.mdm.security.VPDEventListener" />-->
 			<property name="eclipselink.jdbc.exclusive-connection.mode" value="Isolated" />
 			<property name="eclipselink.jdbc.exclusive-connection.is-lazy" value="true" />
 			<property name="eclipselink.jdbc.connections.initial" value="0" />
 			<property name="eclipselink.jdbc.connections.min" value="0" />
 			<property name="eclipselink.jdbc.connections.max" value="1" />
-			<property name="eclipselink.session.customizer" value="inet.module.mdm.jpa.JbossSessionCustomizer" />
+			<!-- <property name="eclipselink.session.customizer" value="inet.module.mdm.jpa.JbossSessionCustomizer" />-->
 		</properties>
 	</persistence-unit>
 </persistence>

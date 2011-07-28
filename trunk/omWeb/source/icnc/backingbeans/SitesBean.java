@@ -4,16 +4,16 @@ import java.util.ArrayList;
 
 import at.icnc.om.entitybeans.TblUser;
 
-
 public class SitesBean{
 	
-	private int role = 1;
+	private int role = 4;
 	private  Integer width;
 	Boolean render = false;
 	private ArrayList<TblUser> User;
 	
-	
 		public Integer getTabWidth(){
+
+			role = UserBean.userrole;
 			switch (role) {
 				case 1:
 				{

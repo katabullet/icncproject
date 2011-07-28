@@ -1,4 +1,4 @@
-package iCNC.EntityBeans;
+package at.icnc.om.entitybeans;
 
 import java.io.Serializable;
 import javax.persistence.*;

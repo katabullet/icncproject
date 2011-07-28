@@ -60,7 +60,7 @@ public class TblCustomer implements Serializable {
 	}
 
 
-	@Column(name="SAP-CNR")
+	@Column(name="SAPCNR")
 	public String get_sap_cnr_() {
 		return this._sap_cnr_;
 	}

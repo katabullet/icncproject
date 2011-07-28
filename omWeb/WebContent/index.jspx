@@ -64,9 +64,9 @@
 										     </ice:panelGroup>
 										 <!-- Buttons -->
 			           					<ice:panelGrid columns="3" styleClass="buttons">
-				           					<ice:commandButton image="images/btn_new_e.png"/>
-				           					<ice:commandButton image="images/btn_edit_e.png"/>  					  	
-			           						<ice:commandButton image="images/btn_delete_e.png"/>		           					  	
+				           					<ice:commandButton image="images/btn_new_e.png" rendered="#{sitesBean.buttonRendered}"/>
+				           					<ice:commandButton image="images/btn_edit_e.png" rendered="#{sitesBean.buttonRendered}"/>  					  	
+			           						<ice:commandButton image="images/btn_delete_e.png" rendered="#{sitesBean.buttonRendered}"/>		           					  	
 			           					</ice:panelGrid>
 			           					
 			           					<ice:dataTable value="#{orderLister.orderList}" var="item" id="test">
@@ -92,7 +92,7 @@
 											</ice:column>
 											<ice:column>
 												<f:facet name="header">Customer</f:facet>
-												<ice:outputText value="#{item.tblCustomer.customername}"/>
+												<ice:outputText value="#{item.customername}"/>
 											</ice:column>
 										</ice:dataTable>
 			           					

@@ -24,6 +24,14 @@
 					<f:facet name="header">Orderdate</f:facet>
 					<ice:outputText value="#{item.orderdate}"/>
 				</ice:column>
+				<ice:column>
+					<f:facet name="header">Orderstate</f:facet>
+					<ice:outputText value="#{item.tblOrderstate.descriptionOs}"/>
+				</ice:column>
+				<ice:column>
+					<f:facet name="header">Customer</f:facet>
+					<ice:outputText value="#{item.tblCustomer.customername}"/>
+				</ice:column>
 			</ice:dataTable>
 			
 		</ice:form>

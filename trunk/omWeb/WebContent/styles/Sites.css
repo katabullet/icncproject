@@ -15,8 +15,13 @@
 .icePnlBrdrSouth{
 
 	background-color: none;
-	vertical-align: middle;
-		
+	vertical-align: middle;	
+}
+
+.form{
+	background-color: none;
+	width: 80%;
+	vertical-align: middle;	
 }
 
 .Base_Login_Icon {
@@ -27,36 +32,12 @@
 	background-repeat: no-repeat;	
 }
 
-table.LoginContainer {
-	/*-moz-border-radius: 6px;*/
-	border-radius: 6px;
-	/*-moz-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
-	-webkit-box-shadow: rgba(0, 0, 0, 0.199219) 0px 1px 6px;*/
-	background-color: #FFFFFF;
-	border: 1px solid #CCCCCC;
-	text-align: center;
-	font-size: 16px;
-}
-
-table.LoginContainer .Title {
-	font-weight: bold;
-	text-align: center;
-	padding-left:20px;
-	color: #000000;
-	font-height: 4em;
-	font-size: 24px;
-	/*
-	padding-right: 30px;
-	padding-left: 50px;*/
+table .leiste{
+	width: 100%;
+	color: #ffffff;
+	}
 	
-}
-
-table.LoginContainer .Text{
-	text-align: center;
-	padding-left:20px;
-}
-
-table.LoginContainer .LoginBtn {
+.LoginBtn {
 	text-align: center;
 	background: url("../images/btn_shadow.png") repeat-x scroll 1px 1px
 		transparent;
@@ -67,46 +48,19 @@ table.LoginContainer .LoginBtn {
 	position: center;
 	width: 80px;
 	height: 30px;
+}
+
+
+.icePnlGrdCol1{width: 33%;}
+.icePnlGrdCol2{width: 33%;}
+
+.Col1{width:93%;}
+.Col2{width: 7%; text-align: right;}
+
+.buttons{
+width: 8%;
+text-align:center;
+}
+
 	
-}
-
-table.LoginContainer .Input
-{
-position:right;
-width: 90%;
-}
-
-table.LoginContainer .Base_ColumnWidth{
-	width: 200px;
-	text-align: Left;
-}
-
-
-
-table.LoginContainer .Base_Text_Center {
-	text-align: center;
-	font-size: 12px;
-	width: 100%;
-}
-
-.Ausrichten{
-	width: 100%;
-	position: center;
-	text-align: center;
-	}
-
-.iceMsgError{
-	text-align: center;
-	font-size: 14px;
-	color: red;
-	position: absolute;
-	width: 410px;
-}
-
-table.kumscho{
-	position: absolute;
-	left:40%;
-	text-align: center;
-	width: 100%;
-}
 

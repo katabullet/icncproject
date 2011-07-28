@@ -48,6 +48,7 @@ public class TblOrderImpl implements TblOrderLocal{
 			Query query = em.createNativeQuery(sqlStatement, TblOrder.class);
 			result.addAll(query.getResultList());
 			em.close();
+			emf.close();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}		

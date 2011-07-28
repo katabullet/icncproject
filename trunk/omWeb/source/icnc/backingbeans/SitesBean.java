@@ -1,15 +1,10 @@
 package icnc.backingbeans;
 
-import java.util.ArrayList;
-
-import at.icnc.om.entitybeans.TblUser;
-
 public class SitesBean{
 	
 	private int role = 4;
 	private  Integer width;
 	Boolean render = false;
-	private ArrayList<TblUser> User;
 	
 		public Integer getTabWidth(){
 
@@ -55,16 +50,11 @@ public class SitesBean{
 			return render;
 		}
 		
-		public ArrayList<TblUser> getUser()
+		public Boolean getButtonRendered()
 		{
-			TblUser u = new TblUser();
-			u.setIdUser(5);
-			u.setPassword("Hallo");
-			u.setUsername("Peter");
-			User.add(u);
-			User.add(u);
+			render = role>3 ? false:true;
 			
-			return User;
+			return render;
 		}
 		
 		

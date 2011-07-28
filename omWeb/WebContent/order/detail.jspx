@@ -3,30 +3,32 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ice="http://www.icesoft.com/icefaces/component"
 	template="/WEB-INF/templates/defaultTemplate.jspx">
-			<ice:dataTable value="#{orderLister.orderList}" var="item">
-				<ice:column>
-					<f:facet name="header">ID</f:facet>
-					<ice:outputText value="#{item.idOrder}"/>
-				</ice:column>
-				<ice:column>
-					<f:facet name="header">Ordernumber</f:facet>
-					<ice:outputText value="#{item.ordernumber}"/>
-				</ice:column>
-				<ice:column>
-					<f:facet name="header">Travelcosts</f:facet>
-					<ice:outputText value="#{item.travelcosts}"/>
-				</ice:column>
-				<ice:column>
-					<f:facet name="header">Orderdate</f:facet>
-					<ice:outputText value="#{item.orderdate}"/>
-				</ice:column>
-				<ice:column>
-					<f:facet name="header">Orderstate</f:facet>
-					<ice:outputText value="#{item.tblOrderstate.descriptionOs}"/>
-				</ice:column>
-				<ice:column>
-					<f:facet name="header">Customer</f:facet>
-					<ice:outputText value="#{item.tblCustomer.customername}"/>
-				</ice:column>
-			</ice:dataTable>
+	<ice:panelGrid style="width: 100%; text-align: center;">
+		<ice:dataTable value="#{orderLister.orderList}" var="item" id="test" style="vertical-align: center;">
+			<ice:column>
+				<f:facet name="header">#{msg.tableID }</f:facet>
+				<ice:outputText value="#{item.idOrder}"/>
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">#{msg.tableOrdernumber}</f:facet>
+				<ice:outputText value="#{item.ordernumber}"/>
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">#{msg.tableTravelcosts}</f:facet>
+				<ice:outputText value="#{item.travelcosts}"/>
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">#{msg.tableOrderdate}</f:facet>
+				<ice:outputText value="#{item.orderdate}"/>
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">#{msg.tableOrderstate}</f:facet>
+				<ice:outputText value="#{item.tblOrderstate.descriptionOs}"/>
+			</ice:column>
+			<ice:column>
+				<f:facet name="header">#{msg.tableCustomer}</f:facet>
+				<ice:outputText value="#{item.tblCustomer.customername}"/>
+			</ice:column>
+		</ice:dataTable>
+	</ice:panelGrid>
 </html>

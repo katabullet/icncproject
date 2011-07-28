@@ -1,5 +1,7 @@
 package icnc.backingbeans;
 
+import at.icnc.om.entitybeans.TblOrder;
+
 public class SitesBean{
 	
 	private int role = 4;
@@ -49,11 +51,11 @@ public class SitesBean{
 			
 			return render;
 		}
+		TblOrder o;
 		
 		public Boolean getButtonRendered()
 		{
 			render = role>3 ? false:true;
-			
 			return render;
 		}
 		

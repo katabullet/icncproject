@@ -50,12 +50,17 @@
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>user</managed-bean-name>
-		<managed-bean-class>Login.UserBean</managed-bean-class>
+		<managed-bean-class>icnc.backingbeans.UserBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>orderLister</managed-bean-name>
 		<managed-bean-class>at.icnc.om.backingbeans.TblOrderBackingBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>sitesBean</managed-bean-name>
+		<managed-bean-class>icnc.backingbeans.SitesBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	
@@ -73,11 +78,11 @@
 	</navigation-rule>
 	
 	<navigation-rule>
-		<display-name>test</display-name>
+		<display-name>logout</display-name>
 		<from-view-id>/index.jspx</from-view-id>
 		<navigation-case>
-			<from-outcome>testitest</from-outcome>
-			<to-view-id>/test.jspx</to-view-id>
+			<from-outcome>null</from-outcome>
+			<to-view-id>/login.jspx</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	

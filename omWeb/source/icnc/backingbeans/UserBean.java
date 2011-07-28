@@ -9,9 +9,16 @@ import inet.module.mdm.security.InetCallbackHandler;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.security.Principal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.security.auth.Subject;
@@ -19,6 +26,9 @@ import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import at.icnc.om.interfaces.PermissionLocal;
+import at.inet.jaas.login.InetLoginModule;
 
 /**
  * Backing bean encapsulating all user handling logic.
@@ -31,9 +41,12 @@ public class UserBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(UserBean.class
 			.getName());
-
+	public static int userrole = 4;
 	private String username;
 	private char[] password;
+	
+	@EJB
+	private PermissionLocal permission;
 	/*private PropertiesBean propertiesBean;*/
 
 	public String getPassword() {
@@ -78,6 +91,7 @@ public class UserBean implements Serializable {
 			HttpSession session = (HttpSession) context.getExternalContext()
 					.getSession(true);
 			session.setAttribute("FILTER_SUBJECT", subject);
+			this.setUserrole();
 		
 		
 			// WebAuthentication webAuthentication = new WebAuthentication();
@@ -94,7 +108,7 @@ public class UserBean implements Serializable {
 					.getExternalContext().getResponse();
 			response.sendRedirect(context.getExternalContext()
 					.encodeResourceURL("index.jspx"));
-			context.responseComplete();
+			context.responseComplete();			
 			return "success";	
 			
 		} catch (LoginException e) {
@@ -112,6 +126,10 @@ public class UserBean implements Serializable {
 			wipePassword();
 		}		
 	}
+	
+	private void setUserrole(){
+		userrole = permission.setPermission(username);
+	}
 
 	public String logout() throws IOException {
 		String tmpUsername = this.username;
@@ -120,6 +138,7 @@ public class UserBean implements Serializable {
 				.getRequestContextPath();
 		context.getExternalContext().redirect(contextPath + "/login.jspx");
 		username = null;
+		userrole = 4;
 		context.responseComplete();
 		/*DatabasePolicy.removeEntityPermissionCacheEntry(tmpUsername);*/
 		HttpSession session = (HttpSession) context.getExternalContext()

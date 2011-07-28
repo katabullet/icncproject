@@ -34,7 +34,7 @@
 							<ice:outputLabel value="Benutzername:"/>
 							<ice:outputLabel value="#{user.username}"/>
 						</ice:panelGroup>
-						<ice:commandButton style="position: right;" value="#{menuLogout}" styleClass="LoginBtn" action="#{user.logout}"/>
+						<ice:commandButton style="position: right;" value="#{msg.menuLogout}" styleClass="LoginBtn" action="#{user.logout}"/>
 					</ice:panelGrid>
     				<ice:panelGroup id="tabSetTabs"
                 				styleClass="exampleBox panelTabSetContainer iceTab">
@@ -44,7 +44,7 @@
             			<ice:panelTab label="#{msg.tableInvoice}" labelWidth="#{sitesBean.tabWidth}" style="text-align: center;" >
             				<ice:panelTabSet id="icePnlTbSet" selectedIndex="0" tabPlacement="Bottom">
             					<ice:panelTab label="#{msg.tableInvoice}" labelWidth="237">
-		           					<ice:panelGrid columns="2" columnClasses="Col1 Col2" styleClass="leiste" style="width: 100%">
+		           					<ice:panelGrid columns="2" columnClasses="Col1 Col2" styleClass="leiste">
 										<!-- DataExporter -->
 										<ice:panelGroup styleClass="exampleBox dataScrollingContainer">
 										        <ice:selectOneMenu id="type" value="#{dataExporter.type}" partialSubmit="true"
@@ -69,8 +69,9 @@
 			           						<ice:commandButton image="images/btn_delete_e.png" rendered="#{sitesBean.buttonRendered}"/>		           					  	
 			           					</ice:panelGrid>
 			           					<!--Tabelle -->
-			           					<ice:panelGrid style="width: 100%; text-align: center;">
-				           					<ice:dataTable value="#{orderLister.orderList}" var="item" id="test" style="vertical-align: center;">
+			           					<ice:panelGroup>
+			           					<ice:panelGrid style="float:center; text-align: center;" styleClass="dataPaginator">
+				           					<ice:dataTable value="#{orderLister.orderList}" var="item" id="test" rows="2">
 												<ice:column>
 													<f:facet name="header">#{msg.tableID }</f:facet>
 													<ice:outputText value="#{item.idOrder}"/>
@@ -97,6 +98,68 @@
 												</ice:column>
 											</ice:dataTable>
 										</ice:panelGrid>
+										<!-- Paginator -->
+										<ice:panelGrid columns="1" styleClass="scrollerTable2" columnClasses="standardTable_ColumnCentered" style="float: center; text-align: center;">
+ 
+									        <ice:dataPaginator id="scroll_1"
+									                         for="test"
+									                         fastStep="10"
+									                         pageCountVar="pageCount"
+									                         pageIndexVar="pageIndex"
+									                         paginator="true"
+									                         paginatorMaxPages="9"
+									                         >
+									 
+									                <f:facet name="first" >
+									                         <ice:graphicImage url="images/arrow-first.gif" style="border:none;"/>
+									                </f:facet>
+									 
+									                <f:facet name="last">
+									                        <ice:graphicImage url="images/arrow-last.gif" style="border:none;" />
+									                </f:facet>
+									 
+									                <f:facet name="previous">
+									                        <ice:graphicImage url="images/arrow-previous.gif" style="border:none;" />
+									                </f:facet>
+									 
+									                <f:facet name="next">
+									                        <ice:graphicImage url="images/arrow-next.gif" style="border:none;" />
+									                </f:facet>
+									 
+									                <f:facet name="fastforward">
+									                        <ice:graphicImage url="images/arrow-ff.gif" style="border:none;" />
+									                </f:facet>
+									 
+									                <f:facet name="fastrewind">
+									                        <ice:graphicImage url="images/arrow-fr.gif" style="border:none;" />
+									                </f:facet>
+									 
+									        </ice:dataPaginator>
+									 
+									        <ice:dataPaginator id="scroll_2"
+									                        for="test"
+									                        rowsCountVar="rowsCount"
+									                        displayedRowsCountVar="displayedRowsCountVar"
+									                        firstRowIndexVar="firstRowIndex"
+									                        lastRowIndexVar="lastRowIndex"
+									                        pageCountVar="pageCount"
+									                        pageIndexVar="pageIndex"
+									                        >
+									 
+									                 <ice:outputFormat value="{0} orders found, displaying {1} orders, from {2} to {3}. Page {4} / {5}" styleClass="standard" >
+									                        <f:param value="#{rowsCount}" />
+									                        <f:param value="#{displayedRowsCountVar}" />
+									                        <f:param value="#{firstRowIndex}" />
+									                        <f:param value="#{lastRowIndex}" />
+									                        <f:param value="#{pageIndex}" />
+									                        <f:param value="#{pageCount}" />
+									                </ice:outputFormat>
+									 
+									        </ice:dataPaginator>
+									 
+									    </ice:panelGrid>
+									    </ice:panelGroup>
+ 
 			           					
 		           					</ice:panelGrid>
             					</ice:panelTab>

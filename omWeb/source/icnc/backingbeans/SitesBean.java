@@ -7,7 +7,7 @@ import at.icnc.om.entitybeans.TblUser;
 
 public class SitesBean{
 	
-	private int role = 4;
+	private int role = 1;
 	private  Integer width;
 	Boolean render = false;
 	private ArrayList<TblUser> User;

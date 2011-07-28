@@ -12,6 +12,7 @@
 
 
 <ice:outputBody id="body">
+<ice:outputStyle href="./styles/Sites.css"/>
 	<f:loadBundle basename="messages" var="msg"/>
 	<ice:panelBorder id="borderLayout" renderCenter="true"
 		renderNorth="true" width="100%" height="100%" align="left"
@@ -27,119 +28,44 @@
 				<f:facet name="south" renderCenter="true">
 				
 				<ice:form id="overviewForm">
-				
+					<ice:panelGrid columns="3" style="width: 100%; text-align: right; background-color: #E7E7E7;">
+						<ice:outputConnectionStatus/>
+						<ice:panelGroup style="vertical-align: middle;">
+							<ice:outputLabel value="Benutzername:"/>
+							<ice:outputLabel value="#{user.username}"/>
+						</ice:panelGroup>
+						<ice:commandButton style="position: right;" value="Logout" styleClass="LoginBtn" action="#{user.logout}"/>
+					</ice:panelGrid>
     				<ice:panelGroup id="tabSetTabs"
-                				styleClass="exampleBox panelTabSetContainer">
+                				styleClass="exampleBox panelTabSetContainer iceTab">
     				<ice:panelTabSet id="icePnlTbSet"
-            					selectedIndex="1"
-            					title="Titel des Panel-Tabsets"
-            					summary="Summary des Tabsets">
-
-        				<!-- Panel Tab 1 defined with some basic content -->
-        				<ice:panelTab rendered="true"
-                      			label="Rechnungen"
-                      			icon=""
-                      			title="Label Tab 1">
-            				<div style="height:150px;">
-                				<ice:outputText
-                        			value="Ausgabetext Tab 1"
-                        			style="font-weight:bold;"/>
-                				<ice:outputText
-                        			value="Beschreibung Ausgabe Tab 1"/>
-                				<br/>
-            				</div>
-        				</ice:panelTab>
+            					selectedIndex="0">
+            					
+            			<ice:panelTab label="Rechnungen" labelWidth="#{sitesBean.tabWidth}" >
+            				<ice:panelTabSet id="icePnlTbSet" selectedIndex="0" tabPlacement="Bottom">
+            					<ice:panelTab label="Rechnungen" labelWidth="237">
+		           					<ice:panelGrid columns="2" columnClasses="Col1 Col2" styleClass="leiste" style="width: 100%">
+		           						<ice:outputLabel value="Test"/>
+			           					<ice:panelGrid columns="3" styleClass="buttons">
+				           					<ice:commandButton image="images/btn_new_e.png"/>
+				           					<ice:commandButton image="images/btn_edit_e.png"/>  					  	
+			           						<ice:commandButton image="images/btn_delete_e.png"/>		           					  	
+			           					</ice:panelGrid>
+		           					</ice:panelGrid>
+            					</ice:panelTab>
+            					<ice:panelTab label="Ertragsart" labelWidth="237"></ice:panelTab>
+            					<ice:panelTab label="Auftragstyp" labelWidth="237"></ice:panelTab>
+            					<ice:panelTab label="Intervall" labelWidth="237"></ice:panelTab>
+            				</ice:panelTabSet>
+            			</ice:panelTab>
+            			<ice:panelTab label="Auftraege" labelWidth="#{sitesBean.tabWidth}"></ice:panelTab>
+        				<ice:panelTab label="Kunden" labelWidth="#{sitesBean.tabWidth}"></ice:panelTab>
+        				<ice:panelTab label="Auswertungen" labelWidth="#{sitesBean.tabWidth}"></ice:panelTab>
+        				<ice:panelTab label="Erinnerungen" labelWidth="#{sitesBean.tabWidth}" rendered="#{sitesBean.rendered5}"></ice:panelTab>
+        				<ice:panelTab label="Protokolle" labelWidth="#{sitesBean.tabWidth}" rendered="#{sitesBean.rendered6}"></ice:panelTab>
+        				<ice:panelTab label="User" labelWidth="#{sitesBean.tabWidth}" rendered="#{sitesBean.rendered7}"></ice:panelTab>
+        			
         				
-        				<!-- Panel Tab 2 defined with some basic content -->
-        				<ice:panelTab rendered="true"
-                      			label="Aufträge"
-                      			icon=""
-                      			title="Label Tab 2">
-            				<div style="height:150px;">
-                				<ice:outputText
-                        			value="Ausgabetext Tab 2"
-                        			style="font-weight:bold;"/>
-                				<ice:outputText
-                        			value="Beschreibung Ausgabe Tab 2"/>
-                				<br/>
-            				</div>
-        				</ice:panelTab>
-        				
-        				<!-- Panel Tab 3 defined with some basic content -->
-        				<ice:panelTab rendered="true"
-                      			label="Kunden"
-                      			icon=""
-                      			title="Label Tab 3">
-            				<div style="height:150px;">
-                				<ice:outputText
-                        			value="Ausgabetext Tab 3"
-                        			style="font-weight:bold;"/>
-                				<ice:outputText
-                        			value="Beschreibung Ausgabe Tab 3"/>
-                				<br/>
-            				</div>
-        				</ice:panelTab> 
-        				
-        				<!-- Panel Tab 4 defined with some basic content -->
-        				<!--  < <ice:panelTab rendered="true"
-                      			label="Auswertungen"
-                      			icon=""
-                      			title="Label Tab 4">
-            				<div style="height:150px;">
-                				<ice:outputText
-                        			value="Ausgabetext Tab 3"
-                        			style="font-weight:bold;"/>
-                				<ice:outputText
-                        			value="Beschreibung Ausgabe Tab 3"/>
-                				<br/>
-            				</div>
-        				</ice:panelTab>-->
-        				
-        				<!-- Panel Tab 5 defined with some basic content -->
-        				<!-- <ice:panelTab rendered="true"
-                      			label="Erinnerungen"
-                      			icon=""
-                      			title="Erinnerungen">
-            				<div style="height:150px;">
-                				<ice:outputText
-                        			value="Ausgabetext Tab 3"
-                        			style="font-weight:bold;"/>
-                				<ice:outputText
-                        			value="Beschreibung Ausgabe Tab 3"/>
-                				<br/>
-            				</div>
-        				</ice:panelTab>  -->
-        				
-        				<!-- Panel Tab 6 defined with some basic content -->
-        				<!-- <ice:panelTab rendered="true"
-                      			label="Protokolle"
-                      			icon=""
-                      			title="Protokolle">
-            				<div style="height:150px;">
-                				<ice:outputText
-                        			value="Ausgabetext Tab 3"
-                        			style="font-weight:bold;"/>
-                				<ice:outputText
-                        			value="Beschreibung Ausgabe Tab 3"/>
-                				<br/>
-            				</div>
-        				</ice:panelTab> -->
-        				
-        				<!-- Panel Tab 7 defined with some basic content -->
-        				<!-- <ice:panelTab rendered="true"
-                      			label="User"
-                      			icon=""
-                      			title="User">
-            				<div style="height:150px;">
-                				<ice:outputText
-                        			value="Ausgabetext Tab 3"
-                        			style="font-weight:bold;"/>
-                				<ice:outputText
-                        			value="Beschreibung Ausgabe Tab 3"/>
-                				<br/>
-            				</div>
-        				</ice:panelTab>    -->
-
     				</ice:panelTabSet>
 					</ice:panelGroup>
 				

@@ -1,8 +1,7 @@
-package Login;
+package icnc.backingbeans;
 
 /*import gw.basis.security.GWCryptoException;*/
 import inet.module.mdm.jsf.helpers.MessageBundleHelper;
-import inet.module.mdm.security.AdministrationPermission;
 /*import inet.module.mdm.security.CryptoHelper;
 import inet.module.mdm.security.DatabasePolicy;*/
 import inet.module.mdm.security.InetCallbackHandler;
@@ -10,7 +9,6 @@ import inet.module.mdm.security.InetCallbackHandler;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.security.Permission;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,22 +31,9 @@ public class UserBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(UserBean.class
 			.getName());
-	private static final Permission DEFINE_USERS_PERMISSION = new AdministrationPermission(
-			"DEFINE_USERS");
-	private static final Permission DEFINE_ROLES_PERMISSION = new AdministrationPermission(
-			"DEFINE_ROLES");
-	private static final Permission DEFINE_PERMISSION_IDS_PERMISSION = new AdministrationPermission(
-			"DEFINE_PERMISSION_IDS");
-	private static final Permission EDIT_HELP_TEXTS_PERMISSION = new AdministrationPermission(
-			"EDIT_HELP_TEXTS");
-	private static final Permission DEFINE_VALIDATION_RULES_PERMISSION = new AdministrationPermission(
-			"DEFINE_VALIDATION_RULES");
-	private static final Permission OLD_MM = new AdministrationPermission(
-			"OLD_MM");
 
 	private String username;
 	private char[] password;
-	private String linkToOldMdm;
 	/*private PropertiesBean propertiesBean;*/
 
 	public String getPassword() {
@@ -128,21 +113,21 @@ public class UserBean implements Serializable {
 		}		
 	}
 
-	/*public String logout() throws IOException {
+	public String logout() throws IOException {
 		String tmpUsername = this.username;
 		FacesContext context = FacesContext.getCurrentInstance();
 		String contextPath = context.getExternalContext()
 				.getRequestContextPath();
-		context.getExternalContext().redirect(contextPath + "/loggedOut.jsp");
+		context.getExternalContext().redirect(contextPath + "/login.jspx");
 		username = null;
 		context.responseComplete();
-		DatabasePolicy.removeEntityPermissionCacheEntry(tmpUsername);
+		/*DatabasePolicy.removeEntityPermissionCacheEntry(tmpUsername);*/
 		HttpSession session = (HttpSession) context.getExternalContext()
 				.getSession(false);
 		session.setAttribute("FILTER_SUBJECT", null);
 		// Session will be invalidate in the loggedOut.jsp page
-		return null;
-	}*/
+		return "logout";
+	}
 
 	public void setPassword(String password) {
 		this.password = password.toCharArray();

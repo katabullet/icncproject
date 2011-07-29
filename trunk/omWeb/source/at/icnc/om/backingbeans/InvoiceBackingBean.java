@@ -16,8 +16,6 @@ public class InvoiceBackingBean {
 	TblInvoiceLocal tblInvoice;
 	@EJB
 	TblIncometypeLocal tblIncometype;
-	@EJB
-	EntityListerLocal entityLister;
 	
 	public ArrayList<TblInvoice> getOrderList(){
 		ArrayList<TblInvoice> result = new ArrayList<TblInvoice>();
@@ -34,13 +32,4 @@ public class InvoiceBackingBean {
 		
 		return result;
 	}
-	
-	/* @SuppressWarnings("unchecked")
-	public ArrayList<TblIncometype> getEntityList(){
-		ArrayList<TblIncometype> result = new ArrayList<TblIncometype>();
-		
-		result.addAll((Collection<? extends TblIncometype>) entityLister.getObjectList("SELECT * FROM TBL_INCOMETYPE"));
-		
-		return result;
-	}*/
 }

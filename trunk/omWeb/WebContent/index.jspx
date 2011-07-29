@@ -48,7 +48,9 @@
 		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
 		           					
             					</ice:panelTab>
-            					<ice:panelTab label="#{msg.tableIncometype}" labelWidth="237"></ice:panelTab>
+            					<ice:panelTab label="#{msg.tableIncometype}" labelWidth="237">
+            						<ui:include src="/detailpages/incometypepage.jspx"></ui:include>
+            					</ice:panelTab>
             					<ice:panelTab label="#{msg.tableOrdertype}" labelWidth="237"></ice:panelTab>
             					<ice:panelTab label="#{msg.tableInterval}" labelWidth="237"></ice:panelTab>
             				</ice:panelTabSet>

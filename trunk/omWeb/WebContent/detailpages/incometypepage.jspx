@@ -38,7 +38,8 @@
 		<ice:panelGroup>     	
 			
 			<!-- Table Invoice Start -->
-			<ice:dataTable value="#{invoiceLister.incometypeList}" var="item" id="incometype" rows="2">
+			<ice:dataTable value="#{invoiceLister.incometypeList}" 
+						   var="item" id="incometype" rows="2">
 				<ice:column>
 					<ice:rowSelector multiple="false"></ice:rowSelector>
 					<f:facet name="header">ID</f:facet>
@@ -52,7 +53,9 @@
 			<!-- Table Invoice End -->
 			
 			<!-- Paginator Start -->
-			<ice:panelGrid columns="1" styleClass="scrollerTable2" columnClasses="standardTable_ColumnCentered" style="float: center; text-align: center;">
+			<ice:panelGrid columns="1" styleClass="scrollerTable2" 
+						   columnClasses="standardTable_ColumnCentered" 
+						   style="float: center; text-align: center;">
 
 		        <ice:dataPaginator id="scroll_1"
 		                         for="incometype"
@@ -60,8 +63,7 @@
 		                         pageCountVar="pageCount"
 		                         pageIndexVar="pageIndex"
 		                         paginator="true"
-		                         paginatorMaxPages="9"
-		                         >
+		                         paginatorMaxPages="9">
 		 
 		                <f:facet name="first" >
 		                         <ice:graphicImage url="images/arrow-first.gif" style="border:none;"/>

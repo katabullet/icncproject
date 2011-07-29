@@ -40,29 +40,30 @@
                 				styleClass="exampleBox panelTabSetContainer iceTab">
     				<ice:panelTabSet id="icePnlTbSet"
             					selectedIndex="0">
-            					
+            			
+            			<!-- Invoice -->		
             			<ice:panelTab label="#{msg.tableInvoice}" labelWidth="#{sitesBean.tabWidth}" style="text-align: center;" >
+            				<!-- Invoice -->
             				<ice:panelTabSet id="icePnlTbSet" selectedIndex="0" tabPlacement="Bottom">
-            					<ice:panelTab label="#{msg.tableInvoice}" labelWidth="237">
+            					<ice:panelTab label="#{msg.tableInvoice}" labelWidth="1098">
             					
 		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
 		           					
             					</ice:panelTab>
-            					<ice:panelTab label="#{msg.tableIncometype}" labelWidth="237">
-            						<ui:include src="/detailpages/incometypepage.jspx"></ui:include>
-            					</ice:panelTab>
-            					<ice:panelTab label="#{msg.tableOrdertype}" labelWidth="237"></ice:panelTab>
-            					<ice:panelTab label="#{msg.tableInterval}" labelWidth="237"></ice:panelTab>
             				</ice:panelTabSet>
             			</ice:panelTab>
-            			
-            			
 						
+						<!-- Order -->
             			<ice:panelTab label="#{msg.tableOrder}" labelWidth="#{sitesBean.tabWidth}"></ice:panelTab>
+            			<!-- Customer -->
         				<ice:panelTab label="#{msg.tableCustomer}" labelWidth="#{sitesBean.tabWidth}"></ice:panelTab>
+        				<!-- Evaluation -->
         				<ice:panelTab label="#{msg.tableEvaluation}" labelWidth="#{sitesBean.tabWidth}"></ice:panelTab>
+        				<!-- Reminder -->
         				<ice:panelTab label="#{msg.tableReminder}" labelWidth="#{sitesBean.tabWidth}" rendered="#{sitesBean.rendered5}"></ice:panelTab>
+        				<!-- Protocol -->
         				<ice:panelTab label="#{msg.tableProtocol}" labelWidth="#{sitesBean.tabWidth}" rendered="#{sitesBean.rendered6}"></ice:panelTab>
+        				<!-- User -->
         				<ice:panelTab label="#{msg.tableUser}" labelWidth="#{sitesBean.tabWidth}" rendered="#{sitesBean.rendered7}"></ice:panelTab>
         			
         				

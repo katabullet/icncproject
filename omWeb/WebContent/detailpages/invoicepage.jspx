@@ -4,7 +4,7 @@
 	xmlns:ice="http://www.icesoft.com/icefaces/component"
 	template="/WEB-INF/templates/defaultTemplate.jspx">
 	
-	
+	<div style="height: 480px;">
 
 	<ice:panelGrid columns="2" columnClasses="Col1 Col2" styleClass="leiste">
 		<!-- DataExporter Start -->
@@ -29,9 +29,9 @@
 		  
 		<!-- Buttons Start -->
      	<ice:panelGrid columns="3" styleClass="buttons">
-      		<ice:commandButton image="images/btn_new_e.png" rendered="#{sitesBean.buttonRendered}"/>
-      		<ice:commandButton image="images/btn_edit_e.png" rendered="#{sitesBean.buttonRendered}" disabled="false"/>  					  	
-     		<ice:commandButton image="images/btn_delete_e.png" rendered="#{sitesBean.buttonRendered}" disabled="false"/>		           					  	
+      		<ice:commandButton  image="images/btn_new_e.png" rendered="#{sitesBean.buttonRendered}"/>
+      		<ice:commandButton id="btnEdit" image="images/btn_edit_e.png" rendered="#{sitesBean.buttonRendered}" disabled="true" visible="false"/>  					  	
+     		<ice:commandButton image="images/btn_delete_e.png" rendered="#{sitesBean.buttonRendered}" visible="false"/>		           					  	
      	</ice:panelGrid>
      	<!-- Buttons End -->
    </ice:panelGrid>
@@ -43,7 +43,7 @@
 			<!-- Table Invoice Start -->
 			<ice:dataTable value="#{invoiceLister.orderList}" var="item" id="invoice" rows="10" styleClass="table">
 				<ice:column>
-					<ice:rowSelector multiple="false"/>
+					<ice:rowSelector selectedMouseOverClass="rowSelection"/>
 					<f:facet name="header">#{msg.tableID}</f:facet>
 					<ice:outputText value="#{item.idInvoice}"/>
 				</ice:column>
@@ -77,32 +77,31 @@
 		                         pageCountVar="pageCount"
 		                         pageIndexVar="pageIndex"
 		                         paginator="true"
-		                         paginatorMaxPages="9"
 		                         style="margin: auto;"
 		                         >
 		 
 		                <f:facet name="first" >
-		                         <ice:graphicImage url="images/arrow-first.gif" style="border:none;"/>
+		                         <ice:graphicImage url="images/btn_s_arrow_first_e.png" style="border:none;"/>
 		                </f:facet>
 		 
 		                <f:facet name="last">
-		                        <ice:graphicImage url="images/arrow-last.gif" style="border:none;" />
+		                        <ice:graphicImage url="images/btn_s_arrow_last_e.png" style="border:none;" />
 		                </f:facet>
 		 
 		                <f:facet name="previous">
-		                        <ice:graphicImage url="images/arrow-previous.gif" style="border:none;" />
+		                        <ice:graphicImage url="images/btn_s_arrow_prev_e.png" style="border:none;" />
 		                </f:facet>
 		 
 		                <f:facet name="next">
-		                        <ice:graphicImage url="images/arrow-next.gif" style="border:none;" />
+		                        <ice:graphicImage url="images/btn_s_arrow_next_e.png" style="border:none;" />
 		                </f:facet>
 		 
 		                <f:facet name="fastforward">
-		                        <ice:graphicImage url="images/arrow-ff.gif" style="border:none;" />
+		                        <ice:graphicImage url="images/btn_s_arrow_ff_e.png" style="border:none;" />
 		                </f:facet>
 		 
 		                <f:facet name="fastrewind">
-		                        <ice:graphicImage url="images/arrow-fr.gif" style="border:none;" />
+		                        <ice:graphicImage url="images/btn_s_arrow_fr_e.png" style="border:none;" />
 		                </f:facet>
 		 
 		        </ice:dataPaginator>
@@ -132,4 +131,5 @@
 		    <!-- Paginator End -->
 		</ice:panelGroup>
  		<!-- PanelGroup with DataTable and DataPaginator End -->
+	</div>
 </html>

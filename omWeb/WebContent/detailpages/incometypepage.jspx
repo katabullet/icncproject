@@ -38,7 +38,7 @@
 		<ice:panelGroup>     	
 			
 			<!-- Table Invoice Start -->
-			<ice:dataTable value="#{invoiceLister.incometypeList}" 
+			<ice:dataTable value="#{invoiceLister.entityList}" 
 						   var="item" id="incometype" rows="2">
 				<ice:column>
 					<ice:rowSelector multiple="false"></ice:rowSelector>

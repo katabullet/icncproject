@@ -30,13 +30,13 @@ public class EntityListerImpl implements EntityListerLocal {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Collection<?> getObjectList(String sqlStatement) {
-		ArrayList<Object> result = new ArrayList<Object>();
+	public Collection<?> getObjectList(String sqlStatement, Class<?> entityClass) {
+		Collection<?> result = new ArrayList<Object>();
 		
 		try {		
 			emf = Persistence.createEntityManagerFactory("omPU");
 			em = emf.createEntityManager();
-			Query query = em.createNativeQuery(sqlStatement);
+			Query query = em.createNativeQuery(sqlStatement, entityClass.getSimpleName());
 			result.addAll(query.getResultList());
 			em.close();
 		} catch (Exception e) {

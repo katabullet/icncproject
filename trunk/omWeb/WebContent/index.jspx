@@ -43,8 +43,8 @@
             			
             			<!-- Invoice -->		
             			<ice:panelTab label="#{msg.tableInvoice}" labelWidth="#{sitesBean.tabWidth}" style="text-align: center;" >
-            				<!-- Invoice -->
-            				<ice:panelTabSet id="icePnlTbSet" selectedIndex="0" tabPlacement="Bottom">
+            				<ice:panelTabSet id="icePnlTbSet1" selectedIndex="0" tabPlacement="Bottom">
+            					<!-- Invoice -->
             					<ice:panelTab label="#{msg.tableInvoice}" labelWidth="1098">
             					
 		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
@@ -54,17 +54,98 @@
             			</ice:panelTab>
 						
 						<!-- Order -->
-            			<ice:panelTab label="#{msg.tableOrder}" labelWidth="#{sitesBean.tabWidth}"></ice:panelTab>
+            			<ice:panelTab label="#{msg.tableOrder}" labelWidth="#{sitesBean.tabWidth}" style="text-align: center;">
+            				<ice:panelTabSet id="icePnlTbSet2" selectedIndex="0" tabPlacement="Bottom">
+            					<!-- Order -->
+            					<ice:panelTab label="#{msg.tableInvoice}" labelWidth="#{sitesBean.orderTabWidth}">
+            					
+		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
+            					</ice:panelTab>
+            					<!-- Interval -->
+            					<ice:panelTab label="#{msg.tableOrder}" labelWidth="#{sitesBean.orderTabWidth}">
+            					
+		           					<ui:include src="/detailpages/orderpage.jspx"></ui:include>
+		           					
+            					</ice:panelTab>
+            					<!-- Orderstate -->
+            					<ice:panelTab label="#{msg.tableInvoice}" labelWidth="#{sitesBean.orderTabWidth}">
+            					
+		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
+            					</ice:panelTab>
+            					<!-- Incometype -->
+            					<ice:panelTab label="#{msg.tableInvoice}" labelWidth="#{sitesBean.orderTabWidth}">
+            					
+		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
+            					</ice:panelTab>
+            					<!-- Costcenter -->
+            					<ice:panelTab label="#{msg.tableInvoice}" labelWidth="#{sitesBean.orderTabWidth}">
+            					
+		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
+            					</ice:panelTab>
+            				</ice:panelTabSet>
+            			</ice:panelTab>
             			<!-- Customer -->
-        				<ice:panelTab label="#{msg.tableCustomer}" labelWidth="#{sitesBean.tabWidth}"></ice:panelTab>
+        				<ice:panelTab label="#{msg.tableCustomer}" labelWidth="#{sitesBean.tabWidth}">
+        					<ice:panelTabSet id="icePnlTbSet3" selectedIndex="0" tabPlacement="Bottom">
+            					<!-- Customer -->
+            					<ice:panelTab label="#{msg.tableInvoice}" labelWidth="#{sitesBean.customerTabWidth}">
+            					
+		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
+            					</ice:panelTab>
+            					<!-- Concern -->
+            					<ice:panelTab label="#{msg.tableInvoice}" labelWidth="#{sitesBean.customerTabWidth}">
+            					
+		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
+            					</ice:panelTab>
+            					<!-- Contactperson -->
+            					<ice:panelTab label="#{msg.tableInvoice}" labelWidth="#{sitesBean.customerTabWidth}">
+            					
+		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
+            					</ice:panelTab>          					       					
+            				</ice:panelTabSet>
+        				</ice:panelTab>
         				<!-- Evaluation -->
         				<ice:panelTab label="#{msg.tableEvaluation}" labelWidth="#{sitesBean.tabWidth}"></ice:panelTab>
         				<!-- Reminder -->
-        				<ice:panelTab label="#{msg.tableReminder}" labelWidth="#{sitesBean.tabWidth}" rendered="#{sitesBean.rendered5}"></ice:panelTab>
+        				<ice:panelTab label="#{msg.tableReminder}" labelWidth="#{sitesBean.tabWidth}" rendered="#{sitesBean.rendered5}">
+        					<ice:panelTabSet id="icePnlTbSet4" selectedIndex="0" tabPlacement="Bottom">
+            					<!-- Reminder -->
+            					<ice:panelTab label="#{msg.tableInvoice}" labelWidth="1098">
+            					
+		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
+            					</ice:panelTab>
+            				</ice:panelTabSet>
+        				</ice:panelTab>
         				<!-- Protocol -->
-        				<ice:panelTab label="#{msg.tableProtocol}" labelWidth="#{sitesBean.tabWidth}" rendered="#{sitesBean.rendered6}"></ice:panelTab>
+        				<ice:panelTab label="#{msg.tableProtocol}" labelWidth="#{sitesBean.tabWidth}" rendered="#{sitesBean.rendered6}">
+        					<ice:panelTabSet id="icePnlTbSet5" selectedIndex="0" tabPlacement="Bottom">
+            					<!-- Protocol -->
+            					<ice:panelTab label="#{msg.tableInvoice}" labelWidth="1098">
+            					
+		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
+            					</ice:panelTab>
+            				</ice:panelTabSet>
+        				</ice:panelTab>
         				<!-- User -->
-        				<ice:panelTab label="#{msg.tableUser}" labelWidth="#{sitesBean.tabWidth}" rendered="#{sitesBean.rendered7}"></ice:panelTab>
+        				<ice:panelTab label="#{msg.tableUser}" labelWidth="#{sitesBean.tabWidth}" rendered="#{sitesBean.rendered7}">
+        					<ice:panelTabSet id="icePnlTbSet6" selectedIndex="0" tabPlacement="Bottom">
+            					<!-- Benutzer -->
+            					<ice:panelTab label="#{msg.tableInvoice}" labelWidth="1098">
+            					
+		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
+            					</ice:panelTab>
+            				</ice:panelTabSet>           				
+        				</ice:panelTab>
         			
         				
     				</ice:panelTabSet>

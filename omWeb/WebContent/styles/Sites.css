@@ -62,5 +62,12 @@ width: 8%;
 text-align:center;
 }
 
+.table{margin: auto;}
+
+.paginator{
+float: center;
+text-align: center;
+margin: auto;
+}
 	
 

@@ -159,9 +159,10 @@
     background-color: #E7E7E7;
     float: left;
 }
+/*
 .iceOutConStatInactv {
     position: absolute;
-    background-image: url(../images/img_connect_idle.gif);
+    background-image: url(../images/connstatus/connect_idle.gif);
     background-position: top;
     background-repeat: no-repeat;
     width: 50px;
@@ -169,7 +170,7 @@
 }
 .iceOutConStatActv {
     position: absolute;
-    background-image: url(../images/img_connect_active.gif);
+    background-image: url(../images/connstatus/connect_active.gif);
     background-position: top;
     background-repeat: no-repeat;
     width: 50px;
@@ -177,7 +178,7 @@
 }
 .iceOutConStatCaution {
     position: absolute;
-    background-image: url(../images/img_connect_caution.gif);
+    background-image: url(../images/connstatus/connect_caution.gif);
     background-position: top;
     background-repeat: no-repeat;
     width: 50px;
@@ -185,12 +186,12 @@
 }
 .iceOutConStatDisconnect {
     position: absolute;
-    background-image: url(../images/img_connect_disconnected.gif);
+    background-image: url(../images/connstatus/connect_disconnected.gif);
     background-position: top;
     background-repeat: no-repeat;
     width: 50px;
     height: 25px;
-}
+}*/
 
 .iceOutConStat {
 	margin: 0px;

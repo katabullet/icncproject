@@ -69,5 +69,10 @@ float: center;
 text-align: center;
 margin: auto;
 }
+
+.rowSelection{
+color: #00BFFF;
+background-color: #00BFFF;
+}
 	
 

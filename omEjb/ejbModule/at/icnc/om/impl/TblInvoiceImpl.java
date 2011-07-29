@@ -22,6 +22,7 @@ import at.icnc.om.interfaces.TblInvoiceLocal;
 public class TblInvoiceImpl implements TblInvoiceLocal {
 
 	private EntityManager em;
+	private EntityManagerFactory emf;
     /**
      * Default constructor. 
      */
@@ -39,7 +40,7 @@ public class TblInvoiceImpl implements TblInvoiceLocal {
 	public ArrayList<TblInvoice> getInvoiceList() {
 		ArrayList<TblInvoice> result = new ArrayList<TblInvoice>();
 		try {		
-			EntityManagerFactory emf = Persistence.createEntityManagerFactory("omPU");
+			emf = Persistence.createEntityManagerFactory("omPU");
 			em = emf.createEntityManager();
 			//Query query = em.createNativeQuery("SELECT a.ID_ORDER, a.ORDERNUMBER, a.ORDERDATE, a.TRAVELCOSTS, b.CUSTOMERNAME, c.DESCRIPTION_OS FROM TBL_ORDER a left join TBL_CUSTOMER b on (a.FK_CUSTOMER = b.ID_CUSTOMER) left join TBL_ORDERSTATE c on (a.FK_ORDERSTATE = c.ID_ORDERSTATE)", TblOrder.class);
 			String sqlStatement = "SELECT * FROM tbl_invoice";
@@ -48,7 +49,9 @@ public class TblInvoiceImpl implements TblInvoiceLocal {
 			em.close();
 		} catch (Exception e) {
 			// TODO: handle exception
-		}		
+		}finally {			
+			emf.close();
+		}
 		
 		return result;
 	}

@@ -6,5 +6,5 @@ import javax.ejb.Local;
 
 @Local
 public interface EntityListerLocal {
-	public Collection<?> getObjectList(String sqlStatement);
+	public Collection<?> getObjectList(String sqlStatement, Class<?> entityClass);
 }

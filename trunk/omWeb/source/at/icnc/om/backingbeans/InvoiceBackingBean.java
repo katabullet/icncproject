@@ -17,7 +17,7 @@ public class InvoiceBackingBean {
 	
 	private ArrayList<TblInvoice> invoiceList = new ArrayList<TblInvoice>();
 	
-	public ArrayList<TblInvoice> getOrderList(){
+	public ArrayList<TblInvoice> getInvoiceList(){
 		/* invoiceList.clear();*/
 		if(invoiceList.isEmpty()){
 			invoiceList.addAll(tblInvoice.getInvoiceList());

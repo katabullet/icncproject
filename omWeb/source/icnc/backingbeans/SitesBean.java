@@ -66,6 +66,4 @@ public class SitesBean{
 		public Integer getCustomerTabWidth(){
 			return 332;
 		}
-		
-		
 }

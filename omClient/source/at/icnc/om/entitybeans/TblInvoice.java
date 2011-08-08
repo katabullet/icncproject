@@ -19,6 +19,7 @@ public class TblInvoice implements Serializable {
 	private String invoicenumber;
 	private BigDecimal sum;
 	private TblOrder tblOrder;
+	private boolean selected;
 
     public TblInvoice() {
     }
@@ -74,6 +75,17 @@ public class TblInvoice implements Serializable {
 
 	public void setTblOrder(TblOrder tblOrder) {
 		this.tblOrder = tblOrder;
+	}
+
+
+	@Transient
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
+	@Transient
+	public boolean isSelected() {
+		return selected;
 	}
 	
 }

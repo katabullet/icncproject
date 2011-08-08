@@ -23,7 +23,8 @@ public class InvoiceBackingBean {
 			invoiceList.addAll(tblInvoice.getInvoiceList());
 		}
 		//invoiceList.addAll(tblInvoice.getInvoiceList()); 
-		return tblInvoice.getInvoiceList();
+		//return tblInvoice.getInvoiceList();
+		return invoiceList;
 	}	
 	
 	public ArrayList<TblIncometype> getIncometypeList(){
@@ -38,7 +39,11 @@ public class InvoiceBackingBean {
 	 */
 	
 	public void rowEvent(RowSelectorEvent re) {
-		invoiceList.get(re.getRow()).setSelected(true);
+		if(invoiceList.get(re.getRow()).isSelected()){
+			invoiceList.get(re.getRow()).setSelected(false);
+		}else {
+			invoiceList.get(re.getRow()).setSelected(true);
+		}
 		//tblInvoice.getInvoiceList().get(re.getRow()).setSelected(true);
 	}
 

@@ -10,7 +10,7 @@
       <context-root>om</context-root>
     </web>
   </module>
-  <module>
+  <!-- <module>
     <java>omClient.jar</java>
-  </module>
+  </module> -->
 </application>

@@ -19,6 +19,7 @@ public class InvoiceBackingBean {
 	
 	private ArrayList<TblInvoice> invoiceList = new ArrayList<TblInvoice>();
 	Boolean visible = false;
+	Boolean popupRender = false;
 	
 	public ArrayList<TblInvoice> getInvoiceList(){
 		if(invoiceList.isEmpty()){
@@ -63,5 +64,14 @@ public class InvoiceBackingBean {
 	public TblInvoice getCurInvoice() {
 		return curInvoice;
 	}	
+	
+	public Boolean getPopupRender(){
+		return popupRender;
+	}
+
+	public void PopupRendernaendern(){
+		popupRender = !popupRender;
+		
+	}
 	
 }

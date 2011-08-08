@@ -1,4 +1,4 @@
-package icnc.backingbeans;
+package at.icnc.om.backingbeans;
 
 import at.icnc.om.entitybeans.TblOrder;
 

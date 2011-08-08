@@ -1,4 +1,4 @@
-package icnc.backingbeans;
+package at.icnc.om.backingbeans;
 
 /*import gw.basis.security.GWCryptoException;*/
 import inet.module.mdm.jsf.helpers.MessageBundleHelper;

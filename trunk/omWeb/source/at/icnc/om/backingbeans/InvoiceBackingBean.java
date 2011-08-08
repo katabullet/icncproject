@@ -18,12 +18,9 @@ public class InvoiceBackingBean {
 	private ArrayList<TblInvoice> invoiceList = new ArrayList<TblInvoice>();
 	
 	public ArrayList<TblInvoice> getInvoiceList(){
-		/* invoiceList.clear();*/
 		if(invoiceList.isEmpty()){
 			invoiceList.addAll(tblInvoice.getInvoiceList());
 		}
-		//invoiceList.addAll(tblInvoice.getInvoiceList()); 
-		//return tblInvoice.getInvoiceList();
 		return invoiceList;
 	}	
 	
@@ -40,11 +37,11 @@ public class InvoiceBackingBean {
 	
 	public void rowEvent(RowSelectorEvent re) {
 		if(invoiceList.get(re.getRow()).isSelected()){
-			invoiceList.get(re.getRow()).setSelected(false);
-		}else {
 			invoiceList.get(re.getRow()).setSelected(true);
+		}else {
+			invoiceList.get(re.getRow()).setSelected(false);
 		}
-		//tblInvoice.getInvoiceList().get(re.getRow()).setSelected(true);
+		//invoiceList.get(re.getRow()).setSelected(true);
 	}
 
 	

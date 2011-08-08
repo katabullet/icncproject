@@ -29,8 +29,8 @@
 		  
 		<!-- Buttons Start -->
      	<ice:panelGrid columns="3" columnClasses="buttons" style="width: 85px;">
-      		<ice:commandButton  image="images/btn_new_e.png" rendered="#{sitesBean.buttonRendered}"/>
-      		<ice:commandButton id="btnEdit" image="images/btn_edit_e.png" rendered="#{sitesBean.buttonRendered}" disabled="true" visible="#{invoiceLister.visible}"/>  					  	
+      		<ice:commandButton  image="images/btn_new_e.png" rendered="#{sitesBean.buttonRendered}" action="#{invoiceLister.PopupRendernaendern}"/>
+      		<ice:commandButton id="btnEdit" image="images/btn_edit_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{invoiceLister.visible}" action="#{invoiceLister.PopupRendernaendern}"/>  					  	
      		<ice:commandButton image="images/btn_delete_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{invoiceLister.visible}"/>		           					  	
      	</ice:panelGrid>
      	<!-- Buttons End -->
@@ -135,7 +135,9 @@
 		 
 		    </ice:panelGrid>
 		    <!-- Paginator End -->
+		    <ui:include src="../Popup/invoicepopup.jspx"></ui:include>
 		</ice:panelGroup>
  		<!-- PanelGroup with DataTable and DataPaginator End -->
+	
 	</div>
 </html>

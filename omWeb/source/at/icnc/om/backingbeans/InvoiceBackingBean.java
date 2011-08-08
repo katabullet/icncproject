@@ -55,7 +55,7 @@ public class InvoiceBackingBean {
 	}
 
 
-	public void setCurInvoice(TblInvoice curInvoice) {
+	private void setCurInvoice(TblInvoice curInvoice) {
 		this.curInvoice = curInvoice;
 	}
 

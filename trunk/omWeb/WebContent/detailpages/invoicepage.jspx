@@ -28,7 +28,7 @@
 	
 		  
 		<!-- Buttons Start -->
-     	<ice:panelGrid columns="3" styleClass="buttons">
+     	<ice:panelGrid columns="3" columnClasses="buttons" style="width: 85px;">
       		<ice:commandButton  image="images/btn_new_e.png" rendered="#{sitesBean.buttonRendered}"/>
       		<ice:commandButton id="btnEdit" image="images/btn_edit_e.png" rendered="#{sitesBean.buttonRendered}" disabled="true" visible="#{invoiceLister.visible}"/>  					  	
      		<ice:commandButton image="images/btn_delete_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{invoiceLister.visible}"/>		           					  	

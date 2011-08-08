@@ -15,7 +15,7 @@ public class InvoiceBackingBean {
 	TblInvoiceLocal tblInvoice;
 	@EJB
 	TblIncometypeLocal tblIncometype;
-
+	public TblInvoice curInvoice;
 	
 	private ArrayList<TblInvoice> invoiceList = new ArrayList<TblInvoice>();
 	Boolean visible = false;
@@ -41,9 +41,11 @@ public class InvoiceBackingBean {
 	public void rowEvent(RowSelectorEvent re) {
 		if(invoiceList.get(re.getRow()).isSelected()){
 			invoiceList.get(re.getRow()).setSelected(true);
+			curInvoice = invoiceList.get(re.getRow());
 			visible = true;
 		}else {
 			invoiceList.get(re.getRow()).setSelected(false);
+			curInvoice = null;
 			visible = false;
 		}
 	}

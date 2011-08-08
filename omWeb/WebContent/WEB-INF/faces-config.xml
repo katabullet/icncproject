@@ -50,7 +50,7 @@
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>user</managed-bean-name>
-		<managed-bean-class>icnc.backingbeans.UserBean</managed-bean-class>
+		<managed-bean-class>at.icnc.om.backingbeans.UserBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
@@ -60,7 +60,7 @@
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>sitesBean</managed-bean-name>
-		<managed-bean-class>icnc.backingbeans.SitesBean</managed-bean-class>
+		<managed-bean-class>at.icnc.om.backingbeans.SitesBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>

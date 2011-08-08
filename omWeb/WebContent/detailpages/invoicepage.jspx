@@ -43,7 +43,7 @@
 			
 			
 				<!-- Table Invoice Start -->
-				<ice:dataTable value="#{invoiceLister.orderList}" var="item" id="invoice" rows="10" styleClass="table">
+				<ice:dataTable value="#{invoiceLister.invoiceList}" var="item" id="invoice" rows="10" styleClass="table">
 					<ice:column>
 						<!-- RowSelector Start -->
 						<ice:rowSelector selectedMouseOverClass="rowSelection"

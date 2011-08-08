@@ -15,7 +15,7 @@ public class InvoiceBackingBean {
 	TblInvoiceLocal tblInvoice;
 	@EJB
 	TblIncometypeLocal tblIncometype;
-	public TblInvoice curInvoice;
+	private TblInvoice curInvoice;
 	
 	private ArrayList<TblInvoice> invoiceList = new ArrayList<TblInvoice>();
 	Boolean visible = false;
@@ -27,13 +27,7 @@ public class InvoiceBackingBean {
 		return invoiceList;
 	}	
 	
-	public ArrayList<TblIncometype> getIncometypeList(){
-		ArrayList<TblIncometype> result = new ArrayList<TblIncometype>();
-		
-		result.addAll(tblIncometype.getIncometypeList());
-		
-		return result;
-	}
+	
 	/*
 	 * _______________________________________________________________________________________
 	 */
@@ -41,11 +35,11 @@ public class InvoiceBackingBean {
 	public void rowEvent(RowSelectorEvent re) {
 		if(invoiceList.get(re.getRow()).isSelected()){
 			invoiceList.get(re.getRow()).setSelected(true);
-			curInvoice = invoiceList.get(re.getRow());
+			setCurInvoice(invoiceList.get(re.getRow()));
 			visible = true;
 		}else {
 			invoiceList.get(re.getRow()).setSelected(false);
-			curInvoice = null;
+			setCurInvoice(null);
 			visible = false;
 		}
 	}
@@ -58,6 +52,16 @@ public class InvoiceBackingBean {
 	public Boolean getVisible(){
 		
 		return visible;
+	}
+
+
+	public void setCurInvoice(TblInvoice curInvoice) {
+		this.curInvoice = curInvoice;
+	}
+
+
+	public TblInvoice getCurInvoice() {
+		return curInvoice;
 	}	
 	
 }

@@ -1,5 +1,6 @@
 package at.icnc.om.backingbeans;
 
+
 import java.util.ArrayList;
 import javax.ejb.EJB;
 import com.icesoft.faces.component.ext.RowSelectorEvent;
@@ -14,8 +15,10 @@ public class InvoiceBackingBean {
 	TblInvoiceLocal tblInvoice;
 	@EJB
 	TblIncometypeLocal tblIncometype;
+
 	
 	private ArrayList<TblInvoice> invoiceList = new ArrayList<TblInvoice>();
+	Boolean visible = false;
 	
 	public ArrayList<TblInvoice> getInvoiceList(){
 		if(invoiceList.isEmpty()){
@@ -38,14 +41,21 @@ public class InvoiceBackingBean {
 	public void rowEvent(RowSelectorEvent re) {
 		if(invoiceList.get(re.getRow()).isSelected()){
 			invoiceList.get(re.getRow()).setSelected(true);
+			visible = true;
 		}else {
 			invoiceList.get(re.getRow()).setSelected(false);
+			visible = false;
 		}
-		//invoiceList.get(re.getRow()).setSelected(true);
 	}
 
 	
 	/*
 	 * _______________________________________________________________________________________
 	 */
+	
+	public Boolean getVisible(){
+		
+		return visible;
+	}	
+	
 }

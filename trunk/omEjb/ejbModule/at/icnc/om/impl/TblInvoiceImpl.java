@@ -61,10 +61,13 @@ public class TblInvoiceImpl implements TblInvoiceLocal {
 		return result;
 	}
 	
-	private EntityManager CreateEM(String persistence){
-		emf = Persistence.createEntityManagerFactory(persistence);
-		em = emf.createEntityManager();
-		return em;		
+	private void CreateEM(String persistence){
+		try {
+			emf = Persistence.createEntityManagerFactory(persistence);
+			em = emf.createEntityManager();	
+		} catch (Exception e) {
+			// TODO: handle exception
+		}	
 	}
 	
 	public void DeleteInvoice(Long invoice){

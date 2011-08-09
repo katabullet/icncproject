@@ -3,7 +3,7 @@ package at.icnc.om.entitybeans;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 
 /**
@@ -17,12 +17,12 @@ public class TblCustomer implements Serializable {
 	private long idCustomer;
 	private String customername;
 	private Date customerstatedate;
-	private String _sap_cnr_;
+	private String sapcnr;
 	private TblConcern tblConcern;
 	private TblContactperson tblContactperson;
 	private TblCustomerstate tblCustomerstate;
 	private TblUser tblUser;
-	private Set<TblOrder> tblOrders;
+	private List<TblOrder> tblOrders;
 
     public TblCustomer() {
     }
@@ -31,7 +31,7 @@ public class TblCustomer implements Serializable {
 	@Id
 	@SequenceGenerator(name="TBL_CUSTOMER_IDCUSTOMER_GENERATOR", sequenceName="TBL_CUSTOMER_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_CUSTOMER_IDCUSTOMER_GENERATOR")
-	@Column(name="ID_CUSTOMER")
+	@Column(name="ID_CUSTOMER", unique=true, nullable=false, precision=22)
 	public long getIdCustomer() {
 		return this.idCustomer;
 	}
@@ -41,6 +41,7 @@ public class TblCustomer implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getCustomername() {
 		return this.customername;
 	}
@@ -60,18 +61,18 @@ public class TblCustomer implements Serializable {
 	}
 
 
-	@Column(name="SAPCNR")
-	public String get_sap_cnr_() {
-		return this._sap_cnr_;
+	@Column(length=45)
+	public String getSapcnr() {
+		return this.sapcnr;
 	}
 
-	public void set_sap_cnr_(String _sap_cnr_) {
-		this._sap_cnr_ = _sap_cnr_;
+	public void setSapcnr(String sapcnr) {
+		this.sapcnr = sapcnr;
 	}
 
 
 	//bi-directional many-to-one association to TblConcern
-    @ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="FK_CONCERN")
 	public TblConcern getTblConcern() {
 		return this.tblConcern;
@@ -83,7 +84,7 @@ public class TblCustomer implements Serializable {
 	
 
 	//bi-directional many-to-one association to TblContactperson
-    @ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="FK_CONTACTPERSON")
 	public TblContactperson getTblContactperson() {
 		return this.tblContactperson;
@@ -95,7 +96,7 @@ public class TblCustomer implements Serializable {
 	
 
 	//bi-directional many-to-one association to TblCustomerstate
-    @ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="FK_CUSTOMERSTATE")
 	public TblCustomerstate getTblCustomerstate() {
 		return this.tblCustomerstate;
@@ -107,7 +108,7 @@ public class TblCustomer implements Serializable {
 	
 
 	//bi-directional many-to-one association to TblUser
-    @ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="FK_SALESMAN")
 	public TblUser getTblUser() {
 		return this.tblUser;
@@ -120,11 +121,11 @@ public class TblCustomer implements Serializable {
 
 	//bi-directional many-to-one association to TblOrder
 	@OneToMany(mappedBy="tblCustomer")
-	public Set<TblOrder> getTblOrders() {
+	public List<TblOrder> getTblOrders() {
 		return this.tblOrders;
 	}
 
-	public void setTblOrders(Set<TblOrder> tblOrders) {
+	public void setTblOrders(List<TblOrder> tblOrders) {
 		this.tblOrders = tblOrders;
 	}
 	

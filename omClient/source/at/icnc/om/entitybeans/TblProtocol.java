@@ -25,7 +25,7 @@ public class TblProtocol implements Serializable {
 	@Id
 	@SequenceGenerator(name="TBL_PROTOCOL_IDPROTOCOL_GENERATOR", sequenceName="TBL_PROTOCOL_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_PROTOCOL_IDPROTOCOL_GENERATOR")
-	@Column(name="ID_PROTOCOL")
+	@Column(name="ID_PROTOCOL", unique=true, nullable=false, precision=22)
 	public long getIdProtocol() {
 		return this.idProtocol;
 	}
@@ -35,6 +35,7 @@ public class TblProtocol implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getChange() {
 		return this.change;
 	}
@@ -55,7 +56,7 @@ public class TblProtocol implements Serializable {
 
 
 	//bi-directional many-to-one association to TblUser
-    @ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="FK_USER")
 	public TblUser getTblUser() {
 		return this.tblUser;

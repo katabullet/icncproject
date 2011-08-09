@@ -3,7 +3,7 @@ package at.icnc.om.entitybeans;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
 
 
 /**
@@ -17,7 +17,7 @@ public class TblInterval implements Serializable {
 	private long idInterval;
 	private String descriptionIv;
 	private BigDecimal months;
-	private Set<TblSettlement> tblSettlements;
+	private List<TblSettlement> tblSettlements;
 
     public TblInterval() {
     }
@@ -26,7 +26,7 @@ public class TblInterval implements Serializable {
 	@Id
 	@SequenceGenerator(name="TBL_INTERVAL_IDINTERVAL_GENERATOR", sequenceName="TBL_INTERVAL_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_INTERVAL_IDINTERVAL_GENERATOR")
-	@Column(name="ID_INTERVAL")
+	@Column(name="ID_INTERVAL", unique=true, nullable=false, precision=22)
 	public long getIdInterval() {
 		return this.idInterval;
 	}
@@ -36,7 +36,7 @@ public class TblInterval implements Serializable {
 	}
 
 
-	@Column(name="DESCRIPTION_IV")
+	@Column(name="DESCRIPTION_IV", length=45)
 	public String getDescriptionIv() {
 		return this.descriptionIv;
 	}
@@ -46,6 +46,7 @@ public class TblInterval implements Serializable {
 	}
 
 
+	@Column(precision=22)
 	public BigDecimal getMonths() {
 		return this.months;
 	}
@@ -57,11 +58,11 @@ public class TblInterval implements Serializable {
 
 	//bi-directional many-to-one association to TblSettlement
 	@OneToMany(mappedBy="tblInterval")
-	public Set<TblSettlement> getTblSettlements() {
+	public List<TblSettlement> getTblSettlements() {
 		return this.tblSettlements;
 	}
 
-	public void setTblSettlements(Set<TblSettlement> tblSettlements) {
+	public void setTblSettlements(List<TblSettlement> tblSettlements) {
 		this.tblSettlements = tblSettlements;
 	}
 	

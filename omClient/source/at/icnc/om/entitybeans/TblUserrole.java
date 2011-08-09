@@ -2,7 +2,7 @@ package at.icnc.om.entitybeans;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 
 /**
@@ -15,7 +15,7 @@ public class TblUserrole implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idUserrole;
 	private String descriptionUr;
-	private Set<TblUser> tblUsers;
+	private List<TblUser> tblUsers;
 
     public TblUserrole() {
     }
@@ -24,7 +24,7 @@ public class TblUserrole implements Serializable {
 	@Id
 	@SequenceGenerator(name="TBL_USERROLE_IDUSERROLE_GENERATOR", sequenceName="TBL_USERROLE_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_USERROLE_IDUSERROLE_GENERATOR")
-	@Column(name="ID_USERROLE")
+	@Column(name="ID_USERROLE", unique=true, nullable=false, precision=22)
 	public long getIdUserrole() {
 		return this.idUserrole;
 	}
@@ -34,7 +34,7 @@ public class TblUserrole implements Serializable {
 	}
 
 
-	@Column(name="DESCRIPTION_UR")
+	@Column(name="DESCRIPTION_UR", length=45)
 	public String getDescriptionUr() {
 		return this.descriptionUr;
 	}
@@ -46,11 +46,11 @@ public class TblUserrole implements Serializable {
 
 	//bi-directional many-to-one association to TblUser
 	@OneToMany(mappedBy="tblUserrole")
-	public Set<TblUser> getTblUsers() {
+	public List<TblUser> getTblUsers() {
 		return this.tblUsers;
 	}
 
-	public void setTblUsers(Set<TblUser> tblUsers) {
+	public void setTblUsers(List<TblUser> tblUsers) {
 		this.tblUsers = tblUsers;
 	}
 	

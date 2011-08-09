@@ -2,7 +2,7 @@ package at.icnc.om.entitybeans;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 
 /**
@@ -16,7 +16,7 @@ public class TblConcern implements Serializable {
 	private long idConcern;
 	private String concernmatchcode;
 	private String concernname;
-	private Set<TblCustomer> tblCustomers;
+	private List<TblCustomer> tblCustomers;
 
     public TblConcern() {
     }
@@ -25,7 +25,7 @@ public class TblConcern implements Serializable {
 	@Id
 	@SequenceGenerator(name="TBL_CONCERN_IDCONCERN_GENERATOR", sequenceName="TBL_CONCERN_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_CONCERN_IDCONCERN_GENERATOR")
-	@Column(name="ID_CONCERN")
+	@Column(name="ID_CONCERN", unique=true, nullable=false, precision=22)
 	public long getIdConcern() {
 		return this.idConcern;
 	}
@@ -35,6 +35,7 @@ public class TblConcern implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getConcernmatchcode() {
 		return this.concernmatchcode;
 	}
@@ -44,6 +45,7 @@ public class TblConcern implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getConcernname() {
 		return this.concernname;
 	}
@@ -55,11 +57,11 @@ public class TblConcern implements Serializable {
 
 	//bi-directional many-to-one association to TblCustomer
 	@OneToMany(mappedBy="tblConcern")
-	public Set<TblCustomer> getTblCustomers() {
+	public List<TblCustomer> getTblCustomers() {
 		return this.tblCustomers;
 	}
 
-	public void setTblCustomers(Set<TblCustomer> tblCustomers) {
+	public void setTblCustomers(List<TblCustomer> tblCustomers) {
 		this.tblCustomers = tblCustomers;
 	}
 	

@@ -18,7 +18,7 @@ public class TblInvoice implements Serializable {
 	private Date duedate;
 	private String invoicenumber;
 	private BigDecimal sum;
-	private TblOrder tblOrder;
+	private TblSettlement tblSettlement;
 	private boolean selected;
 
     public TblInvoice() {
@@ -28,7 +28,7 @@ public class TblInvoice implements Serializable {
 	@Id
 	@SequenceGenerator(name="TBL_INVOICE_IDINVOICE_GENERATOR", sequenceName="TBL_INVOICE_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_INVOICE_IDINVOICE_GENERATOR")
-	@Column(name="ID_INVOICE")
+	@Column(name="ID_INVOICE", unique=true, nullable=false, precision=22)
 	public long getIdInvoice() {
 		return this.idInvoice;
 	}
@@ -48,6 +48,7 @@ public class TblInvoice implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getInvoicenumber() {
 		return this.invoicenumber;
 	}
@@ -57,6 +58,7 @@ public class TblInvoice implements Serializable {
 	}
 
 
+	@Column(precision=22)
 	public BigDecimal getSum() {
 		return this.sum;
 	}
@@ -66,18 +68,17 @@ public class TblInvoice implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to TblOrder
-    @ManyToOne
-	@JoinColumn(name="FK_ORDER")
-	public TblOrder getTblOrder() {
-		return this.tblOrder;
+	//bi-directional many-to-one association to TblSettlement
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="FK_SETTLEMENT")
+	public TblSettlement getTblSettlement() {
+		return this.tblSettlement;
 	}
 
-	public void setTblOrder(TblOrder tblOrder) {
-		this.tblOrder = tblOrder;
+	public void setTblSettlement(TblSettlement tblSettlement) {
+		this.tblSettlement = tblSettlement;
 	}
-
-
+	
 	@Transient
 	public void setSelected(boolean selected) {
 		this.selected = selected;
@@ -86,6 +87,5 @@ public class TblInvoice implements Serializable {
 	@Transient
 	public boolean isSelected() {
 		return selected;
-	}
-	
+	}	
 }

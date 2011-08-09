@@ -2,7 +2,7 @@ package at.icnc.om.entitybeans;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 
 /**
@@ -18,7 +18,7 @@ public class TblContactperson implements Serializable {
 	private String firstname;
 	private String lastname;
 	private String telephone;
-	private Set<TblCustomer> tblCustomers;
+	private List<TblCustomer> tblCustomers;
 
     public TblContactperson() {
     }
@@ -27,7 +27,7 @@ public class TblContactperson implements Serializable {
 	@Id
 	@SequenceGenerator(name="TBL_CONTACTPERSON_IDCONTACTPERSON_GENERATOR", sequenceName="TBL_CONTACTPERSON_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_CONTACTPERSON_IDCONTACTPERSON_GENERATOR")
-	@Column(name="ID_CONTACTPERSON")
+	@Column(name="ID_CONTACTPERSON", unique=true, nullable=false, precision=22)
 	public long getIdContactperson() {
 		return this.idContactperson;
 	}
@@ -37,6 +37,7 @@ public class TblContactperson implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getEmail() {
 		return this.email;
 	}
@@ -46,6 +47,7 @@ public class TblContactperson implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getFirstname() {
 		return this.firstname;
 	}
@@ -55,6 +57,7 @@ public class TblContactperson implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getLastname() {
 		return this.lastname;
 	}
@@ -64,6 +67,7 @@ public class TblContactperson implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getTelephone() {
 		return this.telephone;
 	}
@@ -75,11 +79,11 @@ public class TblContactperson implements Serializable {
 
 	//bi-directional many-to-one association to TblCustomer
 	@OneToMany(mappedBy="tblContactperson")
-	public Set<TblCustomer> getTblCustomers() {
+	public List<TblCustomer> getTblCustomers() {
 		return this.tblCustomers;
 	}
 
-	public void setTblCustomers(Set<TblCustomer> tblCustomers) {
+	public void setTblCustomers(List<TblCustomer> tblCustomers) {
 		this.tblCustomers = tblCustomers;
 	}
 	

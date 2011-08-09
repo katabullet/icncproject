@@ -37,14 +37,11 @@
 				<ice:selectInputDate id="date2" value="#{invoiceLister.curInvoice.duedate}" renderAsPopup="true"/>
        			
        			
-				<ice:outputLabel value="Auftragsnummer" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{invoiceLister.curInvoice.tblOrder.ordernumber}"/>
-				<ice:outputLabel value="Ertragsart" styleClass="Text"/>
-				<ice:selectOneMenu styleClass="Input" value="#{invoiceLister.curInvoice.tblOrder.tblIncometypes}"/>
+				
 			</ice:panelGrid>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" style="width: 500px;">
 				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Speichern"/>
-				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" actionListener="#{invoiceLister.PopupRendernaendern}"/>
+				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{invoiceLister.PopupRendernaendern}"/>
 			</ice:panelGrid>
 		</ice:panelGroup>
 		</f:facet>

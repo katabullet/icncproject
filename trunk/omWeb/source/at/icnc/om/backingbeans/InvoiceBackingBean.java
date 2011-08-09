@@ -76,6 +76,11 @@ public class InvoiceBackingBean {
 		return popupRender;
 	}
 
+	public void PopupRendernaendernNew(){
+		setCurInvoice(new TblInvoice());
+		PopupRendernaendern();
+	}
+	
 	public void PopupRendernaendern(){
 		popupRender = !popupRender;
 		

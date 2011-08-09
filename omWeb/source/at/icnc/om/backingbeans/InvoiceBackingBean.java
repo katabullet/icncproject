@@ -4,8 +4,6 @@ package at.icnc.om.backingbeans;
 import java.util.ArrayList;
 import javax.ejb.EJB;
 import com.icesoft.faces.component.ext.RowSelectorEvent;
-
-import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.entitybeans.TblInvoice;
 import at.icnc.om.interfaces.TblIncometypeLocal;
 import at.icnc.om.interfaces.TblInvoiceLocal;
@@ -15,17 +13,24 @@ public class InvoiceBackingBean {
 	TblInvoiceLocal tblInvoice;
 	@EJB
 	TblIncometypeLocal tblIncometype;
-	private TblInvoice curInvoice;
+	private TblInvoice curInvoice = new TblInvoice();
 	
-	private ArrayList<TblInvoice> invoiceList = new ArrayList<TblInvoice>();
 	Boolean visible = false;
 	Boolean popupRender = false;
 	
-	public ArrayList<TblInvoice> getInvoiceList(){
-		if(invoiceList.isEmpty()){
-			invoiceList.addAll(tblInvoice.getInvoiceList());
+	public ArrayList<TblInvoice> getInvoiceList(){		
+		ArrayList<TblInvoice> invoices = new ArrayList<TblInvoice>();
+		invoices.addAll(tblInvoice.getInvoiceList());
+		
+		if(curInvoice != null){
+			for(TblInvoice curItem : invoices){				
+				if(curItem.getIdInvoice() == curInvoice.getIdInvoice()){
+					curItem.setSelected(true);
+				}
+			}
 		}
-		return invoiceList;
+
+		return invoices;
 	}	
 	
 	
@@ -34,14 +39,14 @@ public class InvoiceBackingBean {
 	 */
 	
 	public void rowEvent(RowSelectorEvent re) {
-		if(invoiceList.get(re.getRow()).isSelected()){
-			invoiceList.get(re.getRow()).setSelected(true);
-			setCurInvoice(invoiceList.get(re.getRow()));
-			visible = true;
-		}else {
-			invoiceList.get(re.getRow()).setSelected(false);
-			setCurInvoice(null);
-			visible = false;
+		
+		if(getCurInvoice() != null){
+			
+			if(getCurInvoice().getIdInvoice() == tblInvoice.getInvoiceList().get(re.getRow()).getIdInvoice()){
+				setCurInvoice(new TblInvoice());
+			}else {
+				setCurInvoice(tblInvoice.getInvoiceList().get(re.getRow()));
+			}
 		}
 	}
 
@@ -56,7 +61,7 @@ public class InvoiceBackingBean {
 	}
 
 
-	private void setCurInvoice(TblInvoice curInvoice) {
+	public void setCurInvoice(TblInvoice curInvoice) {
 		this.curInvoice = curInvoice;
 	}
 

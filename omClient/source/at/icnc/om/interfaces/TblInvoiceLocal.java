@@ -9,4 +9,5 @@ import at.icnc.om.entitybeans.TblInvoice;
 @Local
 public interface TblInvoiceLocal {
 	public ArrayList<TblInvoice> getInvoiceList();
+	public void DeleteInvoice(Long invoice);
 }

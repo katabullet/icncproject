@@ -3,7 +3,7 @@ package at.icnc.om.entitybeans;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 
 /**
@@ -18,12 +18,11 @@ public class TblOrder implements Serializable {
 	private Date orderdate;
 	private String ordernumber;
 	private String travelcosts;
-	private Set<TblInvoice> tblInvoices;
-	private Set<TblCostcentre> tblCostcentres;
+	private List<TblCostcentre> tblCostcentres;
 	private TblCustomer tblCustomer;
-	private Set<TblIncometype> tblIncometypes;
+	private List<TblIncometype> tblIncometypes;
 	private TblOrderstate tblOrderstate;
-	private Set<TblSettlement> tblSettlements;
+	private List<TblSettlement> tblSettlements;
 
     public TblOrder() {
     }
@@ -32,7 +31,7 @@ public class TblOrder implements Serializable {
 	@Id
 	@SequenceGenerator(name="TBL_ORDER_IDORDER_GENERATOR", sequenceName="TBL_ORDER_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_ORDER_IDORDER_GENERATOR")
-	@Column(name="ID_ORDER")
+	@Column(name="ID_ORDER", unique=true, nullable=false, precision=22)
 	public long getIdOrder() {
 		return this.idOrder;
 	}
@@ -52,6 +51,7 @@ public class TblOrder implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getOrdernumber() {
 		return this.ordernumber;
 	}
@@ -61,6 +61,7 @@ public class TblOrder implements Serializable {
 	}
 
 
+	@Column(length=5)
 	public String getTravelcosts() {
 		return this.travelcosts;
 	}
@@ -69,17 +70,6 @@ public class TblOrder implements Serializable {
 		this.travelcosts = travelcosts;
 	}
 
-
-	//bi-directional many-to-one association to TblInvoice
-	@OneToMany(mappedBy="tblOrder")
-	public Set<TblInvoice> getTblInvoices() {
-		return this.tblInvoices;
-	}
-
-	public void setTblInvoices(Set<TblInvoice> tblInvoices) {
-		this.tblInvoices = tblInvoices;
-	}
-	
 
 	//bi-directional many-to-many association to TblCostcentre
     @ManyToMany
@@ -92,17 +82,17 @@ public class TblOrder implements Serializable {
 			@JoinColumn(name="FK_COSTCENTRE")
 			}
 		)
-	public Set<TblCostcentre> getTblCostcentres() {
+	public List<TblCostcentre> getTblCostcentres() {
 		return this.tblCostcentres;
 	}
 
-	public void setTblCostcentres(Set<TblCostcentre> tblCostcentres) {
+	public void setTblCostcentres(List<TblCostcentre> tblCostcentres) {
 		this.tblCostcentres = tblCostcentres;
 	}
 	
 
 	//bi-directional many-to-one association to TblCustomer
-    @ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="FK_CUSTOMER")
 	public TblCustomer getTblCustomer() {
 		return this.tblCustomer;
@@ -124,17 +114,17 @@ public class TblOrder implements Serializable {
 			@JoinColumn(name="FK_INCOMETYPE")
 			}
 		)
-	public Set<TblIncometype> getTblIncometypes() {
+	public List<TblIncometype> getTblIncometypes() {
 		return this.tblIncometypes;
 	}
 
-	public void setTblIncometypes(Set<TblIncometype> tblIncometypes) {
+	public void setTblIncometypes(List<TblIncometype> tblIncometypes) {
 		this.tblIncometypes = tblIncometypes;
 	}
 	
 
 	//bi-directional many-to-one association to TblOrderstate
-    @ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="FK_ORDERSTATE")
 	public TblOrderstate getTblOrderstate() {
 		return this.tblOrderstate;
@@ -147,11 +137,11 @@ public class TblOrder implements Serializable {
 
 	//bi-directional many-to-one association to TblSettlement
 	@OneToMany(mappedBy="tblOrder")
-	public Set<TblSettlement> getTblSettlements() {
+	public List<TblSettlement> getTblSettlements() {
 		return this.tblSettlements;
 	}
 
-	public void setTblSettlements(Set<TblSettlement> tblSettlements) {
+	public void setTblSettlements(List<TblSettlement> tblSettlements) {
 		this.tblSettlements = tblSettlements;
 	}
 	

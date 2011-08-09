@@ -3,6 +3,7 @@ package at.icnc.om.entitybeans;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 
 /**
@@ -15,6 +16,7 @@ public class TblSettlement implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idSettlement;
 	private BigDecimal runtime;
+	private List<TblInvoice> tblInvoices;
 	private TblIncometype tblIncometype;
 	private TblInterval tblInterval;
 	private TblOrder tblOrder;
@@ -26,7 +28,7 @@ public class TblSettlement implements Serializable {
 	@Id
 	@SequenceGenerator(name="TBL_SETTLEMENT_IDSETTLEMENT_GENERATOR", sequenceName="TBL_SETTLEMENT_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_SETTLEMENT_IDSETTLEMENT_GENERATOR")
-	@Column(name="ID_SETTLEMENT")
+	@Column(name="ID_SETTLEMENT", unique=true, nullable=false, precision=22)
 	public long getIdSettlement() {
 		return this.idSettlement;
 	}
@@ -36,6 +38,7 @@ public class TblSettlement implements Serializable {
 	}
 
 
+	@Column(precision=22)
 	public BigDecimal getRuntime() {
 		return this.runtime;
 	}
@@ -45,8 +48,19 @@ public class TblSettlement implements Serializable {
 	}
 
 
+	//bi-directional many-to-one association to TblInvoice
+	@OneToMany(mappedBy="tblSettlement")
+	public List<TblInvoice> getTblInvoices() {
+		return this.tblInvoices;
+	}
+
+	public void setTblInvoices(List<TblInvoice> tblInvoices) {
+		this.tblInvoices = tblInvoices;
+	}
+	
+
 	//bi-directional many-to-one association to TblIncometype
-    @ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="FK_INCOMETYPE")
 	public TblIncometype getTblIncometype() {
 		return this.tblIncometype;
@@ -58,7 +72,7 @@ public class TblSettlement implements Serializable {
 	
 
 	//bi-directional many-to-one association to TblInterval
-    @ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="FK_INTERVAL")
 	public TblInterval getTblInterval() {
 		return this.tblInterval;
@@ -70,7 +84,7 @@ public class TblSettlement implements Serializable {
 	
 
 	//bi-directional many-to-one association to TblOrder
-    @ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="FK_ORDER")
 	public TblOrder getTblOrder() {
 		return this.tblOrder;

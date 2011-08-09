@@ -21,7 +21,7 @@
 	            <ice:outputText
 	                    value="Rechnungsbearbeitung"
 	                    styleClass="popupHeaderText"/>
-	            <ice:commandButton image="images/closepopup.gif" actionListener="#{invoiceLister.PopupRendernaendern}"/>
+	            <ice:commandButton image="images/closepopup.gif" action="#{invoiceLister.PopupRendernaendern}"/>
         	</ice:panelGrid>
 		</f:facet>
 		<f:facet name="body">

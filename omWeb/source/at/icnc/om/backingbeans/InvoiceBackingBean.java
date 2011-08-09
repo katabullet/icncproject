@@ -44,8 +44,10 @@ public class InvoiceBackingBean {
 			
 			if(getCurInvoice().getIdInvoice() == tblInvoice.getInvoiceList().get(re.getRow()).getIdInvoice()){
 				setCurInvoice(new TblInvoice());
+				visible = false;
 			}else {
 				setCurInvoice(tblInvoice.getInvoiceList().get(re.getRow()));
+				visible = true;
 			}
 		}
 	}

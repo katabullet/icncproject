@@ -32,7 +32,7 @@
      		<ice:commandButton image="images/btn_filter_e.png"/>
       		<ice:commandButton  image="images/btn_new_e.png" rendered="#{sitesBean.buttonRendered}" action="#{invoiceLister.PopupRendernaendernNew}"/>
       		<ice:commandButton id="btnEdit" image="images/btn_edit_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{invoiceLister.visible}" action="#{invoiceLister.PopupRendernaendern}"/>  					  	
-     		<ice:commandButton image="images/btn_delete_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{invoiceLister.visible}"/>		           					  	
+     		<ice:commandButton image="images/btn_delete_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{invoiceLister.visible}" action="#{invoiceLister.DeleteInvoice}"/>		           					  	
      	</ice:panelGrid>
      	<!-- Buttons End -->
    </ice:panelGrid>

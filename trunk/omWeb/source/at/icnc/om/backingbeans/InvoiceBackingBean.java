@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.ejb.EJB;
 import com.icesoft.faces.component.ext.RowSelectorEvent;
 import at.icnc.om.entitybeans.TblInvoice;
+import at.icnc.om.entitybeans.TblOrder;
+import at.icnc.om.entitybeans.TblSettlement;
 import at.icnc.om.interfaces.TblIncometypeLocal;
 import at.icnc.om.interfaces.TblInvoiceLocal;
 
@@ -68,6 +70,8 @@ public class InvoiceBackingBean {
 
 	public void PopupRendernaendernNew(){
 		setCurInvoice(new TblInvoice());
+		getCurInvoice().setTblSettlement(new TblSettlement());
+		getCurInvoice().getTblSettlement().setTblOrder(new TblOrder());
 		PopupRendernaendern();
 	}
 	

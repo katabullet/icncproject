@@ -28,15 +28,19 @@
 		<ice:panelGroup>
 			<ice:panelGrid columns="2" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2">
 				<ice:outputLabel value="Rechnungsnummer" styleClass="Text"/>
-				<ice:inputText styleClass="Input"/>
+				<ice:inputText styleClass="Input" value="#{invoiceLister.curInvoice.invoicenumber}"/>
 				<ice:outputLabel value="Betrag" styleClass="Text"/>
-				<ice:inputText styleClass="Input"/>
+				<ice:inputText styleClass="Input" value="#{invoiceLister.curInvoice.sum }"/>
 				<ice:outputLabel value="Faelligkeit" styleClass="Text"/>
-				<ice:inputText styleClass="Input"/>
+				
+				
+				<ice:selectInputDate id="date2" value="#{invoiceLister.curInvoice.duedate}" renderAsPopup="true"/>
+       			
+       			
 				<ice:outputLabel value="Auftragsnummer" styleClass="Text"/>
-				<ice:inputText styleClass="Input"/>
+				<ice:inputText styleClass="Input" value="#{invoiceLister.curInvoice.tblOrder.ordernumber}"/>
 				<ice:outputLabel value="Ertragsart" styleClass="Text"/>
-				<ice:inputText styleClass="Input"/>
+				<ice:selectOneMenu styleClass="Input" value="#{invoiceLister.curInvoice.tblOrder.tblIncometypes}"/>
 			</ice:panelGrid>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" style="width: 500px;">
 				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Speichern"/>

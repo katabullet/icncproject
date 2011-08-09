@@ -74,5 +74,9 @@ margin: auto;
 color: #00BFFF;
 background-color: #00BFFF;
 }
+
+.textPosition{
+text-align: right;
+}
 	
 

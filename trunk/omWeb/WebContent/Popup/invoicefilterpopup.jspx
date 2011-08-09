@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	template="/WEB-INF/templates/defaultTemplate.jspx">
+<ice:outputHead>
+	<ice:outputStyle href="./xmlhttp/css/rime/rime.css" />
+	<ice:outputStyle href="./styles/Sites.css" />
+	<ice:outputStyle href="./styles/popup.css" />
+	<ice:outputStyle href="./styles/Menu.css" />
+</ice:outputHead>
+	
+	<ice:panelPopup rendered="#{invoiceLister.filterPopupRender}"
+					visible="#{invoiceLister.filterPopupRender}"
+					modal="true"
+					draggable="false"
+					autoCentre="true"
+					style="margin: auto;">					
+		<f:facet name="header">
+			<ice:panelGrid columns="2" styleClass="popupHeaderWrapper" style="width: 100%" columnClasses="headerCol1 headerCol2">
+	            <ice:outputText
+	                    value="Rechnungsfilter"
+	                    styleClass="popupHeaderText"/>
+	            <ice:commandButton image="images/closepopup.gif" action="#{invoiceLister.FilterpopupRendernaendern}"/>
+        	</ice:panelGrid>
+		</f:facet>
+		<f:facet name="body">
+		<ice:panelGroup>
+			<ice:panelGrid columns="2" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2">
+				<ice:outputLabel value="Spalte" styleClass="Text"/>
+				<ice:outputLabel value="Filterkriterium" styleClass="Text"/>
+				<ice:selectOneMenu></ice:selectOneMenu>
+				<ice:inputText styleClass="Input"/>				
+			</ice:panelGrid>
+			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" style="width: 500px;">
+				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Filtern"/>
+				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{invoiceLister.FilterpopupRendernaendern}"/>
+			</ice:panelGrid>
+		</ice:panelGroup>
+		</f:facet>
+	</ice:panelPopup>
+	
+</html>

@@ -55,17 +55,26 @@
 						<ice:outputText value="#{item.idInvoice}"/>
 					</ice:column>
 					<ice:column>
-						<f:facet name="header">#{msg.tableDuedate}</f:facet>
-						<ice:outputText styleClass="textPosition" value="#{item.duedate}"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:outputText>
-					</ice:column>
-					<ice:column>
 						<f:facet name="header">#{msg.tableInvoicenumber}</f:facet>
-						<ice:outputText value="#{item.invoicenumber}"/>
+						<ice:outputText styleClass="textPosition" value="#{item.invoicenumber}"/>
 					</ice:column>
 					<ice:column>
 						<f:facet name="header">#{msg.tableSum}</f:facet>
 						<ice:outputText styleClass="textPosition" value="#{item.sum}"><f:convertNumber pattern="#,##0.00"/></ice:outputText>
 					</ice:column>
+					<ice:column>
+						<f:facet name="header">#{msg.tableDuedate}</f:facet>
+						<ice:outputText style="text-align: center;" value="#{item.duedate}"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:outputText>
+					</ice:column>
+					<ice:column>
+						<f:facet name="header">#{msg.tableOrdernumber }</f:facet>
+						<ice:outputText styleClass="textPosition" value="#{item.tblSettlement.tblOrder.ordernumber}"><f:convertNumber pattern="#,##0.00"/></ice:outputText>
+					</ice:column>
+					<ice:column>
+						<f:facet name="header">#{msg.tableIncometype}</f:facet>
+						<ice:outputText style="text-align: left;" value="#{item.tblSettlement.tblIncometype.descriptionIt}"/>
+					</ice:column>
+					
 				</ice:dataTable>
 				<!-- Table Invoice End -->
 			

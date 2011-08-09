@@ -19,6 +19,7 @@ public class InvoiceBackingBean {
 	
 	Boolean visible = false;
 	Boolean popupRender = false;
+	Boolean filterpopupRender = false;
 	
 	public ArrayList<TblInvoice> getInvoiceList(){		
 		ArrayList<TblInvoice> invoices = new ArrayList<TblInvoice>();
@@ -31,14 +32,11 @@ public class InvoiceBackingBean {
 				}
 			}
 		}
-
 		return invoices;
 	}	
 
-	public void rowEvent(RowSelectorEvent re) {
-		
-		if(getCurInvoice() != null){
-			
+	public void rowEvent(RowSelectorEvent re) {		
+		if(getCurInvoice() != null){			
 			if(getCurInvoice().getIdInvoice() == tblInvoice.getInvoiceList().get(re.getRow()).getIdInvoice()){
 				setCurInvoice(new TblInvoice());
 				visible = false;
@@ -49,8 +47,7 @@ public class InvoiceBackingBean {
 		}
 	}
 	
-	public Boolean getVisible(){
-		
+	public Boolean getVisible(){		
 		return visible;
 	}
 
@@ -59,13 +56,16 @@ public class InvoiceBackingBean {
 		this.curInvoice = curInvoice;
 	}
 
-
 	public TblInvoice getCurInvoice() {
 		return curInvoice;
 	}	
 	
 	public Boolean getPopupRender(){
 		return popupRender;
+	}
+	
+	public Boolean getFilterPopupRender(){
+		return filterpopupRender;
 	}
 
 	public void PopupRendernaendernNew(){
@@ -76,8 +76,11 @@ public class InvoiceBackingBean {
 	}
 	
 	public void PopupRendernaendern(){
-		popupRender = !popupRender;
-		
+		popupRender = !popupRender;		
+	}
+	
+	public void FilterpopupRendernaendern(){
+		filterpopupRender = !filterpopupRender;		
 	}
 	
 	public void DeleteInvoice(){

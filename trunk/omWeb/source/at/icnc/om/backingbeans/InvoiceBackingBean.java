@@ -32,12 +32,7 @@ public class InvoiceBackingBean {
 
 		return invoices;
 	}	
-	
-	
-	/*
-	 * _______________________________________________________________________________________
-	 */
-	
+
 	public void rowEvent(RowSelectorEvent re) {
 		
 		if(getCurInvoice() != null){
@@ -51,11 +46,6 @@ public class InvoiceBackingBean {
 			}
 		}
 	}
-
-	
-	/*
-	 * _______________________________________________________________________________________
-	 */
 	
 	public Boolean getVisible(){
 		
@@ -86,4 +76,8 @@ public class InvoiceBackingBean {
 		
 	}
 	
+	public void DeleteInvoice(){
+		tblInvoice.DeleteInvoice(curInvoice.getIdInvoice());
+		visible = false;
+	}
 }

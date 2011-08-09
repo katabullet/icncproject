@@ -76,5 +76,11 @@ public class TblInvoiceImpl implements TblInvoiceLocal {
 		em.remove(curInvoice);
 		em.flush();
 	}
-
+	
+	public void UpdateInvoice(Long invoice){
+		CreateEM(PU);
+		TblInvoice curInvoice = em.find(TblInvoice.class, invoice);
+		em.merge(curInvoice);
+		em.flush();
+	}
 }

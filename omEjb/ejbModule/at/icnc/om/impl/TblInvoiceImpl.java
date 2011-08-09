@@ -23,6 +23,7 @@ public class TblInvoiceImpl implements TblInvoiceLocal {
 
 	private EntityManager em;
 	private EntityManagerFactory emf;
+	private static final String PU = "omPU";
     /**
      * Default constructor. 
      */
@@ -40,11 +41,15 @@ public class TblInvoiceImpl implements TblInvoiceLocal {
 	public ArrayList<TblInvoice> getInvoiceList() {
 		ArrayList<TblInvoice> result = new ArrayList<TblInvoice>();
 		try {		
-			emf = Persistence.createEntityManagerFactory("omPU");
-			em = emf.createEntityManager();
+			CreateEM(PU);
+			/*emf = Persistence.createEntityManagerFactory("omPU");
+			em = emf.createEntityManager();*/
+		
 			//Query query = em.createNativeQuery("SELECT a.ID_ORDER, a.ORDERNUMBER, a.ORDERDATE, a.TRAVELCOSTS, b.CUSTOMERNAME, c.DESCRIPTION_OS FROM TBL_ORDER a left join TBL_CUSTOMER b on (a.FK_CUSTOMER = b.ID_CUSTOMER) left join TBL_ORDERSTATE c on (a.FK_ORDERSTATE = c.ID_ORDERSTATE)", TblOrder.class);
 			String sqlStatement = "SELECT * FROM tbl_invoice";
-			Query query = em.createNativeQuery(sqlStatement, TblInvoice.class);
+			
+			Query query = em.createNativeQuery(sqlStatement, TblInvoice.class);			
+			
 			result.addAll(query.getResultList());
 			em.close();
 		} catch (Exception e) {
@@ -54,6 +59,19 @@ public class TblInvoiceImpl implements TblInvoiceLocal {
 		}
 		
 		return result;
+	}
+	
+	private EntityManager CreateEM(String persistence){
+		emf = Persistence.createEntityManagerFactory(persistence);
+		em = emf.createEntityManager();
+		return em;		
+	}
+	
+	public void DeleteInvoice(Long invoice){
+		CreateEM(PU);
+		TblInvoice curInvoice = em.find(TblInvoice.class, invoice);
+		em.remove(curInvoice);
+		em.flush();
 	}
 
 }

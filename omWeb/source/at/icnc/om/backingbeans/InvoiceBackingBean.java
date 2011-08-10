@@ -117,8 +117,9 @@ public class InvoiceBackingBean {
 	}
 	
 	public void UpdateInvoice(){
-		entityLister.UpdateObject(curInvoice.getIdInvoice(), TblInvoice.class, curInvoice);
+		entityLister.UpdateObject(TblInvoice.class, curInvoice);
 		visible = false;
+		setCurInvoice(new TblInvoice());
 		PopupRendernaendern();
 	}
 

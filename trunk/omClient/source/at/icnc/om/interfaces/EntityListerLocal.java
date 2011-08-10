@@ -8,5 +8,5 @@ import javax.ejb.Local;
 public interface EntityListerLocal {
 	public Collection<?> getObjectList(String sqlStatement, Class<?> entityClass);
 	public void DeleteObject(Long id, Class<?> entityClass);
-	public void UpdateObject(Long id, Class<?> entityClass, Object updated);
+	public void UpdateObject(Class<?> entityClass, Object updated);
 }

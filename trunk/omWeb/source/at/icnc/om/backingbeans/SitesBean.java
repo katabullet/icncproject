@@ -58,12 +58,16 @@ public class SitesBean{
 			render = role>3 ? false:true;
 			return render;
 		}
+		
+		public Integer getInvoiceTabWidth(){
+			return 524;
+		}
 
 		public Integer getOrderTabWidth(){
 			return 179;
 		}
 		
 		public Integer getCustomerTabWidth(){
-			return 332;
+			return 237;
 		}
 }

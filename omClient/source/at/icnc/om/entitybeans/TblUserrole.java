@@ -2,7 +2,7 @@ package at.icnc.om.entitybeans;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -11,11 +11,11 @@ import java.util.List;
  */
 @Entity
 @Table(name="TBL_USERROLE")
-public class TblUserrole implements Serializable {
+public class TblUserrole extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idUserrole;
 	private String descriptionUr;
-	private List<TblUser> tblUsers;
+	private Set<TblUser> tblUsers;
 
     public TblUserrole() {
     }
@@ -46,11 +46,11 @@ public class TblUserrole implements Serializable {
 
 	//bi-directional many-to-one association to TblUser
 	@OneToMany(mappedBy="tblUserrole")
-	public List<TblUser> getTblUsers() {
+	public Set<TblUser> getTblUsers() {
 		return this.tblUsers;
 	}
 
-	public void setTblUsers(List<TblUser> tblUsers) {
+	public void setTblUsers(Set<TblUser> tblUsers) {
 		this.tblUsers = tblUsers;
 	}
 	

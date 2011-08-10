@@ -2,7 +2,7 @@ package at.icnc.om.entitybeans;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -11,11 +11,11 @@ import java.util.List;
  */
 @Entity
 @Table(name="TBL_CUSTOMERSTATE")
-public class TblCustomerstate implements Serializable {
+public class TblCustomerstate extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idCustomerstate;
 	private String descriptionCs;
-	private List<TblCustomer> tblCustomers;
+	private Set<TblCustomer> tblCustomers;
 
     public TblCustomerstate() {
     }
@@ -46,11 +46,11 @@ public class TblCustomerstate implements Serializable {
 
 	//bi-directional many-to-one association to TblCustomer
 	@OneToMany(mappedBy="tblCustomerstate")
-	public List<TblCustomer> getTblCustomers() {
+	public Set<TblCustomer> getTblCustomers() {
 		return this.tblCustomers;
 	}
 
-	public void setTblCustomers(List<TblCustomer> tblCustomers) {
+	public void setTblCustomers(Set<TblCustomer> tblCustomers) {
 		this.tblCustomers = tblCustomers;
 	}
 	

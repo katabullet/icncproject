@@ -12,14 +12,14 @@ import java.util.Date;
  */
 @Entity
 @Table(name="TBL_INVOICE")
-public class TblInvoice implements Serializable {
+public class TblInvoice extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idInvoice;
 	private Date duedate;
 	private String invoicenumber;
 	private BigDecimal sum;
+	private TblInvoicestate tblInvoicestate;
 	private TblSettlement tblSettlement;
-	private boolean selected;
 
     public TblInvoice() {
     }
@@ -68,6 +68,18 @@ public class TblInvoice implements Serializable {
 	}
 
 
+	//bi-directional many-to-one association to TblInvoicestate
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="FK_INVOICESTATE")
+	public TblInvoicestate getTblInvoicestate() {
+		return this.tblInvoicestate;
+	}
+
+	public void setTblInvoicestate(TblInvoicestate tblInvoicestate) {
+		this.tblInvoicestate = tblInvoicestate;
+	}
+	
+
 	//bi-directional many-to-one association to TblSettlement
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="FK_SETTLEMENT")
@@ -79,13 +91,4 @@ public class TblInvoice implements Serializable {
 		this.tblSettlement = tblSettlement;
 	}
 	
-	@Transient
-	public void setSelected(boolean selected) {
-		this.selected = selected;
-	}
-
-	@Transient
-	public boolean isSelected() {
-		return selected;
-	}	
 }

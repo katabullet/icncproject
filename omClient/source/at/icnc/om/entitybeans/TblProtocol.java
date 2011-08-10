@@ -11,7 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name="TBL_PROTOCOL")
-public class TblProtocol implements Serializable {
+public class TblProtocol extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idProtocol;
 	private String change;

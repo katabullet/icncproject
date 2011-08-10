@@ -7,6 +7,7 @@ import com.icesoft.faces.component.ext.RowSelectorEvent;
 import at.icnc.om.entitybeans.TblInvoice;
 import at.icnc.om.entitybeans.TblOrder;
 import at.icnc.om.entitybeans.TblSettlement;
+import at.icnc.om.interfaces.EntityListerLocal;
 import at.icnc.om.interfaces.TblIncometypeLocal;
 import at.icnc.om.interfaces.TblInvoiceLocal;
 
@@ -15,15 +16,34 @@ public class InvoiceBackingBean {
 	TblInvoiceLocal tblInvoice;
 	@EJB
 	TblIncometypeLocal tblIncometype;
+	@EJB
+	EntityListerLocal entityLister;
+	
 	private TblInvoice curInvoice = new TblInvoice();
+	private String filterColumn = "";
+	private String filterValue = "";
 	
 	Boolean visible = false;
 	Boolean popupRender = false;
 	Boolean filterpopupRender = false;
 	
+	@SuppressWarnings("unchecked")
 	public ArrayList<TblInvoice> getInvoiceList(){		
 		ArrayList<TblInvoice> invoices = new ArrayList<TblInvoice>();
-		invoices.addAll(tblInvoice.getInvoiceList());
+		/*invoices.addAll(tblInvoice.getInvoiceList());
+		//invoices.addAll(tblInvoice.getInvoiceList("Sum","5"));
+		
+		if(curInvoice != null){
+			for(TblInvoice curItem : invoices){				
+				if(curItem.getIdInvoice() == curInvoice.getIdInvoice()){
+					curItem.setSelected(true);
+				}
+			}
+		}*/
+		
+		invoices.addAll((ArrayList<TblInvoice>) 
+				entityLister.getObjectList("SELECT * FROM tbl_invoice", 
+						TblInvoice.class));
 		
 		if(curInvoice != null){
 			for(TblInvoice curItem : invoices){				
@@ -32,6 +52,7 @@ public class InvoiceBackingBean {
 				}
 			}
 		}
+		
 		return invoices;
 	}	
 
@@ -84,7 +105,30 @@ public class InvoiceBackingBean {
 	}
 	
 	public void DeleteInvoice(){
-		tblInvoice.DeleteInvoice(curInvoice.getIdInvoice());
+		//tblInvoice.DeleteInvoice(curInvoice.getIdInvoice());
+		entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
 		visible = false;
+	}
+	
+	public void UpdateInvoice(){
+		entityLister.UpdateObject(curInvoice.getIdInvoice(), TblInvoice.class, curInvoice);
+		visible = false;
+		PopupRendernaendern();
+	}
+
+	public void setFilterColumn(String filterColumn) {
+		this.filterColumn = filterColumn;
+	}
+
+	public String getFilterColumn() {
+		return filterColumn;
+	}
+
+	public void setFilterValue(String filterValue) {
+		this.filterValue = filterValue;
+	}
+
+	public String getFilterValue() {
+		return filterValue;
 	}
 }

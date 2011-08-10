@@ -36,11 +36,9 @@
        			<ice:outputLabel value="Auftragsnummer" styleClass="Text"/>
        			<ice:inputText styleClass="Input" value="#{invoiceLister.curInvoice.tblSettlement.tblOrder.ordernumber}"/>
        			<ice:outputLabel value="Ertragsart" styleClass="Text"/>
-       			<!-- <ice:selectOneMenu value="#{invoiceLister.curInvoice.tblSettlement.tblIncometype.descriptionIt}">
-       				<f:selectItems value="#{invoiceLister.invoiceList.tblSettlement.tblIncometype.descriptionIt}"/>
-       			</ice:selectOneMenu> -->
-       			
-				
+       			<ice:selectOneMenu value="#{invoiceLister.curInvoice.tblSettlement.tblIncometype.descriptionIt}">
+					  <f:selectItems value="#{incometypeLister.incometypeListDescriptions}"/>
+       			</ice:selectOneMenu>		
 			</ice:panelGrid>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" style="width: 500px;">
 				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Speichern" action="#{invoiceLister.UpdateInvoice}"/>

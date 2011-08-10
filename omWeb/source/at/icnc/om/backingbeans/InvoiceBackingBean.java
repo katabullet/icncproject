@@ -3,15 +3,19 @@ package at.icnc.om.backingbeans;
 
 import java.util.ArrayList;
 import javax.ejb.EJB;
+
 import com.icesoft.faces.component.ext.RowSelectorEvent;
 
 import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.entitybeans.TblInvoice;
+import at.icnc.om.entitybeans.TblInvoicestate;
 import at.icnc.om.entitybeans.TblOrder;
 import at.icnc.om.entitybeans.TblSettlement;
 import at.icnc.om.interfaces.EntityListerLocal;
 import at.icnc.om.interfaces.TblIncometypeLocal;
 import at.icnc.om.interfaces.TblInvoiceLocal;
+import at.icnc.om.interfaces.TblInvoicestateLocal;
+import at.icnc.om.interfaces.TblOrderLocal;
 
 public class InvoiceBackingBean {
 	@EJB
@@ -20,6 +24,10 @@ public class InvoiceBackingBean {
 	TblIncometypeLocal tblIncometype;
 	@EJB
 	EntityListerLocal entityLister;
+	@EJB
+	TblOrderLocal tblOrder;
+	@EJB
+	TblInvoicestateLocal tblInvoicestate;
 	
 	private TblInvoice curInvoice = new TblInvoice();
 	private String filterColumn = "";
@@ -95,10 +103,22 @@ public class InvoiceBackingBean {
 	public void PopupRendernaendernNew(){
 		setCurInvoice(new TblInvoice());
 		getCurInvoice().setTblSettlement(new TblSettlement());
-		getCurInvoice().getTblSettlement().setTblOrder(new TblOrder());
+		//Defaultwert für Ertragsart setzen
 		TblIncometype income = new TblIncometype();
-		income.setDescriptionIt("Projekt");
+		String defaultWertIncometype = tblIncometype.getIncometypeList().get(0).getDescriptionIt();
+		income.setDescriptionIt(defaultWertIncometype);
 		getCurInvoice().getTblSettlement().setTblIncometype(income);
+		//Defaultwert für Auftragsnummer setzen
+		TblOrder order = new TblOrder();
+		String defaultWertOrder = tblOrder.getOrderList().get(tblOrder.getOrderList().size()-1).getOrdernumber();
+		order.setOrdernumber(defaultWertOrder);
+		getCurInvoice().getTblSettlement().setTblOrder(order);
+		//Defaultwert für Rechnungstatus setzen
+		TblInvoicestate invoicestate = new TblInvoicestate();
+		String defaultWertInvoicestate = tblInvoicestate.getInvoicsestateList().get(0).getDescriptionIs();
+		invoicestate.setDescriptionIs(defaultWertInvoicestate);
+		getCurInvoice().setTblInvoicestate(invoicestate);
+		
 		PopupRendernaendern();
 	}
 	

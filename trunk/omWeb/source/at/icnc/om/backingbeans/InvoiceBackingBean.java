@@ -96,7 +96,7 @@ public class InvoiceBackingBean {
 		getCurInvoice().setTblSettlement(new TblSettlement());
 		getCurInvoice().getTblSettlement().setTblOrder(new TblOrder());
 		TblIncometype income = new TblIncometype();
-		income.setDescriptionIt("Lizenz");
+		income.setDescriptionIt("Projekt");
 		getCurInvoice().getTblSettlement().setTblIncometype(income);
 		PopupRendernaendern();
 	}

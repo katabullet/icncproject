@@ -20,6 +20,7 @@
 		<class>at.icnc.om.entitybeans.TblSettlement</class>
 		<class>at.icnc.om.entitybeans.TblUser</class>
 		<class>at.icnc.om.entitybeans.TblUserrole</class>
+		<class>at.icnc.om.entitybeans.TblInvoicestate</class>
 
 		<properties>
 		    <!-- set property "eclipselink.target-database" also for Oracle 11 DB to "Oracle10g".

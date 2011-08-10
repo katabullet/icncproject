@@ -20,6 +20,7 @@ public class TblInvoice extends Selectable implements Serializable {
 	private BigDecimal sum;
 	private TblInvoicestate tblInvoicestate;
 	private TblSettlement tblSettlement;
+	private BigDecimal estimation;
 
     public TblInvoice() {
     }
@@ -65,6 +66,15 @@ public class TblInvoice extends Selectable implements Serializable {
 
 	public void setSum(BigDecimal sum) {
 		this.sum = sum;
+	}
+	
+	@Column(precision=22)
+	public BigDecimal getEstimation(){
+		return this.estimation;
+	}
+	
+	public void setEstimation(BigDecimal estimation){
+		this.estimation = estimation;
 	}
 
 

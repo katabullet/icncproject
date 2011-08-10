@@ -51,6 +51,7 @@ public class InvoiceBackingBean {
 			for(TblInvoice curItem : invoices){				
 				if(curItem.getIdInvoice() == curInvoice.getIdInvoice()){
 					curItem.setSelected(true);
+					//setCurInvoice(curItem);
 				}
 			}
 		}

@@ -43,7 +43,7 @@
 				
 			</ice:panelGrid>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" style="width: 500px;">
-				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Speichern"/>
+				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Speichern" action="#{invoiceLister.UpdateInvoice}"/>
 				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{invoiceLister.PopupRendernaendern}"/>
 			</ice:panelGrid>
 		</ice:panelGroup>

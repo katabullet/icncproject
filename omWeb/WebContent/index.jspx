@@ -42,17 +42,29 @@
     				<ice:panelTabSet id="icePnlTbSet"
             					selectedIndex="0">
             			
-            			<!-- Invoice -->		
+            			<!--Settlement-->		
             			<ice:panelTab label="#{msg.tableInvoice}" labelWidth="#{sitesBean.tabWidth}" style="text-align: center;" >
             				<ice:panelTabSet id="icePnlTbSet1" selectedIndex="0" tabPlacement="Bottom">
+            					<!-- Settlement -->
+            					<ice:panelTab label="#{msg.tableSettlement}" labelWidth="#{sitesBean.allTabWidth}">
+            					
+		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
+            					</ice:panelTab>
+            					<!-- Interval -->
+            					<ice:panelTab label="#{msg.tableInterval}" labelWidth="#{sitesBean.allTabWidth}">
+            					
+		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
+            					</ice:panelTab>
             					<!-- Invoice -->
-            					<ice:panelTab label="#{msg.tableInvoice}" labelWidth="#{sitesBean.invoiceTabWidth}">
+            					<ice:panelTab label="#{msg.tableInvoice}" labelWidth="#{sitesBean.allTabWidth}">
             					
 		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
 		           					
             					</ice:panelTab>
             					<!-- InvoiceState -->
-            					<ice:panelTab label="#{msg.tableInvoicestate}" labelWidth="#{sitesBean.invoiceTabWidth}">
+            					<ice:panelTab label="#{msg.tableInvoicestate}" labelWidth="#{sitesBean.allTabWidth}">
             					
 		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
 		           					
@@ -64,31 +76,25 @@
             			<ice:panelTab label="#{msg.tableOrder}" labelWidth="#{sitesBean.tabWidth}" style="text-align: center;">
             				<ice:panelTabSet id="icePnlTbSet2" selectedIndex="0" tabPlacement="Bottom">
             					<!-- Order -->
-            					<ice:panelTab label="#{msg.tableOrder}" labelWidth="#{sitesBean.orderTabWidth}">
+            					<ice:panelTab label="#{msg.tableOrder}" labelWidth="#{sitesBean.allTabWidth}">
             					
 		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
 		           					
             					</ice:panelTab>
-            					<!-- Interval -->
-            					<ice:panelTab label="#{msg.tableInterval}" labelWidth="#{sitesBean.orderTabWidth}">
-            					
-		           					<ui:include src="/detailpages/orderpage.jspx"></ui:include>
-		           					
-            					</ice:panelTab>
             					<!-- Orderstate -->
-            					<ice:panelTab label="#{msg.tableOrderstate}" labelWidth="#{sitesBean.orderTabWidth}">
+            					<ice:panelTab label="#{msg.tableOrderstate}" labelWidth="#{sitesBean.allTabWidth}">
             					
 		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
 		           					
             					</ice:panelTab>
             					<!-- Incometype -->
-            					<ice:panelTab label="#{msg.tableIncometype}" labelWidth="#{sitesBean.orderTabWidth}">
+            					<ice:panelTab label="#{msg.tableIncometype}" labelWidth="#{sitesBean.allTabWidth}">
             					
 		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
 		           					
             					</ice:panelTab>
             					<!-- Costcenter -->
-            					<ice:panelTab label="#{msg.tableCostcenter}" labelWidth="#{sitesBean.orderTabWidth}">
+            					<ice:panelTab label="#{msg.tableCostcenter}" labelWidth="#{sitesBean.allTabWidth}">
             					
 		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
 		           					
@@ -99,25 +105,25 @@
         				<ice:panelTab label="#{msg.tableCustomer}" labelWidth="#{sitesBean.tabWidth}">
         					<ice:panelTabSet id="icePnlTbSet3" selectedIndex="0" tabPlacement="Bottom">
             					<!-- Customer -->
-            					<ice:panelTab label="#{msg.tableCustomer}" labelWidth="#{sitesBean.customerTabWidth}">
+            					<ice:panelTab label="#{msg.tableCustomer}" labelWidth="#{sitesBean.allTabWidth}">
             					
 		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
 		           					
             					</ice:panelTab>
             					<!-- Concern -->
-            					<ice:panelTab label="#{msg.tableConcern}" labelWidth="#{sitesBean.customerTabWidth}">
+            					<ice:panelTab label="#{msg.tableConcern}" labelWidth="#{sitesBean.allTabWidth}">
             					
 		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
 		           					
             					</ice:panelTab>
             					<!-- Contactperson -->
-            					<ice:panelTab label="#{msg.tableContactperson}" labelWidth="#{sitesBean.customerTabWidth}">
+            					<ice:panelTab label="#{msg.tableContactperson}" labelWidth="#{sitesBean.allTabWidth}">
             					
 		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
 		           					
             					</ice:panelTab>
             					<!-- Contactstate -->
-            					<ice:panelTab label="#{msg.tableContactstate}" labelWidth="#{sitesBean.customerTabWidth}">
+            					<ice:panelTab label="#{msg.tableContactstate}" labelWidth="#{sitesBean.allTabWidth}">
             					
 		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
 		           					

@@ -2,8 +2,7 @@ package at.icnc.om.entitybeans;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -12,14 +11,14 @@ import java.util.List;
  */
 @Entity
 @Table(name="TBL_USER")
-public class TblUser implements Serializable {
+public class TblUser extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idUser;
-	private BigDecimal failedlogins;
+	private String failedlogins;
 	private String password;
 	private String username;
-	private List<TblCustomer> tblCustomers;
-	private List<TblProtocol> tblProtocols;
+	private Set<TblCustomer> tblCustomers;
+	private Set<TblProtocol> tblProtocols;
 	private TblUserrole tblUserrole;
 
     public TblUser() {
@@ -39,12 +38,12 @@ public class TblUser implements Serializable {
 	}
 
 
-	@Column(precision=22)
-	public BigDecimal getFailedlogins() {
+	@Column(length=20)
+	public String getFailedlogins() {
 		return this.failedlogins;
 	}
 
-	public void setFailedlogins(BigDecimal failedlogins) {
+	public void setFailedlogins(String failedlogins) {
 		this.failedlogins = failedlogins;
 	}
 
@@ -71,22 +70,22 @@ public class TblUser implements Serializable {
 
 	//bi-directional many-to-one association to TblCustomer
 	@OneToMany(mappedBy="tblUser")
-	public List<TblCustomer> getTblCustomers() {
+	public Set<TblCustomer> getTblCustomers() {
 		return this.tblCustomers;
 	}
 
-	public void setTblCustomers(List<TblCustomer> tblCustomers) {
+	public void setTblCustomers(Set<TblCustomer> tblCustomers) {
 		this.tblCustomers = tblCustomers;
 	}
 	
 
 	//bi-directional many-to-one association to TblProtocol
 	@OneToMany(mappedBy="tblUser")
-	public List<TblProtocol> getTblProtocols() {
+	public Set<TblProtocol> getTblProtocols() {
 		return this.tblProtocols;
 	}
 
-	public void setTblProtocols(List<TblProtocol> tblProtocols) {
+	public void setTblProtocols(Set<TblProtocol> tblProtocols) {
 		this.tblProtocols = tblProtocols;
 	}
 	

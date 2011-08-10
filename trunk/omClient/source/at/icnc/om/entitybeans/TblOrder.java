@@ -3,7 +3,7 @@ package at.icnc.om.entitybeans;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -12,17 +12,17 @@ import java.util.List;
  */
 @Entity
 @Table(name="TBL_ORDER")
-public class TblOrder implements Serializable {
+public class TblOrder extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idOrder;
 	private Date orderdate;
 	private String ordernumber;
 	private String travelcosts;
-	private List<TblCostcentre> tblCostcentres;
+	private Set<TblCostcentre> tblCostcentres;
 	private TblCustomer tblCustomer;
-	private List<TblIncometype> tblIncometypes;
+	private Set<TblIncometype> tblIncometypes;
 	private TblOrderstate tblOrderstate;
-	private List<TblSettlement> tblSettlements;
+	private Set<TblSettlement> tblSettlements;
 
     public TblOrder() {
     }
@@ -82,11 +82,11 @@ public class TblOrder implements Serializable {
 			@JoinColumn(name="FK_COSTCENTRE")
 			}
 		)
-	public List<TblCostcentre> getTblCostcentres() {
+	public Set<TblCostcentre> getTblCostcentres() {
 		return this.tblCostcentres;
 	}
 
-	public void setTblCostcentres(List<TblCostcentre> tblCostcentres) {
+	public void setTblCostcentres(Set<TblCostcentre> tblCostcentres) {
 		this.tblCostcentres = tblCostcentres;
 	}
 	
@@ -114,11 +114,11 @@ public class TblOrder implements Serializable {
 			@JoinColumn(name="FK_INCOMETYPE")
 			}
 		)
-	public List<TblIncometype> getTblIncometypes() {
+	public Set<TblIncometype> getTblIncometypes() {
 		return this.tblIncometypes;
 	}
 
-	public void setTblIncometypes(List<TblIncometype> tblIncometypes) {
+	public void setTblIncometypes(Set<TblIncometype> tblIncometypes) {
 		this.tblIncometypes = tblIncometypes;
 	}
 	
@@ -137,11 +137,11 @@ public class TblOrder implements Serializable {
 
 	//bi-directional many-to-one association to TblSettlement
 	@OneToMany(mappedBy="tblOrder")
-	public List<TblSettlement> getTblSettlements() {
+	public Set<TblSettlement> getTblSettlements() {
 		return this.tblSettlements;
 	}
 
-	public void setTblSettlements(List<TblSettlement> tblSettlements) {
+	public void setTblSettlements(Set<TblSettlement> tblSettlements) {
 		this.tblSettlements = tblSettlements;
 	}
 	

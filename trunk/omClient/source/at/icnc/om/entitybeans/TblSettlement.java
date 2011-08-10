@@ -3,7 +3,7 @@ package at.icnc.om.entitybeans;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -12,11 +12,11 @@ import java.util.List;
  */
 @Entity
 @Table(name="TBL_SETTLEMENT")
-public class TblSettlement implements Serializable {
+public class TblSettlement extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idSettlement;
 	private BigDecimal runtime;
-	private List<TblInvoice> tblInvoices;
+	private Set<TblInvoice> tblInvoices;
 	private TblIncometype tblIncometype;
 	private TblInterval tblInterval;
 	private TblOrder tblOrder;
@@ -50,11 +50,11 @@ public class TblSettlement implements Serializable {
 
 	//bi-directional many-to-one association to TblInvoice
 	@OneToMany(mappedBy="tblSettlement")
-	public List<TblInvoice> getTblInvoices() {
+	public Set<TblInvoice> getTblInvoices() {
 		return this.tblInvoices;
 	}
 
-	public void setTblInvoices(List<TblInvoice> tblInvoices) {
+	public void setTblInvoices(Set<TblInvoice> tblInvoices) {
 		this.tblInvoices = tblInvoices;
 	}
 	

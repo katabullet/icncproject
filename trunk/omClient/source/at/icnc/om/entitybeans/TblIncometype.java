@@ -2,7 +2,7 @@ package at.icnc.om.entitybeans;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -11,12 +11,12 @@ import java.util.List;
  */
 @Entity
 @Table(name="TBL_INCOMETYPE")
-public class TblIncometype implements Serializable {
+public class TblIncometype extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idIncometype;
 	private String descriptionIt;
-	private List<TblOrder> tblOrders;
-	private List<TblSettlement> tblSettlements;
+	private Set<TblOrder> tblOrders;
+	private Set<TblSettlement> tblSettlements;
 
     public TblIncometype() {
     }
@@ -47,22 +47,22 @@ public class TblIncometype implements Serializable {
 
 	//bi-directional many-to-many association to TblOrder
 	@ManyToMany(mappedBy="tblIncometypes")
-	public List<TblOrder> getTblOrders() {
+	public Set<TblOrder> getTblOrders() {
 		return this.tblOrders;
 	}
 
-	public void setTblOrders(List<TblOrder> tblOrders) {
+	public void setTblOrders(Set<TblOrder> tblOrders) {
 		this.tblOrders = tblOrders;
 	}
 	
 
 	//bi-directional many-to-one association to TblSettlement
 	@OneToMany(mappedBy="tblIncometype")
-	public List<TblSettlement> getTblSettlements() {
+	public Set<TblSettlement> getTblSettlements() {
 		return this.tblSettlements;
 	}
 
-	public void setTblSettlements(List<TblSettlement> tblSettlements) {
+	public void setTblSettlements(Set<TblSettlement> tblSettlements) {
 		this.tblSettlements = tblSettlements;
 	}
 	

@@ -83,13 +83,11 @@ public class EntityListerImpl implements EntityListerLocal {
 		}
 	}
 	
-	public void UpdateObject(Long id, Class<?> entityClass, Object updated){
+	public void UpdateObject(Class<?> entityClass, Object updated){
 		
 		try {
 			CreateEM(PU);
-			Object curObject = entityClass.cast(em.find(entityClass, id));
-			curObject = updated;
-			em.merge(curObject);
+			em.merge(updated);
 			em.flush();
 			em.close();
 		} catch (Exception e) {
@@ -106,8 +104,9 @@ public class EntityListerImpl implements EntityListerLocal {
 		String sqlStatement = "SELECT * FROM " + table;
 		if(filterColumn != null && filterValue != null){
 			sqlStatement += " WHERE ";
-			for(int x = 0; x<= filterColumn.length; x++){
-				sqlStatement += filterColumn[x] + " LIKE '%" + filterValue[x] + "%' AND ";
+			for(int x = 0; x< filterColumn.length; x++){
+				sqlStatement += " AND ";
+				sqlStatement += filterColumn[x] + " LIKE '%" + filterValue[x] + "%'";
 			}
 		}
 		sqlStatement = sqlStatement.substring(0, sqlStatement.length() - 4);

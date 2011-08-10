@@ -59,15 +59,15 @@ public class SitesBean{
 			return render;
 		}
 		
-		public Integer getInvoiceTabWidth(){
-			return 524;
+		public Integer getAllTabWidth(){
+			return 237;
 		}
 
-		public Integer getOrderTabWidth(){
+		/*public Integer getOrderTabWidth(){
 			return 179;
 		}
 		
 		public Integer getCustomerTabWidth(){
 			return 237;
-		}
+		}*/
 }

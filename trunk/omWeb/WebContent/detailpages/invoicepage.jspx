@@ -145,10 +145,10 @@
 		 
 		    </ice:panelGrid>
 		    <!-- Paginator End -->
-		    <ui:include src="../Popup/invoicepopup.jspx"></ui:include>
-		    <ui:include src="../Popup/invoicefilterpopup.jspx"></ui:include>
+		    
 		</ice:panelGroup>
  		<!-- PanelGroup with DataTable and DataPaginator End -->
-	
+			<ui:include src="../Popup/invoicepopup.jspx"></ui:include>
+		    <ui:include src="../Popup/invoicefilterpopup.jspx"></ui:include>
 	</div>
 </html>

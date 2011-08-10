@@ -27,16 +27,22 @@
 		<f:facet name="body">
 		<ice:panelGroup>
 			<ice:panelGrid columns="2" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2">
-				<ice:outputLabel value="Rechnungsnummer" styleClass="Text"/>
+				<ice:outputLabel value="#{msg.tableInvoicenumber}" styleClass="Text"/>
 				<ice:inputText styleClass="Input" value="#{invoiceLister.curInvoice.invoicenumber}"/>
-				<ice:outputLabel value="Betrag" styleClass="Text"/>
+				<ice:outputLabel value="#{msg.tableSum}" styleClass="Text"/>
 				<ice:inputText styleClass="Input" value="#{invoiceLister.curInvoice.sum }"/>
-				<ice:outputLabel value="Faelligkeit" styleClass="Text"/>
+				<ice:outputLabel value="#{msg.tableDuedate}" styleClass="Text"/>
 				<ice:selectInputDate id="date2" value="#{invoiceLister.curInvoice.duedate}" renderAsPopup="true"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
-       			<ice:outputLabel value="Auftragsnummer" styleClass="Text"/>
-       			<ice:inputText styleClass="Input" value="#{invoiceLister.curInvoice.tblSettlement.tblOrder.ordernumber}"/>
-       			<ice:outputLabel value="Ertragsart" styleClass="Text"/>
-       			<ice:selectOneMenu value="#{invoiceLister.curInvoice.tblSettlement.tblIncometype.descriptionIt}">
+       			<ice:outputLabel value="#{msg.tableInvoicestate}" styleClass="Text"/>
+       			<ice:selectOneMenu value="#{invoiceLister.curInvoice.tblInvoicestate.descriptionIs}"  styleClass="Input">
+					  <f:selectItems value="#{invoicestateLister.invoicestateListDescription}"/>
+       			</ice:selectOneMenu>
+       			<ice:outputLabel value="#{msg.tableOrdernumber}" styleClass="Text"/>
+       			<ice:selectOneMenu value="#{invoiceLister.curInvoice.tblSettlement.tblOrder.ordernumber}" styleClass="Input">
+					  <f:selectItems value="#{orderLister.orderListNumbers}"/>
+       			</ice:selectOneMenu>
+       			<ice:outputLabel value="#{msg.tableIncometype}" styleClass="Text"/>
+       			<ice:selectOneMenu value="#{invoiceLister.curInvoice.tblSettlement.tblIncometype.descriptionIt}"  styleClass="Input">
 					  <f:selectItems value="#{incometypeLister.incometypeListDescriptions}"/>
        			</ice:selectOneMenu>		
 			</ice:panelGrid>

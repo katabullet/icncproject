@@ -4,6 +4,8 @@ package at.icnc.om.backingbeans;
 import java.util.ArrayList;
 import javax.ejb.EJB;
 import com.icesoft.faces.component.ext.RowSelectorEvent;
+
+import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.entitybeans.TblInvoice;
 import at.icnc.om.entitybeans.TblOrder;
 import at.icnc.om.entitybeans.TblSettlement;
@@ -93,6 +95,9 @@ public class InvoiceBackingBean {
 		setCurInvoice(new TblInvoice());
 		getCurInvoice().setTblSettlement(new TblSettlement());
 		getCurInvoice().getTblSettlement().setTblOrder(new TblOrder());
+		TblIncometype income = new TblIncometype();
+		income.setDescriptionIt("Lizenz");
+		getCurInvoice().getTblSettlement().setTblIncometype(income);
 		PopupRendernaendern();
 	}
 	

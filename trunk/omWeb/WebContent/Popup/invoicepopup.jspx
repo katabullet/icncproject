@@ -32,7 +32,7 @@
 				<ice:outputLabel value="Betrag" styleClass="Text"/>
 				<ice:inputText styleClass="Input" value="#{invoiceLister.curInvoice.sum }"/>
 				<ice:outputLabel value="Faelligkeit" styleClass="Text"/>
-				<ice:selectInputDate id="date2" value="#{invoiceLister.curInvoice.duedate}" renderAsPopup="true"/>
+				<ice:selectInputDate id="date2" value="#{invoiceLister.curInvoice.duedate}" renderAsPopup="true"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
        			<ice:outputLabel value="Auftragsnummer" styleClass="Text"/>
        			<ice:inputText styleClass="Input" value="#{invoiceLister.curInvoice.tblSettlement.tblOrder.ordernumber}"/>
        			<ice:outputLabel value="Ertragsart" styleClass="Text"/>

@@ -79,7 +79,7 @@ public class TblInvoice extends Selectable implements Serializable {
 
 
 	//bi-directional many-to-one association to TblInvoicestate
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.MERGE})
 	@JoinColumn(name="FK_INVOICESTATE")
 	public TblInvoicestate getTblInvoicestate() {
 		return this.tblInvoicestate;
@@ -91,7 +91,7 @@ public class TblInvoice extends Selectable implements Serializable {
 	
 
 	//bi-directional many-to-one association to TblSettlement
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade={CascadeType.MERGE})
 	@JoinColumn(name="FK_SETTLEMENT")
 	public TblSettlement getTblSettlement() {
 		return this.tblSettlement;

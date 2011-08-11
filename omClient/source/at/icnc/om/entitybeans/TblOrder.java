@@ -17,7 +17,7 @@ public class TblOrder extends Selectable implements Serializable {
 	private long idOrder;
 	private Date orderdate;
 	private String ordernumber;
-	private boolean travelcosts;
+	private Integer travelcosts;
 	private Set<TblCostcentre> tblCostcentres;
 	private TblCustomer tblCustomer;
 	private Set<TblIncometype> tblIncometypes;
@@ -62,11 +62,11 @@ public class TblOrder extends Selectable implements Serializable {
 
 
 	@Column(precision=1)
-	public boolean getTravelcosts() {
+	public Integer getTravelcosts() {
 		return this.travelcosts;
 	}
 
-	public void setTravelcosts(boolean travelcosts) {
+	public void setTravelcosts(Integer travelcosts) {
 		this.travelcosts = travelcosts;
 	}
 

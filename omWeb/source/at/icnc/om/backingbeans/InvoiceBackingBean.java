@@ -2,6 +2,8 @@ package at.icnc.om.backingbeans;
 
 
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.EJB;
 
 import com.icesoft.faces.component.ext.RowSelectorEvent;
@@ -105,18 +107,19 @@ public class InvoiceBackingBean {
 		getCurInvoice().setTblSettlement(new TblSettlement());
 		//Defaultwert für Ertragsart setzen
 		TblIncometype income = new TblIncometype();
-		String defaultWertIncometype = tblIncometype.getIncometypeList().get(0).getDescriptionIt();
-		income.setDescriptionIt(defaultWertIncometype);
+		List<TblIncometype> defaultWertIncometype = (List<TblIncometype>)entityLister.getObjectList("SELECT  * FROM TBL_INCOMETYPE", TblIncometype.class);
+		income.setDescriptionIt(defaultWertIncometype.get(0).getDescriptionIt());
 		getCurInvoice().getTblSettlement().setTblIncometype(income);
 		//Defaultwert für Auftragsnummer setzen
 		TblOrder order = new TblOrder();
-		String defaultWertOrder = tblOrder.getOrderList().get(tblOrder.getOrderList().size()-1).getOrdernumber();
-		order.setOrdernumber(defaultWertOrder);
+		List<TblOrder> defaultListeOrder =(List<TblOrder>) entityLister.getObjectList("SELECT  * FROM tbl_order", TblOrder.class);
+		TblOrder defaultWertOrder = defaultListeOrder.get(defaultListeOrder.size()-1);
+		order.setOrdernumber(defaultWertOrder.getOrdernumber());
 		getCurInvoice().getTblSettlement().setTblOrder(order);
 		//Defaultwert für Rechnungstatus setzen
 		TblInvoicestate invoicestate = new TblInvoicestate();
-		String defaultWertInvoicestate = tblInvoicestate.getInvoicsestateList().get(0).getDescriptionIs();
-		invoicestate.setDescriptionIs(defaultWertInvoicestate);
+		List<TblInvoicestate> defaultWertInvoicestate = (List<TblInvoicestate>)entityLister.getObjectList("SELECT  * FROM tbl_invoicestate", TblInvoicestate.class);
+		invoicestate.setDescriptionIs(defaultWertInvoicestate.get(0).getDescriptionIs());
 		getCurInvoice().setTblInvoicestate(invoicestate);
 		
 		PopupRendernaendern();

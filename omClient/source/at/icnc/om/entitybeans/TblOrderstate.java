@@ -6,11 +6,11 @@ import java.util.Set;
 
 
 /**
- * The persistent class for the TBL_ORDERSTATE database table.
+ * The persistent class for the OMORDERSTATE database table.
  * 
  */
 @Entity
-@Table(name="TBL_ORDERSTATE")
+@Table(name="OMORDERSTATE")
 public class TblOrderstate extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idOrderstate;
@@ -22,8 +22,8 @@ public class TblOrderstate extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="TBL_ORDERSTATE_IDORDERSTATE_GENERATOR", sequenceName="TBL_ORDERSTATE_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_ORDERSTATE_IDORDERSTATE_GENERATOR")
+	@SequenceGenerator(name="OMORDERSTATE_IDORDERSTATE_GENERATOR", sequenceName="OMORDERSTATE_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMORDERSTATE_IDORDERSTATE_GENERATOR")
 	@Column(name="ID_ORDERSTATE", unique=true, nullable=false, precision=22)
 	public long getIdOrderstate() {
 		return this.idOrderstate;

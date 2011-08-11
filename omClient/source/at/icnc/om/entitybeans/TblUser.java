@@ -6,11 +6,11 @@ import java.util.Set;
 
 
 /**
- * The persistent class for the TBL_USER database table.
+ * The persistent class for the OMUSER database table.
  * 
  */
 @Entity
-@Table(name="TBL_USER")
+@Table(name="OMUSER")
 public class TblUser extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idUser;
@@ -26,8 +26,8 @@ public class TblUser extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="TBL_USER_IDUSER_GENERATOR", sequenceName="TBL_USER_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_USER_IDUSER_GENERATOR")
+	@SequenceGenerator(name="OMUSER_IDUSER_GENERATOR", sequenceName="OMUSER_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMUSER_IDUSER_GENERATOR")
 	@Column(name="ID_USER", unique=true, nullable=false, precision=22)
 	public long getIdUser() {
 		return this.idUser;

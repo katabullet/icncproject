@@ -6,11 +6,11 @@ import java.util.Set;
 
 
 /**
- * The persistent class for the TBL_CUSTOMERSTATE database table.
+ * The persistent class for the OMCUSTOMERSTATE database table.
  * 
  */
 @Entity
-@Table(name="TBL_CUSTOMERSTATE")
+@Table(name="OMCUSTOMERSTATE")
 public class TblCustomerstate extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idCustomerstate;
@@ -22,8 +22,8 @@ public class TblCustomerstate extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="TBL_CUSTOMERSTATE_IDCUSTOMERSTATE_GENERATOR", sequenceName="TBL_CUSTOMERSTATE_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_CUSTOMERSTATE_IDCUSTOMERSTATE_GENERATOR")
+	@SequenceGenerator(name="OMCUSTOMERSTATE_IDCUSTOMERSTATE_GENERATOR", sequenceName="OMCUSTOMERSTATE_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMCUSTOMERSTATE_IDCUSTOMERSTATE_GENERATOR")
 	@Column(name="ID_CUSTOMERSTATE", unique=true, nullable=false, precision=22)
 	public long getIdCustomerstate() {
 		return this.idCustomerstate;

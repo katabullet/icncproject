@@ -22,7 +22,7 @@ public class IncometypeBackingBean {
 	public ArrayList<TblIncometype> getIncometypeList(){	
 		if(incometypes == null){
 			//incometypes.addAll(tblIncometype.getIncometypeList());
-			incometypes.addAll((Collection<? extends TblIncometype>) entityLister.getObjectList("SELECT * FROM tbl_incometype", TblIncometype.class));
+			incometypes.addAll((Collection<? extends TblIncometype>) entityLister.getObjectList("SELECT * FROM OMincometype", TblIncometype.class));
 		}
 		return incometypes;
 	}

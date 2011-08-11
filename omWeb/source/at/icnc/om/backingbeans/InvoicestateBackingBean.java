@@ -28,7 +28,7 @@ public class InvoicestateBackingBean {
 			return invoicestates;*/
 			invoicestates.clear();
 			invoicestates.addAll((Collection<? extends TblInvoicestate>) 
-					entityLister.getObjectList("SELECT * FROM tbl_invoicestate", 
+					entityLister.getObjectList("SELECT * FROM OMinvoicestate", 
 							TblInvoicestate.class));
 			if(curInvoicestate != null){
 				for(TblInvoicestate curItem : invoicestates){				
@@ -50,7 +50,7 @@ public class InvoicestateBackingBean {
 		}
 		
 		public void setInvoicestateListDescription(SelectItem selectedItem){
-			setCurInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM tbl_invoicestate WHERE description_is = '" + 
+			setCurInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM OMinvoicestate WHERE description_is = '" + 
 					selectedItem.getValue() + "'", TblInvoicestate.class));				
 		}
 

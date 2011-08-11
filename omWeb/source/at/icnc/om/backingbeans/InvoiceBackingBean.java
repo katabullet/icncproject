@@ -53,7 +53,7 @@ public class InvoiceBackingBean {
 		if(invoiceList == null){
 			invoiceList = new ArrayList<TblInvoice>();
 			invoiceList.addAll((ArrayList<TblInvoice>) 
-					entityLister.getObjectList("SELECT * FROM tbl_invoice", 
+					entityLister.getObjectList("SELECT * FROM OMinvoice", 
 							TblInvoice.class));
 		}
 		
@@ -66,7 +66,7 @@ public class InvoiceBackingBean {
 		}
 		
 		/* invoices.addAll((ArrayList<TblInvoice>) 
-				entityLister.getObjectList("SELECT * FROM tbl_invoice", 
+				entityLister.getObjectList("SELECT * FROM OMinvoice", 
 						TblInvoice.class));
 		
 		if(curInvoice != null){
@@ -130,26 +130,26 @@ public class InvoiceBackingBean {
 
 		//getCurInvoice().setIdInvoice(entityLister.NextID(TblInvoice.class));
 		getCurInvoice().setDuedate(new Date());
-		getCurInvoice().setTblSettlement((TblSettlement) entityLister.getSingleObject("SELECT * FROM tbl_SETTLEMENT WHERE id_settlement = 1", TblSettlement.class));
-		getCurInvoice().getTblSettlement().setTblOrder((TblOrder) entityLister.getSingleObject("SELECT * FROM tbl_order WHERE id_order = 1", TblOrder.class));
-		getCurInvoice().setTblInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM tbl_invoicestate WHERE id_invoicestate = 1", TblInvoicestate.class));
+		getCurInvoice().setTblSettlement((TblSettlement) entityLister.getSingleObject("SELECT * FROM OMSETTLEMENT WHERE id_settlement = 1", TblSettlement.class));
+		getCurInvoice().getTblSettlement().setTblOrder((TblOrder) entityLister.getSingleObject("SELECT * FROM OMorder WHERE id_order = 1", TblOrder.class));
+		getCurInvoice().setTblInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM OMinvoicestate WHERE id_invoicestate = 1", TblInvoicestate.class));
 		
-		getCurInvoice().getTblSettlement().setTblIncometype((TblIncometype) entityLister.getSingleObject("SELECT * FROM tbl_incometype WHERE id_incometype = 2", TblIncometype.class));
+		getCurInvoice().getTblSettlement().setTblIncometype((TblIncometype) entityLister.getSingleObject("SELECT * FROM OMincometype WHERE id_incometype = 2", TblIncometype.class));
 
 		getCurInvoice().setTblSettlement(new TblSettlement());
 		TblIncometype income = new TblIncometype();
-		List<TblIncometype> defaultWertIncometype = (List<TblIncometype>)entityLister.getObjectList("SELECT  * FROM TBL_INCOMETYPE", TblIncometype.class);
+		List<TblIncometype> defaultWertIncometype = (List<TblIncometype>)entityLister.getObjectList("SELECT  * FROM OMINCOMETYPE", TblIncometype.class);
 		income.setDescriptionIt(defaultWertIncometype.get(0).getDescriptionIt());
 		getCurInvoice().getTblSettlement().setTblIncometype(income);
 		//Defaultwert für Auftragsnummer setzen
 		TblOrder order = new TblOrder();
-		List<TblOrder> defaultListeOrder =(List<TblOrder>) entityLister.getObjectList("SELECT  * FROM tbl_order", TblOrder.class);
+		List<TblOrder> defaultListeOrder =(List<TblOrder>) entityLister.getObjectList("SELECT  * FROM OMorder", TblOrder.class);
 		TblOrder defaultWertOrder = defaultListeOrder.get(defaultListeOrder.size()-1);
 		order.setOrdernumber(defaultWertOrder.getOrdernumber());
 		getCurInvoice().getTblSettlement().setTblOrder(order);
 		//Defaultwert für Rechnungstatus setzen
 		TblInvoicestate invoicestate = new TblInvoicestate();
-		List<TblInvoicestate> defaultWertInvoicestate = (List<TblInvoicestate>)entityLister.getObjectList("SELECT  * FROM tbl_invoicestate", TblInvoicestate.class);
+		List<TblInvoicestate> defaultWertInvoicestate = (List<TblInvoicestate>)entityLister.getObjectList("SELECT  * FROM OMinvoicestate", TblInvoicestate.class);
 		invoicestate.setDescriptionIs(defaultWertInvoicestate.get(0).getDescriptionIs());
 		getCurInvoice().setTblInvoicestate(invoicestate);*/
 		
@@ -211,7 +211,7 @@ public class InvoiceBackingBean {
 		if(invoicestates == null){
 			invoicestates = new ArrayList<TblInvoicestate>();
 			invoicestates.addAll((Collection<? extends TblInvoicestate>) 
-					entityLister.getObjectList("SELECT * FROM tbl_invoicestate", 
+					entityLister.getObjectList("SELECT * FROM OMinvoicestate", 
 							TblInvoicestate.class));
 		}
 		
@@ -237,7 +237,7 @@ public class InvoiceBackingBean {
 	}
 	
 	public void InvoicestateChange(ValueChangeEvent vce){
-		setCurInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM tbl_invoicestate WHERE description_is = '" + 
+		setCurInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM OMinvoicestate WHERE description_is = '" + 
 				vce.getNewValue().toString() + "'", TblInvoicestate.class));				
 	}
 

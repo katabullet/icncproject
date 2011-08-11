@@ -7,11 +7,11 @@ import java.util.Set;
 
 
 /**
- * The persistent class for the TBL_CUSTOMER database table.
+ * The persistent class for the OMCUSTOMER database table.
  * 
  */
 @Entity
-@Table(name="TBL_CUSTOMER")
+@Table(name="OMCUSTOMER")
 public class TblCustomer extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idCustomer;
@@ -29,8 +29,8 @@ public class TblCustomer extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="TBL_CUSTOMER_IDCUSTOMER_GENERATOR", sequenceName="TBL_CUSTOMER_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_CUSTOMER_IDCUSTOMER_GENERATOR")
+	@SequenceGenerator(name="OMCUSTOMER_IDCUSTOMER_GENERATOR", sequenceName="OMCUSTOMER_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMCUSTOMER_IDCUSTOMER_GENERATOR")
 	@Column(name="ID_CUSTOMER", unique=true, nullable=false, precision=22)
 	public long getIdCustomer() {
 		return this.idCustomer;

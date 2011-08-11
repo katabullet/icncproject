@@ -6,11 +6,11 @@ import java.util.Set;
 
 
 /**
- * The persistent class for the TBL_INVOICESTATE database table.
+ * The persistent class for the OMINVOICESTATE database table.
  * 
  */
 @Entity
-@Table(name="TBL_INVOICESTATE")
+@Table(name="OMINVOICESTATE")
 public class TblInvoicestate extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idInvoicestate;
@@ -22,8 +22,8 @@ public class TblInvoicestate extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="TBL_INVOICESTATE_IDINVOICESTATE_GENERATOR", sequenceName="TBL_INVOICESTATE_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_INVOICESTATE_IDINVOICESTATE_GENERATOR")
+	@SequenceGenerator(name="OMINVOICESTATE_IDINVOICESTATE_GENERATOR", sequenceName="OMINVOICESTATE_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMINVOICESTATE_IDINVOICESTATE_GENERATOR")
 	@Column(name="ID_INVOICESTATE", unique=true, nullable=false, precision=22)
 	public long getIdInvoicestate() {
 		return this.idInvoicestate;

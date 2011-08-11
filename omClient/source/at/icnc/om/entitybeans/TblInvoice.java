@@ -7,11 +7,11 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the TBL_INVOICE database table.
+ * The persistent class for the OMINVOICE database table.
  * 
  */
 @Entity
-@Table(name="TBL_INVOICE")
+@Table(name="OMINVOICE")
 public class TblInvoice extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idInvoice;
@@ -27,8 +27,8 @@ public class TblInvoice extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="TBL_INVOICE_IDINVOICE_GENERATOR", sequenceName="TBL_INVOICE_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_INVOICE_IDINVOICE_GENERATOR")
+	@SequenceGenerator(name="OMINVOICE_IDINVOICE_GENERATOR", sequenceName="OMINVOICE_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMINVOICE_IDINVOICE_GENERATOR")
 	@Column(name="ID_INVOICE", unique=true, nullable=false, precision=22)
 	public long getIdInvoice() {
 		return this.idInvoice;

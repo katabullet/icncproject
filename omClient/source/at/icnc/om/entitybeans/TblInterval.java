@@ -7,11 +7,11 @@ import java.util.Set;
 
 
 /**
- * The persistent class for the TBL_INTERVAL database table.
+ * The persistent class for the OMINTERVAL database table.
  * 
  */
 @Entity
-@Table(name="TBL_INTERVAL")
+@Table(name="OMINTERVAL")
 public class TblInterval extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idInterval;
@@ -24,8 +24,8 @@ public class TblInterval extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="TBL_INTERVAL_IDINTERVAL_GENERATOR", sequenceName="TBL_INTERVAL_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_INTERVAL_IDINTERVAL_GENERATOR")
+	@SequenceGenerator(name="OMINTERVAL_IDINTERVAL_GENERATOR", sequenceName="OMINTERVAL_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMINTERVAL_IDINTERVAL_GENERATOR")
 	@Column(name="ID_INTERVAL", unique=true, nullable=false, precision=22)
 	public long getIdInterval() {
 		return this.idInterval;

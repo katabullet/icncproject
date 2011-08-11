@@ -1,14 +1,13 @@
 package at.icnc.om.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import at.icnc.om.entitybeans.TblInvoice;
 import at.icnc.om.interfaces.EntityListerLocal;
 
 import javax.annotation.PreDestroy;
 import javax.ejb.Local;
-import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -32,11 +31,12 @@ public class EntityListerImpl implements EntityListerLocal {
     public EntityListerImpl() {
         // TODO Auto-generated constructor stub
     }
-
+    
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<?> getObjectList(String sqlStatement, Class<?> entityClass) {
 		Collection<?> result = new ArrayList<Object>();
+		
 		
 		try {		
 			//CreateEM(PU);
@@ -47,13 +47,32 @@ public class EntityListerImpl implements EntityListerLocal {
 		}finally {			
 			emf.close();
 			//em.close();
-		}		
+		}	
+		
+		return result;
+	}
+	
+	public Object getSingleObject(String sqlStatement, Class<?> entityClass){
+		Object result = new Object();
+		
+		try {
+			result = CreateQuery(sqlStatement, entityClass, CreateEM(PU)).getSingleResult();
+			em.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			emf.close();
+		}
 		
 		return result;
 	}
 	
 	private Query CreateQuery(String sqlStatement, Class<?> entityClass, EntityManager curEM){
 		Query query = em.createNativeQuery(sqlStatement, entityClass);	
+		return query;
+	}
+	
+	private Query CreateQuery(String sqlStatement, EntityManager curEM){
+		Query query = curEM.createNativeQuery(sqlStatement);
 		return query;
 	}
 	
@@ -83,11 +102,26 @@ public class EntityListerImpl implements EntityListerLocal {
 		}
 	}
 	
+	public Long NextID(Class<?> entityClass){		
+		String classname = entityClass.getSimpleName();
+		
+		classname = classname.substring(3);
+		String sqlStatement = "SELECT tbl_" + classname + "_seq.nextval FROM dual";
+		
+		//return ((BigDecimal) CreateQuery("SELECT " + classname + "_SEQ.Nextval FROM DUAL", entityClass, CreateEM(PU)).getResultList().get(0)).longValue();
+		return ((BigDecimal)CreateQuery(sqlStatement, CreateEM(PU)).getSingleResult()).longValue();
+	}
+	
 	public void UpdateObject(Class<?> entityClass, Object updated){
 		
 		try {
 			CreateEM(PU);
+			
 			em.merge(updated);
+			
+			
+			//em.persist(updated);
+			
 			em.flush();
 			em.close();
 		} catch (Exception e) {
@@ -97,21 +131,6 @@ public class EntityListerImpl implements EntityListerLocal {
 			emf.close();
 		}
 	}	
-	
-	@SuppressWarnings("unused")
-	private String StatementCreater(String table, String[] filterColumn, 
-									String[] filterValue){
-		String sqlStatement = "SELECT * FROM " + table;
-		if(filterColumn != null && filterValue != null){
-			sqlStatement += " WHERE ";
-			for(int x = 0; x< filterColumn.length; x++){
-				sqlStatement += " AND ";
-				sqlStatement += filterColumn[x] + " LIKE '%" + filterValue[x] + "%'";
-			}
-		}
-		sqlStatement = sqlStatement.substring(0, sqlStatement.length() - 4);
-		return sqlStatement;
-	}
 	
 	@PreDestroy
 	public void BeforeDestroy(){

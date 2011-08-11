@@ -6,11 +6,11 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the TBL_PROTOCOL database table.
+ * The persistent class for the OMPROTOCOL database table.
  * 
  */
 @Entity
-@Table(name="TBL_PROTOCOL")
+@Table(name="OMPROTOCOL")
 public class TblProtocol extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idProtocol;
@@ -23,8 +23,8 @@ public class TblProtocol extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="TBL_PROTOCOL_IDPROTOCOL_GENERATOR", sequenceName="TBL_PROTOCOL_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_PROTOCOL_IDPROTOCOL_GENERATOR")
+	@SequenceGenerator(name="OMPROTOCOL_IDPROTOCOL_GENERATOR", sequenceName="OMPROTOCOL_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMPROTOCOL_IDPROTOCOL_GENERATOR")
 	@Column(name="ID_PROTOCOL", unique=true, nullable=false, precision=22)
 	public long getIdProtocol() {
 		return this.idProtocol;

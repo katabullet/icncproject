@@ -45,8 +45,8 @@ public class TblInvoiceImpl implements TblInvoiceLocal {
 			/*emf = Persistence.createEntityManagerFactory("omPU");
 			em = emf.createEntityManager();*/
 		
-			//Query query = em.createNativeQuery("SELECT a.ID_ORDER, a.ORDERNUMBER, a.ORDERDATE, a.TRAVELCOSTS, b.CUSTOMERNAME, c.DESCRIPTION_OS FROM TBL_ORDER a left join TBL_CUSTOMER b on (a.FK_CUSTOMER = b.ID_CUSTOMER) left join TBL_ORDERSTATE c on (a.FK_ORDERSTATE = c.ID_ORDERSTATE)", TblOrder.class);
-			String sqlStatement = "SELECT * FROM tbl_invoice";
+			//Query query = em.createNativeQuery("SELECT a.ID_ORDER, a.ORDERNUMBER, a.ORDERDATE, a.TRAVELCOSTS, b.CUSTOMERNAME, c.DESCRIPTION_OS FROM OMORDER a left join OMCUSTOMER b on (a.FK_CUSTOMER = b.ID_CUSTOMER) left join OMORDERSTATE c on (a.FK_ORDERSTATE = c.ID_ORDERSTATE)", TblOrder.class);
+			String sqlStatement = "SELECT * FROM OMinvoice";
 			
 			Query query = em.createNativeQuery(sqlStatement, TblInvoice.class);			
 			

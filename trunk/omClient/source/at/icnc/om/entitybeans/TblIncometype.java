@@ -6,11 +6,11 @@ import java.util.Set;
 
 
 /**
- * The persistent class for the TBL_INCOMETYPE database table.
+ * The persistent class for the OMINCOMETYPE database table.
  * 
  */
 @Entity
-@Table(name="TBL_INCOMETYPE")
+@Table(name="OMINCOMETYPE")
 public class TblIncometype extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idIncometype;
@@ -23,8 +23,8 @@ public class TblIncometype extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="TBL_INCOMETYPE_IDINCOMETYPE_GENERATOR", sequenceName="TBL_INCOMETYPE_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_INCOMETYPE_IDINCOMETYPE_GENERATOR")
+	@SequenceGenerator(name="OMINCOMETYPE_IDINCOMETYPE_GENERATOR", sequenceName="OMINCOMETYPE_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMINCOMETYPE_IDINCOMETYPE_GENERATOR")
 	@Column(name="ID_INCOMETYPE", unique=true, nullable=false, precision=22)
 	public long getIdIncometype() {
 		return this.idIncometype;

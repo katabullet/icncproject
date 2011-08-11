@@ -7,11 +7,11 @@ import java.util.Set;
 
 
 /**
- * The persistent class for the TBL_ORDER database table.
+ * The persistent class for the OMORDER database table.
  * 
  */
 @Entity
-@Table(name="TBL_ORDER")
+@Table(name="OMORDER")
 public class TblOrder extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idOrder;
@@ -29,8 +29,8 @@ public class TblOrder extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="TBL_ORDER_IDORDER_GENERATOR", sequenceName="TBL_ORDER_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_ORDER_IDORDER_GENERATOR")
+	@SequenceGenerator(name="OMORDER_IDORDER_GENERATOR", sequenceName="OMORDER_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMORDER_IDORDER_GENERATOR")
 	@Column(name="ID_ORDER", unique=true, nullable=false, precision=22)
 	public long getIdOrder() {
 		return this.idOrder;
@@ -74,7 +74,7 @@ public class TblOrder extends Selectable implements Serializable {
 	//bi-directional many-to-many association to TblCostcentre
     @ManyToMany
 	@JoinTable(
-		name="TBL_ORDER_HAS_COSTCENTRE"
+		name="OMORDER_HAS_COSTCENTRE"
 		, joinColumns={
 			@JoinColumn(name="FK_ORDER")
 			}
@@ -106,7 +106,7 @@ public class TblOrder extends Selectable implements Serializable {
 	//bi-directional many-to-many association to TblIncometype
     @ManyToMany
 	@JoinTable(
-		name="TBL_ORDER_HAS_INCOMETYPE"
+		name="OMORDER_HAS_INCOMETYPE"
 		, joinColumns={
 			@JoinColumn(name="FK_ORDER")
 			}

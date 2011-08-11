@@ -33,7 +33,7 @@ public class PermissionImpl implements PermissionLocal {
 		Connection con = getSQLConnection("java:omDS");
 		
 		try {
-			ps = con.prepareStatement("SELECT FK_USERROLE FROM TBL_USER WHERE USERNAME = ?");
+			ps = con.prepareStatement("SELECT FK_USERROLE FROM OMUSER WHERE USERNAME = ?");
 			ps.setString(1, username);
 			rs = ps.executeQuery();
 			

@@ -6,11 +6,11 @@ import java.util.Set;
 
 
 /**
- * The persistent class for the TBL_COSTCENTRE database table.
+ * The persistent class for the OMCOSTCENTRE database table.
  * 
  */
 @Entity
-@Table(name="TBL_COSTCENTRE")
+@Table(name="OMCOSTCENTRE")
 public class TblCostcentre extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idCostcentre;
@@ -23,8 +23,8 @@ public class TblCostcentre extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="TBL_COSTCENTRE_IDCOSTCENTRE_GENERATOR", sequenceName="TBL_COSTCENTRE_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_COSTCENTRE_IDCOSTCENTRE_GENERATOR")
+	@SequenceGenerator(name="OMCOSTCENTRE_IDCOSTCENTRE_GENERATOR", sequenceName="OMCOSTCENTRE_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMCOSTCENTRE_IDCOSTCENTRE_GENERATOR")
 	@Column(name="ID_COSTCENTRE", unique=true, nullable=false, precision=22)
 	public long getIdCostcentre() {
 		return this.idCostcentre;

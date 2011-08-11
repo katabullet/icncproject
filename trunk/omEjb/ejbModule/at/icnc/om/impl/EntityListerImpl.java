@@ -106,7 +106,7 @@ public class EntityListerImpl implements EntityListerLocal {
 		String classname = entityClass.getSimpleName();
 		
 		classname = classname.substring(3);
-		String sqlStatement = "SELECT tbl_" + classname + "_seq.nextval FROM dual";
+		String sqlStatement = "SELECT OM" + classname + "_seq.nextval FROM dual";
 		
 		//return ((BigDecimal) CreateQuery("SELECT " + classname + "_SEQ.Nextval FROM DUAL", entityClass, CreateEM(PU)).getResultList().get(0)).longValue();
 		return ((BigDecimal)CreateQuery(sqlStatement, CreateEM(PU)).getSingleResult()).longValue();

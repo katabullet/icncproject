@@ -7,11 +7,11 @@ import java.util.Set;
 
 
 /**
- * The persistent class for the TBL_SETTLEMENT database table.
+ * The persistent class for the OMSETTLEMENT database table.
  * 
  */
 @Entity
-@Table(name="TBL_SETTLEMENT")
+@Table(name="OMSETTLEMENT")
 public class TblSettlement extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idSettlement;
@@ -26,8 +26,8 @@ public class TblSettlement extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="TBL_SETTLEMENT_IDSETTLEMENT_GENERATOR", sequenceName="TBL_SETTLEMENT_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TBL_SETTLEMENT_IDSETTLEMENT_GENERATOR")
+	@SequenceGenerator(name="OMSETTLEMENT_IDSETTLEMENT_GENERATOR", sequenceName="OMSETTLEMENT_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMSETTLEMENT_IDSETTLEMENT_GENERATOR")
 	@Column(name="ID_SETTLEMENT", unique=true, nullable=false, precision=22)
 	public long getIdSettlement() {
 		return this.idSettlement;

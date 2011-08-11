@@ -2,9 +2,13 @@ package at.icnc.om.backingbeans;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.SelectItem;
 
 import com.icesoft.faces.component.ext.RowSelectorEvent;
 
@@ -38,22 +42,30 @@ public class InvoiceBackingBean {
 	Boolean visible = false;
 	Boolean popupRender = false;
 	Boolean filterpopupRender = false;
+	private ArrayList<TblInvoice> invoiceList;
 	
 	@SuppressWarnings("unchecked")
 	public ArrayList<TblInvoice> getInvoiceList(){		
-		ArrayList<TblInvoice> invoices = new ArrayList<TblInvoice>();
+		//ArrayList<TblInvoice> invoices = new ArrayList<TblInvoice>();
 		/*invoices.addAll(tblInvoice.getInvoiceList());
 		//invoices.addAll(tblInvoice.getInvoiceList("Sum","5"));
+		*/
+		if(invoiceList == null){
+			invoiceList = new ArrayList<TblInvoice>();
+			invoiceList.addAll((ArrayList<TblInvoice>) 
+					entityLister.getObjectList("SELECT * FROM tbl_invoice", 
+							TblInvoice.class));
+		}
 		
 		if(curInvoice != null){
-			for(TblInvoice curItem : invoices){				
+			for(TblInvoice curItem : invoiceList){				
 				if(curItem.getIdInvoice() == curInvoice.getIdInvoice()){
 					curItem.setSelected(true);
 				}
 			}
-		}*/
+		}
 		
-		invoices.addAll((ArrayList<TblInvoice>) 
+		/* invoices.addAll((ArrayList<TblInvoice>) 
 				entityLister.getObjectList("SELECT * FROM tbl_invoice", 
 						TblInvoice.class));
 		
@@ -64,18 +76,29 @@ public class InvoiceBackingBean {
 					//setCurInvoice(curItem);
 				}
 			}
-		}
+		}*/
 		
-		return invoices;
+		//return invoices;
+		return invoiceList;
 	}	
 
 	public void rowEvent(RowSelectorEvent re) {		
-		if(getCurInvoice() != null){			
+		/*if(getCurInvoice() != null){			
 			if(getCurInvoice().getIdInvoice() == tblInvoice.getInvoiceList().get(re.getRow()).getIdInvoice()){
 				setCurInvoice(new TblInvoice());
 				visible = false;
 			}else {
 				setCurInvoice(tblInvoice.getInvoiceList().get(re.getRow()));
+				visible = true;
+			}
+		}*/
+		
+		if(getCurInvoice() != null){			
+			if(getCurInvoice().getIdInvoice() == invoiceList.get(re.getRow()).getIdInvoice()){
+				setCurInvoice(new TblInvoice());
+				visible = false;
+			}else {
+				setCurInvoice(invoiceList.get(re.getRow()));
 				visible = true;
 			}
 		}
@@ -103,9 +126,17 @@ public class InvoiceBackingBean {
 	}
 
 	public void PopupRendernaendernNew(){
-		setCurInvoice(new TblInvoice());
+		/* setCurInvoice(new TblInvoice());
+
+		//getCurInvoice().setIdInvoice(entityLister.NextID(TblInvoice.class));
+		getCurInvoice().setDuedate(new Date());
+		getCurInvoice().setTblSettlement((TblSettlement) entityLister.getSingleObject("SELECT * FROM tbl_SETTLEMENT WHERE id_settlement = 1", TblSettlement.class));
+		getCurInvoice().getTblSettlement().setTblOrder((TblOrder) entityLister.getSingleObject("SELECT * FROM tbl_order WHERE id_order = 1", TblOrder.class));
+		getCurInvoice().setTblInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM tbl_invoicestate WHERE id_invoicestate = 1", TblInvoicestate.class));
+		
+		getCurInvoice().getTblSettlement().setTblIncometype((TblIncometype) entityLister.getSingleObject("SELECT * FROM tbl_incometype WHERE id_incometype = 2", TblIncometype.class));
+
 		getCurInvoice().setTblSettlement(new TblSettlement());
-		//Defaultwert für Ertragsart setzen
 		TblIncometype income = new TblIncometype();
 		List<TblIncometype> defaultWertIncometype = (List<TblIncometype>)entityLister.getObjectList("SELECT  * FROM TBL_INCOMETYPE", TblIncometype.class);
 		income.setDescriptionIt(defaultWertIncometype.get(0).getDescriptionIt());
@@ -120,7 +151,7 @@ public class InvoiceBackingBean {
 		TblInvoicestate invoicestate = new TblInvoicestate();
 		List<TblInvoicestate> defaultWertInvoicestate = (List<TblInvoicestate>)entityLister.getObjectList("SELECT  * FROM tbl_invoicestate", TblInvoicestate.class);
 		invoicestate.setDescriptionIs(defaultWertInvoicestate.get(0).getDescriptionIs());
-		getCurInvoice().setTblInvoicestate(invoicestate);
+		getCurInvoice().setTblInvoicestate(invoicestate);*/
 		
 		PopupRendernaendern();
 	}
@@ -136,13 +167,17 @@ public class InvoiceBackingBean {
 	public void DeleteInvoice(){
 		//tblInvoice.DeleteInvoice(curInvoice.getIdInvoice());
 		entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
+		invoiceList = null;
 		visible = false;
 	}
 	
 	public void UpdateInvoice(){
+		curInvoice.setTblInvoicestate(curInvoicestate);
 		entityLister.UpdateObject(TblInvoice.class, curInvoice);
 		visible = false;
-		setCurInvoice(new TblInvoice());
+		invoiceList = null;
+		invoicestates = null;
+		setCurInvoice(new TblInvoice());		
 		PopupRendernaendern();
 	}
 
@@ -161,4 +196,62 @@ public class InvoiceBackingBean {
 	public String getFilterValue() {
 		return filterValue;
 	}
+	
+	// __________________________________________________________________________
+	
+	
+	ArrayList<TblInvoicestate> invoicestates;
+	private TblInvoicestate curInvoicestate;
+	
+	@SuppressWarnings("unchecked")
+	private ArrayList<TblInvoicestate> getInvoicestateList(){
+		/*invoicestates.clear();
+		invoicestates.addAll(tblInvoicestate.getInvoicsestateList());
+		return invoicestates;*/
+		if(invoicestates == null){
+			invoicestates = new ArrayList<TblInvoicestate>();
+			invoicestates.addAll((Collection<? extends TblInvoicestate>) 
+					entityLister.getObjectList("SELECT * FROM tbl_invoicestate", 
+							TblInvoicestate.class));
+		}
+		
+		if(curInvoicestate != null){
+			for(TblInvoicestate curItem : invoicestates){				
+				if(curItem.getIdInvoicestate() == curInvoicestate.getIdInvoicestate()){
+					curItem.setSelected(true);
+				}
+			}
+		}else{
+			curInvoicestate = invoicestates.get(0);
+		}		
+	
+		return invoicestates;
+	}	
+	
+	public ArrayList<SelectItem> getInvoicestateListDescription(){
+		ArrayList<SelectItem> invoicsestates = new ArrayList<SelectItem>();
+		for (TblInvoicestate item : getInvoicestateList()) {
+			invoicsestates.add(new SelectItem(item.getDescriptionIs()));
+		}
+		return invoicsestates;			
+	}
+	
+	public void InvoicestateChange(ValueChangeEvent vce){
+		setCurInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM tbl_invoicestate WHERE description_is = '" + 
+				vce.getNewValue().toString() + "'", TblInvoicestate.class));				
+	}
+
+	public void setCurInvoicestate(TblInvoicestate curInvoicestate) {
+		this.curInvoicestate = curInvoicestate;
+	}
+
+	public TblInvoicestate getCurInvoicestate() {
+		return curInvoicestate;
+	}
+	
+	public void DateChangeListener(ValueChangeEvent vce){
+		getCurInvoice().setDuedate((Date) vce.getNewValue());
+	}
+	
+	//___________________________________________________________________________
 }

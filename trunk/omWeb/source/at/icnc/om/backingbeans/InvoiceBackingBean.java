@@ -1,6 +1,7 @@
 package at.icnc.om.backingbeans;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -436,5 +437,58 @@ public class InvoiceBackingBean implements Refreshable{
 	
 	public void SettlementChangeFilter(ValueChangeEvent vce){
 		setSettlementnumber(vce.getNewValue().toString());				
+	}
+	
+	public void Filtern() {
+		ArrayList<String> werte = new ArrayList<String>();
+		ArrayList<String> spalte= new ArrayList<String>();
+		
+		if(invoicenumber != null){
+			werte.add(invoicenumber);
+			spalte.add("invoicenumber");
+		}
+		
+		if(sum != null){
+			werte.add(sum);
+			spalte.add("sum");
+		}
+		
+		if(estimatate != null){
+			werte.add(estimatate);
+			spalte.add("estimation");
+		}
+		
+		if(duedate != null){
+			werte.add(duedate.toString());
+			spalte.add("duedate");
+		}
+		
+		if(invoicestate != null){
+			werte.add(invoicestate);
+			spalte.add("description_is");
+		}
+		
+		if(ordernumber != null){
+			werte.add(ordernumber);
+			spalte.add("ordernumber");
+		}
+		
+		if(incometype != null){
+			werte.add(incometype);
+			spalte.add("description_it");
+		}
+		
+		if(settlementnumber != null){
+			werte.add(settlementnumber);
+			spalte.add("id_settlement");
+		}
+		
+		if(invoicenumber != null){
+			werte.add(invoicenumber);
+			spalte.add("");
+		}
+		
+		
+		 
 	}
 }

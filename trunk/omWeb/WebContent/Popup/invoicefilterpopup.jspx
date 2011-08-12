@@ -59,7 +59,7 @@
        			</ice:selectOneMenu>			
 			</ice:panelGrid>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" style="width: 500px;">
-				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Filtern"/>
+				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Filtern" action="#{invoiceLister.Filtern}"/>
 				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{invoiceLister.FilterpopupRendernaendern}"/>
 			</ice:panelGrid>
 		</ice:panelGroup>

@@ -304,4 +304,137 @@ public class InvoiceBackingBean implements Refreshable{
 	public void ClosePopup(){
 		init();
 	}
+	
+	//___________________________________________________________________________
+	//Filterpopup Methoden
+
+	private String invoicenumber;
+	private String sum;
+	private String estimatate;
+	private Date duedate;
+	private String invoicestate;
+	private String ordernumber;
+	private String incometype;
+	private String settlementnumber;
+	
+	public void setInvoicenumber(String invoicenumber) {
+		this.invoicenumber = invoicenumber;
+	}
+
+	public String getInvoicenumber() {
+		return invoicenumber;
+	}
+
+	public void setSum(String sum) {
+		this.sum = sum;
+	}
+
+	public String getSum() {
+		return sum;
+	}
+
+	public void setEstimatate(String estimatate) {
+		this.estimatate = estimatate;
+	}
+
+	public String getEstimatate() {
+		return estimatate;
+	}
+
+	public void setDuedate(Date duedate) {
+		this.duedate = duedate;
+	}
+
+	public Date getDuedate() {
+		return duedate;
+	}
+
+	public void setInvoicestate(String invoicestate) {
+		this.invoicestate = invoicestate;
+	}
+
+	public String getInvoicestate() {
+		return invoicestate;
+	}
+
+	public void setOrdernumber(String ordernumber) {
+		this.ordernumber = ordernumber;
+	}
+
+	public String getOrdernumber() {
+		return ordernumber;
+	}
+
+	public void setIncometype(String incometype) {
+		this.incometype = incometype;
+	}
+
+	public String getIncometype() {
+		return incometype;
+	}
+
+	public void setSettlementnumber(String settlementnumber) {
+		this.settlementnumber = settlementnumber;
+	}
+
+	public String getSettlementnumber() {
+		return settlementnumber;
+	}
+	public ArrayList<SelectItem> getorderListDescription(){
+		ArrayList<SelectItem> ordernumber = new ArrayList<SelectItem>();
+	
+		ArrayList<TblOrder> order = new ArrayList<TblOrder>();
+		order.addAll((Collection<? extends TblOrder>) 
+				entityLister.getObjectList("SELECT * FROM OMorder", 
+						TblOrder.class));
+		
+		for (TblOrder item : order) {
+			ordernumber.add(new SelectItem(item.getOrdernumber()));
+		}
+		return ordernumber;			
+	}
+	
+	public ArrayList<SelectItem> getincometypeListDescription(){
+		ArrayList<SelectItem> incometypeDescription = new ArrayList<SelectItem>();
+	
+		ArrayList<TblIncometype> incometype = new ArrayList<TblIncometype>();
+		incometype.addAll((Collection<? extends TblIncometype>) 
+				entityLister.getObjectList("SELECT * FROM OMincometype", 
+						TblIncometype.class));
+		
+		for (TblIncometype item : incometype) {
+			incometypeDescription.add(new SelectItem(item.getDescriptionIt()));
+		}
+		return incometypeDescription;			
+	}
+	
+	public ArrayList<SelectItem> getsettlementListDescription(){
+		ArrayList<SelectItem> settlementID = new ArrayList<SelectItem>();
+	
+		ArrayList<TblSettlement> settlement = new ArrayList<TblSettlement>();
+		settlement.addAll((Collection<? extends TblSettlement>) 
+				entityLister.getObjectList("SELECT * FROM OMsettlement", 
+						TblSettlement.class));
+		
+		for (TblSettlement item : settlement) {
+			settlementID.add(new SelectItem(item.getIdSettlement()));
+		}
+		return settlementID;			
+	}
+	
+	public void InvoicestateChangeFilter(ValueChangeEvent vce){
+		setInvoicestate(vce.getNewValue().toString());				
+	}
+	
+	public void OrderChangeFilter(ValueChangeEvent vce){
+		setOrdernumber(vce.getNewValue().toString());				
+	}
+	
+	public void IncometypeChangeFilter(ValueChangeEvent vce){
+		setIncometype(vce.getNewValue().toString());			
+	}
+	
+	public void SettlementChangeFilter(ValueChangeEvent vce){
+		setSettlementnumber(vce.getNewValue().toString());				
+	}
 }

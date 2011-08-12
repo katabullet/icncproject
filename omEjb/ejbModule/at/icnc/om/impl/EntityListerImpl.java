@@ -100,24 +100,18 @@ public class EntityListerImpl implements EntityListerLocal {
 		}finally{
 			emf.close();
 		}
-	}
+	}	
 	
-	public Long NextID(Class<?> entityClass){		
-		String classname = entityClass.getSimpleName();
-		
-		classname = classname.substring(3);
-		String sqlStatement = "SELECT OM" + classname + "_seq.nextval FROM dual";
-		
-		//return ((BigDecimal) CreateQuery("SELECT " + classname + "_SEQ.Nextval FROM DUAL", entityClass, CreateEM(PU)).getResultList().get(0)).longValue();
-		return ((BigDecimal)CreateQuery(sqlStatement, CreateEM(PU)).getSingleResult()).longValue();
-	}
-	
-	public void UpdateObject(Class<?> entityClass, Object updated){
+	public void UpdateObject(Class<?> entityClass, Object updated, Long id){
 		
 		try {
 			CreateEM(PU);
 			
-			em.merge(updated);
+			if(em.find(entityClass, id) != null){
+				em.merge(updated);
+			}else{
+				em.persist(updated);
+			}
 			
 			
 			//em.persist(updated);

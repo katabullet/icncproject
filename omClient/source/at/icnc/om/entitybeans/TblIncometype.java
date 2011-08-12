@@ -23,7 +23,7 @@ public class TblIncometype extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="OMINCOMETYPE_IDINCOMETYPE_GENERATOR", sequenceName="OMINCOMETYPE_SEQ")
+	@SequenceGenerator(name="OMINCOMETYPE_IDINCOMETYPE_GENERATOR", sequenceName="OMINCOMETYPE_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMINCOMETYPE_IDINCOMETYPE_GENERATOR")
 	@Column(name="ID_INCOMETYPE", unique=true, nullable=false, precision=22)
 	public long getIdIncometype() {

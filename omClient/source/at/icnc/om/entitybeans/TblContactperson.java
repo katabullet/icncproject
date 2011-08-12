@@ -25,7 +25,7 @@ public class TblContactperson extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="OMCONTACTPERSON_IDCONTACTPERSON_GENERATOR", sequenceName="OMCONTACTPERSON_SEQ")
+	@SequenceGenerator(name="OMCONTACTPERSON_IDCONTACTPERSON_GENERATOR", sequenceName="OMCONTACTPERSON_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMCONTACTPERSON_IDCONTACTPERSON_GENERATOR")
 	@Column(name="ID_CONTACTPERSON", unique=true, nullable=false, precision=22)
 	public long getIdContactperson() {

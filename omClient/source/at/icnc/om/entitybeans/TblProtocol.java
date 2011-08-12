@@ -23,7 +23,7 @@ public class TblProtocol extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="OMPROTOCOL_IDPROTOCOL_GENERATOR", sequenceName="OMPROTOCOL_SEQ")
+	@SequenceGenerator(name="OMPROTOCOL_IDPROTOCOL_GENERATOR", sequenceName="OMPROTOCOL_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMPROTOCOL_IDPROTOCOL_GENERATOR")
 	@Column(name="ID_PROTOCOL", unique=true, nullable=false, precision=22)
 	public long getIdProtocol() {

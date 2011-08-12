@@ -22,7 +22,7 @@ public class TblInvoicestate extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="OMINVOICESTATE_IDINVOICESTATE_GENERATOR", sequenceName="OMINVOICESTATE_SEQ")
+	@SequenceGenerator(name="OMINVOICESTATE_IDINVOICESTATE_GENERATOR", sequenceName="OMINVOICESTATE_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMINVOICESTATE_IDINVOICESTATE_GENERATOR")
 	@Column(name="ID_INVOICESTATE", unique=true, nullable=false, precision=22)
 	public long getIdInvoicestate() {

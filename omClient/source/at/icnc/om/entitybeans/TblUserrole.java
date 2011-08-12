@@ -22,7 +22,7 @@ public class TblUserrole extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="OMUSERROLE_IDUSERROLE_GENERATOR", sequenceName="OMUSERROLE_SEQ")
+	@SequenceGenerator(name="OMUSERROLE_IDUSERROLE_GENERATOR", sequenceName="OMUSERROLE_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMUSERROLE_IDUSERROLE_GENERATOR")
 	@Column(name="ID_USERROLE", unique=true, nullable=false, precision=22)
 	public long getIdUserrole() {

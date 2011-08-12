@@ -15,6 +15,7 @@ import java.util.Date;
 public class TblInvoice extends Selectable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long idInvoice;
+	
 	private Date duedate;
 	private String invoicenumber;
 	private BigDecimal sum;
@@ -27,7 +28,7 @@ public class TblInvoice extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="OMINVOICE_IDINVOICE_GENERATOR", sequenceName="OMINVOICE_SEQ")
+	@SequenceGenerator(name="OMINVOICE_IDINVOICE_GENERATOR", sequenceName="OMINVOICE_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMINVOICE_IDINVOICE_GENERATOR")
 	@Column(name="ID_INVOICE", unique=true, nullable=false, precision=22)
 	public long getIdInvoice() {
@@ -39,7 +40,7 @@ public class TblInvoice extends Selectable implements Serializable {
 	}
 
 
-    @Temporal( TemporalType.DATE)
+	@Temporal( TemporalType.DATE)
 	public Date getDuedate() {
 		return this.duedate;
 	}

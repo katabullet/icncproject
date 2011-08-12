@@ -23,7 +23,7 @@ public class TblCostcentre extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="OMCOSTCENTRE_IDCOSTCENTRE_GENERATOR", sequenceName="OMCOSTCENTRE_SEQ")
+	@SequenceGenerator(name="OMCOSTCENTRE_IDCOSTCENTRE_GENERATOR", sequenceName="OMCOSTCENTRE_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMCOSTCENTRE_IDCOSTCENTRE_GENERATOR")
 	@Column(name="ID_COSTCENTRE", unique=true, nullable=false, precision=22)
 	public long getIdCostcentre() {

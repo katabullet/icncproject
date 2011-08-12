@@ -26,7 +26,7 @@ public class TblSettlement extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="OMSETTLEMENT_IDSETTLEMENT_GENERATOR", sequenceName="OMSETTLEMENT_SEQ")
+	@SequenceGenerator(name="OMSETTLEMENT_IDSETTLEMENT_GENERATOR", sequenceName="OMSETTLEMENT_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMSETTLEMENT_IDSETTLEMENT_GENERATOR")
 	@Column(name="ID_SETTLEMENT", unique=true, nullable=false, precision=22)
 	public long getIdSettlement() {

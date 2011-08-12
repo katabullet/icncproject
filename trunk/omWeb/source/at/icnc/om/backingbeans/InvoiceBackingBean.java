@@ -10,6 +10,8 @@ import javax.ejb.EJB;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
+import com.icesoft.faces.component.datapaginator.DataPaginator;
+import com.icesoft.faces.component.datapaginator.PaginatorActionEvent;
 import com.icesoft.faces.component.ext.RowSelectorEvent;
 
 import at.icnc.om.entitybeans.TblIncometype;
@@ -35,10 +37,13 @@ public class InvoiceBackingBean implements Refreshable{
 	TblOrderLocal tblOrder;
 	@EJB
 	TblInvoicestateLocal tblInvoicestate;
+
 	
 	private TblInvoice curInvoice = new TblInvoice();
 	private String filterColumn = "";
 	private String filterValue = "";
+	
+	private DataPaginator paginator;
 	
 	Boolean visible = false;
 	Boolean popupRender = false;
@@ -275,11 +280,20 @@ public class InvoiceBackingBean implements Refreshable{
 		visible = false;
 		popupRender = false;
 		filterpopupRender = false;
+		paginator.gotoFirstPage();
 	}
 
 	@Override
 	public void refresh() {
 		invoiceList = null;
 		invoicestates = null;	
+	}
+
+	public void setPaginator(DataPaginator paginator) {
+		this.paginator = paginator;
+	}
+
+	public DataPaginator getPaginator() {
+		return paginator;
 	}
 }

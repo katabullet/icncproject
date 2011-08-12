@@ -10,8 +10,8 @@
 	<ice:outputStyle href="./styles/popup.css" />
 	<ice:outputStyle href="./styles/Menu.css" />
 </ice:outputHead>
-
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ 
 <ice:outputBody id="body">
 <ice:outputStyle href="./styles/Sites.css"/>
 	<f:loadBundle basename="messages" var="msg"/>
@@ -43,7 +43,7 @@
             					selectedIndex="0">
             			
             			<!--Settlement-->		
-            			<ice:panelTab label="#{msg.tableInvoice}" labelWidth="#{sitesBean.tabWidth}" style="text-align: center;" >
+            			<ice:panelTab label="#{msg.tableSettlement}" labelWidth="#{sitesBean.tabWidth}" style="text-align: center;" >
             				<ice:panelTabSet id="icePnlTbSet1" selectedIndex="0" tabPlacement="Bottom">
             					<!-- Settlement -->
             					<ice:panelTab label="#{msg.tableSettlement}" labelWidth="#{sitesBean.allTabWidth}">

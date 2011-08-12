@@ -11,7 +11,7 @@
 		<ice:panelGroup styleClass="exampleBox dataScrollingContainer">
 			<ice:selectOneMenu id="type" value="#{dataExporter.type}" partialSubmit="true"
 		            valueChangeListener="#{dataExporter.typeChangeListener}" >
-		            <f:selectItem itemLabel="Select a type" itemValue=""/>
+		            <f:selectItem itemLabel="#{msg.tableExport}" itemValue=""/>
 		            <f:selectItem itemLabel="MS Excel" itemValue="excel"/>
 		            <f:selectItem itemLabel="CSV (comma separated values)" itemValue="csv"/>
 		        </ice:selectOneMenu>
@@ -28,11 +28,12 @@
 	
 		  
 		<!-- Buttons Start -->
-     	<ice:panelGrid columns="4" columnClasses="buttons" style="width: 112px;">
-     		<ice:commandButton image="images/btn_filter_e.png" action="#{invoiceLister.FilterpopupRendernaendern}"/>
-      		<ice:commandButton  image="images/btn_new_e.png" rendered="#{sitesBean.buttonRendered}" action="#{invoiceLister.PopupRendernaendernNew}"/>
-      		<ice:commandButton id="btnEdit" image="images/btn_edit_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{invoiceLister.visible}" action="#{invoiceLister.PopupRendernaendern}"/>  					  	
-     		<ice:commandButton image="images/btn_delete_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{invoiceLister.visible}" action="#{invoiceLister.DeleteInvoice}"/>		           					  	
+     	<ice:panelGrid columns="5" columnClasses="buttons" style="width: 112px;">
+     		<ice:commandButton title="#{msg.buttonRefresh}" image="images/refresh.jpg" action="#{invoiceLister.init}"/>
+     		<ice:commandButton title="#{msg.buttonFilter}" image="images/btn_filter_e.png" action="#{invoiceLister.FilterpopupRendernaendern}"/>
+      		<ice:commandButton title="#{msg.buttonNew}" image="images/btn_new_e.png" rendered="#{sitesBean.buttonRendered}" action="#{invoiceLister.PopupRendernaendernNew}"/>
+      		<ice:commandButton title="#{msg.buttonEdit}" image="images/btn_edit_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{invoiceLister.visible}" action="#{invoiceLister.PopupRendernaendern}"/>  					  	
+     		<ice:commandButton title="#{msg.buttonDelete}" image="images/btn_delete_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{invoiceLister.visible}" action="#{invoiceLister.DeleteInvoice}"/>		           					  	
      	</ice:panelGrid>
      	<!-- Buttons End -->
    </ice:panelGrid>
@@ -97,7 +98,7 @@
 		                         pageIndexVar="pageIndex"
 		                         paginator="true"
 		                         style="margin: auto;"
-		                         paginatorMaxPages="4">
+		                         binding="#{invoiceLister.paginator}">
 		 
 		                <f:facet name="first" >
 		                         <ice:graphicImage url="images/btn_s_arrow_first_e.png" style="border:none;"/>

@@ -78,6 +78,10 @@
 						<f:facet name="header">#{msg.tableIncometype}</f:facet>
 						<ice:outputText style="text-align: left;" value="#{item.tblSettlement.tblIncometype.descriptionIt}"/>
 					</ice:column>
+					<ice:column>
+						<f:facet name="header">#{msg.tableSettlementnumber}</f:facet>
+						<ice:outputText style="text-align: textPosition;" value="#{item.tblSettlement.idSettlement}"/>
+					</ice:column>
 					
 				</ice:dataTable>
 				<!-- Table Invoice End -->
@@ -87,14 +91,13 @@
 			<!-- Paginator Start -->
 			<ice:panelGrid columns="1" styleClass="scrollerTable2 paginator" columnClasses="standardTable_ColumnCentered">
 
-		        <ice:dataPaginator id="scroll_1"
-		                         for="invoice"
+		        <ice:dataPaginator for="invoice"
 		                         fastStep="10"
 		                         pageCountVar="pageCount"
 		                         pageIndexVar="pageIndex"
 		                         paginator="true"
 		                         style="margin: auto;"
-		                         >
+		                         paginatorMaxPages="4">
 		 
 		                <f:facet name="first" >
 		                         <ice:graphicImage url="images/btn_s_arrow_first_e.png" style="border:none;"/>
@@ -122,8 +125,7 @@
 		 
 		        </ice:dataPaginator>
 		 
-		        <ice:dataPaginator id="scroll_2"
-		                        for="invoice"
+		        <ice:dataPaginator for="invoice"
 		                        rowsCountVar="rowsCount"
 		                        displayedRowsCountVar="displayedRowsCountVar"
 		                        firstRowIndexVar="firstRowIndex"

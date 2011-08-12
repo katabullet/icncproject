@@ -5,7 +5,7 @@
 	xmlns:ice="http://www.icesoft.com/icefaces/component"
 	template="/WEB-INF/templates/defaultTemplate.jspx">
 <ice:outputHead>
-	<ice:outputStyle href="./xmlhttp/css/rime/rime.css" />
+	<ice:outputStyle href="./xmlhttp/css/rime/rime-portlet.css" />
 	<ice:outputStyle href="./styles/Sites.css" />
 	<ice:outputStyle href="./styles/popup.css" />
 	<ice:outputStyle href="./styles/Menu.css" />
@@ -54,19 +54,18 @@
             					<!-- Interval -->
             					<ice:panelTab label="#{msg.tableInterval}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
-		           					
+
             					</ice:panelTab>
             					<!-- Invoice -->
             					<ice:panelTab label="#{msg.tableInvoice}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+
 		           					
             					</ice:panelTab>
             					<!-- InvoiceState -->
             					<ice:panelTab label="#{msg.tableInvoicestate}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           				
 		           					
             					</ice:panelTab>
             				</ice:panelTabSet>
@@ -78,25 +77,25 @@
             					<!-- Order -->
             					<ice:panelTab label="#{msg.tableOrder}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
 		           					
             					</ice:panelTab>
             					<!-- Orderstate -->
             					<ice:panelTab label="#{msg.tableOrderstate}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
 		           					
             					</ice:panelTab>
             					<!-- Incometype -->
             					<ice:panelTab label="#{msg.tableIncometype}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
 		           					
             					</ice:panelTab>
             					<!-- Costcenter -->
             					<ice:panelTab label="#{msg.tableCostcenter}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
 		           					
             					</ice:panelTab>
             				</ice:panelTabSet>
@@ -107,25 +106,25 @@
             					<!-- Customer -->
             					<ice:panelTab label="#{msg.tableCustomer}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
 		           					
             					</ice:panelTab>
             					<!-- Concern -->
             					<ice:panelTab label="#{msg.tableConcern}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
 		           					
             					</ice:panelTab>
             					<!-- Contactperson -->
             					<ice:panelTab label="#{msg.tableContactperson}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
 		           					
             					</ice:panelTab>
             					<!-- Contactstate -->
             					<ice:panelTab label="#{msg.tableContactstate}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
 		           					
             					</ice:panelTab>            					       					
             				</ice:panelTabSet>
@@ -138,7 +137,7 @@
             					<!-- Reminder -->
             					<ice:panelTab label="#{msg.tableReminder}" labelWidth="1098">
             					
-		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
 		           					
             					</ice:panelTab>
             				</ice:panelTabSet>
@@ -149,7 +148,7 @@
             					<!-- Protocol -->
             					<ice:panelTab label="#{msg.tableProtocol}" labelWidth="1098">
             					
-		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
 		           					
             					</ice:panelTab>
             				</ice:panelTabSet>
@@ -160,7 +159,7 @@
             					<!-- Benutzer -->
             					<ice:panelTab label="#{msg.tableUser}" labelWidth="1098">
             					
-		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					
 		           					
             					</ice:panelTab>
             				</ice:panelTabSet>           				

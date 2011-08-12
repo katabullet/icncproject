@@ -28,8 +28,7 @@ public class InvoicestateBackingBean {
 			return invoicestates;*/
 			invoicestates.clear();
 			invoicestates.addAll((Collection<? extends TblInvoicestate>) 
-					entityLister.getObjectList("SELECT * FROM OMinvoicestate", 
-							TblInvoicestate.class));
+					entityLister.getObjectList(TblInvoicestate.class));
 			if(curInvoicestate != null){
 				for(TblInvoicestate curItem : invoicestates){				
 					if(curItem.getIdInvoicestate() == curInvoicestate.getIdInvoicestate()){

@@ -71,8 +71,7 @@ public class InvoiceBackingBean implements Refreshable{
 		if(invoiceList == null){
 			invoiceList = new ArrayList<TblInvoice>();
 			invoiceList.addAll((ArrayList<TblInvoice>) 
-					entityLister.getObjectList("SELECT * FROM OMinvoice", 
-							TblInvoice.class));
+					entityLister.getObjectList(TblInvoice.class));
 		}
 		
 		if(curInvoice != null){
@@ -82,6 +81,7 @@ public class InvoiceBackingBean implements Refreshable{
 				}
 			}
 		}
+				
 		
 		/* invoices.addAll((ArrayList<TblInvoice>) 
 				entityLister.getObjectList("SELECT * FROM OMinvoice", 
@@ -233,8 +233,7 @@ public class InvoiceBackingBean implements Refreshable{
 		if(invoicestates == null){
 			invoicestates = new ArrayList<TblInvoicestate>();
 			invoicestates.addAll((Collection<? extends TblInvoicestate>) 
-					entityLister.getObjectList("SELECT * FROM OMinvoicestate", 
-							TblInvoicestate.class));
+					entityLister.getObjectList(TblInvoicestate.class));
 		}
 		
 		if(curInvoicestate != null){
@@ -381,13 +380,13 @@ public class InvoiceBackingBean implements Refreshable{
 	public String getSettlementnumber() {
 		return settlementnumber;
 	}
+	@SuppressWarnings("unchecked")
 	public ArrayList<SelectItem> getorderListDescription(){
 		ArrayList<SelectItem> ordernumber = new ArrayList<SelectItem>();
 	
 		ArrayList<TblOrder> order = new ArrayList<TblOrder>();
-		order.addAll((Collection<? extends TblOrder>) 
-				entityLister.getObjectList("SELECT * FROM OMorder", 
-						TblOrder.class));
+		order.addAll((ArrayList<TblOrder>)
+				entityLister.getObjectList(TblOrder.class));
 		
 		for (TblOrder item : order) {
 			ordernumber.add(new SelectItem(item.getOrdernumber()));
@@ -395,13 +394,13 @@ public class InvoiceBackingBean implements Refreshable{
 		return ordernumber;			
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ArrayList<SelectItem> getincometypeListDescription(){
 		ArrayList<SelectItem> incometypeDescription = new ArrayList<SelectItem>();
 	
 		ArrayList<TblIncometype> incometype = new ArrayList<TblIncometype>();
 		incometype.addAll((Collection<? extends TblIncometype>) 
-				entityLister.getObjectList("SELECT * FROM OMincometype", 
-						TblIncometype.class));
+				entityLister.getObjectList(TblIncometype.class));
 		
 		for (TblIncometype item : incometype) {
 			incometypeDescription.add(new SelectItem(item.getDescriptionIt()));
@@ -409,13 +408,13 @@ public class InvoiceBackingBean implements Refreshable{
 		return incometypeDescription;			
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ArrayList<SelectItem> getsettlementListDescription(){
 		ArrayList<SelectItem> settlementID = new ArrayList<SelectItem>();
 	
 		ArrayList<TblSettlement> settlement = new ArrayList<TblSettlement>();
 		settlement.addAll((Collection<? extends TblSettlement>) 
-				entityLister.getObjectList("SELECT * FROM OMsettlement", 
-						TblSettlement.class));
+				entityLister.getObjectList(TblSettlement.class));
 		
 		for (TblSettlement item : settlement) {
 			settlementID.add(new SelectItem(item.getIdSettlement()));

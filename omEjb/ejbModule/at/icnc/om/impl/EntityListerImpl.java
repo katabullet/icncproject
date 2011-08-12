@@ -34,9 +34,9 @@ public class EntityListerImpl implements EntityListerLocal {
     
 	@SuppressWarnings("unchecked")
 	@Override
-	public Collection<?> getObjectList(String sqlStatement, Class<?> entityClass) {
+	public Collection<?> getObjectList(Class<?> entityClass) {
 		Collection<?> result = new ArrayList<Object>();
-		
+		String sqlStatement = QueryBuilder.CreateSelectStatement(entityClass);
 		
 		try {		
 			//CreateEM(PU);
@@ -48,6 +48,21 @@ public class EntityListerImpl implements EntityListerLocal {
 			emf.close();
 			//em.close();
 		}	
+		
+		return result;
+	}
+	
+	public Object getSingleObject(Class<?> entityClass){
+		Object result = new Object();
+		String sqlStatement = QueryBuilder.CreateSelectStatement(entityClass);
+		
+		try {
+			result = CreateQuery(sqlStatement, entityClass, CreateEM(PU)).getSingleResult();
+			em.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			emf.close();
+		}
 		
 		return result;
 	}
@@ -69,12 +84,7 @@ public class EntityListerImpl implements EntityListerLocal {
 	private Query CreateQuery(String sqlStatement, Class<?> entityClass, EntityManager curEM){
 		Query query = em.createNativeQuery(sqlStatement, entityClass);	
 		return query;
-	}
-	
-	private Query CreateQuery(String sqlStatement, EntityManager curEM){
-		Query query = curEM.createNativeQuery(sqlStatement);
-		return query;
-	}
+	}	
 	
 	private EntityManager CreateEM(String persistence){
 		try {
@@ -110,7 +120,6 @@ public class EntityListerImpl implements EntityListerLocal {
 			if(em.find(entityClass, id) != null){
 				em.merge(updated);
 			}else{
-				System.out.println("**************** Es wird zu einem neuen Eintrag kommen ****************");
 				em.persist(updated);
 			}
 			

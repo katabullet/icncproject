@@ -2,7 +2,10 @@ package at.icnc.om.impl;
 
 public class QueryBuilder {
 	
-	public String StatementCreater(String table, String[] filterColumn, 
+	public QueryBuilder(){
+	}
+	
+	public static String CreateSelectStatement(String table, String[] filterColumn, 
 									String[] filterValue){
 		String sqlStatement = "SELECT * FROM " + table;
 		if(filterColumn != null && filterValue != null){
@@ -16,4 +19,15 @@ public class QueryBuilder {
 		return sqlStatement;
 	}
 	
+	public static String CreateSelectStatement(Class<?> entityClass){
+		String sqlStatement = "";
+		String table = "";
+		
+		sqlStatement = "SELECT * FROM ";
+		table = entityClass.getSimpleName();
+		table = "om" + table.substring(3);
+		sqlStatement += table;
+		
+		return sqlStatement;
+	}
 }

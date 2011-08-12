@@ -2,6 +2,8 @@ package at.icnc.om.impl;
 
 public class QueryBuilder {
 	
+	private static final String projectPrefix = "om";
+	
 	public QueryBuilder(){
 	}
 	
@@ -25,7 +27,7 @@ public class QueryBuilder {
 		
 		sqlStatement = "SELECT * FROM ";
 		table = entityClass.getSimpleName();
-		table = "om" + table.substring(3);
+		table = projectPrefix + table.substring(3);
 		sqlStatement += table;
 		
 		return sqlStatement;

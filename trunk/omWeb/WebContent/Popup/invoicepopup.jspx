@@ -21,7 +21,7 @@
 	            <ice:outputText
 	                    value="Rechnungsbearbeitung"
 	                    styleClass="popupHeaderText"/>
-	            <ice:commandButton image="images/closepopup.gif" action="#{invoiceLister.PopupRendernaendern}"/>
+	            <ice:commandButton image="images/closepopup.gif" action="#{invoiceLister.ClosePopup}"/>
         	</ice:panelGrid>
 		</f:facet>
 		<f:facet name="body">
@@ -48,7 +48,7 @@
 			</ice:panelGrid>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" style="width: 500px;">
 				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Speichern" action="#{invoiceLister.UpdateInvoice}"/>
-				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{invoiceLister.PopupRendernaendern}"/>
+				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{invoiceLister.ClosePopup}"/>
 			</ice:panelGrid>
 		</ice:panelGroup>
 		</f:facet>

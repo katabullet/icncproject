@@ -110,6 +110,7 @@ public class EntityListerImpl implements EntityListerLocal {
 			if(em.find(entityClass, id) != null){
 				em.merge(updated);
 			}else{
+				System.out.println("**************** Es wird zu einem neuen Eintrag kommen ****************");
 				em.persist(updated);
 			}
 			

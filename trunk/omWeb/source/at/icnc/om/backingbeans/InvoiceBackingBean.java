@@ -170,6 +170,15 @@ public class InvoiceBackingBean implements Refreshable{
 		invoicestate.setDescriptionIs(defaultWertInvoicestate.get(0).getDescriptionIs());
 		getCurInvoice().setTblInvoicestate(invoicestate);*/
 		
+		
+		setCurInvoice(new TblInvoice());
+		getCurInvoice().setIdInvoice(0);
+		getCurInvoice().setTblSettlement((TblSettlement) entityLister.getSingleObject("SELECT * FROM omsettlement WHERE rownum <= 1", TblSettlement.class));
+		getCurInvoice().setDuedate(new Date());
+		getCurInvoice().setTblInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM ominvoicestate WHERE rownum <= 1", TblInvoicestate.class));
+		getCurInvoice().getTblSettlement().setTblOrder((TblOrder) entityLister.getSingleObject("SELECT * FROM omorder WHERE rownum <= 1", TblOrder.class));
+		
+		
 		PopupRendernaendern();
 	}
 	
@@ -184,18 +193,13 @@ public class InvoiceBackingBean implements Refreshable{
 	public void DeleteInvoice(){
 		//tblInvoice.DeleteInvoice(curInvoice.getIdInvoice());
 		entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
-		invoiceList = null;
-		visible = false;
+		init();
 	}
 	
 	public void UpdateInvoice(){
 		curInvoice.setTblInvoicestate(curInvoicestate);
 		entityLister.UpdateObject(TblInvoice.class, curInvoice, curInvoice.getIdInvoice());
-		visible = false;
-		invoiceList = null;
-		invoicestates = null;
-		setCurInvoice(new TblInvoice());		
-		PopupRendernaendern();
+		init();	
 	}
 
 	public void setFilterColumn(String filterColumn) {
@@ -295,5 +299,9 @@ public class InvoiceBackingBean implements Refreshable{
 
 	public DataPaginator getPaginator() {
 		return paginator;
+	}
+	
+	public void ClosePopup(){
+		init();
 	}
 }

@@ -10,8 +10,10 @@ import javax.ejb.EJB;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
+import com.icesoft.faces.component.datapaginator.DataPaginator;
 import com.icesoft.faces.component.ext.RowSelectorEvent;
 
+import antlr.debug.NewLineEvent;
 import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.entitybeans.TblInvoice;
 import at.icnc.om.entitybeans.TblInvoicestate;
@@ -44,6 +46,7 @@ public class InvoiceBackingBean {
 	Boolean filterpopupRender = false;
 	private ArrayList<TblInvoice> invoiceList;
 	
+	
 	@SuppressWarnings("unchecked")
 	public ArrayList<TblInvoice> getInvoiceList(){		
 		//ArrayList<TblInvoice> invoices = new ArrayList<TblInvoice>();
@@ -64,7 +67,6 @@ public class InvoiceBackingBean {
 				}
 			}
 		}
-		
 		/* invoices.addAll((ArrayList<TblInvoice>) 
 				entityLister.getObjectList("SELECT * FROM OMinvoice", 
 						TblInvoice.class));
@@ -122,6 +124,9 @@ public class InvoiceBackingBean {
 	}
 	
 	public Boolean getFilterPopupRender(){
+		setCurFilterInvoice(new TblInvoice());
+		getCurFilterInvoice().setIdInvoice(0);
+		
 		return filterpopupRender;
 	}
 
@@ -247,6 +252,166 @@ public class InvoiceBackingBean {
 
 	public TblInvoicestate getCurInvoicestate() {
 		return curInvoicestate;
+	}
+	
+	ArrayList<TblIncometype> incometype;
+	private TblIncometype curIncometype;
+	
+	@SuppressWarnings("unchecked")
+	private ArrayList<TblIncometype> getIncometypeList(){
+		/*invoicestates.clear();
+		invoicestates.addAll(tblInvoicestate.getInvoicsestateList());
+		return invoicestates;*/
+		if(incometype == null){
+			incometype = new ArrayList<TblIncometype>();
+			incometype.addAll((Collection<? extends TblIncometype>) 
+					entityLister.getObjectList("SELECT * FROM OMincometype", 
+							TblIncometype.class));
+		}
+		
+		if(curIncometype != null){
+			for(TblIncometype curItem : incometype){				
+				if(curItem.getIdIncometype() == curIncometype.getIdIncometype()){
+					curItem.setSelected(true);
+				}
+			}
+		}else{
+			curIncometype = incometype.get(0);
+		}		
+	
+		return incometype;
+	}	
+	
+	public ArrayList<SelectItem> getIncometypeListDescription(){
+		ArrayList<SelectItem> incometype = new ArrayList<SelectItem>();
+		for (TblIncometype item : getIncometypeList()) {
+			incometype.add(new SelectItem(item.getDescriptionIt()));
+		}
+		return incometype;			
+	}
+	
+	public void IncometypeChange(ValueChangeEvent vce){
+		setCurIncometype((TblIncometype) entityLister.getSingleObject("SELECT * FROM OMincometype WHERE description_it = '" + 
+				vce.getNewValue().toString() + "'", TblIncometype.class));				
+	}
+
+	public void setCurIncometype(TblIncometype curIncometype) {
+		this.curIncometype = curIncometype;
+		curFilterInvoice.getTblSettlement().setTblIncometype(curIncometype);
+	}
+
+	public TblIncometype getCurIncometype() {
+		return curIncometype;
+	}
+	
+	ArrayList<TblOrder> order;
+	private TblOrder curOrder;
+	
+	@SuppressWarnings("unchecked")
+	private ArrayList<TblOrder> getOrderList(){
+		/*invoicestates.clear();
+		invoicestates.addAll(tblInvoicestate.getInvoicsestateList());
+		return invoicestates;*/
+		if(order == null){
+			order = new ArrayList<TblOrder>();
+			order.addAll((Collection<? extends TblOrder>) 
+					entityLister.getObjectList("SELECT * FROM OMorder", 
+							TblOrder.class));
+		}
+		
+		if(curOrder != null){
+			for(TblOrder curItem : order){				
+				if(curItem.getIdOrder() == curOrder.getIdOrder()){
+					curItem.setSelected(true);
+				}
+			}
+		}else{
+			curOrder = order.get(0);
+		}		
+	
+		return order;
+	}	
+	
+	public ArrayList<SelectItem> getOrderListDescription(){
+		ArrayList<SelectItem> order = new ArrayList<SelectItem>();
+		for (TblOrder item : getOrderList()) {
+			order.add(new SelectItem(item.getOrdernumber()));
+		}
+		return order;			
+	}
+	
+	public void OrderChange(ValueChangeEvent vce){
+		setCurOrder((TblOrder) entityLister.getSingleObject("SELECT * FROM OMorder WHERE description_it = '" + 
+				vce.getNewValue().toString() + "'", TblOrder.class));				
+	}
+
+	public void setCurOrder(TblOrder curOrder) {
+		this.curOrder = curOrder;
+		curFilterInvoice.getTblSettlement().setTblOrder(curOrder);
+	}
+
+	public TblOrder getCurOrder() {
+		return curOrder;
+	}
+	
+	ArrayList<TblSettlement> settlement;
+	private TblSettlement curSettlement;
+	
+	@SuppressWarnings("unchecked")
+	private ArrayList<TblSettlement> getSettlementList(){
+		/*invoicestates.clear();
+		invoicestates.addAll(tblInvoicestate.getInvoicsestateList());
+		return invoicestates;*/
+		if(settlement == null){
+			settlement = new ArrayList<TblSettlement>();
+			settlement.addAll((Collection<? extends TblSettlement>) 
+					entityLister.getObjectList("SELECT * FROM OMsettlement", 
+							TblSettlement.class));
+		}
+		
+		if(curSettlement != null){
+			for(TblSettlement curItem : settlement){				
+				if(curItem.getIdSettlement() == curSettlement.getIdSettlement()){
+					curItem.setSelected(true);
+				}
+			}
+		}else{
+			curSettlement = settlement.get(0);
+		}		
+	
+		return settlement;
+	}	
+	
+	public ArrayList<SelectItem> getSettlementListDescription(){
+		ArrayList<SelectItem> settlement = new ArrayList<SelectItem>();
+		for (TblSettlement item : getSettlementList()) {
+			settlement.add(new SelectItem(item.getIdSettlement()));
+		}
+		return settlement;			
+	}
+	
+	public void SettlementChange(ValueChangeEvent vce){
+		setCurSettlement((TblSettlement) entityLister.getSingleObject("SELECT * FROM OMsettlement WHERE description_it = '" + 
+				vce.getNewValue().toString() + "'", TblSettlement.class));				
+	}
+
+	public void setCurSettlement(TblSettlement curSettlement) {
+		this.curSettlement = curSettlement;
+		curFilterInvoice.setTblSettlement(curSettlement);
+	}
+
+	public TblSettlement getCurSettlement() {
+		return curSettlement;
+	}
+	
+	public TblInvoice curFilterInvoice;
+	
+	public TblInvoice getCurFilterInvoice(){
+		return curFilterInvoice;
+	}
+	
+	public void setCurFilterInvoice(TblInvoice invoice){
+		this.curFilterInvoice = invoice;
 	}
 	
 	public void DateChangeListener(ValueChangeEvent vce){

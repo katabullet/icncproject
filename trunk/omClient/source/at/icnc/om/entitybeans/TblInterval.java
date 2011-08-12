@@ -24,7 +24,7 @@ public class TblInterval extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="OMINTERVAL_IDINTERVAL_GENERATOR", sequenceName="OMINTERVAL_SEQ")
+	@SequenceGenerator(name="OMINTERVAL_IDINTERVAL_GENERATOR", sequenceName="OMINTERVAL_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMINTERVAL_IDINTERVAL_GENERATOR")
 	@Column(name="ID_INTERVAL", unique=true, nullable=false, precision=22)
 	public long getIdInterval() {

@@ -22,7 +22,7 @@ public class TblOrderstate extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="OMORDERSTATE_IDORDERSTATE_GENERATOR", sequenceName="OMORDERSTATE_SEQ")
+	@SequenceGenerator(name="OMORDERSTATE_IDORDERSTATE_GENERATOR", sequenceName="OMORDERSTATE_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMORDERSTATE_IDORDERSTATE_GENERATOR")
 	@Column(name="ID_ORDERSTATE", unique=true, nullable=false, precision=22)
 	public long getIdOrderstate() {

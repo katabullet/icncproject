@@ -29,7 +29,7 @@ public class TblOrder extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="OMORDER_IDORDER_GENERATOR", sequenceName="OMORDER_SEQ")
+	@SequenceGenerator(name="OMORDER_IDORDER_GENERATOR", sequenceName="OMORDER_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMORDER_IDORDER_GENERATOR")
 	@Column(name="ID_ORDER", unique=true, nullable=false, precision=22)
 	public long getIdOrder() {

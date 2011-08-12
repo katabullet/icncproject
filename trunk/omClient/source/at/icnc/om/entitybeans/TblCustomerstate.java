@@ -22,7 +22,7 @@ public class TblCustomerstate extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="OMCUSTOMERSTATE_IDCUSTOMERSTATE_GENERATOR", sequenceName="OMCUSTOMERSTATE_SEQ")
+	@SequenceGenerator(name="OMCUSTOMERSTATE_IDCUSTOMERSTATE_GENERATOR", sequenceName="OMCUSTOMERSTATE_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMCUSTOMERSTATE_IDCUSTOMERSTATE_GENERATOR")
 	@Column(name="ID_CUSTOMERSTATE", unique=true, nullable=false, precision=22)
 	public long getIdCustomerstate() {

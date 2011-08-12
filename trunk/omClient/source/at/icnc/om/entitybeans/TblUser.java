@@ -26,7 +26,7 @@ public class TblUser extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="OMUSER_IDUSER_GENERATOR", sequenceName="OMUSER_SEQ")
+	@SequenceGenerator(name="OMUSER_IDUSER_GENERATOR", sequenceName="OMUSER_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMUSER_IDUSER_GENERATOR")
 	@Column(name="ID_USER", unique=true, nullable=false, precision=22)
 	public long getIdUser() {

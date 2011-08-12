@@ -23,7 +23,7 @@ public class TblConcern extends Selectable implements Serializable {
 
 
 	@Id
-	@SequenceGenerator(name="OMCONCERN_IDCONCERN_GENERATOR", sequenceName="OMCONCERN_SEQ")
+	@SequenceGenerator(name="OMCONCERN_IDCONCERN_GENERATOR", sequenceName="OMCONCERN_SEQ", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="OMCONCERN_IDCONCERN_GENERATOR")
 	@Column(name="ID_CONCERN", unique=true, nullable=false, precision=22)
 	public long getIdConcern() {

@@ -21,7 +21,7 @@
 	            <ice:outputText
 	                    value="Rechnungsbearbeitung"
 	                    styleClass="popupHeaderText"/>
-	            <ice:commandButton image="images/closepopup.gif" action="#{invoiceLister.ClosePopup}"/>
+	            <ice:commandButton image="images/closepopup.gif" action="#{invoiceLister.closePopup}"/>
         	</ice:panelGrid>
 		</f:facet>
 		<f:facet name="body">
@@ -34,9 +34,9 @@
 				<ice:outputLabel value="#{msg.tableEstimation}" styleClass="Text"/>
 				<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.estimation}"/>
 				<ice:outputLabel value="#{msg.tableDuedate}" styleClass="Text"/>
-				<ice:selectInputDate highlightValue="#{invoiceLister.curInvoice.duedate}" value="#{invoiceLister.curInvoice.duedate}" renderAsPopup="true" valueChangeListener="#{invoiceLister.DateChangeListener}"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
+				<ice:selectInputDate highlightValue="#{invoiceLister.curInvoice.duedate}" value="#{invoiceLister.curInvoice.duedate}" renderAsPopup="true"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
        			<ice:outputLabel value="#{msg.tableInvoicestate}" styleClass="Text"/>
-       			<ice:selectOneMenu value="#{invoiceLister.curInvoice.tblInvoicestate.descriptionIs}"  styleClass="Input" valueChangeListener="#{invoiceLister.InvoicestateChange}">
+       			<ice:selectOneMenu value="#{invoiceLister.curInvoice.tblInvoicestate.descriptionIs}"  styleClass="Input" valueChangeListener="#{invoiceLister.changeInvoicestate}">
 					  <f:selectItems value="#{invoiceLister.invoicestateListDescription}"/>
        			</ice:selectOneMenu>
        			<ice:outputLabel value="#{msg.tableOrdernumber}" styleClass="Text"/>
@@ -47,8 +47,8 @@
        			<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.tblSettlement.idSettlement}"/>		
 			</ice:panelGrid>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" style="width: 500px;">
-				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Speichern" action="#{invoiceLister.UpdateInvoice}"/>
-				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{invoiceLister.ClosePopup}"/>
+				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Speichern" action="#{invoiceLister.updateInvoice}"/>
+				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{invoiceLister.closePopup}"/>
 			</ice:panelGrid>
 		</ice:panelGroup>
 		</f:facet>

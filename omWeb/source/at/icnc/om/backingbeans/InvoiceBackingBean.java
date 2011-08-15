@@ -1,20 +1,12 @@
 package at.icnc.om.backingbeans;
 
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
-
 import javax.ejb.EJB;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
-
-import com.icesoft.faces.component.datapaginator.DataPaginator;
-import com.icesoft.faces.component.datapaginator.PaginatorActionEvent;
-import com.icesoft.faces.component.ext.RowSelectorEvent;
-
 import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.entitybeans.TblInvoice;
 import at.icnc.om.entitybeans.TblInvoicestate;
@@ -22,260 +14,197 @@ import at.icnc.om.entitybeans.TblOrder;
 import at.icnc.om.entitybeans.TblSettlement;
 import at.icnc.om.interfaces.EntityListerLocal;
 import at.icnc.om.interfaces.Refreshable;
-import at.icnc.om.interfaces.TblIncometypeLocal;
-import at.icnc.om.interfaces.TblInvoiceLocal;
-import at.icnc.om.interfaces.TblInvoicestateLocal;
-import at.icnc.om.interfaces.TblOrderLocal;
+import com.icesoft.faces.component.datapaginator.DataPaginator;
+import com.icesoft.faces.component.ext.RowSelectorEvent;
 
+/**
+ * Implementation of invoiceLister
+ * 
+ * @author csh80, nkn80, cma80
+ *
+ */
 public class InvoiceBackingBean implements Refreshable{
-	@EJB
-	TblInvoiceLocal tblInvoice;
-	@EJB
-	TblIncometypeLocal tblIncometype;
+	
+	// Session Bean of EntityLister to Read and Write Entities
 	@EJB
 	EntityListerLocal entityLister;
-	@EJB
-	TblOrderLocal tblOrder;
-	@EJB
-	TblInvoicestateLocal tblInvoicestate;
 
-	
+	// Variable to save selected Invoice
 	private TblInvoice curInvoice = new TblInvoice();
-	private String filterColumn = "";
-	private String filterValue = "";
 	
-	private DataPaginator paginator;
-	
-	Boolean visible = false;
-	Boolean popupRender = false;
-	Boolean filterpopupRender = false;
+	// List with all Invoices to avoid constant DB-Reading
 	private ArrayList<TblInvoice> invoiceList;
 	
-	private Date datum;
+	// DataPaginator for auto pagination and resetting to first page
+	private DataPaginator paginator;
 	
+	// Variable to set Delete- and Edit-Button visible 
+	private Boolean visible = false;
 	
-	public void setDatum(Date datum) {
-		this.datum = datum;
-	}
-
-	public Date getDatum() {
-		return datum;
-	}
-
+	// Variable to make Edit-Popup visible and rendered
+	private Boolean popupRender = false;
+	
+	// Variable to make Filter-Popup visible and rendered
+	private Boolean filterpopupRender = false;
+	
+	// Variable to make Delete-Popup visible and rendered
+	private Boolean deletePopupRender = false;
+	
+	// List with all invoicestates 
+	ArrayList<TblInvoicestate> invoicestates;
+	
+	// Variable to save selected invoicestate
+	private TblInvoicestate curInvoicestate;
+	
+	/*
+	 * ______________________________________________________________________________
+	 * EntityLister functions
+	 */
+	
+	/**
+	 * This functions returns a list with all invoices
+	 * @return invoiceList
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<TblInvoice> getInvoiceList(){		
-		//ArrayList<TblInvoice> invoices = new ArrayList<TblInvoice>();
-		/*invoices.addAll(tblInvoice.getInvoiceList());
-		//invoices.addAll(tblInvoice.getInvoiceList("Sum","5"));
-		*/
-		if(invoiceList == null){
+		
+		/* Invoices are only read out of DB if they were not read before 
+		 * avoids unnecessary data traffic 
+		 */
+		if (invoiceList == null) {
 			invoiceList = new ArrayList<TblInvoice>();
 			invoiceList.addAll((ArrayList<TblInvoice>) 
 					entityLister.getObjectList(TblInvoice.class));
 		}
 		
-		if(curInvoice != null){
-			for(TblInvoice curItem : invoiceList){				
-				if(curItem.getIdInvoice() == curInvoice.getIdInvoice()){
+		/* Makes the user know which invoice is selected (it is shaded) */
+		if (curInvoice != null) {
+			for(TblInvoice curItem : invoiceList) {				
+				if(curItem.getIdInvoice() == curInvoice.getIdInvoice()) {
 					curItem.setSelected(true);
 				}
 			}
 		}
-				
 		
-		/* invoices.addAll((ArrayList<TblInvoice>) 
-				entityLister.getObjectList("SELECT * FROM OMinvoice", 
-						TblInvoice.class));
-		
-		if(curInvoice != null){
-			for(TblInvoice curItem : invoices){				
-				if(curItem.getIdInvoice() == curInvoice.getIdInvoice()){
-					curItem.setSelected(true);
-					//setCurInvoice(curItem);
-				}
-			}
-		}*/
-		
-		//return invoices;
 		return invoiceList;
 	}	
-
-	public void rowEvent(RowSelectorEvent re) {		
-		/*if(getCurInvoice() != null){			
-			if(getCurInvoice().getIdInvoice() == tblInvoice.getInvoiceList().get(re.getRow()).getIdInvoice()){
-				setCurInvoice(new TblInvoice());
-				visible = false;
-			}else {
-				setCurInvoice(tblInvoice.getInvoiceList().get(re.getRow()));
-				visible = true;
-			}
-		}*/
-		
-		if(getCurInvoice() != null){			
-			if(getCurInvoice().getIdInvoice() == invoiceList.get(re.getRow()).getIdInvoice()){
-				setCurInvoice(new TblInvoice());
-				visible = false;
-			}else {
-				setCurInvoice(invoiceList.get(re.getRow()));
-				visible = true;
-			}
-		}
-	}
 	
-	public Boolean getVisible(){		
-		return visible;
-	}
-
-
-	public void setCurInvoice(TblInvoice curInvoice) {
-		this.curInvoice = curInvoice;
-	}
-
-	public TblInvoice getCurInvoice() {
-		return curInvoice;
-	}	
-	
-	public Boolean getPopupRender(){
-		return popupRender;
-	}
-	
-	public Boolean getFilterPopupRender(){
-		return filterpopupRender;
-	}
-
-	public void PopupRendernaendernNew(){
-		/* setCurInvoice(new TblInvoice());
-
-		//getCurInvoice().setIdInvoice(entityLister.NextID(TblInvoice.class));
-		getCurInvoice().setDuedate(new Date());
-		getCurInvoice().setTblSettlement((TblSettlement) entityLister.getSingleObject("SELECT * FROM OMSETTLEMENT WHERE id_settlement = 1", TblSettlement.class));
-		getCurInvoice().getTblSettlement().setTblOrder((TblOrder) entityLister.getSingleObject("SELECT * FROM OMorder WHERE id_order = 1", TblOrder.class));
-		getCurInvoice().setTblInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM OMinvoicestate WHERE id_invoicestate = 1", TblInvoicestate.class));
-		
-		getCurInvoice().getTblSettlement().setTblIncometype((TblIncometype) entityLister.getSingleObject("SELECT * FROM OMincometype WHERE id_incometype = 2", TblIncometype.class));
-
-		getCurInvoice().setTblSettlement(new TblSettlement());
-		TblIncometype income = new TblIncometype();
-		List<TblIncometype> defaultWertIncometype = (List<TblIncometype>)entityLister.getObjectList("SELECT  * FROM OMINCOMETYPE", TblIncometype.class);
-		income.setDescriptionIt(defaultWertIncometype.get(0).getDescriptionIt());
-		getCurInvoice().getTblSettlement().setTblIncometype(income);
-		//Defaultwert für Auftragsnummer setzen
-		TblOrder order = new TblOrder();
-		List<TblOrder> defaultListeOrder =(List<TblOrder>) entityLister.getObjectList("SELECT  * FROM OMorder", TblOrder.class);
-		TblOrder defaultWertOrder = defaultListeOrder.get(defaultListeOrder.size()-1);
-		order.setOrdernumber(defaultWertOrder.getOrdernumber());
-		getCurInvoice().getTblSettlement().setTblOrder(order);
-		//Defaultwert für Rechnungstatus setzen
-		TblInvoicestate invoicestate = new TblInvoicestate();
-		List<TblInvoicestate> defaultWertInvoicestate = (List<TblInvoicestate>)entityLister.getObjectList("SELECT  * FROM OMinvoicestate", TblInvoicestate.class);
-		invoicestate.setDescriptionIs(defaultWertInvoicestate.get(0).getDescriptionIs());
-		getCurInvoice().setTblInvoicestate(invoicestate);*/
-		
-		
-		setCurInvoice(new TblInvoice());
-		getCurInvoice().setIdInvoice(0);
-		getCurInvoice().setTblSettlement((TblSettlement) entityLister.getSingleObject("SELECT * FROM omsettlement WHERE rownum <= 1", TblSettlement.class));
-		getCurInvoice().setDuedate(new Date());
-		getCurInvoice().setTblInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM ominvoicestate WHERE rownum <= 1", TblInvoicestate.class));
-		getCurInvoice().getTblSettlement().setTblOrder((TblOrder) entityLister.getSingleObject("SELECT * FROM omorder WHERE rownum <= 1", TblOrder.class));
-		
-		
-		PopupRendernaendern();
-	}
-	
-	public void PopupRendernaendern(){
-		popupRender = !popupRender;		
-	}
-	
-	public void FilterpopupRendernaendern(){
-		filterpopupRender = !filterpopupRender;		
-	}
-	
-	public void DeleteInvoice(){
-		//tblInvoice.DeleteInvoice(curInvoice.getIdInvoice());
-		entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
-		init();
-	}
-	
-	public void UpdateInvoice(){
-		curInvoice.setTblInvoicestate(curInvoicestate);
-		entityLister.UpdateObject(TblInvoice.class, curInvoice, curInvoice.getIdInvoice());
-		init();	
-	}
-
-	public void setFilterColumn(String filterColumn) {
-		this.filterColumn = filterColumn;
-	}
-
-	public String getFilterColumn() {
-		return filterColumn;
-	}
-
-	public void setFilterValue(String filterValue) {
-		this.filterValue = filterValue;
-	}
-
-	public String getFilterValue() {
-		return filterValue;
-	}
-	
-	// __________________________________________________________________________
-	
-	
-	ArrayList<TblInvoicestate> invoicestates;
-	private TblInvoicestate curInvoicestate;
-	
+	/**
+	 * This function returns a list with all invoicestates
+	 * @return invoicestateList
+	 */
 	@SuppressWarnings("unchecked")
 	private ArrayList<TblInvoicestate> getInvoicestateList(){
-		/*invoicestates.clear();
-		invoicestates.addAll(tblInvoicestate.getInvoicsestateList());
-		return invoicestates;*/
+		
+		/* Invoices are only read out of DB if they were not read before 
+		 * avoids unnecessary data traffic 
+		 */		
 		if(invoicestates == null){
 			invoicestates = new ArrayList<TblInvoicestate>();
 			invoicestates.addAll((Collection<? extends TblInvoicestate>) 
 					entityLister.getObjectList(TblInvoicestate.class));
 		}
 		
-		if(curInvoicestate != null){
+		/* If no invoicestate is selected, curInvoicestate is set to selected
+		 * otherwise the invoicestate is unselected
+		 */		
+		if(getCurInvoicestate() != null){
 			for(TblInvoicestate curItem : invoicestates){				
-				if(curItem.getIdInvoicestate() == curInvoicestate.getIdInvoicestate()){
+				if(curItem.getIdInvoicestate() == getCurInvoicestate().getIdInvoicestate()){
 					curItem.setSelected(true);
 				}
 			}
 		}else{
-			curInvoicestate = invoicestates.get(0);
+			setCurInvoicestate(invoicestates.get(0));
 		}		
 	
 		return invoicestates;
 	}	
+
+	/**
+	 * This method captures a RowSelectorEvent
+	 * It is called when clicked on element in DataTable
+	 * @param re
+	 */
+	public void rowEvent(RowSelectorEvent re) {		
+		
+		/* If no invoices is selected, curInvoice is set to selected
+		 * otherwise the invoice is unselected
+		 */
+		if(getCurInvoice() != null){			
+			if(getCurInvoice().getIdInvoice() == invoiceList.get(re.getRow()).getIdInvoice()){
+				setCurInvoice(new TblInvoice());
+				setVisible(false);
+			}else {
+				setCurInvoice(invoiceList.get(re.getRow()));
+				setVisible(true);
+			}
+		}
+	}
 	
+	/* Getter for Delete- and Edit-Button visible */
+	public Boolean getVisible(){		
+		return visible;
+	}
+	
+	/* Setter for Delete- and Edit-Button visible */
+	private void setVisible(Boolean visible){
+		this.visible = visible;
+	}
+
+	/* Setter for currently selected invoice */
+	public void setCurInvoice(TblInvoice curInvoice) {
+		this.curInvoice = curInvoice;
+	}
+	
+	/* Getter for currently selected invoice */
+	public TblInvoice getCurInvoice() {
+		return curInvoice;
+	}	
+	
+	/**
+	 * Function to create SelectItems of all Invoicestates
+	 * Important for combobox (needs SelectItem, not objects of invoicestates)
+	 * @return List of SelectItem 
+	 */
 	public ArrayList<SelectItem> getInvoicestateListDescription(){
 		ArrayList<SelectItem> invoicsestates = new ArrayList<SelectItem>();
 		for (TblInvoicestate item : getInvoicestateList()) {
+			/* Description of each invoicestate is added to SelectItem-List */
 			invoicsestates.add(new SelectItem(item.getDescriptionIs()));
 		}
 		return invoicsestates;			
 	}
 	
-	public void InvoicestateChange(ValueChangeEvent vce){
+	/**
+	 * Method that Listens to Change Event of a combobox
+	 * if another element in the combobox is selected, the value in
+	 * curInvoicestate is set to the selected one
+	 * @param vce
+	 */
+	public void changeInvoicestate(ValueChangeEvent vce){
 		setCurInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM OMinvoicestate WHERE description_is = '" + 
 				vce.getNewValue().toString() + "'", TblInvoicestate.class));				
 	}
 
+	/* Setter of curInvoicestate */
 	public void setCurInvoicestate(TblInvoicestate curInvoicestate) {
 		this.curInvoicestate = curInvoicestate;
 	}
 
+	/* Getter of curInvoicestate */
 	public TblInvoicestate getCurInvoicestate() {
 		return curInvoicestate;
 	}
 	
-	public void DateChangeListener(ValueChangeEvent vce){
-		getCurInvoice().setDuedate((Date) vce.getNewValue());
-	}
 	
-	//___________________________________________________________________________
-	
+	/**
+	 * init Method
+	 * resets all lists with db-content
+	 * closes all popups
+	 * goes back to first page
+	 * resets curInvoice
+	 */
 	@Override
 	public void init() {
 		refresh();
@@ -284,24 +213,34 @@ public class InvoiceBackingBean implements Refreshable{
 		visible = false;
 		popupRender = false;
 		filterpopupRender = false;
+		setDeletePopupRender(false);
 		paginator.gotoFirstPage();
 	}
 
+	/**
+	 * Lists with DB-content are set NULL to
+	 * make sure they are read from DB
+	 */
 	@Override
 	public void refresh() {
 		invoiceList = null;
 		invoicestates = null;	
 	}
 
+	/* Setter of Paginator */
 	public void setPaginator(DataPaginator paginator) {
 		this.paginator = paginator;
 	}
-
+	
+	/* Getter of paginator */
 	public DataPaginator getPaginator() {
 		return paginator;
 	}
 	
-	public void ClosePopup(){
+	/**
+	 * All Popups can be closed via this method
+	 */
+	public void closePopup(){
 		init();
 	}
 	
@@ -485,9 +424,104 @@ public class InvoiceBackingBean implements Refreshable{
 		if(invoicenumber != null){
 			werte.add(invoicenumber);
 			spalte.add("");
-		}
+		}		 
+	}
+	
+	/*
+	 * ____________________________________________________________________________________
+	 * All Popup-Methods (incl. functions, methods, getter and setter
+	 */
+	
+	/* 
+	 * _______________________________________________
+	 * invoicepopup
+	 */
+	
+	/**
+	 * Changes render value of Invoice-Popup
+	 */
+	public void changePopupRender(){
+		popupRender = !popupRender;		
+	}
+	
+	/* Getter for PopupRender */
+	public Boolean getPopupRender(){
+		return popupRender;
+	}
+	
+	/**
+	 * Updates currently selected invoice or creates new invoice
+	 */
+	public void updateInvoice(){
+		curInvoice.setTblInvoicestate(curInvoicestate);
+		entityLister.UpdateObject(TblInvoice.class, curInvoice, curInvoice.getIdInvoice());
+		init();	
+	}
+	
+	/**
+	 * Method to open popup to create new Invoice
+	 */
+	public void changePopupRenderNew(){
 		
+		/* New invoice is initialized */ 
+		setCurInvoice(new TblInvoice());
+		/* ID of new invoice is set to 0 (important for EntityManager) */
+		getCurInvoice().setIdInvoice(0);
 		
-		 
+		/* Setting default values of new invoice */
+		getCurInvoice().setTblSettlement((TblSettlement) entityLister.getSingleObject("SELECT * FROM omsettlement WHERE rownum <= 1", TblSettlement.class));
+		getCurInvoice().setDuedate(new Date());
+		getCurInvoice().setTblInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM ominvoicestate WHERE rownum <= 1", TblInvoicestate.class));
+		getCurInvoice().getTblSettlement().setTblOrder((TblOrder) entityLister.getSingleObject("SELECT * FROM omorder WHERE rownum <= 1", TblOrder.class));
+		
+		/* Makes popup visible */
+		changePopupRender();
+	}
+	
+	/* 
+	 * _______________________________________________
+	 * deletepopup
+	 */
+	
+	/* Setter of DeletePopup Render */
+	private void setDeletePopupRender(Boolean deletePopupRender) {
+		this.deletePopupRender = deletePopupRender;
+	}
+
+	/* Getter of DeletePopup Render */
+	public Boolean getDeletePopupRender() {
+		return deletePopupRender;
+	}
+	
+	/**
+	 * Changes render value of Delete-Popup
+	 */
+	public void changeDeletePopupRender(){
+		setDeletePopupRender(true);
+	}
+	
+	/**
+	 * Deletes currently selected invoice
+	 */
+	public void deleteInvoice(){
+		entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
+		init();
+	}
+	
+	/* 
+	 * _______________________________________________
+	 * filterpopup
+	 */
+	
+	/* Getter for FilterPopupRender */
+	public Boolean getFilterPopupRender(){
+		return filterpopupRender;
+	}	
+	
+	/**
+	 * Changes render value of Filter-Popup
+	 */
+	public void changeFilterPopupRender(){
+		filterpopupRender = !filterpopupRender;		
 	}
 }

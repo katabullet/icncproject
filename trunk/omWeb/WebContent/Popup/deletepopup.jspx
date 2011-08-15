@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	template="/WEB-INF/templates/defaultTemplate.jspx">
+<ice:outputHead>
+	<ice:outputStyle href="./xmlhttp/css/rime/rime.css" />
+	<ice:outputStyle href="./styles/Sites.css" />
+	<ice:outputStyle href="./styles/popup.css" />
+	<ice:outputStyle href="./styles/Menu.css" />
+</ice:outputHead>
+	
+	<ice:panelPopup rendered="#{invoiceLister.deletePopupRender}"
+					visible="#{invoiceLister.deletePopupRender}"
+					modal="true"
+					draggable="false"
+					autoCentre="true"
+					style="margin: auto;">					
+		<f:facet name="header">
+			<ice:panelGrid columns="2" styleClass="popupHeaderWrapper" style="width: 100%" columnClasses="headerCol1 headerCol2">
+	            <ice:outputText
+	                    value="Rechnung loeschen"
+	                    styleClass="popupHeaderText"/>
+	            <ice:commandButton image="images/closepopup.gif" action="#{invoiceLister.closePopup}"/>
+        	</ice:panelGrid>
+		</f:facet>
+		<f:facet name="body">
+		<ice:panelGroup>
+			<ice:outputText value="Wollen Sie das markierte Element wirklich loeschen?"></ice:outputText>
+			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" style="width: 500px;">
+				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Loeschen" action="#{invoiceLister.deleteInvoice}"/>
+				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Abbrechen" action="#{invoiceLister.closePopup}"/>
+			</ice:panelGrid>
+		</ice:panelGroup>
+		</f:facet>
+	</ice:panelPopup>
+	
+</html>

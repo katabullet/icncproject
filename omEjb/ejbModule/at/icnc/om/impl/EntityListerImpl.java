@@ -1,11 +1,7 @@
 package at.icnc.om.impl;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import at.icnc.om.interfaces.EntityListerLocal;
-
 import javax.annotation.PreDestroy;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -13,9 +9,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import at.icnc.om.interfaces.EntityListerLocal;
 
 /**
  * Session Bean implementation class EntityListerImpl
+ * @author csh80
  */
 @Stateless
 @Local( { EntityListerLocal.class })
@@ -23,30 +21,41 @@ public class EntityListerImpl implements EntityListerLocal {
 	
 	private EntityManager em;
 	private EntityManagerFactory emf;
-	private static final String PU = "omPU";
+	/* PersistenceUnit */
+	private static final String PU = "omPU"; 
 
     /**
      * Default constructor. 
+     * nothing is done on creation
      */
     public EntityListerImpl() {
-        // TODO Auto-generated constructor stub
     }
     
+    /**
+     * Returns a list of all entities of the defined entityClass
+     * @param entityClass class of specific entity (entityname.class)
+     */
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<?> getObjectList(Class<?> entityClass) {
+		/* local list for all results */
 		Collection<?> result = new ArrayList<Object>();
+		
+		/* Creates the SQL-Statement using QueryBuilder 
+		 * sqlStatement without any filters 
+		 */
 		String sqlStatement = QueryBuilder.CreateSelectStatement(entityClass);
 		
 		try {		
-			//CreateEM(PU);
+			/* Uses create Query to create a Query
+			 * Query-Method getResultList is used
+			 */
 			result.addAll(CreateQuery(sqlStatement, entityClass, CreateEM(PU)).getResultList());
 			em.close();
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 		}finally {			
 			emf.close();
-			//em.close();
 		}	
 		
 		return result;
@@ -60,7 +69,6 @@ public class EntityListerImpl implements EntityListerLocal {
 			result = CreateQuery(sqlStatement, entityClass, CreateEM(PU)).getSingleResult();
 			em.close();
 		} catch (Exception e) {
-			// TODO: handle exception
 			emf.close();
 		}
 		
@@ -81,21 +89,39 @@ public class EntityListerImpl implements EntityListerLocal {
 		return result;
 	}
 	
+	/**
+	 * Creates a Query that can be used to get a single result or resultlist
+	 * 
+	 * @param sqlStatement 
+	 * @param entityClass 
+	 * @param curEM 
+	 * @return the created query is returned
+	 */
 	private Query CreateQuery(String sqlStatement, Class<?> entityClass, EntityManager curEM){
 		Query query = em.createNativeQuery(sqlStatement, entityClass);	
 		return query;
 	}	
 	
+	/**
+	 * Creates an entityManager using an entityManagerFactory 
+	 * 
+	 * @param persistence Name of the persistence Unit
+	 * @return the created entityManager is returned
+	 */
 	private EntityManager CreateEM(String persistence){
 		try {
 			emf = Persistence.createEntityManagerFactory(persistence);
 			em = emf.createEntityManager();	
 		} catch (Exception e) {
-			// TODO: handle exception
 		}	
 		return em;
 	}
 	
+	/**
+	 * An entity with the specified id of type entityClass is deleted
+	 * @param id id of the selected entity
+	 * @param entityClass Classtype of the selected entity (entityname.class)
+	 */
 	public void DeleteObject(Long id, Class<?> entityClass){
 		
 		try {
@@ -105,13 +131,18 @@ public class EntityListerImpl implements EntityListerLocal {
 			em.flush();
 			em.close();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
 			emf.close();
 		}
 	}	
 	
+	/**
+	 * An entity with the specified id of type entityClass is updated or added
+	 * @param id id of the selected entity
+	 * @param entityClass Classtype of the selected entity (entityname.class)
+	 * @param updated the object that will be added or updated
+	 */
 	public void UpdateObject(Class<?> entityClass, Object updated, Long id){
 		
 		try {
@@ -121,15 +152,11 @@ public class EntityListerImpl implements EntityListerLocal {
 				em.merge(updated);
 			}else{
 				em.persist(updated);
-			}
-			
-			
-			//em.persist(updated);
+			}	
 			
 			em.flush();
 			em.close();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
 			emf.close();

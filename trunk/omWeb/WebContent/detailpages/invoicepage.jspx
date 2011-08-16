@@ -21,7 +21,8 @@
 		                label="Click to download #{dataExporter.type} file"
 		                type="#{dataExporter.type}"
 		                popupBlockerLabel="Popup Blocker detected - click here to resume download..."
-		                clickToCreateFileText="Click to create #{dataExporter.type} file "/>
+		                clickToCreateFileText="Click to create #{dataExporter.type} file "
+		                ignorePagination="true"/>
 		       </ice:panelGroup>
 		 </ice:panelGroup>
 		 <!-- DataExporter End -->		 			           					

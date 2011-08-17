@@ -35,7 +35,7 @@ public class IncometypeBackingBean {
 		return descriptions_it;
 	}
 	
-	public void setIncometypeListDescriptions(SelectItem selectedItem){
+	private void setIncometypeListDescriptions(SelectItem selectedItem){
 		
 	}
 

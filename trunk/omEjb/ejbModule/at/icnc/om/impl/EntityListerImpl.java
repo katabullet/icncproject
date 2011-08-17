@@ -1,5 +1,6 @@
 package at.icnc.om.impl;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.annotation.PreDestroy;
@@ -9,6 +10,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+
+import org.omg.CORBA.OMGVMCID;
+
 import at.icnc.om.interfaces.EntityListerLocal;
 
 /**
@@ -167,6 +171,34 @@ public class EntityListerImpl implements EntityListerLocal {
 	public void BeforeDestroy(){
 		em.close();
 		emf.close();
+	}
+
+	@SuppressWarnings("unchecked")
+	public Collection<?> getFilterList(Class<?> entityClass, String Class, String Joins, ArrayList<String> werte, ArrayList<String> spalte) {
+		/* local list for all results */
+		Collection<?> result = new ArrayList<String>();
+		
+		/* Creates the SQL-Statement using QueryBuilder 
+		 * sqlStatement without any filters 
+		 */
+		String sqlStatement = QueryBuilder.CreateSelectStatement(Class, Joins, spalte, werte);
+		
+		try {		
+			/* Uses create Query to create a Query
+			 * Query-Method getResultList is used
+			 */
+			//result.addAll(CreateQuery(sqlStatement, entityClass, CreateEM(PU)).getResultList());
+			
+			Query query = CreateEM(PU).createQuery(sqlStatement);
+			result.addAll(query.getResultList());
+			em.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {			
+			emf.close();
+		}	
+		
+		return result;
 	}
 	
 	

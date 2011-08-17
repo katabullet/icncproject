@@ -2,13 +2,18 @@ package at.icnc.om.backingbeans;
 
 
 import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
+
 import javax.ejb.EJB;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+
+import jxl.write.DateFormat;
 import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.entitybeans.TblInvoice;
 import at.icnc.om.entitybeans.TblInvoicestate;
@@ -217,6 +222,7 @@ public class InvoiceBackingBean implements Refreshable{
 		filterpopupRender = false;
 		setDeletePopupRender(false);
 		paginator.gotoFirstPage();
+		clearFilter();
 	}
 
 	/**
@@ -249,46 +255,83 @@ public class InvoiceBackingBean implements Refreshable{
 	//___________________________________________________________________________
 	//Filterpopup Methoden
 
-	private String invoicenumber;
-	private String sum;
-	private String estimatate;
-	private Date duedate;
+	private String invoicenumberFrom;
+	private String invoicenumberTo;
+	private String sumFrom;
+	private String sumTo;
+	private String estimatateFrom;
+	private String estimatateTo;
+	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	private Date duedateFrom;
+	private Date duedateTo;
 	private String invoicestate;
 	private String ordernumber;
 	private String incometype;
 	private String settlementnumber;
-	private Format format = new SimpleDateFormat("dd.MM.yyyy");
+	private Format format = new SimpleDateFormat("yyyy-MM-dd");
 	
-	public void setInvoicenumber(String invoicenumber) {
-		this.invoicenumber = invoicenumber;
+	public void setInvoicenumberFrom(String invoicenumber) {
+		this.invoicenumberFrom = invoicenumber;
 	}
 
-	public String getInvoicenumber() {
-		return invoicenumber;
+	public String getInvoicenumberFrom() {
+		return invoicenumberFrom;
+	}
+	
+	public void setInvoicenumberTo(String invoicenumber) {
+		this.invoicenumberTo = invoicenumber;
 	}
 
-	public void setSum(String sum) {
-		this.sum = sum;
+	public String getInvoicenumberTo() {
+		return invoicenumberTo;
 	}
 
-	public String getSum() {
-		return sum;
+	public void setSumFrom(String sum) {
+		this.sumFrom = sum;
 	}
 
-	public void setEstimatate(String estimatate) {
-		this.estimatate = estimatate;
+	public String getSumFrom() {
+		return sumFrom;
+	}
+	
+	public void setSumTo(String sum) {
+		this.sumTo = sum;
 	}
 
-	public String getEstimatate() {
-		return estimatate;
+	public String getSumTo() {
+		return sumTo;
 	}
 
-	public void setDuedate(Date duedate) {
-		this.duedate = duedate;
+	public void setEstimatateFrom(String estimatate) {
+		this.estimatateFrom = estimatate;
 	}
 
-	public Date getDuedate() {
-		return duedate;
+	public String getEstimatateFrom() {
+		return estimatateFrom;
+	}
+	
+	public void setEstimatateTo(String estimatate) {
+		this.estimatateTo = estimatate;
+	}
+
+	public String getEstimatateTo() {
+		return estimatateTo;
+	}
+
+	public void setDuedateFrom(Date duedate) {
+		this.duedateFrom = duedate;
+	}
+
+	public Date getDuedateFrom() {
+		return duedateFrom;
+	}
+	
+	public void setDuedateTo(Date duedate) {
+		this.duedateTo = duedate;
+	}
+
+	public Date getDuedateTo() {
+		return duedateTo;
 	}
 
 	public void setInvoicestate(String invoicestate) {
@@ -405,60 +448,110 @@ public class InvoiceBackingBean implements Refreshable{
 	public void Filtern() {
 		ArrayList<String> werte = new ArrayList<String>();
 		ArrayList<String> spalte= new ArrayList<String>();
+		String joinStatement="";
 		
-		if(invoicenumber != null && invoicenumber!=""){
-			werte.add(invoicenumber);
-			spalte.add("invoicenumber");
+		if(invoicenumberFrom != null && invoicenumberFrom!="" || invoicenumberTo != null && invoicenumberTo!=""){
+			if(invoicenumberFrom=="") invoicenumberFrom="0";
+			if(invoicenumberTo=="") invoicenumberTo="999999";
+			werte.add(invoicenumberFrom + ":" + invoicenumberTo);
+			spalte.add("t.invoicenumber");
 		}
 		
-		if(sum != null && sum !=""){
-			werte.add(sum);
-			spalte.add("sum");
+		if(sumFrom != null && sumFrom!="" || sumTo != null && sumTo!=""){
+			if(sumFrom.contains(",")){
+				sumFrom.replace(",", ".");
+			}
+			if(sumTo.contains(",")){
+				sumTo.replace(",", ".");
+			}
+			if(sumFrom=="") sumFrom="0";
+			if(sumTo=="") sumTo="999999";
+			
+			werte.add(sumFrom + ":" + sumTo);
+			spalte.add("t.sum");
 		}
 		
-		if(estimatate != null && estimatate !=""){
-			werte.add(estimatate);
-			spalte.add("estimation");
+		if(estimatateFrom != null && estimatateFrom!="" || estimatateTo != null && estimatateTo!=""){
+			if(estimatateFrom.contains(",")){
+				estimatateFrom.replace(",", ".");
+			}
+			if(estimatateTo.contains(",")){
+				estimatateTo.replace(",", ".");
+			}
+			if(estimatateFrom=="") estimatateFrom="0";
+			if(estimatateTo=="") estimatateTo="999999";
+			werte.add(estimatateFrom + ":" + estimatateTo);
+			spalte.add("t.estimation");
 		}
 		
-		if(duedate != null){
-			werte.add(format.format(duedate));
-			spalte.add("duedate");
+		if(duedateFrom != null || duedateTo != null){
+			if(duedateFrom==null)
+				try {
+					duedateFrom = dateFormat.parse("1999-01-01");
+				} catch (ParseException e) {
+				}
+			if(duedateTo==null)
+				try {
+					duedateTo = dateFormat.parse("3000-01-01");
+				} catch (ParseException e) {
+				}
+			
+			werte.add(format.format(duedateFrom) + ":" + format.format(duedateTo));
+			//werte.add(duedate.toString());
+			spalte.add("t.duedate");
 		}
 		
 		if(invoicestate != null && invoicestate!=""){
 			werte.add(invoicestate);
-			spalte.add("s.descriptionIs");
+			spalte.add("i.descriptionIs");
+			joinStatement +=" INNER JOIN t.tblInvoicestate i";
 		}
 		
 		if(ordernumber != null && ordernumber!=""){
 			werte.add(ordernumber);
-			spalte.add("OMOrder.ordernumber");
+			spalte.add("o.ordernumber");
+			joinStatement +=" INNER JOIN t.tblSettlement s INNER JOIN s.tblOrder o";
 		}
 		
 		if(incometype != null && incometype != ""){
 			werte.add(incometype);
-			spalte.add("OMIncometype.description_it");
+			spalte.add("c.descriptionIt");
+			if(!joinStatement.contains("t.tblSettlement s")){
+				joinStatement +=" INNER JOIN t.tblSettlement s";
+			}
+			joinStatement +=" INNER JOIN s.tblIncometype c";
 		}
 		
 		if(settlementnumber != null && settlementnumber !=""){
 			werte.add(settlementnumber);
-			spalte.add("OMSettlement.id_settlement");
+			spalte.add("s.idSettlement");
+			if(!joinStatement.contains("t.tblSettlement s")){
+				joinStatement +=" INNER JOIN t.tblSettlement s";
+			}
 		}
 		
-				
-		String[] w =  new String[werte.size()];
-		String[] s =  new String[spalte.size()];
-		int i = 0;
-		
-		for (String item : werte) {
-			w[i] = item;
-			s[i] = spalte.get(i);
-			i++;
+		try {
+			invoiceList.clear();
+			invoiceList.addAll((ArrayList<TblInvoice>)entityLister.getFilterList(TblInvoice.class,"TblInvoice", joinStatement,werte, spalte));
+			changeFilterPopupRender();
+		} catch (Exception e) {
+			init();
 		}
-		invoiceList.clear();
-		invoiceList.addAll((ArrayList<TblInvoice>)entityLister.getFilterList(TblInvoice.class,"TblInvoice",w, s));
-		changeFilterPopupRender();
+	}
+	
+	public void clearFilter(){
+		invoicenumberFrom="";
+		invoicenumberTo="";
+		sumFrom="";
+		sumTo="";
+		estimatateFrom="";
+		estimatateTo="";
+		duedateFrom=null;
+		duedateTo=null;
+		invoicestate="";
+		ordernumber="";
+		incometype="";
+		settlementnumber="";
 	}
 	
 	/*

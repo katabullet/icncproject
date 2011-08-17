@@ -1,6 +1,8 @@
 package at.icnc.om.backingbeans;
 
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -255,6 +257,7 @@ public class InvoiceBackingBean implements Refreshable{
 	private String ordernumber;
 	private String incometype;
 	private String settlementnumber;
+	private Format format = new SimpleDateFormat("dd.MM.yyyy");
 	
 	public void setInvoicenumber(String invoicenumber) {
 		this.invoicenumber = invoicenumber;
@@ -320,6 +323,21 @@ public class InvoiceBackingBean implements Refreshable{
 		return settlementnumber;
 	}
 	@SuppressWarnings("unchecked")
+	public ArrayList<SelectItem> getinvoicestateListDescriptionFilter(){
+		ArrayList<SelectItem> invoicestate = new ArrayList<SelectItem>();
+	
+		ArrayList<TblInvoicestate> iState = new ArrayList<TblInvoicestate>();
+		iState.addAll((ArrayList<TblInvoicestate>)
+				entityLister.getObjectList(TblInvoicestate.class));
+		
+		invoicestate.add(new SelectItem());
+		for (TblInvoicestate item : iState) {
+			invoicestate.add(new SelectItem(item.getDescriptionIs()));
+		}
+		return invoicestate;			
+	}
+	
+	@SuppressWarnings("unchecked")
 	public ArrayList<SelectItem> getorderListDescription(){
 		ArrayList<SelectItem> ordernumber = new ArrayList<SelectItem>();
 	
@@ -327,6 +345,7 @@ public class InvoiceBackingBean implements Refreshable{
 		order.addAll((ArrayList<TblOrder>)
 				entityLister.getObjectList(TblOrder.class));
 		
+		ordernumber.add(new SelectItem());
 		for (TblOrder item : order) {
 			ordernumber.add(new SelectItem(item.getOrdernumber()));
 		}
@@ -341,6 +360,7 @@ public class InvoiceBackingBean implements Refreshable{
 		incometype.addAll((Collection<? extends TblIncometype>) 
 				entityLister.getObjectList(TblIncometype.class));
 		
+		incometypeDescription.add(new SelectItem());
 		for (TblIncometype item : incometype) {
 			incometypeDescription.add(new SelectItem(item.getDescriptionIt()));
 		}
@@ -355,6 +375,7 @@ public class InvoiceBackingBean implements Refreshable{
 		settlement.addAll((Collection<? extends TblSettlement>) 
 				entityLister.getObjectList(TblSettlement.class));
 		
+		settlementID.add(new SelectItem());
 		for (TblSettlement item : settlement) {
 			settlementID.add(new SelectItem(item.getIdSettlement()));
 		}
@@ -362,69 +383,82 @@ public class InvoiceBackingBean implements Refreshable{
 	}
 	
 	public void InvoicestateChangeFilter(ValueChangeEvent vce){
-		setInvoicestate(vce.getNewValue().toString());				
+		setInvoicestate(vce.getNewValue().toString());
+		//setInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM OMinvoicestate WHERE description_is = '" + vce.getNewValue().toString() + "'", TblInvoicestate.class));					
 	}
 	
 	public void OrderChangeFilter(ValueChangeEvent vce){
-		setOrdernumber(vce.getNewValue().toString());				
+		setOrdernumber(vce.getNewValue().toString());	
+		//setOrdernumber((TblOrder) entityLister.getSingleObject("SELECT * FROM OMorder WHERE ordernumber = '" + vce.getNewValue().toString() + "'", TblOrder.class));
 	}
 	
 	public void IncometypeChangeFilter(ValueChangeEvent vce){
-		setIncometype(vce.getNewValue().toString());			
+		setIncometype(vce.getNewValue().toString());	
+		//setIncometype((TblIncometype) entityLister.getSingleObject("SELECT * FROM omIncometype WHERE description_it = '" + vce.getNewValue().toString() + "'", TblIncometype.class));
 	}
 	
 	public void SettlementChangeFilter(ValueChangeEvent vce){
-		setSettlementnumber(vce.getNewValue().toString());				
+		setSettlementnumber(vce.getNewValue().toString());
+		//setSettlementnumber((TblSettlement) entityLister.getSingleObject("SELECT * FROM OMsettlement WHERE id_settlement = '" + vce.getNewValue().toString() + "'", TblSettlement.class));
 	}
 	
 	public void Filtern() {
 		ArrayList<String> werte = new ArrayList<String>();
 		ArrayList<String> spalte= new ArrayList<String>();
 		
-		if(invoicenumber != null){
+		if(invoicenumber != null && invoicenumber!=""){
 			werte.add(invoicenumber);
 			spalte.add("invoicenumber");
 		}
 		
-		if(sum != null){
+		if(sum != null && sum !=""){
 			werte.add(sum);
 			spalte.add("sum");
 		}
 		
-		if(estimatate != null){
+		if(estimatate != null && estimatate !=""){
 			werte.add(estimatate);
 			spalte.add("estimation");
 		}
 		
 		if(duedate != null){
-			werte.add(duedate.toString());
+			werte.add(format.format(duedate));
 			spalte.add("duedate");
 		}
 		
-		if(invoicestate != null){
+		if(invoicestate != null && invoicestate!=""){
 			werte.add(invoicestate);
-			spalte.add("description_is");
+			spalte.add("s.descriptionIs");
 		}
 		
-		if(ordernumber != null){
+		if(ordernumber != null && ordernumber!=""){
 			werte.add(ordernumber);
-			spalte.add("ordernumber");
+			spalte.add("OMOrder.ordernumber");
 		}
 		
-		if(incometype != null){
+		if(incometype != null && incometype != ""){
 			werte.add(incometype);
-			spalte.add("description_it");
+			spalte.add("OMIncometype.description_it");
 		}
 		
-		if(settlementnumber != null){
+		if(settlementnumber != null && settlementnumber !=""){
 			werte.add(settlementnumber);
-			spalte.add("id_settlement");
+			spalte.add("OMSettlement.id_settlement");
 		}
 		
-		if(invoicenumber != null){
-			werte.add(invoicenumber);
-			spalte.add("");
-		}		 
+				
+		String[] w =  new String[werte.size()];
+		String[] s =  new String[spalte.size()];
+		int i = 0;
+		
+		for (String item : werte) {
+			w[i] = item;
+			s[i] = spalte.get(i);
+			i++;
+		}
+		invoiceList.clear();
+		invoiceList.addAll((ArrayList<TblInvoice>)entityLister.getFilterList(TblInvoice.class,"TblInvoice",w, s));
+		changeFilterPopupRender();
 	}
 	
 	/*

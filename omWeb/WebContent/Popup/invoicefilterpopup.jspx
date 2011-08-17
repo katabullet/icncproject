@@ -21,47 +21,54 @@
 	            <ice:outputText
 	                    value="Rechnungsfilter"
 	                    styleClass="popupHeaderText"/>
-	            <ice:commandButton image="images/closepopup.gif" action="#{invoiceLister.FilterpopupRendernaendern}"/>
+	            <ice:commandButton image="images/closepopup.gif" action="#{invoiceLister.closePopup}"/>
         	</ice:panelGrid>
 		</f:facet>
 		<f:facet name="body">
 		<ice:panelGroup>
-			<ice:panelGrid columns="2" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2">
-				<ice:outputLabel value="Spalte" styleClass="Text"/>
-				<ice:outputLabel value="Filterkriterium" styleClass="Text"/>
+			<ice:panelGrid columns="3" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2 columnPopup2">
+				
+				<ice:outputLabel value="Spalte" styleClass="Text" style="font-size: 18px;"/>
+				<ice:outputLabel value="Filterkriterium von" styleClass="HeadText"/>
+				<ice:outputLabel value="Filterkriterium bis" styleClass="HeadText"/>
 				<ice:outputLabel value="#{msg.tableInvoicenumber}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{invoiceLister.invoicenumber}"/>
+				<ice:inputText styleClass="Input" value="#{invoiceLister.invoicenumberFrom}"/>
+				<ice:inputText styleClass="Input" value="#{invoiceLister.invoicenumberTo}"/>
 				<ice:outputLabel value="#{msg.tableSum}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{invoiceLister.sum}"/>
+				<ice:inputText styleClass="Input" value="#{invoiceLister.sumFrom}"/>
+				<ice:inputText styleClass="Input" value="#{invoiceLister.sumTo}"/>
 				<ice:outputLabel value="#{msg.tableEstimation}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{invoiceLister.estimatate}"/>
+				<ice:inputText styleClass="Input" value="#{invoiceLister.estimatateFrom}"/>
+				<ice:inputText styleClass="Input" value="#{invoiceLister.estimatateTo}"/>
 				<ice:outputLabel value="#{msg.tableDuedate}" styleClass="Text"/>
-				<ice:selectInputDate value="#{invoiceLister.duedate}" renderAsPopup="true"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
+				<ice:selectInputDate styleClass="Input" value="#{invoiceLister.duedateFrom}" renderAsPopup="true"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
+				<ice:selectInputDate styleClass="Input" value="#{invoiceLister.duedateTo}" renderAsPopup="true"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
        			<ice:outputLabel value="#{msg.tableInvoicestate}" styleClass="Text"/>
        			<ice:selectOneMenu value="#{invoiceLister.invoicestate}"  styleClass="Input" valueChangeListener="#{invoiceLister.InvoicestateChangeFilter}">
-					  <f:selectItem value=""/>
-					  <f:selectItems value="#{invoiceLister.invoicestateListDescription}"/>
+					  <f:selectItems value="#{invoiceLister.invoicestateListDescriptionFilter}"/>
        			</ice:selectOneMenu>
+       			<ice:panelGrid/>
        			<ice:outputLabel value="#{msg.tableOrdernumber}" styleClass="Text"/>
        			<ice:selectOneMenu value="#{invoiceLister.ordernumber}"  styleClass="Input" valueChangeListener="#{invoiceLister.OrderChangeFilter}">
-					  <f:selectItem value=""/>
 					  <f:selectItems value="#{invoiceLister.orderListDescription}"/>
        			</ice:selectOneMenu>
+       			<ice:panelGrid/>
        			<ice:outputLabel value="#{msg.tableIncometype}" styleClass="Text"/>
        			<ice:selectOneMenu value="#{invoiceLister.incometype}"  styleClass="Input" valueChangeListener="#{invoiceLister.IncometypeChangeFilter}">
-					  <f:selectItem value=""/>
 					  <f:selectItems value="#{invoiceLister.incometypeListDescription}"/>
        			</ice:selectOneMenu>
+       			<ice:panelGrid/>
        			<ice:outputLabel value="#{msg.tableSettlementnumber}" styleClass="Text"/>
        			<ice:selectOneMenu value="#{invoiceLister.settlementnumber}"  styleClass="Input" valueChangeListener="#{invoiceLister.SettlementChangeFilter}">
-					  <f:selectItem value=""/>
 					  <f:selectItems value="#{invoiceLister.settlementListDescription}"/>
        			</ice:selectOneMenu>			
 			</ice:panelGrid>
-			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" style="width: 500px;">
+			<ice:panelGrid/>
+			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" style="width:100%;">
 				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Filtern" action="#{invoiceLister.Filtern}"/>
-				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{invoiceLister.FilterpopupRendernaendern}"/>
+				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{invoiceLister.closePopup}"/>
 			</ice:panelGrid>
+			<ice:panelGrid/>
 		</ice:panelGroup>
 		</f:facet>
 	</ice:panelPopup>

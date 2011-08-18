@@ -1,8 +1,8 @@
 package at.icnc.om.impl;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
+
 import javax.annotation.PreDestroy;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -10,8 +10,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-
-import org.omg.CORBA.OMGVMCID;
 
 import at.icnc.om.interfaces.EntityListerLocal;
 

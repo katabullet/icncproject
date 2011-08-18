@@ -19,9 +19,8 @@
 		<f:facet name="header">
 			<!-- Header Popup (filter) Start -->
 			<ice:panelGrid columns="2" styleClass="popupHeaderWrapper" style="width: 100%" columnClasses="headerCol1 headerCol2">
-	            <!-- ToDo: Dynamisch: Neu/Ändern -->
 	            <ice:outputText	                    
-	                    value="Rechnungsfilter"
+	                    value="#{msg.tableFilterInvoices}"
 	                    styleClass="popupHeaderText"/>
 	            <ice:commandButton image="images/closepopup.gif" action="#{invoiceLister.closePopup}"/>
         	</ice:panelGrid>

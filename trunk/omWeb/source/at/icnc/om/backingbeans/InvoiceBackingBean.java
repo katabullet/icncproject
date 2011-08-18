@@ -1,18 +1,25 @@
 package at.icnc.om.backingbeans;
 
 
+import java.math.BigDecimal;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.ejb.EJB;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.ConverterException;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.faces.validator.ValidatorException;
 
 import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.entitybeans.TblInvoice;
@@ -668,4 +675,26 @@ public class InvoiceBackingBean extends AbstractBean {
 		getCurInvoice().setIdInvoice(0);
 		refresh();
 	}	
+	
+	public void validateSum(FacesContext context, UIComponent validate, Object value){
+		FacesMessage msg = new FacesMessage("Das ist ein Test");
+		Pattern pattern = Pattern.compile("[a-zA-Z]");
+		Matcher matcher = pattern.matcher((String) value);
+		
+		if(matcher.matches()){
+			context.addMessage(validate.getClientId(context), msg);
+		}
+		try {
+			BigDecimal enteredSum = (BigDecimal) value;
+						
+		} catch (ValidatorException e) {
+			context.addMessage(validate.getClientId(context), msg);
+		} catch (ConverterException e){
+			context.addMessage(validate.getClientId(context), msg);
+		} catch (Exception e){
+			context.addMessage(validate.getClientId(context), msg);
+		}
+	    
+		context.addMessage(validate.getClientId(context), msg);
+	}
 }

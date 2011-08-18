@@ -32,7 +32,7 @@
 			<property name="eclipselink.logging.level" value="FINE" />
 			<property name="eclipselink.cache.shared.default" value="false" />
 			<!-- <property name="eclipselink.session-event-listener" value="inet.module.mdm.security.VPDEventListener" />-->
-			<property name="eclipselink.jdbc.exclusive-connection.mode" value="Isolated" />
+			<!-- <property name="eclipselink.jdbc.exclusive-connection.mode" value="Isolated" /> -->
 			<property name="eclipselink.jdbc.exclusive-connection.is-lazy" value="true" />
 			<property name="eclipselink.jdbc.connections.initial" value="0" />
 			<property name="eclipselink.jdbc.connections.min" value="0" />

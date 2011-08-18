@@ -18,7 +18,7 @@
 					style="margin: auto;">					
 		<f:facet name="header">
 		<!-- Header Popup (delete) Start -->
-			<ice:panelGrid columns="2" styleClass="popupHeaderWrapper" style="width: 100%" columnClasses="headerCol1 headerCol2">
+			<ice:panelGrid columns="2" styleClass="popupHeaderWrapper panelGridHeader" columnClasses="headerCol1 headerCol2">
 	            <ice:outputText
 	                    value="#{msg.tableDeleteInvoice}"
 	                    styleClass="popupHeaderText"/>
@@ -35,14 +35,14 @@
 			<ice:panelGrid styleClass="panelGridMiddle">
 				<ice:outputText value="#{msg.tableReallyDelete}" styleClass="Text"/>
 			</ice:panelGrid>
-			<ice:panelGrid style="height: 20px;">
+			<ice:panelGrid styleClass="panelGridSpace1">
 				<ice:outputText value=""/>
 			</ice:panelGrid>
-			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" style="width: 500px;">
+			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" styleClass="panelGridButtons">
 				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="#{msg.buttonDelete}" action="#{invoiceLister.deleteInvoice}"/>
 				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="#{msg.buttonCancel}" action="#{invoiceLister.closePopup}"/>
 			</ice:panelGrid>
-			<ice:panelGrid style="height: 15px;">
+			<ice:panelGrid styleClass="panelGridSpace2">
 				<ice:outputText value=""/>
 			</ice:panelGrid>
 		</ice:panelGroup>

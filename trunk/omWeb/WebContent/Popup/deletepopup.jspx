@@ -17,21 +17,25 @@
 					autoCentre="true"
 					style="margin: auto;">					
 		<f:facet name="header">
+		<!-- Header Popup (delete) Start -->
 			<ice:panelGrid columns="2" styleClass="popupHeaderWrapper" style="width: 100%" columnClasses="headerCol1 headerCol2">
 	            <ice:outputText
-	                    value="Rechnung loeschen"
+	                    value="#{msg.tableDeleteInvoice}"
 	                    styleClass="popupHeaderText"/>
 	            <ice:commandButton image="images/closepopup.gif" action="#{invoiceLister.closePopup}"/>
         	</ice:panelGrid>
+        <!-- Header Popup (delete) Start -->
 		</f:facet>
 		<f:facet name="body">
+		<!-- Outputtext + Buttons Popup (delete) Start -->
 		<ice:panelGroup>
-			<ice:outputText value="Wollen Sie das markierte Element wirklich loeschen?"></ice:outputText>
+			<ice:outputText value="#{msg.tableReallyDelete}"></ice:outputText>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" style="width: 500px;">
-				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Loeschen" action="#{invoiceLister.deleteInvoice}"/>
-				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Abbrechen" action="#{invoiceLister.closePopup}"/>
+				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="#{msg.buttonDelete}" action="#{invoiceLister.deleteInvoice}"/>
+				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="#{msg.buttonCancel}" action="#{invoiceLister.closePopup}"/>
 			</ice:panelGrid>
 		</ice:panelGroup>
+		<!-- Outputtext + Buttons Popup (delete) End -->
 		</f:facet>
 	</ice:panelPopup>
 	

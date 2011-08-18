@@ -32,7 +32,7 @@
 					<ice:panelGrid columns="3" style="width: 100%; text-align: right; background-color: #E7E7E7;">
 						<ice:outputConnectionStatus/>
 						<ice:panelGroup style="vertical-align: middle;">
-							<ice:outputLabel value="Benutzername:"/>
+							<ice:outputLabel value="#{msg.loginUserName}:"/>
 							<ice:outputLabel value="#{user.username}"/>
 						</ice:panelGroup>
 						<ice:commandButton style="position: right;" value="#{msg.menuLogout}" styleClass="LoginBtn" action="#{user.logout}"/>

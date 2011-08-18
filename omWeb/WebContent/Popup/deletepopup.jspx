@@ -32,7 +32,7 @@
 			<ice:panelGrid style="height: 20px;">
 				<ice:outputText value=""/>
 			</ice:panelGrid>
-			<ice:panelGrid style="width: 100%; text-align: center;">
+			<ice:panelGrid styleClass="panelGridMiddle">
 				<ice:outputText value="#{msg.tableReallyDelete}" styleClass="Text"/>
 			</ice:panelGrid>
 			<ice:panelGrid style="height: 20px;">

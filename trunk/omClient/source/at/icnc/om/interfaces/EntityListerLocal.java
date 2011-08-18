@@ -5,13 +5,30 @@ import java.util.Collection;
 
 import javax.ejb.Local;
 
+/**
+ * Local Interface for EntityListerImpl
+ * @author csh80
+ *
+ */
 @Local
 public interface EntityListerLocal {
+	
+	/* Function to return entityList without filters */
 	public Collection<?> getObjectList(Class<?> entityClass);
+	
+	/* Method to delete a specific entity */
 	public void DeleteObject(Long id, Class<?> entityClass);
+	
+	/* Method to update a specific entity */
 	public void UpdateObject(Class<?> entityClass, Object updated, Long id);
+	
+	/* Function to get a single entity */
 	public Object getSingleObject(Class<?> entityClass);
+	
+	/* Function to get a single entity including a self-made statement */
 	public Object getSingleObject(String sqlStatement, Class<?> entityClass);
+
+	/* Function to get a filtered entity-list */
 	public Collection<?> getFilterList(Class<?> entityClass, String Class, String Joins, ArrayList<String> werte, ArrayList<String> spalte);
-	//public Long NextID(Class<?> entityClass);
+
 }

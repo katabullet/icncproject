@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.ejb.EJB;
+
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
@@ -16,6 +19,10 @@ import at.icnc.om.entitybeans.TblInvoice;
 import at.icnc.om.entitybeans.TblInvoicestate;
 import at.icnc.om.entitybeans.TblOrder;
 import at.icnc.om.entitybeans.TblSettlement;
+import at.icnc.om.interfaces.EntityListerLocal;
+import at.icnc.om.interfaces.Refreshable;
+
+import com.icesoft.faces.component.datapaginator.DataPaginator;
 
 import com.icesoft.faces.component.ext.RowSelectorEvent;
 
@@ -191,10 +198,14 @@ public class InvoiceBackingBean extends AbstractBean {
 	 * Lists with DB-content are set NULL to
 	 * make sure they are read from DB
 	 */
+	
+	FacesContext ctx = FacesContext.getCurrentInstance();
+	
 	@Override
 	public void refresh() {
 		visible = !(getCurInvoice().getIdInvoice() == 0);
 		invoiceList = null;
+		invoicestates = null;
 		invoicestates = null;
 		popupRender = false;
 		filterpopupRender = false;

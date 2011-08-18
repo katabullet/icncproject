@@ -37,6 +37,12 @@
 			<property-class>java.lang.String</property-class>
 		</property>
 	</validator>
+	<validator>
+		<description></description>
+		<display-name>sumValidator</display-name>
+		<validator-id>sumValidator</validator-id>
+		<validator-class>at.icnc.om.validators.InvoiceValidator</validator-class>
+	</validator>
 	<managed-bean>
 		<managed-bean-name>searchStructureProvider</managed-bean-name>
 		<managed-bean-class>inet.module.mdm.jsf.beans.SearchStructureProvider</managed-bean-class>

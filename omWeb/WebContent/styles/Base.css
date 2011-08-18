@@ -372,7 +372,13 @@ table.LoginContainer .LoginBtn {
 
 .Base_Text_Center,.PageContainer,.iceMsgsError,.iceMsgError {
 	text-align: center;
-	font-size: 12px;
+	font-size: 12px;	
+}
+.iceMsgError li {
+	list-style-type: none;
+	list-style-image: none;
+	list-style: none;
+	list-style-image: none;	
 }
 
 .icePnlBrdrNorth {

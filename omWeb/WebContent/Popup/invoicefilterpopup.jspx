@@ -17,14 +17,17 @@
 					autoCentre="true"
 					style="margin: auto;">					
 		<f:facet name="header">
+			<!-- Header Popup (filter) Start -->
 			<ice:panelGrid columns="2" styleClass="popupHeaderWrapper" style="width: 100%" columnClasses="headerCol1 headerCol2">
 	            <ice:outputText
 	                    value="Rechnungsfilter"
 	                    styleClass="popupHeaderText"/>
 	            <ice:commandButton image="images/closepopup.gif" action="#{invoiceLister.closePopup}"/>
         	</ice:panelGrid>
+        	<!-- Header Popup (filter) End -->
 		</f:facet>
 		<f:facet name="body">
+		<!-- Labels + Inputtexts Popup (filter) Start -->
 		<ice:panelGroup>
 			<ice:panelGrid columns="3" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2 columnPopup2">
 				
@@ -70,6 +73,7 @@
 			</ice:panelGrid>
 			<ice:panelGrid/>
 		</ice:panelGroup>
+		<!-- Labels + Inputtexts Popup (filter) End -->
 		</f:facet>
 	</ice:panelPopup>
 	

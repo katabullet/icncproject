@@ -13,16 +13,16 @@
 			<ice:selectOneMenu id="type" value="#{dataExporter.type}" partialSubmit="true"
 		            valueChangeListener="#{dataExporter.typeChangeListener}" >
 		            <f:selectItem itemLabel="#{msg.tableExport}" itemValue=""/>
-		            <f:selectItem itemLabel="MS Excel" itemValue="excel"/>
-		            <f:selectItem itemLabel="CSV (comma separated values)" itemValue="csv"/>
+		            <f:selectItem itemLabel="#{msg.tableExcel}" itemValue="excel"/>
+		            <f:selectItem itemLabel="#{msg.tableCSV}" itemValue="csv"/>
 		        </ice:selectOneMenu>
 		        <br/>
 		       <ice:panelGroup effect="#{dataExporter.changeEffect}" style="width:180px;">
 		            <ice:dataExporter for="invoice"
-		                label="Click to download #{dataExporter.type} file"
+		                label="#{msg.tableDataExporter1} #{dataExporter.type} #{msg.tableDataExporter2}"
 		                type="#{dataExporter.type}"
-		                popupBlockerLabel="Popup Blocker detected - click here to resume download..."
-		                clickToCreateFileText="Click to create #{dataExporter.type} file "
+		                popupBlockerLabel="#{msg.tablePopupBlocker}"
+		                clickToCreateFileText="#{msg.tableDataExporter12} #{dataExporter.type} #{msg.tableDataExporter2}"
 		                ignorePagination="true"/>
 		       </ice:panelGroup>
 		</ice:panelGroup>	 			           					
@@ -135,7 +135,7 @@
 	                        pageIndexVar="pageIndex"
 	                        >
 	 
-	                 <ice:outputFormat value="{0} orders found, displaying {1} orders, from {2} to {3}. Page {4} / {5}" styleClass="standard" >
+	                 <ice:outputFormat value="{0} #{msg.tablePaginator1} {1} #{msg.tablePaginator2} {2} #{msg.tablePaginator3} {3}#{msg.tablePaginator4} {4} / {5}" styleClass="standard" >
 	                        <f:param value="#{rowsCount}" />
 	                        <f:param value="#{displayedRowsCountVar}" />
 	                        <f:param value="#{firstRowIndex}" />

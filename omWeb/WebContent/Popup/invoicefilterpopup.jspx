@@ -19,7 +19,8 @@
 		<f:facet name="header">
 			<!-- Header Popup (filter) Start -->
 			<ice:panelGrid columns="2" styleClass="popupHeaderWrapper" style="width: 100%" columnClasses="headerCol1 headerCol2">
-	            <ice:outputText
+	            <!-- ToDo: Dynamisch: Neu/Ändern -->
+	            <ice:outputText	                    
 	                    value="Rechnungsfilter"
 	                    styleClass="popupHeaderText"/>
 	            <ice:commandButton image="images/closepopup.gif" action="#{invoiceLister.closePopup}"/>
@@ -31,9 +32,9 @@
 		<ice:panelGroup>
 			<ice:panelGrid columns="3" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2 columnPopup2">
 				
-				<ice:outputLabel value="Spalte" styleClass="Text" style="font-size: 18px;"/>
-				<ice:outputLabel value="Filterkriterium von" styleClass="HeadText"/>
-				<ice:outputLabel value="Filterkriterium bis" styleClass="HeadText"/>
+				<ice:outputLabel value="#{msg.tableColumn}" styleClass="Text" style="font-size: 18px;"/>
+				<ice:outputLabel value="#{msg.tableCriterionStart}" styleClass="HeadText"/>
+				<ice:outputLabel value="#{msg.tableCriterionEnd}" styleClass="HeadText"/>
 				<ice:outputLabel value="#{msg.tableInvoicenumber}" styleClass="Text"/>
 				<ice:inputText styleClass="Input" value="#{invoiceLister.invoicenumberFrom}"/>
 				<ice:inputText styleClass="Input" value="#{invoiceLister.invoicenumberTo}"/>

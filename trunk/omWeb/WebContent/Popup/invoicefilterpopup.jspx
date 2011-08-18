@@ -67,11 +67,16 @@
        			</ice:selectOneMenu>			
 			</ice:panelGrid>
 			<ice:panelGrid/>
+			<ice:panelGrid style="height: 20px;">
+				<ice:outputText value=""/>
+			</ice:panelGrid>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" style="width:100%;">
 				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Filtern" action="#{invoiceLister.Filtern}"/>
 				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{invoiceLister.closePopup}"/>
 			</ice:panelGrid>
-			<ice:panelGrid/>
+			<ice:panelGrid style="height: 15px;">
+				<ice:outputText value=""/>
+			</ice:panelGrid>
 		</ice:panelGroup>
 		<!-- Labels + Inputtexts Popup (filter) End -->
 		</f:facet>

@@ -1,3 +1,8 @@
+.panelGridMiddle{
+	width: 100%;
+	text-align: center;
+	}
+
 .panelPosition{
 	text-align: center;
 	}
@@ -40,3 +45,11 @@
 	width: 120px;
 	height: 30px;
 }
+
+.panelGridHeader{
+	width: 100%;
+	}
+	
+.panelGridButtons{
+	width: 500px;
+	}

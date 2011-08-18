@@ -29,8 +29,12 @@
 			<ice:panelGrid columns="2" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2">
 				<ice:outputLabel value="#{msg.tableInvoicenumber}" styleClass="Text"/>
 				<ice:inputText styleClass="Input" value="#{invoiceLister.curInvoice.invoicenumber}"/>
-				<ice:outputLabel value="#{msg.tableSum}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{invoiceLister.curInvoice.sum }"/>
+				<ice:outputLabel value="#{msg.tableSum}" styleClass="Text"/>			
+					
+				<ice:inputText id="inputSum" styleClass="Input" value="#{invoiceLister.curInvoice.sum }" partialSubmit="true">
+					<f:validator validatorId="sumValidator" for="inputSum" />
+				</ice:inputText>
+				
 				<ice:outputLabel value="#{msg.tableEstimation}" styleClass="Text"/>
 				<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.estimation}"/>
 				<ice:outputLabel value="#{msg.tableDuedate}" styleClass="Text"/>

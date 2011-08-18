@@ -215,6 +215,7 @@ public class InvoiceBackingBean extends AbstractBean {
 	//___________________________________________________________________________
 	//Filterpopup Methoden
 
+	/*Fields declarations for the Filter*/
 	private String invoicenumberFrom;
 	private String invoicenumberTo;
 	private String sumFrom;
@@ -230,6 +231,7 @@ public class InvoiceBackingBean extends AbstractBean {
 	private String settlementnumber;
 	private Format format = new SimpleDateFormat("yyyy-MM-dd");
 	
+	/* Start of the Getter and Setter Methods for the Filter*/
 	public void setInvoicenumberFrom(String invoicenumber) {
 		this.invoicenumberFrom = invoicenumber;
 	}
@@ -325,6 +327,13 @@ public class InvoiceBackingBean extends AbstractBean {
 	public String getSettlementnumber() {
 		return settlementnumber;
 	}
+	/*End of the Getter and Setter Methods for the Filter*/
+	
+	/**
+	 * Function to create SelectItems of all Invoicestates plus an empty one
+	 * Important for combobox (needs SelectItem, not objects of invoicestates)
+	 * @return List of SelectItem 
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<SelectItem> getinvoicestateListDescriptionFilter(){
 		ArrayList<SelectItem> invoicestate = new ArrayList<SelectItem>();
@@ -332,14 +341,20 @@ public class InvoiceBackingBean extends AbstractBean {
 		ArrayList<TblInvoicestate> iState = new ArrayList<TblInvoicestate>();
 		iState.addAll((ArrayList<TblInvoicestate>)
 				entityLister.getObjectList(TblInvoicestate.class));
-		
+		/*An empty Item is added to SelectItem-List*/
 		invoicestate.add(new SelectItem());
 		for (TblInvoicestate item : iState) {
+			/* Description of each invoicestate is added to SelectItem-List */
 			invoicestate.add(new SelectItem(item.getDescriptionIs()));
 		}
 		return invoicestate;			
 	}
 	
+	/**
+	 * Function to create SelectItems of all Ordernumbers plus an empty one
+	 * Important for combobox (needs SelectItem, not objects of order)
+	 * @return List of SelectItem 
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<SelectItem> getorderListDescription(){
 		ArrayList<SelectItem> ordernumber = new ArrayList<SelectItem>();
@@ -347,14 +362,20 @@ public class InvoiceBackingBean extends AbstractBean {
 		ArrayList<TblOrder> order = new ArrayList<TblOrder>();
 		order.addAll((ArrayList<TblOrder>)
 				entityLister.getObjectList(TblOrder.class));
-		
+		/*An empty Item is added to SelectItem-List*/
 		ordernumber.add(new SelectItem());
 		for (TblOrder item : order) {
+			/* Number of each order is added to SelectItem-List */
 			ordernumber.add(new SelectItem(item.getOrdernumber()));
 		}
 		return ordernumber;			
 	}
 	
+	/**
+	 * Function to create SelectItems of all Incometypes plus an empty one
+	 * Important for combobox (needs SelectItem, not objects of incometype)
+	 * @return List of SelectItem 
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<SelectItem> getincometypeListDescription(){
 		ArrayList<SelectItem> incometypeDescription = new ArrayList<SelectItem>();
@@ -362,14 +383,20 @@ public class InvoiceBackingBean extends AbstractBean {
 		ArrayList<TblIncometype> incometype = new ArrayList<TblIncometype>();
 		incometype.addAll((Collection<? extends TblIncometype>) 
 				entityLister.getObjectList(TblIncometype.class));
-		
+		/*An empty Item is added to SelectItem-List*/
 		incometypeDescription.add(new SelectItem());
 		for (TblIncometype item : incometype) {
+			/* Description of each incometype is added to SelectItem-List */
 			incometypeDescription.add(new SelectItem(item.getDescriptionIt()));
 		}
 		return incometypeDescription;			
 	}
 	
+	/**
+	 * Function to create SelectItems of all Settlement Ids plus an empty one
+	 * Important for combobox (needs SelectItem, not objects of settlement)
+	 * @return List of SelectItem 
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<SelectItem> getsettlementListDescription(){
 		ArrayList<SelectItem> settlementID = new ArrayList<SelectItem>();
@@ -377,75 +404,125 @@ public class InvoiceBackingBean extends AbstractBean {
 		ArrayList<TblSettlement> settlement = new ArrayList<TblSettlement>();
 		settlement.addAll((Collection<? extends TblSettlement>) 
 				entityLister.getObjectList(TblSettlement.class));
-		
+		/*An empty Item is added to SelectItem-List*/
 		settlementID.add(new SelectItem());
 		for (TblSettlement item : settlement) {
+			/* ID of each settlement is added to SelectItem-List */
 			settlementID.add(new SelectItem(item.getIdSettlement()));
 		}
 		return settlementID;			
 	}
 	
+	/**
+	 * Method that Listens to Change Event of a combobox
+	 * if another element in the combobox is selected, the value in
+	 * curInvoicestate is set to the selected one
+	 * @param vce
+	 */
 	public void InvoicestateChangeFilter(ValueChangeEvent vce){
-		setInvoicestate(vce.getNewValue().toString());
-		//setInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM OMinvoicestate WHERE description_is = '" + vce.getNewValue().toString() + "'", TblInvoicestate.class));					
+		setInvoicestate(vce.getNewValue().toString());		
 	}
 	
+	/**
+	 * Method that Listens to Change Event of a combobox
+	 * if another element in the combobox is selected, the value in
+	 * curOrder is set to the selected one
+	 * @param vce
+	 */
 	public void OrderChangeFilter(ValueChangeEvent vce){
 		setOrdernumber(vce.getNewValue().toString());	
-		//setOrdernumber((TblOrder) entityLister.getSingleObject("SELECT * FROM OMorder WHERE ordernumber = '" + vce.getNewValue().toString() + "'", TblOrder.class));
 	}
 	
+	/**
+	 * Method that Listens to Change Event of a combobox
+	 * if another element in the combobox is selected, the value in
+	 * curIncometype is set to the selected one
+	 * @param vce
+	 */
 	public void IncometypeChangeFilter(ValueChangeEvent vce){
 		setIncometype(vce.getNewValue().toString());	
-		//setIncometype((TblIncometype) entityLister.getSingleObject("SELECT * FROM omIncometype WHERE description_it = '" + vce.getNewValue().toString() + "'", TblIncometype.class));
 	}
 	
+	/**
+	 * Method that Listens to Change Event of a combobox
+	 * if another element in the combobox is selected, the value in
+	 * curSettlement is set to the selected one
+	 * @param vce
+	 */
 	public void SettlementChangeFilter(ValueChangeEvent vce){
 		setSettlementnumber(vce.getNewValue().toString());
-		//setSettlementnumber((TblSettlement) entityLister.getSingleObject("SELECT * FROM OMsettlement WHERE id_settlement = '" + vce.getNewValue().toString() + "'", TblSettlement.class));
 	}
 	
+	/**
+	 * Filtern Method
+	 * add the filter values and the columns to ArrayLists
+	 * create the Join-Statement
+	 * calls the "getFilterList" Method from the EntityLister to get the Filterlist
+	 */
 	public void Filtern() {
+		/*ArrayList which managed the filter values*/
 		ArrayList<String> werte = new ArrayList<String>();
+		/*ArrayList which managed the filter columns*/
 		ArrayList<String> spalte= new ArrayList<String>();
-		String joinStatement="";		
-
+		/*Field with contains the Joinstatement*/
+		String joinStatement="";
+		
+		/*Start Methods which check if the Fields are set and add them to the ArrayLists*/
 		if(invoicenumberFrom != null && invoicenumberFrom!="" || invoicenumberTo != null && invoicenumberTo!=""){
+			
+			/*Start - Set a default Value if none is set*/
 			if(invoicenumberFrom=="") invoicenumberFrom="0";
 			if(invoicenumberTo=="") invoicenumberTo="999999";
+			/*End - Set a default Value if none is set*/
+			
 			werte.add(invoicenumberFrom + ":" + invoicenumberTo);
 			spalte.add("t.invoicenumber");
 
 		}
 		
 		if(sumFrom != null && sumFrom!="" || sumTo != null && sumTo!=""){
+			
+			/*Start - Replace the Char "," with the Char "."*/
 			if(sumFrom.contains(",")){
 				sumFrom.replace(",", ".");
 			}
 			if(sumTo.contains(",")){
 				sumTo.replace(",", ".");
 			}
+			/*End - Replace the Char "," with the Char "."*/
+			
+			/*Start - Set a default Value if none is set*/
 			if(sumFrom=="") sumFrom="0";
 			if(sumTo=="") sumTo="999999";
+			/*End - Set a default Value if none is set*/
 			
 			werte.add(sumFrom + ":" + sumTo);
 			spalte.add("t.sum");
 		}
 		
 		if(estimatateFrom != null && estimatateFrom!="" || estimatateTo != null && estimatateTo!=""){
+			
+			/*Start - Replace the Char "," with the Char "."*/
 			if(estimatateFrom.contains(",")){
 				estimatateFrom.replace(",", ".");
 			}
 			if(estimatateTo.contains(",")){
 				estimatateTo.replace(",", ".");
 			}
+			/*End - Replace the Char "," with the Char "."*/
+			
+			/*Start - Set a default Value if none is set*/
 			if(estimatateFrom=="") estimatateFrom="0";
 			if(estimatateTo=="") estimatateTo="999999";
+			/*End - Set a default Value if none is set*/
+			
 			werte.add(estimatateFrom + ":" + estimatateTo);
 			spalte.add("t.estimation");
 		}
 		
 		if(duedateFrom != null || duedateTo != null){
+			
+			/*Start - Set a default Value if none is set*/
 			if(duedateFrom==null)
 				try {
 					duedateFrom = dateFormat.parse("1999-01-01");
@@ -456,27 +533,33 @@ public class InvoiceBackingBean extends AbstractBean {
 					duedateTo = dateFormat.parse("3000-01-01");
 				} catch (ParseException e) {
 				}
+			/*Start - Set a default Value if none is set*/
 			
 			werte.add(format.format(duedateFrom) + ":" + format.format(duedateTo));
-			//werte.add(duedate.toString());
 			spalte.add("t.duedate");
 		}
 		
 		if(invoicestate != null && invoicestate!=""){
 			werte.add(invoicestate);
 			spalte.add("i.descriptionIs");
+			
+			/*Add a part of the Joinstatement*/
 			joinStatement +=" INNER JOIN t.tblInvoicestate i";
 		}
 		
 		if(ordernumber != null && ordernumber!=""){
 			werte.add(ordernumber);
 			spalte.add("o.ordernumber");
+			
+			/*Add a part of the Joinstatement*/
 			joinStatement +=" INNER JOIN t.tblSettlement s INNER JOIN s.tblOrder o";
 		}
 		
 		if(incometype != null && incometype != ""){
 			werte.add(incometype);
 			spalte.add("c.descriptionIt");
+			
+			/*Add a part of the Joinstatement*/
 			if(!joinStatement.contains("t.tblSettlement s")){
 				joinStatement +=" INNER JOIN t.tblSettlement s";
 			}
@@ -486,22 +569,32 @@ public class InvoiceBackingBean extends AbstractBean {
 		if(settlementnumber != null && settlementnumber !=""){
 			werte.add(settlementnumber);
 			spalte.add("s.idSettlement");
+			
+			/*Add a part of the Joinstatement*/
 			if(!joinStatement.contains("t.tblSettlement s")){
 				joinStatement +=" INNER JOIN t.tblSettlement s";
 			}
 		}
+		/*End Methods which check if the Fields are set and add them to the ArrayLists*/
 		
+		/*Try and Catch: Try to call the "getFilterList" Method and get the FilterList or catch to call the "init" Method*/
 		try {
+			/*Deletes the current Table*/
 			invoiceList.clear();
+			
 			invoiceList.addAll((ArrayList<TblInvoice>)entityLister.getFilterList(TblInvoice.class,"TblInvoice", joinStatement,werte, spalte));
+			
+			/*Method to close the Popup*/
 			changeFilterPopupRender();
 		} catch (Exception e) {
 			init();
-		}
-
-		invoiceList.clear();
-		//invoiceList.addAll((ArrayList<TblInvoice>)entityLister.getFilterList(TblInvoice.class,"TblInvoice",w, s));
-		changeFilterPopupRender();
+			
+			/*Deletes the current Table*/
+			invoiceList.clear();
+			
+			/*Method to close the Popup*/
+			changeFilterPopupRender();
+		}	
 
 	}	
 

@@ -10,12 +10,18 @@
 .columnPopup1{
 	text-align: right;
 	padding-right: 20px;
-	width: 200px;
 	height: 50px;
+	padding-left: 30px;
 	}
 	
 .columnPopup2{
-	text-align: center;
+	text-align: left;
+	width: 300px;
+	height: 50px;
+	}
+	
+.columnPopup2Center{
+	text-align: left;
 	width: 300px;
 	height: 50px;
 	}
@@ -51,5 +57,22 @@
 	}
 	
 .panelGridButtons{
-	width: 500px;
+	width: 100%;
 	}
+	
+.panelGridSpace1{
+	height: 20px;
+	}
+	
+.panelGridSpace2{
+	height: 15px;
+	}
+	
+.TextTitel{
+	font-size: 18px;
+	}
+	
+.Calendar{
+	text-align: center;
+	width: 200px;
+	}	

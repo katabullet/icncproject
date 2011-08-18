@@ -7,21 +7,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
-import javax.ejb.EJB;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import jxl.write.DateFormat;
 import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.entitybeans.TblInvoice;
 import at.icnc.om.entitybeans.TblInvoicestate;
 import at.icnc.om.entitybeans.TblOrder;
 import at.icnc.om.entitybeans.TblSettlement;
-import at.icnc.om.interfaces.EntityListerLocal;
-import at.icnc.om.interfaces.Refreshable;
-import com.icesoft.faces.component.datapaginator.DataPaginator;
+
 import com.icesoft.faces.component.ext.RowSelectorEvent;
 
 /**
@@ -30,32 +25,13 @@ import com.icesoft.faces.component.ext.RowSelectorEvent;
  * @author csh80, nkn80, cma80
  *
  */
-public class InvoiceBackingBean implements Refreshable{
+public class InvoiceBackingBean extends AbstractBean {
 	
-	// Session Bean of EntityLister to Read and Write Entities
-	@EJB
-	EntityListerLocal entityLister;
-
 	// Variable to save selected Invoice
 	private TblInvoice curInvoice = new TblInvoice();
 	
 	// List with all Invoices to avoid constant DB-Reading
 	private ArrayList<TblInvoice> invoiceList;
-	
-	// DataPaginator for auto pagination and resetting to first page
-	private DataPaginator paginator;
-	
-	// Variable to set Delete- and Edit-Button visible 
-	private Boolean visible = false;
-	
-	// Variable to make Edit-Popup visible and rendered
-	private Boolean popupRender = false;
-	
-	// Variable to make Filter-Popup visible and rendered
-	private Boolean filterpopupRender = false;
-	
-	// Variable to make Delete-Popup visible and rendered
-	private Boolean deletePopupRender = false;
 	
 	// List with all invoicestates 
 	ArrayList<TblInvoicestate> invoicestates;
@@ -91,7 +67,7 @@ public class InvoiceBackingBean implements Refreshable{
 					curItem.setSelected(true);
 				}
 			}
-		}
+		}		
 		
 		return invoiceList;
 	}	
@@ -133,6 +109,7 @@ public class InvoiceBackingBean implements Refreshable{
 	 * It is called when clicked on element in DataTable
 	 * @param re
 	 */
+	@Override
 	public void rowEvent(RowSelectorEvent re) {		
 		
 		/* If no invoices is selected, curInvoice is set to selected
@@ -147,17 +124,7 @@ public class InvoiceBackingBean implements Refreshable{
 				setVisible(true);
 			}
 		}
-	}
-	
-	/* Getter for Delete- and Edit-Button visible */
-	public Boolean getVisible(){		
-		return visible;
-	}
-	
-	/* Setter for Delete- and Edit-Button visible */
-	private void setVisible(Boolean visible){
-		this.visible = visible;
-	}
+	}	
 
 	/* Setter for currently selected invoice */
 	public void setCurInvoice(TblInvoice curInvoice) {
@@ -202,8 +169,7 @@ public class InvoiceBackingBean implements Refreshable{
 	/* Getter of curInvoicestate */
 	public TblInvoicestate getCurInvoicestate() {
 		return curInvoicestate;
-	}
-	
+	}	
 	
 	/**
 	 * init Method
@@ -213,15 +179,11 @@ public class InvoiceBackingBean implements Refreshable{
 	 * resets curInvoice
 	 */
 	@Override
-	public void init() {
-		refresh();
+	public void init() {		
 		setCurInvoice(new TblInvoice());
 		getCurInvoice().setIdInvoice(0);
-		visible = false;
-		popupRender = false;
-		filterpopupRender = false;
-		setDeletePopupRender(false);
 		paginator.gotoFirstPage();
+		refresh();
 		clearFilter();
 	}
 
@@ -231,25 +193,12 @@ public class InvoiceBackingBean implements Refreshable{
 	 */
 	@Override
 	public void refresh() {
+		visible = !(getCurInvoice().getIdInvoice() == 0);
 		invoiceList = null;
-		invoicestates = null;	
-	}
-
-	/* Setter of Paginator */
-	public void setPaginator(DataPaginator paginator) {
-		this.paginator = paginator;
-	}
-	
-	/* Getter of paginator */
-	public DataPaginator getPaginator() {
-		return paginator;
-	}
-	
-	/**
-	 * All Popups can be closed via this method
-	 */
-	public void closePopup(){
-		init();
+		invoicestates = null;
+		popupRender = false;
+		filterpopupRender = false;
+		setDeletePopupRender(false);
 	}
 	
 	//___________________________________________________________________________
@@ -448,13 +397,14 @@ public class InvoiceBackingBean implements Refreshable{
 	public void Filtern() {
 		ArrayList<String> werte = new ArrayList<String>();
 		ArrayList<String> spalte= new ArrayList<String>();
-		String joinStatement="";
-		
+		String joinStatement="";		
+
 		if(invoicenumberFrom != null && invoicenumberFrom!="" || invoicenumberTo != null && invoicenumberTo!=""){
 			if(invoicenumberFrom=="") invoicenumberFrom="0";
 			if(invoicenumberTo=="") invoicenumberTo="999999";
 			werte.add(invoicenumberFrom + ":" + invoicenumberTo);
 			spalte.add("t.invoicenumber");
+
 		}
 		
 		if(sumFrom != null && sumFrom!="" || sumTo != null && sumTo!=""){
@@ -537,8 +487,16 @@ public class InvoiceBackingBean implements Refreshable{
 		} catch (Exception e) {
 			init();
 		}
-	}
-	
+
+		invoiceList.clear();
+		//invoiceList.addAll((ArrayList<TblInvoice>)entityLister.getFilterList(TblInvoice.class,"TblInvoice",w, s));
+		changeFilterPopupRender();
+
+	}	
+
+	/**
+	 * Deletes currently selected invoice
+	**/
 	public void clearFilter(){
 		invoicenumberFrom="";
 		invoicenumberTo="";
@@ -557,23 +515,22 @@ public class InvoiceBackingBean implements Refreshable{
 	/*
 	 * ____________________________________________________________________________________
 	 * All Popup-Methods (incl. functions, methods, getter and setter
+
 	 */
-	
-	/* 
-	 * _______________________________________________
-	 * invoicepopup
-	 */
-	
-	/**
-	 * Changes render value of Invoice-Popup
-	 */
-	public void changePopupRender(){
-		popupRender = !popupRender;		
+	@Override
+	public void deleteEntity(){
+		entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
+		refresh();
 	}
 	
-	/* Getter for PopupRender */
-	public Boolean getPopupRender(){
-		return popupRender;
+	/**
+	 * Updates currently selected invoice or creates new invoice
+	 */
+	@Override
+	public void updateEntity(){
+		curInvoice.setTblInvoicestate(curInvoicestate);
+		entityLister.UpdateObject(TblInvoice.class, curInvoice, curInvoice.getIdInvoice());
+		refresh();
 	}
 	
 	/**
@@ -582,7 +539,7 @@ public class InvoiceBackingBean implements Refreshable{
 	public void updateInvoice(){
 		curInvoice.setTblInvoicestate(curInvoicestate);
 		entityLister.UpdateObject(TblInvoice.class, curInvoice, curInvoice.getIdInvoice());
-		init();	
+		refresh();
 	}
 	
 	/**
@@ -605,50 +562,14 @@ public class InvoiceBackingBean implements Refreshable{
 		changePopupRender();
 	}
 	
-	/* 
-	 * _______________________________________________
-	 * deletepopup
-	 */
-	
-	/* Setter of DeletePopup Render */
-	private void setDeletePopupRender(Boolean deletePopupRender) {
-		this.deletePopupRender = deletePopupRender;
-	}
-
-	/* Getter of DeletePopup Render */
-	public Boolean getDeletePopupRender() {
-		return deletePopupRender;
-	}
-	
-	/**
-	 * Changes render value of Delete-Popup
-	 */
-	public void changeDeletePopupRender(){
-		setDeletePopupRender(true);
-	}
 	
 	/**
 	 * Deletes currently selected invoice
 	 */
 	public void deleteInvoice(){
 		entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
-		init();
-	}
-	
-	/* 
-	 * _______________________________________________
-	 * filterpopup
-	 */
-	
-	/* Getter for FilterPopupRender */
-	public Boolean getFilterPopupRender(){
-		return filterpopupRender;
+		curInvoice = new TblInvoice();
+		getCurInvoice().setIdInvoice(0);
+		refresh();
 	}	
-	
-	/**
-	 * Changes render value of Filter-Popup
-	 */
-	public void changeFilterPopupRender(){
-		filterpopupRender = !filterpopupRender;		
-	}
 }

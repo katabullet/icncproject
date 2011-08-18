@@ -197,10 +197,7 @@ public class InvoiceBackingBean extends AbstractBean {
 	/**
 	 * Lists with DB-content are set NULL to
 	 * make sure they are read from DB
-	 */
-	
-	FacesContext ctx = FacesContext.getCurrentInstance();
-	
+	 */	
 	@Override
 	public void refresh() {
 		visible = !(getCurInvoice().getIdInvoice() == 0);
@@ -599,7 +596,7 @@ public class InvoiceBackingBean extends AbstractBean {
 	}	
 
 	/**
-	 * Deletes currently selected invoice
+	 * Deletes the current filter
 	**/
 	public void clearFilter(){
 		invoicenumberFrom="";
@@ -614,13 +611,8 @@ public class InvoiceBackingBean extends AbstractBean {
 		ordernumber="";
 		incometype="";
 		settlementnumber="";
-	}
+	}	
 	
-	/*
-	 * ____________________________________________________________________________________
-	 * All Popup-Methods (incl. functions, methods, getter and setter
-
-	 */
 	@Override
 	public void deleteEntity(){
 		entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);

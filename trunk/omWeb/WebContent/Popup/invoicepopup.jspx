@@ -55,8 +55,8 @@
        			<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.tblSettlement.idSettlement}"/>		
 			</ice:panelGrid>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" style="width: 500px;">
-				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Speichern" action="#{invoiceLister.updateInvoice}"/>
-				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{invoiceLister.closePopup}"/>
+				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="#{msg.buttonSave}" action="#{invoiceLister.updateInvoice}"/>
+				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="#{msg.buttonCancel}" action="#{invoiceLister.closePopup}"/>
 			</ice:panelGrid>
 		</ice:panelGroup>
 		<!-- Labels + Inputtexts Popup (edit & new) End -->

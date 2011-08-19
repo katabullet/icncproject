@@ -63,6 +63,10 @@
 .panelGridSpace1{
 	height: 20px;
 	}
+
+.panelGridSpace1 ul {
+	list-style: none;
+}
 	
 .panelGridSpace2{
 	height: 15px;

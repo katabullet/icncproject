@@ -22,7 +22,7 @@
 	            <ice:outputText	                    
 	                    value="#{msg.tableFilterInvoices}"
 	                    styleClass="popupHeaderText"/>
-	            <ice:commandButton image="images/closepopup.gif" action="#{invoiceLister.closePopup}"/>
+	            <ice:commandButton image="images/closepopup.gif" action="#{invoiceLister.closePopup}" immediate="true"/>
         	</ice:panelGrid>
         	<!-- Header Popup (filter) End -->
 		</f:facet>
@@ -68,11 +68,11 @@
 			</ice:panelGrid>
 			<ice:panelGrid/>
 			<ice:panelGrid styleClass="panelGridSpace1">
-				<ice:outputText value=""/>
+				<ice:messages layout="list" errorClass="iceMsgError"></ice:messages>
 			</ice:panelGrid>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" styleClass="panelGridButtons">
 				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Filtern" action="#{invoiceLister.Filtern}"/>
-				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{invoiceLister.closePopup}"/>
+				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{invoiceLister.closePopup}" immediate="true"/>
 			</ice:panelGrid>
 			<ice:panelGrid styleClass="panelGridSpace2">
 				<ice:outputText value=""/>

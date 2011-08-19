@@ -56,7 +56,7 @@
 			</ice:panelGrid>
 			
 			<ice:panelGrid styleClass="panelGridSpace1">
-				<ice:messages layout="list"  errorClass="iceMsgError" styleClass="iceMsgError"></ice:messages>
+				<ice:messages layout="list" errorClass="iceMsgError"></ice:messages>
 			</ice:panelGrid>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" styleClass="panelGridButtons">
 				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="#{msg.buttonSave}" action="#{invoiceLister.updateInvoice}"/>

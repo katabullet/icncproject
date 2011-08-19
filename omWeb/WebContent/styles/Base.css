@@ -374,12 +374,6 @@ table.LoginContainer .LoginBtn {
 	text-align: center;
 	font-size: 12px;	
 }
-.iceMsgError li {
-	list-style-type: none;
-	list-style-image: none;
-	list-style: none;
-	list-style-image: none;	
-}
 
 .icePnlBrdrNorth {
 	border-bottom: 1px solid #D9D9D9;
@@ -396,8 +390,8 @@ table.PageContainer {
 		
 }
 
-.icePnlGrdCol1{
-padding: 0;
+.icePnlGrdCol1 {
+	padding: 0;
 }
 
 .iceMnuItmLabel{
@@ -411,4 +405,7 @@ border: 1px solid #D9D9D9;
 height: 21px;
 }
 
+.errMessageClass {	
+	color: #FF0000;	
+	text-align: center;
 }

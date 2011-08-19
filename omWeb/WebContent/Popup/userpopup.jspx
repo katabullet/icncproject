@@ -19,7 +19,7 @@
 			styleClass="popupHeaderWrapper panelGridHeader"
 			columnClasses="headerCol1 headerCol2">
 			<!-- ToDo: Dynamisch: Neu/Aendern -->
-			<ice:outputText value="#{msg.tableEditUser}"
+			<ice:outputText value="#{userLister.userPopupName}"
 				styleClass="popupHeaderText" />
 			<ice:commandButton image="images/closepopup.gif"
 				action="#{userLister.closePopup}" immediate="true" />

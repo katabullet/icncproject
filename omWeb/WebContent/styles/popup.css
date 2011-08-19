@@ -62,10 +62,15 @@
 	
 .panelGridSpace1{
 	height: 20px;
+	text-align: left;
 	}
 
+.panelGridSpace1 ul li {
+	list-style: url("");
+}
+
 .panelGridSpace1 ul {
-	list-style: none;
+	height: auto;
 }
 	
 .panelGridSpace2{

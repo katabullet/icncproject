@@ -1,20 +1,32 @@
 package at.icnc.om.backingbeans;
 
 
+import java.math.BigDecimal;
 import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.ConverterException;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.faces.validator.ValidatorException;
 
 import at.icnc.om.entitybeans.TblIncometype;
+import at.icnc.om.entitybeans.TblInterval;
 import at.icnc.om.entitybeans.TblInvoice;
 import at.icnc.om.entitybeans.TblInvoicestate;
 import at.icnc.om.entitybeans.TblOrder;
 import at.icnc.om.entitybeans.TblSettlement;
+import at.icnc.om.entitybeans.TblUser;
+import at.icnc.om.interfaces.Filterable;
 
 import com.icesoft.faces.component.ext.RowSelectorEvent;
 
@@ -24,84 +36,130 @@ import com.icesoft.faces.component.ext.RowSelectorEvent;
  * @author csh80, nkn80, cma80
  *
  */
-public class IntervalBackingBean extends AbstractBean {
+public class IntervalBackingBean extends AbstractBean implements Filterable {
 	
-	// Variable to save selected Invoice
-	private TblInvoice curInvoice = new TblInvoice();
+	// Variable to save selected Interval
+	private TblInterval curInterval = new TblInterval();
 	
-	// List with all Invoices to avoid constant DB-Reading
-	private ArrayList<TblInvoice> invoiceList;
-	
-	// List with all invoicestates 
-	ArrayList<TblInvoicestate> invoicestates;
-	
-	// Variable to save selected invoicestate
-	private TblInvoicestate curInvoicestate;
-	
-	/*
-	 * ______________________________________________________________________________
-	 * EntityLister functions
-	 */
+	// List with all Intervals to avoid constant DB-Reading
+	private ArrayList<TblInterval> intervalList;
 	
 	/**
 	 * This functions returns a list with all invoices
 	 * @return invoiceList
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayList<TblInvoice> getInvoiceList(){		
+	public ArrayList<TblInterval> getIntervalList(){		
 		
 		/* Invoices are only read out of DB if they were not read before 
 		 * avoids unnecessary data traffic 
 		 */
-		if (invoiceList == null) {
-			invoiceList = new ArrayList<TblInvoice>();
-			invoiceList.addAll((ArrayList<TblInvoice>) 
-					entityLister.getObjectList(TblInvoice.class));
+		if (intervalList == null) {
+			intervalList = new ArrayList<TblInterval>();
+			intervalList.addAll((ArrayList<TblInterval>) 
+					entityLister.getObjectList(TblInterval.class));
 		}
 		
 		/* Makes the user know which invoice is selected (it is shaded) */
-		if (curInvoice != null) {
-			for(TblInvoice curItem : invoiceList) {				
-				if(curItem.getIdInvoice() == curInvoice.getIdInvoice()) {
+		if (curInterval != null) {
+			for(TblInterval curItem : intervalList) {				
+				if(curItem.getIdInterval() == curInterval.getIdInterval()) {
 					curItem.setSelected(true);
 				}
 			}
 		}		
 		
-		return invoiceList;
-	}	
-	
-	/**
-	 * This function returns a list with all invoicestates
-	 * @return invoicestateList
+		return intervalList;
+	}		
+
+	/*
+	 * Filter
+	 * @see at.icnc.om.interfaces.Filterable#filterEntities()
 	 */
-	@SuppressWarnings("unchecked")
-	private ArrayList<TblInvoicestate> getInvoicestateList(){
+		private String descriptionIv;
+		private Long months;
 		
-		/* Invoices are only read out of DB if they were not read before 
-		 * avoids unnecessary data traffic 
-		 */		
-		if(invoicestates == null){
-			invoicestates = new ArrayList<TblInvoicestate>();
-			invoicestates.addAll((Collection<? extends TblInvoicestate>) 
-					entityLister.getObjectList(TblInvoicestate.class));
+		/* Setter of descriptionIv */
+		public void setDescriptionIv(String descriptionIv) {
+			this.descriptionIv = descriptionIv;
+		}
+
+		/* Getter of descriptionIv */
+		public String getDescriptionIv() {
+			return descriptionIv;
 		}
 		
-		/* If no invoicestate is selected, curInvoicestate is set to selected
-		 * otherwise the invoicestate is unselected
-		 */		
-		if(getCurInvoicestate() != null){
-			for(TblInvoicestate curItem : invoicestates){				
-				if(curItem.getIdInvoicestate() == getCurInvoicestate().getIdInvoicestate()){
-					curItem.setSelected(true);
-				}
+		/* Setter of months */
+		public void setMonths(Long months) {
+			this.months = months;
+		}
+
+		/* Getter of months */
+		public Long getMonths() {
+			return months;
+		}
+
+		/**
+		 * Filtern Method
+		 * add the filter values and the columns to ArrayLists
+		 * create the Join-Statement
+		 * calls the "getFilterList" Method from the EntityLister to get the Filterlist
+		 */
+		@Override
+		public void filterEntities() {
+			/*ArrayList which managed the filter values*/
+			ArrayList<String> werte = new ArrayList<String>();
+			/*ArrayList which managed the filter columns*/
+			ArrayList<String> spalte= new ArrayList<String>();
+			/*Field with contains the Joinstatement*/
+			String joinStatement="";
+			
+			/*Start Methods which check if the Fields are set and add them to the ArrayLists*/
+			if(descriptionIv != null && descriptionIv !=""){
+				
+				werte.add(descriptionIv);
+				spalte.add("t.descriptionIv");
 			}
-		}else{
-			setCurInvoicestate(invoicestates.get(0));
-		}		
-	
-		return invoicestates;
-	}	
+			
+			if(months != null && months != 0){
+				
+				werte.add(months.toString());
+				spalte.add("t.months");
+			}
+			
+			/*End Methods which check if the Fields are set and add them to the ArrayLists*/
+			
+			/*Try and Catch: Try to call the "getFilterList" Method and get the FilterList or catch to call the "init" Method*/
+			try {
+				/*Deletes the current Table*/
+				intervalList.clear();
+				
+				intervalList.addAll((ArrayList<TblInterval>)entityLister.getFilterList(TblInterval.class,"TblInterval", joinStatement,werte, spalte));
+				
+				/*Method to close the Popup*/
+				changeFilterPopupRender();
+			} catch (Exception e) {
+				init();
+				
+				/*Deletes the current Table*/
+				intervalList.clear();
+				
+				/*Method to close the Popup*/
+				changeFilterPopupRender();
+			}	
+		}
+		
+		
+
+	/**
+	 * Method to open popup to create new Invoice
+	 */
+	@Override
+	public void changePopupRenderNew() {
+		curInterval = new TblInterval();
+		curInterval.setIdInterval(0);
+		changePopupRender();
+	}
 
 	/**
 	 * This method captures a RowSelectorEvent
@@ -109,366 +167,84 @@ public class IntervalBackingBean extends AbstractBean {
 	 * @param re
 	 */
 	@Override
-	public void rowEvent(RowSelectorEvent re) {		
-		
+	public void rowEvent(RowSelectorEvent re) {
 		/* If no invoices is selected, curInvoice is set to selected
 		 * otherwise the invoice is unselected
 		 */
-		if(getCurInvoice() != null){			
-			if(getCurInvoice().getIdInvoice() == invoiceList.get(re.getRow()).getIdInvoice()){
-				setCurInvoice(new TblInvoice());
+		if(curInterval != null){			
+			if(curInterval.getIdInterval() == intervalList.get(re.getRow()).getIdInterval()){
+				curInterval = new TblInterval();
 				setVisible(false);
 			}else {
-				setCurInvoice(invoiceList.get(re.getRow()));
+				curInterval = intervalList.get(re.getRow());
 				setVisible(true);
 			}
 		}
-	}	
-
-	/* Setter for currently selected invoice */
-	public void setCurInvoice(TblInvoice curInvoice) {
-		this.curInvoice = curInvoice;
-	}
-	
-	/* Getter for currently selected invoice */
-	public TblInvoice getCurInvoice() {
-		return curInvoice;
-	}	
-	
-	/**
-	 * Function to create SelectItems of all Invoicestates
-	 * Important for combobox (needs SelectItem, not objects of invoicestates)
-	 * @return List of SelectItem 
-	 */
-	public ArrayList<SelectItem> getInvoicestateListDescription(){
-		ArrayList<SelectItem> invoicsestates = new ArrayList<SelectItem>();
-		for (TblInvoicestate item : getInvoicestateList()) {
-			/* Description of each invoicestate is added to SelectItem-List */
-			invoicsestates.add(new SelectItem(item.getDescriptionIs()));
-		}
-		return invoicsestates;			
-	}
-	
-	/**
-	 * Method that Listens to Change Event of a combobox
-	 * if another element in the combobox is selected, the value in
-	 * curInvoicestate is set to the selected one
-	 * @param vce
-	 */
-	public void changeInvoicestate(ValueChangeEvent vce){
-		setCurInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM OMinvoicestate WHERE description_is = '" + 
-				vce.getNewValue().toString() + "'", TblInvoicestate.class));				
 	}
 
-	/* Setter of curInvoicestate */
-	public void setCurInvoicestate(TblInvoicestate curInvoicestate) {
-		this.curInvoicestate = curInvoicestate;
-	}
-
-	/* Getter of curInvoicestate */
-	public TblInvoicestate getCurInvoicestate() {
-		return curInvoicestate;
-	}	
-	
 	/**
 	 * init Method
 	 * resets all lists with db-content
 	 * closes all popups
 	 * goes back to first page
-	 * resets curInvoice
+	 * resets curInterval
 	 */
 	@Override
-	public void init() {		
-		setCurInvoice(new TblInvoice());
-		getCurInvoice().setIdInvoice(0);
+	public void init() {
+		curInterval = new TblInterval();
+		curInterval.setIdInterval(0);
 		paginator.gotoFirstPage();
 		refresh();
+		clearFilter();
 	}
 
 	/**
 	 * Lists with DB-content are set NULL to
 	 * make sure they are read from DB
-	 */
+	 */	
 	@Override
 	public void refresh() {
-		visible = !(getCurInvoice().getIdInvoice() == 0);
-		invoiceList = null;
-		invoicestates = null;
+		visible = !(curInterval.getIdInterval() == 0);
+		intervalList = null;
 		popupRender = false;
 		filterpopupRender = false;
 		setDeletePopupRender(false);
 	}
-	
-	//___________________________________________________________________________
-	//Filterpopup Methoden
 
-	private String invoicenumber;
-	private String sum;
-	private String estimatate;
-	private Date duedate;
-	private String invoicestate;
-	private String ordernumber;
-	private String incometype;
-	private String settlementnumber;
-	private Format format = new SimpleDateFormat("dd.MM.yyyy");
-	
-	public void setInvoicenumber(String invoicenumber) {
-		this.invoicenumber = invoicenumber;
-	}
-
-	public String getInvoicenumber() {
-		return invoicenumber;
-	}
-
-	public void setSum(String sum) {
-		this.sum = sum;
-	}
-
-	public String getSum() {
-		return sum;
-	}
-
-	public void setEstimatate(String estimatate) {
-		this.estimatate = estimatate;
-	}
-
-	public String getEstimatate() {
-		return estimatate;
-	}
-
-	public void setDuedate(Date duedate) {
-		this.duedate = duedate;
-	}
-
-	public Date getDuedate() {
-		return duedate;
-	}
-
-	public void setInvoicestate(String invoicestate) {
-		this.invoicestate = invoicestate;
-	}
-
-	public String getInvoicestate() {
-		return invoicestate;
-	}
-
-	public void setOrdernumber(String ordernumber) {
-		this.ordernumber = ordernumber;
-	}
-
-	public String getOrdernumber() {
-		return ordernumber;
-	}
-
-	public void setIncometype(String incometype) {
-		this.incometype = incometype;
-	}
-
-	public String getIncometype() {
-		return incometype;
-	}
-
-	public void setSettlementnumber(String settlementnumber) {
-		this.settlementnumber = settlementnumber;
-	}
-
-	public String getSettlementnumber() {
-		return settlementnumber;
-	}
-	@SuppressWarnings("unchecked")
-	public ArrayList<SelectItem> getinvoicestateListDescriptionFilter(){
-		ArrayList<SelectItem> invoicestate = new ArrayList<SelectItem>();
-	
-		ArrayList<TblInvoicestate> iState = new ArrayList<TblInvoicestate>();
-		iState.addAll((ArrayList<TblInvoicestate>)
-				entityLister.getObjectList(TblInvoicestate.class));
-		
-		invoicestate.add(new SelectItem());
-		for (TblInvoicestate item : iState) {
-			invoicestate.add(new SelectItem(item.getDescriptionIs()));
-		}
-		return invoicestate;			
-	}
-	
-	@SuppressWarnings("unchecked")
-	public ArrayList<SelectItem> getorderListDescription(){
-		ArrayList<SelectItem> ordernumber = new ArrayList<SelectItem>();
-	
-		ArrayList<TblOrder> order = new ArrayList<TblOrder>();
-		order.addAll((ArrayList<TblOrder>)
-				entityLister.getObjectList(TblOrder.class));
-		
-		ordernumber.add(new SelectItem());
-		for (TblOrder item : order) {
-			ordernumber.add(new SelectItem(item.getOrdernumber()));
-		}
-		return ordernumber;			
-	}
-	
-	@SuppressWarnings("unchecked")
-	public ArrayList<SelectItem> getincometypeListDescription(){
-		ArrayList<SelectItem> incometypeDescription = new ArrayList<SelectItem>();
-	
-		ArrayList<TblIncometype> incometype = new ArrayList<TblIncometype>();
-		incometype.addAll((Collection<? extends TblIncometype>) 
-				entityLister.getObjectList(TblIncometype.class));
-		
-		incometypeDescription.add(new SelectItem());
-		for (TblIncometype item : incometype) {
-			incometypeDescription.add(new SelectItem(item.getDescriptionIt()));
-		}
-		return incometypeDescription;			
-	}
-	
-	@SuppressWarnings("unchecked")
-	public ArrayList<SelectItem> getsettlementListDescription(){
-		ArrayList<SelectItem> settlementID = new ArrayList<SelectItem>();
-	
-		ArrayList<TblSettlement> settlement = new ArrayList<TblSettlement>();
-		settlement.addAll((Collection<? extends TblSettlement>) 
-				entityLister.getObjectList(TblSettlement.class));
-		
-		settlementID.add(new SelectItem());
-		for (TblSettlement item : settlement) {
-			settlementID.add(new SelectItem(item.getIdSettlement()));
-		}
-		return settlementID;			
-	}
-	
-	public void InvoicestateChangeFilter(ValueChangeEvent vce){
-		setInvoicestate(vce.getNewValue().toString());
-		//setInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM OMinvoicestate WHERE description_is = '" + vce.getNewValue().toString() + "'", TblInvoicestate.class));					
-	}
-	
-	public void OrderChangeFilter(ValueChangeEvent vce){
-		setOrdernumber(vce.getNewValue().toString());	
-		//setOrdernumber((TblOrder) entityLister.getSingleObject("SELECT * FROM OMorder WHERE ordernumber = '" + vce.getNewValue().toString() + "'", TblOrder.class));
-	}
-	
-	public void IncometypeChangeFilter(ValueChangeEvent vce){
-		setIncometype(vce.getNewValue().toString());	
-		//setIncometype((TblIncometype) entityLister.getSingleObject("SELECT * FROM omIncometype WHERE description_it = '" + vce.getNewValue().toString() + "'", TblIncometype.class));
-	}
-	
-	public void SettlementChangeFilter(ValueChangeEvent vce){
-		setSettlementnumber(vce.getNewValue().toString());
-		//setSettlementnumber((TblSettlement) entityLister.getSingleObject("SELECT * FROM OMsettlement WHERE id_settlement = '" + vce.getNewValue().toString() + "'", TblSettlement.class));
-	}
-	
-	public void Filtern() {
-		ArrayList<String> werte = new ArrayList<String>();
-		ArrayList<String> spalte= new ArrayList<String>();
-		
-		if(invoicenumber != null && invoicenumber!=""){
-			
-			werte.add(invoicenumber);
-			spalte.add("invoicenumber");
-		}
-		
-		if(sum != null && sum !=""){
-			werte.add(sum);
-			spalte.add("sum");
-		}
-		
-		if(estimatate != null && estimatate !=""){
-			werte.add(estimatate);
-			spalte.add("estimation");
-		}
-		
-		if(duedate != null){
-			werte.add(format.format(duedate));
-			spalte.add("duedate");
-		}
-		
-		if(invoicestate != null && invoicestate!=""){
-			werte.add(invoicestate);
-			spalte.add("s.descriptionIs");
-		}
-		
-		if(ordernumber != null && ordernumber!=""){
-			werte.add(ordernumber);
-			spalte.add("OMOrder.ordernumber");
-		}
-		
-		if(incometype != null && incometype != ""){
-			werte.add(incometype);
-			spalte.add("OMIncometype.description_it");
-		}
-		
-		if(settlementnumber != null && settlementnumber !=""){
-			werte.add(settlementnumber);
-			spalte.add("OMSettlement.id_settlement");
-		}
-		
-				
-		String[] w =  new String[werte.size()];
-		String[] s =  new String[spalte.size()];
-		int i = 0;
-		
-		for (String item : werte) {
-			w[i] = item;
-			s[i] = spalte.get(i);
-			i++;
-		}
-		invoiceList.clear();
-		//invoiceList.addAll((ArrayList<TblInvoice>)entityLister.getFilterList(TblInvoice.class,"TblInvoice",w, s));
-		changeFilterPopupRender();
-	}	
-	
 	/**
-	 * Deletes currently selected invoice
+	 * Deletes currently selected Interval
 	 */
 	@Override
-	public void deleteEntity(){
-		entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
+	public void deleteEntity() {
+		entityLister.DeleteObject(curInterval.getIdInterval(), TblInterval.class);
+		curInterval = new TblInterval();
+		curInterval.setIdInterval(0);
 		refresh();
 	}
-	
+
 	/**
-	 * Updates currently selected invoice or creates new invoice
+	 * Updates currently selected Interval
 	 */
 	@Override
-	public void updateEntity(){
-		curInvoice.setTblInvoicestate(curInvoicestate);
-		entityLister.UpdateObject(TblInvoice.class, curInvoice, curInvoice.getIdInvoice());
+	public void updateEntity() {
+		entityLister.UpdateObject(TblInterval.class, curInterval, curInterval.getIdInterval());
 		refresh();
 	}
 	
 	/**
-	 * Updates currently selected invoice or creates new invoice
-	 */
-	public void updateInvoice(){
-		curInvoice.setTblInvoicestate(curInvoicestate);
-		entityLister.UpdateObject(TblInvoice.class, curInvoice, curInvoice.getIdInvoice());
-		refresh();
-	}
-	
-	/**
-	 * Method to open popup to create new Invoice
-	 */
-	public void changePopupRenderNew(){
+	 * Deletes the current filter
+	**/
+	public void clearFilter(){
 		
-		/* New invoice is initialized */ 
-		setCurInvoice(new TblInvoice());
-		/* ID of new invoice is set to 0 (important for EntityManager) */
-		getCurInvoice().setIdInvoice(0);
-		
-		/* Setting default values of new invoice */
-		getCurInvoice().setTblSettlement((TblSettlement) entityLister.getSingleObject("SELECT * FROM omsettlement WHERE rownum <= 1", TblSettlement.class));
-		getCurInvoice().setDuedate(new Date());
-		getCurInvoice().setTblInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM ominvoicestate WHERE rownum <= 1", TblInvoicestate.class));
-		getCurInvoice().getTblSettlement().setTblOrder((TblOrder) entityLister.getSingleObject("SELECT * FROM omorder WHERE rownum <= 1", TblOrder.class));
-		
-		/* Makes popup visible */
-		changePopupRender();
-	}
-	
-	
-	/**
-	 * Deletes currently selected invoice
-	 */
-	public void deleteInvoice(){
-		entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
-		refresh();
 	}	
+	
+	/* Setter of curInterval */
+	public void setCurInterval(TblInterval interval){
+		this.curInterval = interval;
+	}
+	
+	/* Getter of curInterval */
+	public TblInterval getCurInterval(){
+		return curInterval;
+	}
 }

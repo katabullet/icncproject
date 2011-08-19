@@ -55,6 +55,7 @@
             					<!-- Interval -->
             					<ice:panelTab label="#{msg.tableInterval}" labelWidth="#{sitesBean.allTabWidth}">
             					
+            						<ui:include src="/detailpages/intervalpage.jspx"></ui:include>
 
             					</ice:panelTab>
             					<!-- Invoice -->

@@ -89,6 +89,11 @@
 		<managed-bean-class>at.icnc.om.backingbeans.InvoicestateBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>userLister</managed-bean-name>
+		<managed-bean-class>at.icnc.om.backingbeans.UserBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 	
 	<navigation-rule>
 		<display-name>login</display-name>

@@ -10,6 +10,7 @@
 	<ice:outputStyle href="./styles/popup.css" />
 	<ice:outputStyle href="./styles/Menu.css" />
 </ice:outputHead>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
  
 <ice:outputBody id="body">
@@ -48,7 +49,7 @@
             					<!-- Settlement -->
             					<ice:panelTab label="#{msg.tableSettlement}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					<ui:include src="/detailpages/invoicepage.jspx"></ui:include>
+		           					<ui:include src="/detailpages/invoicepage.jspx"/>
 		           					
             					</ice:panelTab>
             					<!-- Interval -->
@@ -159,7 +160,7 @@
             					<!-- Benutzer -->
             					<ice:panelTab label="#{msg.tableUser}" labelWidth="1098">
             					
-		           					
+		           					<ui:include src="/detailpages/userpage.jspx"/>
 		           					
             					</ice:panelTab>
             				</ice:panelTabSet>           				

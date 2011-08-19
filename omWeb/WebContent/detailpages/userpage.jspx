@@ -25,7 +25,7 @@
 		        </ice:selectOneMenu>
 		        <br/>
 		       <ice:panelGroup effect="#{dataExporter.changeEffect}" style="width:180px;">
-		            <ice:dataExporter for="invoice"
+		            <ice:dataExporter for="user"
 		                label="#{msg.tableDataExporter1} #{dataExporter.type} #{msg.tableDataExporter2}"
 		                type="#{dataExporter.type}"
 		                popupBlockerLabel="#{msg.tablePopupBlocker}"
@@ -36,12 +36,12 @@
 		<!-- DataExporter End -->
 		  
 		<!-- Buttons Start -->
-     	<ice:panelGrid columns="5" columnClasses="buttons" style="width: 112px;">
-     		<ice:commandButton title="#{msg.buttonRefresh}" image="images/refresh.jpg" action="#{invoiceLister.init}"/>
-     		<ice:commandButton title="#{msg.buttonFilter}" image="images/btn_filter_e.png" action="#{invoiceLister.changeFilterPopupRender}"/>
-      		<ice:commandButton title="#{msg.buttonNew}" image="images/btn_new_e.png" rendered="#{sitesBean.buttonRendered}" action="#{invoiceLister.changePopupRenderNew}"/>
-      		<ice:commandButton title="#{msg.buttonEdit}" image="images/btn_edit_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{invoiceLister.visible}" action="#{invoiceLister.changePopupRender}"/>  					  	
-     		<ice:commandButton title="#{msg.buttonDelete}" image="images/btn_delete_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{invoiceLister.visible}" action="#{invoiceLister.changeDeletePopupRender}"/>		           					  	
+     	<ice:panelGrid columns="5" columnClasses="buttons" style="width: 140px;">
+     		<ice:commandButton title="#{msg.buttonRefresh}" image="images/refresh.jpg" action="#{userLister.init}"/>
+     		<ice:commandButton title="#{msg.buttonFilter}" image="images/btn_filter_e.png" action="#{userLister.changeFilterPopupRender}"/>
+      		<ice:commandButton title="#{msg.buttonNew}" image="images/btn_new_e.png" rendered="#{sitesBean.buttonRendered}" action="#{userLister.changePopupRenderNew}"/>
+      		<ice:commandButton title="#{msg.buttonEdit}" image="images/btn_edit_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{userLister.visible}" action="#{userLister.changePopupRender}"/>  					  	
+     		<ice:commandButton title="#{msg.buttonDelete}" image="images/btn_delete_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{userLister.visible}" action="#{userLister.changeDeletePopupRender}"/>		           					  	
      	</ice:panelGrid>
      	<!-- Buttons End -->
      	
@@ -50,60 +50,40 @@
    	<ice:panelGroup style="height:30px" ></ice:panelGroup>
 	<ice:panelGroup style="margin: auto; width: 100%; text-align: center; ">     	
 								
-		<!-- Table Invoice Start -->
-		<ice:dataTable value="#{invoiceLister.invoiceList}" var="item" id="invoice" rows="10" styleClass="table" style="margin: auto;">
+		<!-- Table User Start -->
+		<ice:dataTable value="#{userLister.userList}" var="item" id="user" rows="10" styleClass="table" style="margin: auto;">
 			<ice:column>
 				<!-- RowSelector Start -->
 				<ice:rowSelector selectedMouseOverClass="rowSelection"
 						value="#{item.selected}"
-						selectionListener="#{invoiceLister.rowEvent}"/>
+						selectionListener="#{userLister.rowEvent}"/>
 				<!-- RowSelector End -->
-				<f:facet name="header">#{msg.tableInvoicenumber}</f:facet>
-				<ice:outputText styleClass="textPosition" value="#{item.invoicenumber}"/>
+				<f:facet name="header">#{msg.loginUserName}</f:facet>
+				<ice:outputText styleClass="textPosition" value="#{item.username}"/>
 			</ice:column>
 			<ice:column>
-				<f:facet name="header">#{msg.tableSum}</f:facet>
-				<ice:outputText styleClass="textPosition" value="#{item.sum}"><f:convertNumber pattern="#,##0.00"/></ice:outputText>
+				<f:facet name="header">#{msg.loginPassword}</f:facet>
+				<ice:outputText styleClass="textPosition" value="#{item.password}"/>
 			</ice:column>
 			<ice:column>
-				<f:facet name="header">#{msg.tableEstimation}</f:facet>
-				<ice:outputText styleClass="textPosition" value="#{item.estimation}"><f:convertNumber pattern="#,##0.00"/></ice:outputText>
-			</ice:column>
-			<ice:column>
-				<f:facet name="header">#{msg.tableDuedate}</f:facet>
-				<ice:outputText style="text-align: center;" value="#{item.duedate}"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:outputText>
-			</ice:column>
-			<ice:column>
-				<f:facet name="header">#{msg.tableInvoicestate}</f:facet>
-				<ice:outputText style="text-align: center;" value="#{item.tblInvoicestate.descriptionIs}"/>
-			</ice:column>
-			<ice:column>
-				<f:facet name="header">#{msg.tableOrdernumber }</f:facet>
-				<ice:outputText styleClass="textPosition" value="#{item.tblSettlement.tblOrder.ordernumber}"><f:convertNumber pattern="#,##0.00"/></ice:outputText>
-			</ice:column>
-			<ice:column>
-				<f:facet name="header">#{msg.tableIncometype}</f:facet>
-				<ice:outputText style="text-align: left;" value="#{item.tblSettlement.tblIncometype.descriptionIt}"/>
-			</ice:column>
-			<ice:column>
-				<f:facet name="header">#{msg.tableSettlementnumber}</f:facet>
-				<ice:outputText style="text-align: textPosition;" value="#{item.tblSettlement.idSettlement}"/>
-			</ice:column>			
+				<f:facet name="header">#{msg.tableUserrole}</f:facet>
+				<ice:outputText styleClass="textPosition" value="#{item.tblUserrole.descriptionUr}"/>
+			</ice:column>		
 		</ice:dataTable>
-		<!-- Table Invoice End -->
+		<!-- Table User End -->
 	
-		<ice:panelGroup style="height:30px" ></ice:panelGroup>
+		<ice:panelGroup style="height:30px"/>
 		
 		<ice:panelGrid columns="1" styleClass="scrollerTable2 paginator" columnClasses="standardTable_ColumnCentered">
 
 			<!-- Paginator Start -->
-	        <ice:dataPaginator for="invoice"
+	        <ice:dataPaginator for="user"
 	                         fastStep="10"
 	                         pageCountVar="pageCount"
 	                         pageIndexVar="pageIndex"
 	                         paginator="true"
 	                         style="margin: auto;"
-	                         binding="#{invoiceLister.paginator}">
+	                         binding="#{userLister.paginator}">
 	 				
 	 				<!-- Paginator Navigation Start -->
 	                <f:facet name="first" >
@@ -133,7 +113,7 @@
 	 
 	        </ice:dataPaginator>
 	 
-	        <ice:dataPaginator for="invoice"
+	        <ice:dataPaginator for="user"
 	                        rowsCountVar="rowsCount"
 	                        displayedRowsCountVar="displayedRowsCountVar"
 	                        firstRowIndexVar="firstRowIndex"
@@ -158,9 +138,9 @@
 	</ice:panelGroup>
 	
 		<!-- Includes Pop-Ups Start -->
-		<ui:include src="../Popup/invoicepopup.jspx"></ui:include>
-	    <ui:include src="../Popup/invoicefilterpopup.jspx"></ui:include>
-	    <ui:include src="../Popup/invoicedeletepopup.jspx"></ui:include>
+		<ui:include src="../Popup/userpopup.jspx"></ui:include>
+	    <ui:include src="../Popup/userfilterpopup.jspx"></ui:include>
+	    <ui:include src="../Popup/userdeletepopup.jspx"></ui:include>
 	    <!-- Includes Pop-Ups End -->
 	    
 	</div>

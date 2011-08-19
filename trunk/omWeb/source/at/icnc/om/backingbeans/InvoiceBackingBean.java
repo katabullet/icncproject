@@ -220,12 +220,12 @@ public class InvoiceBackingBean extends AbstractBean {
 	//Filterpopup Methoden
 
 	/*Fields declarations for the Filter*/
-	private String invoicenumberFrom;
-	private String invoicenumberTo;
-	private String sumFrom;
-	private String sumTo;
-	private String estimatateFrom;
-	private String estimatateTo;
+	private Integer invoicenumberFrom;
+	private Integer invoicenumberTo;
+	private Long sumFrom;
+	private Long sumTo;
+	private Long estimatateFrom;
+	private Long estimatateTo;
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	private Date duedateFrom;
 	private Date duedateTo;
@@ -236,51 +236,51 @@ public class InvoiceBackingBean extends AbstractBean {
 	private Format format = new SimpleDateFormat("yyyy-MM-dd");
 	
 	/* Start of the Getter and Setter Methods for the Filter*/
-	public void setInvoicenumberFrom(String invoicenumber) {
+	public void setInvoicenumberFrom(Integer invoicenumber) {
 		this.invoicenumberFrom = invoicenumber;
 	}
 
-	public String getInvoicenumberFrom() {
+	public Integer getInvoicenumberFrom() {
 		return invoicenumberFrom;
 	}
 	
-	public void setInvoicenumberTo(String invoicenumber) {
+	public void setInvoicenumberTo(Integer invoicenumber) {
 		this.invoicenumberTo = invoicenumber;
 	}
 
-	public String getInvoicenumberTo() {
+	public Integer getInvoicenumberTo() {
 		return invoicenumberTo;
 	}
 
-	public void setSumFrom(String sum) {
+	public void setSumFrom(Long sum) {
 		this.sumFrom = sum;
 	}
 
-	public String getSumFrom() {
+	public Long getSumFrom() {
 		return sumFrom;
 	}
 	
-	public void setSumTo(String sum) {
+	public void setSumTo(Long sum) {
 		this.sumTo = sum;
 	}
 
-	public String getSumTo() {
+	public Long getSumTo() {
 		return sumTo;
 	}
 
-	public void setEstimatateFrom(String estimatate) {
+	public void setEstimatateFrom(Long estimatate) {
 		this.estimatateFrom = estimatate;
 	}
 
-	public String getEstimatateFrom() {
+	public Long getEstimatateFrom() {
 		return estimatateFrom;
 	}
 	
-	public void setEstimatateTo(String estimatate) {
+	public void setEstimatateTo(Long estimatate) {
 		this.estimatateTo = estimatate;
 	}
 
-	public String getEstimatateTo() {
+	public Long getEstimatateTo() {
 		return estimatateTo;
 	}
 
@@ -472,11 +472,11 @@ public class InvoiceBackingBean extends AbstractBean {
 		String joinStatement="";
 		
 		/*Start Methods which check if the Fields are set and add them to the ArrayLists*/
-		if(invoicenumberFrom != null && invoicenumberFrom!="" || invoicenumberTo != null && invoicenumberTo!=""){
+		if(invoicenumberFrom != null && invoicenumberFrom!=0 || invoicenumberTo != null && invoicenumberTo!=0){
 			
 			/*Start - Set a default Value if none is set*/
-			if(invoicenumberFrom=="") invoicenumberFrom="0";
-			if(invoicenumberTo=="") invoicenumberTo="999999";
+			if(invoicenumberFrom==null) invoicenumberFrom=0;
+			if(invoicenumberTo==0 || invoicenumberTo == null) invoicenumberTo=999999;
 			/*End - Set a default Value if none is set*/
 			
 			werte.add(invoicenumberFrom + ":" + invoicenumberTo);
@@ -484,40 +484,22 @@ public class InvoiceBackingBean extends AbstractBean {
 
 		}
 		
-		if(sumFrom != null && sumFrom!="" || sumTo != null && sumTo!=""){
-			
-			/*Start - Replace the Char "," with the Char "."*/
-			if(sumFrom.contains(",")){
-				sumFrom.replace(",", ".");
-			}
-			if(sumTo.contains(",")){
-				sumTo.replace(",", ".");
-			}
-			/*End - Replace the Char "," with the Char "."*/
+		if(sumFrom != null && sumFrom!=0 || sumTo != null && sumTo!=0){
 			
 			/*Start - Set a default Value if none is set*/
-			if(sumFrom=="") sumFrom="0";
-			if(sumTo=="") sumTo="999999";
+			if(sumFrom==null) sumFrom=(long) 0;
+			if(sumTo==0 || sumTo == null) sumTo=(long)999999;
 			/*End - Set a default Value if none is set*/
 			
 			werte.add(sumFrom + ":" + sumTo);
 			spalte.add("t.sum");
 		}
 		
-		if(estimatateFrom != null && estimatateFrom!="" || estimatateTo != null && estimatateTo!=""){
-			
-			/*Start - Replace the Char "," with the Char "."*/
-			if(estimatateFrom.contains(",")){
-				estimatateFrom.replace(",", ".");
-			}
-			if(estimatateTo.contains(",")){
-				estimatateTo.replace(",", ".");
-			}
-			/*End - Replace the Char "," with the Char "."*/
+		if(estimatateFrom != null && estimatateFrom!=0 || estimatateTo != null && estimatateTo!=0){
 			
 			/*Start - Set a default Value if none is set*/
-			if(estimatateFrom=="") estimatateFrom="0";
-			if(estimatateTo=="") estimatateTo="999999";
+			if(estimatateFrom==null) estimatateFrom=(long)0;
+			if(estimatateTo==0 || estimatateTo == null) estimatateTo=(long)999999;
 			/*End - Set a default Value if none is set*/
 			
 			werte.add(estimatateFrom + ":" + estimatateTo);
@@ -606,12 +588,12 @@ public class InvoiceBackingBean extends AbstractBean {
 	 * Deletes the current filter
 	**/
 	public void clearFilter(){
-		invoicenumberFrom="";
-		invoicenumberTo="";
-		sumFrom="";
-		sumTo="";
-		estimatateFrom="";
-		estimatateTo="";
+		invoicenumberFrom=null;
+		invoicenumberTo=null;
+		sumFrom=null;
+		sumTo=null;
+		estimatateFrom=null;
+		estimatateTo=null;
 		duedateFrom=null;
 		duedateTo=null;
 		invoicestate="";

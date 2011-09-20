@@ -4,6 +4,14 @@
 	xmlns:ice="http://www.icesoft.com/icefaces/component"
 	template="/WEB-INF/templates/defaultTemplate.jspx">
 	
+	<ice:outputHead>
+	<ice:outputStyle href="./xmlhttp/css/rime/rime-portlet.css" />
+	<ice:outputStyle href="./styles/Sites.css" />
+	<ice:outputStyle href="./styles/popup.css" />
+	<ice:outputStyle href="./styles/Menu.css" />
+	</ice:outputHead>
+	
+	<div style="height: 480px;">
 	
 	<ice:panelGrid columns="2" columnClasses="Col1 Col2" styleClass="leiste">
 	
@@ -11,111 +19,116 @@
 		<ice:panelGroup styleClass="exampleBox dataScrollingContainer">
 		        <ice:selectOneMenu id="type" value="#{dataExporter.type}" partialSubmit="true"
 		            valueChangeListener="#{dataExporter.typeChangeListener}" >
-		            <f:selectItem itemLabel="Select a type" itemValue=""/>
-		            <f:selectItem itemLabel="MS Excel" itemValue="excel"/>
-		            <f:selectItem itemLabel="CSV (comma separated values)" itemValue="csv"/>
+		            <f:selectItem itemLabel="#{msg.tableExport}" itemValue=""/>
+		            <f:selectItem itemLabel="#{msg.tableExcel}" itemValue="excel"/>
+		            <f:selectItem itemLabel="#{msg.tableCSV}" itemValue="csv"/>
 		        </ice:selectOneMenu>
 		        <br/>
 		       <ice:panelGroup effect="#{dataExporter.changeEffect}" style="width:180px;">
 		            <ice:dataExporter for="incometype"
-		                label="Click to download #{dataExporter.type} file"
+		                label="#{msg.tableDataExporter1} #{dataExporter.type} #{msg.tableDataExporter2}"
 		                type="#{dataExporter.type}"
-		                popupBlockerLabel="Popup Blocker detected - click here to resume download..."
-		                clickToCreateFileText="Click to create #{dataExporter.type} file "/>
+		                popupBlockerLabel="#{msg.tablePopupBlocker}"
+		                clickToCreateFileText="#{msg.tableDataExporter12} #{dataExporter.type} #{msg.tableDataExporter2}"
+		                ignorePagination="true"/>
 		       </ice:panelGroup>
 		 </ice:panelGroup>
 		 <!-- DataExporter End -->
 		  
 		<!-- Buttons Start -->
-     	<ice:panelGrid columns="3" styleClass="buttons">
-      		<ice:commandButton image="images/btn_new_e.png" rendered="#{sitesBean.buttonRendered}"/>
-      		<ice:commandButton image="images/btn_edit_e.png" rendered="#{sitesBean.buttonRendered}"/>  					  	
-     		<ice:commandButton image="images/btn_delete_e.png" rendered="#{sitesBean.buttonRendered}"/>		           					  	
+     	<ice:panelGrid columns="5" columnClasses="buttons" style="width: 112px;">
+      		<ice:commandButton title="#{msg.buttonRefresh}" image="images/refresh.jpg" action="#{incometypeLister.init}"/>
+     		<ice:commandButton title="#{msg.buttonFilter}" image="images/btn_filter_e.png" action="#{incometypeLister.changeFilterPopupRender}"/>
+      		<ice:commandButton title="#{msg.buttonNew}" image="images/btn_new_e.png" rendered="#{sitesBean.buttonRendered}" action="#{incometypeLister.changePopupRenderNew}"/>
+      		<ice:commandButton title="#{msg.buttonEdit}" image="images/btn_edit_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{incometypeLister.visible}" action="#{incometypeLister.changePopupRender}"/>  					  	
+     		<ice:commandButton title="#{msg.buttonDelete}" image="images/btn_delete_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{incometypeLister.visible}" action="#{incometypeLister.changeDeletePopupRender}"/>		           					  	
      	</ice:panelGrid>
      	<!-- Buttons End -->
      	
-     	<!--PanelGroup with DataTable and DataPaginator Start -->
-		<ice:panelGroup>     	
+     	</ice:panelGrid>
+     	
+     	<ice:panelGroup style="height:30px" ></ice:panelGroup>
+		<ice:panelGroup style="margin: auto; width: 100%; text-align: center; ">     	
 			
-			<!-- Table Invoice Start -->
-			<ice:dataTable value="#{invoiceLister.incometypeList}" 
-						   var="item" id="incometype" rows="2">
+			<!-- Table Incometype Start -->
+			<ice:dataTable value="#{incometypeLister.incometypeList}" var="item" id="incometype" rows="10" styleClass="table" style="margin: auto;">
 				<ice:column>
-					<ice:rowSelector multiple="false"></ice:rowSelector>
-					<f:facet name="header">ID</f:facet>
-					<ice:outputText value="#{item.idIncometype}"/>
-				</ice:column>
-				<ice:column>
-					<f:facet name="header">Beschreibung Incometype</f:facet>
-					<ice:outputText value="#{item.descriptionIt}"/>
+				<!-- RowSelector Start -->
+				<ice:rowSelector selectedMouseOverClass="rowSelection"
+						value="#{item.selected}"
+						selectionListener="#{incometypeLister.rowEvent}"/>
+				<!-- RowSelector End -->
+				<f:facet name="header">#{msg.tableDescriptionIt}</f:facet>
+				<ice:outputText styleClass="textPosition" value="#{item.descriptionIt}"></ice:outputText>
 				</ice:column>				
 			</ice:dataTable>
-			<!-- Table Invoice End -->
+			<!-- Table Incometype End -->
 			
 			<!-- Paginator Start -->
-			<ice:panelGrid columns="1" styleClass="scrollerTable2" 
-						   columnClasses="standardTable_ColumnCentered" 
-						   style="float: center; text-align: center;">
-
-		        <ice:dataPaginator id="scroll_1"
-		                         for="incometype"
-		                         fastStep="10"
-		                         pageCountVar="pageCount"
-		                         pageIndexVar="pageIndex"
-		                         paginator="true"
-		                         paginatorMaxPages="9">
-		 
-		                <f:facet name="first" >
-		                         <ice:graphicImage url="images/arrow-first.gif" style="border:none;"/>
-		                </f:facet>
-		 
-		                <f:facet name="last">
-		                        <ice:graphicImage url="images/arrow-last.gif" style="border:none;" />
-		                </f:facet>
-		 
-		                <f:facet name="previous">
-		                        <ice:graphicImage url="images/arrow-previous.gif" style="border:none;" />
-		                </f:facet>
-		 
-		                <f:facet name="next">
-		                        <ice:graphicImage url="images/arrow-next.gif" style="border:none;" />
-		                </f:facet>
-		 
-		                <f:facet name="fastforward">
-		                        <ice:graphicImage url="images/arrow-ff.gif" style="border:none;" />
-		                </f:facet>
-		 
-		                <f:facet name="fastrewind">
-		                        <ice:graphicImage url="images/arrow-fr.gif" style="border:none;" />
-		                </f:facet>
-		 
-		        </ice:dataPaginator>
-		 
-		        <ice:dataPaginator id="scroll_2"
-		                        for="incometype"
-		                        rowsCountVar="rowsCount"
-		                        displayedRowsCountVar="displayedRowsCountVar"
-		                        firstRowIndexVar="firstRowIndex"
-		                        lastRowIndexVar="lastRowIndex"
-		                        pageCountVar="pageCount"
-		                        pageIndexVar="pageIndex"
-		                        >
-		 
-		                 <ice:outputFormat value="{0} orders found, displaying {1} orders, from {2} to {3}. Page {4} / {5}" styleClass="standard" >
-		                        <f:param value="#{rowsCount}" />
-		                        <f:param value="#{displayedRowsCountVar}" />
-		                        <f:param value="#{firstRowIndex}" />
-		                        <f:param value="#{lastRowIndex}" />
-		                        <f:param value="#{pageIndex}" />
-		                        <f:param value="#{pageCount}" />
-		                </ice:outputFormat>
-		 
-		        </ice:dataPaginator>
-		 
-		    </ice:panelGrid>
-		    <!-- Paginator End -->
-		</ice:panelGroup>
- 		<!-- PanelGroup with DataTable and DataPaginator End -->
+	        <ice:dataPaginator for="incometype"
+	                         fastStep="10"
+	                         pageCountVar="pageCount"
+	                         pageIndexVar="pageIndex"
+	                         paginator="true"
+	                         style="margin: auto;"
+	                         binding="#{incometypeLister.paginator}">
+	 				
+	 				<!-- Paginator Navigation Start -->
+	                <f:facet name="first" >
+	                         <ice:graphicImage url="images/btn_s_arrow_first_e.png" style="border:none;"/>
+	                </f:facet>
+	 
+	                <f:facet name="last">
+	                        <ice:graphicImage url="images/btn_s_arrow_last_e.png" style="border:none;" />
+	                </f:facet>
+	 
+	                <f:facet name="previous">
+	                        <ice:graphicImage url="images/btn_s_arrow_prev_e.png" style="border:none;" />
+	                </f:facet>
+	 
+	                <f:facet name="next">
+	                        <ice:graphicImage url="images/btn_s_arrow_next_e.png" style="border:none;" />
+	                </f:facet>
+	 
+	                <f:facet name="fastforward">
+	                        <ice:graphicImage url="images/btn_s_arrow_ff_e.png" style="border:none;" />
+	                </f:facet>
+	 
+	                <f:facet name="fastrewind">
+	                        <ice:graphicImage url="images/btn_s_arrow_fr_e.png" style="border:none;" />
+	                </f:facet>
+	                <!-- Paginator Navigation End -->
+	 
+	        </ice:dataPaginator>
+	 
+	        <ice:dataPaginator for="incometype"
+	                        rowsCountVar="rowsCount"
+	                        displayedRowsCountVar="displayedRowsCountVar"
+	                        firstRowIndexVar="firstRowIndex"
+	                        lastRowIndexVar="lastRowIndex"
+	                        pageCountVar="pageCount"
+	                        pageIndexVar="pageIndex"
+	                        >
+	 
+	                 <ice:outputFormat value="{0} #{msg.tablePaginator1} {1} #{msg.tablePaginator2} {2} #{msg.tablePaginator3} {3}#{msg.tablePaginator4} {4} / {5}" styleClass="standard" >
+	                        <f:param value="#{rowsCount}" />
+	                        <f:param value="#{displayedRowsCountVar}" />
+	                        <f:param value="#{firstRowIndex}" />
+	                        <f:param value="#{lastRowIndex}" />
+	                        <f:param value="#{pageIndex}" />
+	                        <f:param value="#{pageCount}" />
+	                </ice:outputFormat>
+	 
+	        </ice:dataPaginator>
+	        <!-- Paginator End -->
+	     		    
+	</ice:panelGroup>
+	
+		<!-- Includes Pop-Ups Start -->
+		<ui:include src="../Popup/incometypepopup.jspx"></ui:include>
+	    <ui:include src="../Popup/incometypefilterpopup.jspx"></ui:include>
+	    <ui:include src="../Popup/incometypedeletepopup.jspx"></ui:include>
+	    <!-- Includes Pop-Ups End -->
 			           					
-</ice:panelGrid>
+</div>
 </html>

@@ -34,7 +34,7 @@ public abstract class AbstractBean implements Refreshable {
 	protected Boolean deletePopupRender = false;
 	
 	// DataPaginator for auto pagination and resetting to first page
-	protected DataPaginator paginator;
+	protected DataPaginator paginator = new DataPaginator();
 	
 	// Variable to write Error-Messages
 	protected String errorMessage;

@@ -1,0 +1,141 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	template="/WEB-INF/templates/defaultTemplate.jspx">
+	
+	<ice:outputHead>
+	<ice:outputStyle href="./xmlhttp/css/rime/rime-portlet.css" />
+	<ice:outputStyle href="./styles/Sites.css" />
+	<ice:outputStyle href="./styles/popup.css" />
+	<ice:outputStyle href="./styles/Menu.css" />
+</ice:outputHead>
+	
+	<div style="height: 480px;">
+
+	<ice:panelGrid columns="2" columnClasses="Col1 Col2" styleClass="leiste">
+		
+		<!-- DataExporter Start -->
+		<ice:panelGroup styleClass="exampleBox dataScrollingContainer">
+			<ice:selectOneMenu id="type" value="#{dataExporter.type}" partialSubmit="true"
+		            valueChangeListener="#{dataExporter.typeChangeListener}" >
+		            <f:selectItem itemLabel="#{msg.tableExport}" itemValue=""/>
+		            <f:selectItem itemLabel="#{msg.tableExcel}" itemValue="excel"/>
+		            <f:selectItem itemLabel="#{msg.tableCSV}" itemValue="csv"/>
+		        </ice:selectOneMenu>
+		        <br/>
+		       <ice:panelGroup effect="#{dataExporter.changeEffect}" style="width:180px;">
+		            <ice:dataExporter for="invoicestate"
+		                label="#{msg.tableDataExporter1} #{dataExporter.type} #{msg.tableDataExporter2}"
+		                type="#{dataExporter.type}"
+		                popupBlockerLabel="#{msg.tablePopupBlocker}"
+		                clickToCreateFileText="#{msg.tableDataExporter12} #{dataExporter.type} #{msg.tableDataExporter2}"
+		                ignorePagination="true"/>
+		       </ice:panelGroup>
+		</ice:panelGroup>	 			           					
+		<!-- DataExporter End -->
+		  
+		<!-- Buttons Start -->
+     	<ice:panelGrid columns="5" columnClasses="buttons" style="width: 112px;">
+     		<ice:commandButton title="#{msg.buttonRefresh}" image="images/refresh.jpg" action="#{invoicestateLister.init}"/>
+     		<ice:commandButton title="#{msg.buttonFilter}" image="images/btn_filter_e.png" action="#{invoicestateLister.changeFilterPopupRender}"/>
+      		<ice:commandButton title="#{msg.buttonNew}" image="images/btn_new_e.png" rendered="#{sitesBean.buttonRendered}" action="#{invoicestateLister.changePopupRenderNew}"/>
+      		<ice:commandButton title="#{msg.buttonEdit}" image="images/btn_edit_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{invoicestateLister.visible}" action="#{invoicestateLister.changePopupRender}"/>  					  	
+     		<ice:commandButton title="#{msg.buttonDelete}" image="images/btn_delete_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{invoicestateLister.visible}" action="#{invoicestateLister.changeDeletePopupRender}"/>		           					  	
+     	</ice:panelGrid>
+     	<!-- Buttons End -->
+     	
+    </ice:panelGrid>    	
+     	
+   	<ice:panelGroup style="height:30px" ></ice:panelGroup>
+	<ice:panelGroup style="margin: auto; width: 100%; text-align: center; ">     	
+								
+		<!-- Table Invoice Start -->
+		<ice:dataTable value="#{invoicestateLister.invoicestateList}" var="item" id="invoicestate" rows="10" styleClass="table" style="margin: auto;">			
+			
+			<ice:column>
+				<!-- RowSelector Start -->
+				<ice:rowSelector selectedMouseOverClass="rowSelection"
+						value="#{item.selected}"
+						selectionListener="#{invoicestateLister.rowEvent}"/>
+				<!-- RowSelector End -->
+				<f:facet name="header">#{msg.tableDescriptionIs}</f:facet>
+				<ice:outputText styleClass="textPosition" value="#{item.descriptionIs}"></ice:outputText>
+			</ice:column>
+											
+		</ice:dataTable>
+		<!-- Table Invoice End -->
+	
+		<ice:panelGroup style="height:30px" ></ice:panelGroup>
+		
+		<ice:panelGrid columns="1" styleClass="scrollerTable2 paginator" columnClasses="standardTable_ColumnCentered">
+
+			<!-- Paginator Start -->
+	        <ice:dataPaginator for="invoicestate"
+	                         fastStep="10"
+	                         pageCountVar="pageCount"
+	                         pageIndexVar="pageIndex"
+	                         paginator="true"
+	                         style="margin: auto;"
+	                         binding="#{invoicestateLister.paginator}">
+	 				
+	 				<!-- Paginator Navigation Start -->
+	                <f:facet name="first" >
+	                         <ice:graphicImage url="images/btn_s_arrow_first_e.png" style="border:none;"/>
+	                </f:facet>
+	 
+	                <f:facet name="last">
+	                        <ice:graphicImage url="images/btn_s_arrow_last_e.png" style="border:none;" />
+	                </f:facet>
+	 
+	                <f:facet name="previous">
+	                        <ice:graphicImage url="images/btn_s_arrow_prev_e.png" style="border:none;" />
+	                </f:facet>
+	 
+	                <f:facet name="next">
+	                        <ice:graphicImage url="images/btn_s_arrow_next_e.png" style="border:none;" />
+	                </f:facet>
+	 
+	                <f:facet name="fastforward">
+	                        <ice:graphicImage url="images/btn_s_arrow_ff_e.png" style="border:none;" />
+	                </f:facet>
+	 
+	                <f:facet name="fastrewind">
+	                        <ice:graphicImage url="images/btn_s_arrow_fr_e.png" style="border:none;" />
+	                </f:facet>
+	                <!-- Paginator Navigation End -->
+	 
+	        </ice:dataPaginator>
+	 
+	        <ice:dataPaginator for="invoicestate"
+	                        rowsCountVar="rowsCount"
+	                        displayedRowsCountVar="displayedRowsCountVar"
+	                        firstRowIndexVar="firstRowIndex"
+	                        lastRowIndexVar="lastRowIndex"
+	                        pageCountVar="pageCount"
+	                        pageIndexVar="pageIndex"
+	                        >
+	 
+	                 <ice:outputFormat value="{0} #{msg.tablePaginator1} {1} #{msg.tablePaginator2} {2} #{msg.tablePaginator3} {3}#{msg.tablePaginator4} {4} / {5}" styleClass="standard" >
+	                        <f:param value="#{rowsCount}" />
+	                        <f:param value="#{displayedRowsCountVar}" />
+	                        <f:param value="#{firstRowIndex}" />
+	                        <f:param value="#{lastRowIndex}" />
+	                        <f:param value="#{pageIndex}" />
+	                        <f:param value="#{pageCount}" />
+	                </ice:outputFormat>
+	 
+	        </ice:dataPaginator>
+	        <!-- Paginator End -->
+	 
+	    </ice:panelGrid>    		    
+	</ice:panelGroup>
+	
+		<!-- Includes Pop-Ups Start -->
+		<ui:include src="../Popup/invoicestatepopup.jspx"></ui:include>
+		<ui:include src="../Popup/invoicestatedeletepopup.jspx"></ui:include>
+		<ui:include src="../Popup/invoicestatefilterpopup.jspx"></ui:include>
+	    <!-- Includes Pop-Ups End -->
+	    
+	</div>
+</html>

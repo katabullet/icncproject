@@ -10,47 +10,45 @@
 	<ice:outputStyle href="./styles/Menu.css" />
 </ice:outputHead>
 	
-	<ice:panelPopup rendered="#{customerstateLister.filterPopupRender}"
-					visible="#{customerstateLister.filterPopupRender}"
+	<ice:panelPopup rendered="#{invoicestateLister.popupRender}"
+					visible="#{invoicestateLister.popupRender}"
 					modal="true"
 					draggable="false"
 					autoCentre="true"
 					style="margin: auto;">					
 		<f:facet name="header">
-			<!-- Header Popup (filter) Start -->
+			<!-- Header Popup (edit, new) Start -->
 			<ice:panelGrid columns="2" styleClass="popupHeaderWrapper panelGridHeader" columnClasses="headerCol1 headerCol2">
-	            <ice:outputText	                    
-	                    value="#{msg.tableFilterCustomerstate}"
+	            <!-- ToDo: Dynamisch: Neu/Aendern -->
+	            <ice:outputText
+	                    value="#{msg.tableEditInvoicestate}"
 	                    styleClass="popupHeaderText"/>
-	            <ice:commandButton image="images/closepopup.gif" action="#{customerstateLister.closePopup}" immediate="true"/>
+	            <ice:commandButton image="images/closepopup.gif" action="#{invoicestateLister.closePopup}"/>
         	</ice:panelGrid>
-        	<!-- Header Popup (filter) End -->
+        	<!-- Header Popup (edit, new) End -->
 		</f:facet>
 		<f:facet name="body">
-		<!-- Labels + Inputtexts Popup (filter) Start -->
+		<!-- Labels + Inputtexts Popup (edit & new) Start -->
 		<ice:panelGroup>
-			<ice:panelGrid columns="2" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2Center columnPopup2Center">
+			<ice:panelGrid columns="2" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2">
+								
+				<ice:outputLabel value="#{msg.tableDescriptionIs}" styleClass="Text"/>
+				<ice:inputText styleClass="Input" value="#{invoicestateLister.curInvoicestate.descriptionIs}"></ice:inputText>	
 				
-				<ice:outputLabel value="#{msg.tableColumn}" styleClass="Text TextTitel"/>
-				<ice:outputLabel value="#{msg.tableCriterion}" styleClass="HeadText"/>
-				
-				<ice:outputLabel value="#{msg.tableDescriptionCs}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{customerstateLister.descriptionCsFilter}"/>
-									
 			</ice:panelGrid>
-			<ice:panelGrid/>
+			
 			<ice:panelGrid styleClass="panelGridSpace1">
 				<ice:messages layout="list" errorClass="iceMsgError"></ice:messages>
 			</ice:panelGrid>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" styleClass="panelGridButtons">
-				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Filtern" action="#{customerstateLister.filterEntities}"/>
-				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{customerstateLister.closePopup}" immediate="true"/>
+				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="#{msg.buttonSave}" action="#{invoicestateLister.updateEntity}"/>
+				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="#{msg.buttonCancel}" action="#{invoicestateLister.closePopup}"/>
 			</ice:panelGrid>
 			<ice:panelGrid styleClass="panelGridSpace2">
 				<ice:outputText value=""/>
 			</ice:panelGrid>
 		</ice:panelGroup>
-		<!-- Labels + Inputtexts Popup (filter) End -->
+		<!-- Labels + Inputtexts Popup (edit & new) End -->
 		</f:facet>
 	</ice:panelPopup>
 	

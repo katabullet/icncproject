@@ -42,6 +42,9 @@
                 				styleClass="exampleBox panelTabSetContainer iceTab">
     				<ice:panelTabSet id="icePnlTbSet"
             					selectedIndex="0">
+            					
+            			<!-- Evaluation -->
+        				<ice:panelTab label="#{msg.tableEvaluation}" labelWidth="#{sitesBean.tabWidth}"></ice:panelTab>
             			
             			<!--Settlement-->		
             			<ice:panelTab label="#{msg.tableSettlement}" labelWidth="#{sitesBean.tabWidth}" style="text-align: center;" >
@@ -55,7 +58,7 @@
             					<!-- Interval -->
             					<ice:panelTab label="#{msg.tableInterval}" labelWidth="#{sitesBean.allTabWidth}">
             					
-            						<ui:include src="/detailpages/intervalpage.jspx"></ui:include>
+            						<ui:include src="/detailpages/intervalpage.jspx"/>
 
             					</ice:panelTab>
             					<!-- Invoice -->
@@ -67,7 +70,7 @@
             					<!-- InvoiceState -->
             					<ice:panelTab label="#{msg.tableInvoicestate}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           				
+		           					<ui:include src="/detailpages/invoicestatepage.jspx"/>
 		           					
             					</ice:panelTab>
             				</ice:panelTabSet>
@@ -102,37 +105,37 @@
             					</ice:panelTab>
             				</ice:panelTabSet>
             			</ice:panelTab>
+            			
             			<!-- Customer -->
         				<ice:panelTab label="#{msg.tableCustomer}" labelWidth="#{sitesBean.tabWidth}">
         					<ice:panelTabSet id="icePnlTbSet3" selectedIndex="0" tabPlacement="Bottom">
             					<!-- Customer -->
             					<ice:panelTab label="#{msg.tableCustomer}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					<ui:include src="/detailpages/customerpage.jspx"></ui:include>
+		           					<ui:include src="/detailpages/customerpage.jspx"/>
 		           					
             					</ice:panelTab>
             					<!-- Concern -->
             					<ice:panelTab label="#{msg.tableConcern}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					<ui:include src="/detailpages/concernpage.jspx"></ui:include>
+		           					<ui:include src="/detailpages/concernpage.jspx"/>
 		           					
             					</ice:panelTab>
             					<!-- Contactperson -->
             					<ice:panelTab label="#{msg.tableContactperson}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					<ui:include src="/detailpages/contactpersonpage.jspx"></ui:include>
+		           					<ui:include src="/detailpages/contactpersonpage.jspx"/>
 		           					
             					</ice:panelTab>
             					<!-- Contactstate -->
             					<ice:panelTab label="#{msg.tableCustomerState}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					<ui:include src="/detailpages/customerstatepage.jspx"></ui:include>
+		           					<ui:include src="/detailpages/customerstatepage.jspx"/>
 		           					
             					</ice:panelTab>            					       					
             				</ice:panelTabSet>
         				</ice:panelTab>
-        				<!-- Evaluation -->
-        				<ice:panelTab label="#{msg.tableEvaluation}" labelWidth="#{sitesBean.tabWidth}"></ice:panelTab>
+        				
         				<!-- Reminder -->
         				<ice:panelTab label="#{msg.tableReminder}" labelWidth="#{sitesBean.tabWidth}" rendered="#{sitesBean.rendered5}">
         					<ice:panelTabSet id="icePnlTbSet4" selectedIndex="0" tabPlacement="Bottom">
@@ -144,6 +147,7 @@
             					</ice:panelTab>
             				</ice:panelTabSet>
         				</ice:panelTab>
+        				
         				<!-- Protocol -->
         				<ice:panelTab label="#{msg.tableProtocol}" labelWidth="#{sitesBean.tabWidth}" rendered="#{sitesBean.rendered6}">
         					<ice:panelTabSet id="icePnlTbSet5" selectedIndex="0" tabPlacement="Bottom">
@@ -155,6 +159,7 @@
             					</ice:panelTab>
             				</ice:panelTabSet>
         				</ice:panelTab>
+        				
         				<!-- User -->
         				<ice:panelTab label="#{msg.tableUser}" labelWidth="#{sitesBean.tabWidth}" rendered="#{sitesBean.rendered7}">
         					<ice:panelTabSet id="icePnlTbSet6" selectedIndex="0" tabPlacement="Bottom">

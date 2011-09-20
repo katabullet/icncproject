@@ -20,7 +20,7 @@ public class CustomerstateBackingBean extends AbstractBean implements Filterable
 	// List with all Customerstates to avoid constant DB-Reading
 	private ArrayList<TblCustomerstate> customerstateList;
 	
-	// Variable to save current Concern
+	// Variable to save current Customerstate
 	private TblCustomerstate curCustomerstate = new TblCustomerstate();
 	
 	/* Field declaration for Filter */

@@ -22,7 +22,7 @@
 			<ice:outputText value="#{userLister.userPopupName}"
 				styleClass="popupHeaderText" />
 			<ice:commandButton image="images/closepopup.gif"
-				action="#{userLister.closePopup}" immediate="true" />
+				action="#{userLister.closePopup}"/>
 		</ice:panelGrid>
 		<!-- Header Popup (edit, new) End -->
 	</f:facet>
@@ -54,8 +54,7 @@
 				<ice:commandButton styleClass="Base_Text_Center buttonCol"
 					value="#{msg.buttonSave}" action="#{userLister.updateEntity}" />
 				<ice:commandButton styleClass="Base_Text_Center buttonCol"
-					value="#{msg.buttonCancel}" action="#{userLister.closePopup}"
-					immediate="true" />
+					value="#{msg.buttonCancel}" action="#{userLister.closePopup}"/>
 			</ice:panelGrid>
 			<ice:panelGrid styleClass="panelGridSpace2">
 				<ice:outputText value="" />

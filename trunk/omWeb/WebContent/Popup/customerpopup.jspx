@@ -1,0 +1,83 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	template="/WEB-INF/templates/defaultTemplate.jspx">
+<ice:outputHead>
+	<ice:outputStyle href="./xmlhttp/css/rime/rime.css" />
+	<ice:outputStyle href="./styles/Sites.css" />
+	<ice:outputStyle href="./styles/popup.css" />
+	<ice:outputStyle href="./styles/Menu.css" />
+</ice:outputHead>
+	
+	<ice:panelPopup rendered="#{customerLister.popupRender}"
+					visible="#{customerLister.popupRender}"
+					modal="true"
+					draggable="false"
+					autoCentre="true"
+					style="margin: auto;">					
+		<f:facet name="header">
+			<!-- Header Popup (edit, new) Start -->
+			<ice:panelGrid columns="2" styleClass="popupHeaderWrapper panelGridHeader" columnClasses="headerCol1 headerCol2">
+	            <!-- ToDo: Dynamisch: Neu/Aendern -->
+	            <ice:outputText
+	                    value="#{msg.tableEditCustomer}"
+	                    styleClass="popupHeaderText"/>
+	            <ice:commandButton image="images/closepopup.gif" action="#{customerLister.closePopup}"/>
+        	</ice:panelGrid>
+        	<!-- Header Popup (edit, new) End -->
+		</f:facet>
+		<f:facet name="body">
+		<!-- Labels + Inputtexts Popup (edit & new) Start -->
+		<ice:panelGroup>
+			<ice:panelGrid columns="2" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2">
+								
+				<ice:outputLabel value="#{msg.tableCustomername}" styleClass="Text"/>
+				<ice:inputText styleClass="Input" value="#{customerLister.curCustomer.customername}"></ice:inputText>
+						
+				<ice:outputLabel value="#{msg.tableSAPCNR}" styleClass="Text"/>
+				<ice:inputText styleClass="Input" value="#{customerLister.curCustomer.sapcnr}"></ice:inputText>
+				
+				<ice:outputLabel value="#{msg.tableContactperson}" styleClass="Text"/>
+				<ice:selectOneMenu value="#{customerLister.contactperson}" styleClass="Input" valueChangeListener="#{customerLister.changeContactperson}">
+					  <f:selectItems value="#{customerLister.contactpersonListDescription}"/>
+       			</ice:selectOneMenu>
+				
+				<ice:outputLabel value="#{msg.tableCustomerState}" styleClass="Text"/>
+				<ice:selectOneMenu value="#{customerLister.curCustomerstate.descriptionCs}" styleClass="Input" valueChangeListener="#{customerLister.changeCustomerstate}">
+					  <f:selectItems value="#{customerLister.customerstateListDescription}"/>
+       			</ice:selectOneMenu>
+				
+				<ice:outputLabel value="#{msg.tableCustomerStateDate}" styleClass="Text"/>
+				<ice:outputText styleClass="textPosition" value="#{customerLister.curCustomer.customerstatedate}">
+					<f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/>
+				</ice:outputText>
+				
+				<ice:outputLabel value="#{msg.tableConcernName}" styleClass="Text"/>
+				<ice:selectOneMenu value="#{customerLister.curConcern.concernname}" styleClass="Input" valueChangeListener="#{customerLister.changeConcern}">
+					  <f:selectItems value="#{customerLister.concernListDescription}"/>
+       			</ice:selectOneMenu>
+				
+				<ice:outputLabel value="#{msg.tableSalesman}" styleClass="Text"/>
+				<ice:selectOneMenu value="#{customerLister.curSalesman.username}" styleClass="Input" valueChangeListener="#{customerLister.changeSalesman}" required="false">
+					<f:selectItems value="#{customerLister.salesmanListDescription}"/>			
+				</ice:selectOneMenu>
+
+			</ice:panelGrid>
+			
+			<ice:panelGrid styleClass="panelGridSpace1">
+				<ice:messages layout="list" errorClass="iceMsgError"></ice:messages>
+			</ice:panelGrid>
+			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" styleClass="panelGridButtons">
+				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="#{msg.buttonSave}" action="#{customerLister.updateEntity}"/>
+				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="#{msg.buttonCancel}" action="#{customerLister.closePopup}"/>
+			</ice:panelGrid>
+			<ice:panelGrid styleClass="panelGridSpace2">
+				<ice:outputText value=""/>
+			</ice:panelGrid>
+		</ice:panelGroup>
+		<!-- Labels + Inputtexts Popup (edit & new) End -->
+		</f:facet>
+	</ice:panelPopup>
+	
+</html>

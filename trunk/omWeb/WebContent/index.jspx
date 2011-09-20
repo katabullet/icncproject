@@ -94,7 +94,7 @@
             					<!-- Incometype -->
             					<ice:panelTab label="#{msg.tableIncometype}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					
+		           				<ui:include src="/detailpages/incometypepage.jspx"></ui:include>
 		           					
             					</ice:panelTab>
             					<!-- Costcenter -->

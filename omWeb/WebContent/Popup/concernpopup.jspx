@@ -10,8 +10,8 @@
 	<ice:outputStyle href="./styles/Menu.css" />
 </ice:outputHead>
 	
-	<ice:panelPopup rendered="#{intervalLister.popupRender}"
-					visible="#{intervalLister.popupRender}"
+	<ice:panelPopup rendered="#{concernLister.popupRender}"
+					visible="#{concernLister.popupRender}"
 					modal="true"
 					draggable="false"
 					autoCentre="true"
@@ -21,9 +21,9 @@
 			<ice:panelGrid columns="2" styleClass="popupHeaderWrapper panelGridHeader" columnClasses="headerCol1 headerCol2">
 	            <!-- ToDo: Dynamisch: Neu/Aendern -->
 	            <ice:outputText
-	                    value="#{msg.tableEditInterval}"
+	                    value="#{msg.tableEditConcern}"
 	                    styleClass="popupHeaderText"/>
-	            <ice:commandButton image="images/closepopup.gif" action="#{intervalLister.closePopup}"/>
+	            <ice:commandButton image="images/closepopup.gif" action="#{concernLister.closePopup}"/>
         	</ice:panelGrid>
         	<!-- Header Popup (edit, new) End -->
 		</f:facet>
@@ -32,19 +32,20 @@
 		<ice:panelGroup>
 			<ice:panelGrid columns="2" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2">
 								
-				<ice:outputLabel value="#{msg.tableDescriptionIv}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{intervalLister.curInterval.descriptionIv}"/>
-				
-				<ice:outputLabel value="#{msg.tableMonths}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{intervalLister.curInterval.months}" partialSubmit="true"/>		
+				<ice:outputLabel value="#{msg.tableConcernname}" styleClass="Text"/>
+				<ice:inputText styleClass="Input" value="#{concernLister.curConcern.concernname}"></ice:inputText>
+						
+				<ice:outputLabel value="#{msg.tableConcernmatchcode}" styleClass="Text"/>
+				<ice:inputText styleClass="Input" value="#{concernLister.curConcern.concernmatchcode}"></ice:inputText>
+
 			</ice:panelGrid>
 			
 			<ice:panelGrid styleClass="panelGridSpace1">
 				<ice:messages layout="list" errorClass="iceMsgError"></ice:messages>
 			</ice:panelGrid>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" styleClass="panelGridButtons">
-				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="#{msg.buttonSave}" action="#{intervalLister.updateEntity}"/>
-				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="#{msg.buttonCancel}" action="#{intervalLister.closePopup}"/>
+				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="#{msg.buttonSave}" action="#{concernLister.updateEntity}"/>
+				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="#{msg.buttonCancel}" action="#{concernLister.closePopup}"/>
 			</ice:panelGrid>
 			<ice:panelGrid styleClass="panelGridSpace2">
 				<ice:outputText value=""/>

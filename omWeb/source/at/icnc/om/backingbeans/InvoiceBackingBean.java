@@ -656,27 +656,5 @@ public class InvoiceBackingBean extends AbstractBean {
 		curInvoice = new TblInvoice();
 		getCurInvoice().setIdInvoice(0);
 		refresh();
-	}	
-	
-	public void validateSum(FacesContext context, UIComponent validate, Object value){
-		FacesMessage msg = new FacesMessage("Das ist ein Test");
-		Pattern pattern = Pattern.compile("[a-zA-Z]");
-		Matcher matcher = pattern.matcher((String) value);
-		
-		if(matcher.matches()){
-			context.addMessage(validate.getClientId(context), msg);
-		}
-		try {
-			BigDecimal enteredSum = (BigDecimal) value;
-						
-		} catch (ValidatorException e) {
-			context.addMessage(validate.getClientId(context), msg);
-		} catch (ConverterException e){
-			context.addMessage(validate.getClientId(context), msg);
-		} catch (Exception e){
-			context.addMessage(validate.getClientId(context), msg);
-		}
-	    
-		context.addMessage(validate.getClientId(context), msg);
 	}
 }

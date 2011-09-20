@@ -25,7 +25,7 @@
 		        </ice:selectOneMenu>
 		        <br/>
 		       <ice:panelGroup effect="#{dataExporter.changeEffect}" style="width:180px;">
-		            <ice:dataExporter for="interval"
+		            <ice:dataExporter for="concern"
 		                label="#{msg.tableDataExporter1} #{dataExporter.type} #{msg.tableDataExporter2}"
 		                type="#{dataExporter.type}"
 		                popupBlockerLabel="#{msg.tablePopupBlocker}"
@@ -37,11 +37,11 @@
 		  
 		<!-- Buttons Start -->
      	<ice:panelGrid columns="5" columnClasses="buttons" style="width: 112px;">
-     		<ice:commandButton title="#{msg.buttonRefresh}" image="images/refresh.jpg" action="#{intervalLister.init}"/>
-     		<ice:commandButton title="#{msg.buttonFilter}" image="images/btn_filter_e.png" action="#{intervalLister.changeFilterPopupRender}"/>
-      		<ice:commandButton title="#{msg.buttonNew}" image="images/btn_new_e.png" rendered="#{sitesBean.buttonRendered}" action="#{intervalLister.changePopupRenderNew}"/>
-      		<ice:commandButton title="#{msg.buttonEdit}" image="images/btn_edit_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{intervalLister.visible}" action="#{intervalLister.changePopupRender}"/>  					  	
-     		<ice:commandButton title="#{msg.buttonDelete}" image="images/btn_delete_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{intervalLister.visible}" action="#{intervalLister.changeDeletePopupRender}"/>		           					  	
+     		<ice:commandButton title="#{msg.buttonRefresh}" image="images/refresh.jpg" action="#{concernLister.init}"/>
+     		<ice:commandButton title="#{msg.buttonFilter}" image="images/btn_filter_e.png" action="#{concernLister.changeFilterPopupRender}"/>
+      		<ice:commandButton title="#{msg.buttonNew}" image="images/btn_new_e.png" rendered="#{sitesBean.buttonRendered}" action="#{concernLister.changePopupRenderNew}"/>
+      		<ice:commandButton title="#{msg.buttonEdit}" image="images/btn_edit_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{concernLister.visible}" action="#{concernLister.changePopupRender}"/>  					  	
+     		<ice:commandButton title="#{msg.buttonDelete}" image="images/btn_delete_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{concernLister.visible}" action="#{concernLister.changeDeletePopupRender}"/>		           					  	
      	</ice:panelGrid>
      	<!-- Buttons End -->
      	
@@ -51,20 +51,21 @@
 	<ice:panelGroup style="margin: auto; width: 100%; text-align: center; ">     	
 								
 		<!-- Table Invoice Start -->
-		<ice:dataTable value="#{intervalLister.intervalList}" var="item" id="interval" rows="10" styleClass="table" style="margin: auto;">			
+		<ice:dataTable value="#{concernLister.concernList}" var="item" id="concern" rows="10" styleClass="table" style="margin: auto;">			
 			<ice:column>
-				<f:facet name="header">#{msg.tableDescriptionIv}</f:facet>
-				<ice:outputText styleClass="textPosition" value="#{item.descriptionIv}"></ice:outputText>
+				<f:facet name="header">#{msg.tableConcernname}</f:facet>
+				<ice:outputText styleClass="textPosition" value="#{item.concernname}"></ice:outputText>
 			</ice:column>
 			<ice:column>
 				<!-- RowSelector Start -->
 				<ice:rowSelector selectedMouseOverClass="rowSelection"
 						value="#{item.selected}"
-						selectionListener="#{intervalLister.rowEvent}"/>
+						selectionListener="#{concernLister.rowEvent}"/>
 				<!-- RowSelector End -->
-				<f:facet name="header">#{msg.tableMonths}</f:facet>
-				<ice:outputText styleClass="textPosition" value="#{item.months}"></ice:outputText>
-			</ice:column>			
+				<f:facet name="header">#{msg.tableConcernmatchcode}</f:facet>
+				<ice:outputText styleClass="textPosition" value="#{item.concernmatchcode}"></ice:outputText>
+			</ice:column>
+											
 		</ice:dataTable>
 		<!-- Table Invoice End -->
 	
@@ -73,13 +74,13 @@
 		<ice:panelGrid columns="1" styleClass="scrollerTable2 paginator" columnClasses="standardTable_ColumnCentered">
 
 			<!-- Paginator Start -->
-	        <ice:dataPaginator for="interval"
+	        <ice:dataPaginator for="concern"
 	                         fastStep="10"
 	                         pageCountVar="pageCount"
 	                         pageIndexVar="pageIndex"
 	                         paginator="true"
 	                         style="margin: auto;"
-	                         binding="#{intervalLister.paginator}">
+	                         binding="#{concernLister.paginator}">
 	 				
 	 				<!-- Paginator Navigation Start -->
 	                <f:facet name="first" >
@@ -109,7 +110,7 @@
 	 
 	        </ice:dataPaginator>
 	 
-	        <ice:dataPaginator for="interval"
+	        <ice:dataPaginator for="concern"
 	                        rowsCountVar="rowsCount"
 	                        displayedRowsCountVar="displayedRowsCountVar"
 	                        firstRowIndexVar="firstRowIndex"
@@ -134,9 +135,9 @@
 	</ice:panelGroup>
 	
 		<!-- Includes Pop-Ups Start -->
-		<ui:include src="../Popup/intervalpopup.jspx"></ui:include>
-	    <ui:include src="../Popup/intervalfilterpopup.jspx"></ui:include>
-	    <ui:include src="../Popup/intervaldeletepopup.jspx"></ui:include>
+		<ui:include src="../Popup/concernpopup.jspx"></ui:include>
+		<ui:include src="../Popup/concerndeletepopup.jspx"></ui:include>
+		<ui:include src="../Popup/concernfilterpopup.jspx"></ui:include>
 	    <!-- Includes Pop-Ups End -->
 	    
 	</div>

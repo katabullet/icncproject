@@ -10,8 +10,8 @@
 	<ice:outputStyle href="./styles/Menu.css" />
 </ice:outputHead>
 	
-	<ice:panelPopup rendered="#{intervalLister.filterPopupRender}"
-					visible="#{intervalLister.filterPopupRender}"
+	<ice:panelPopup rendered="#{concernLister.filterPopupRender}"
+					visible="#{concernLister.filterPopupRender}"
 					modal="true"
 					draggable="false"
 					autoCentre="true"
@@ -20,9 +20,9 @@
 			<!-- Header Popup (filter) Start -->
 			<ice:panelGrid columns="2" styleClass="popupHeaderWrapper panelGridHeader" columnClasses="headerCol1 headerCol2">
 	            <ice:outputText	                    
-	                    value="#{msg.tableFilterInterval}"
+	                    value="#{msg.tableFilterConcern}"
 	                    styleClass="popupHeaderText"/>
-	            <ice:commandButton image="images/closepopup.gif" action="#{intervalLister.closePopup}" immediate="true"/>
+	            <ice:commandButton image="images/closepopup.gif" action="#{concernLister.closePopup}" immediate="true"/>
         	</ice:panelGrid>
         	<!-- Header Popup (filter) End -->
 		</f:facet>
@@ -34,11 +34,11 @@
 				<ice:outputLabel value="#{msg.tableColumn}" styleClass="Text TextTitel"/>
 				<ice:outputLabel value="#{msg.tableCriterion}" styleClass="HeadText"/>
 				
-				<ice:outputLabel value="#{msg.tableDescriptionIv}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{intervalLister.descriptionIv}"/>
+				<ice:outputLabel value="#{msg.tableConcernname}" styleClass="Text"/>
+				<ice:inputText styleClass="Input" value="#{concernLister.concernnameFilter}"/>
 				
-				<ice:outputLabel value="#{msg.tableMonths}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{intervalLister.months}"/>
+				<ice:outputLabel value="#{msg.tableConcernmatchcode}" styleClass="Text"/>
+				<ice:inputText styleClass="Input" value="#{concernLister.concernmatchcodeFilter}"/>
 					
 			</ice:panelGrid>
 			<ice:panelGrid/>
@@ -46,8 +46,8 @@
 				<ice:messages layout="list" errorClass="iceMsgError"></ice:messages>
 			</ice:panelGrid>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" styleClass="panelGridButtons">
-				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Filtern" action="#{intervalLister.filterEntities}"/>
-				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{intervalLister.closePopup}" immediate="true"/>
+				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Filtern" action="#{concernLister.filterEntities}"/>
+				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{concernLister.closePopup}" immediate="true"/>
 			</ice:panelGrid>
 			<ice:panelGrid styleClass="panelGridSpace2">
 				<ice:outputText value=""/>

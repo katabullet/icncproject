@@ -23,7 +23,7 @@
 	            <ice:outputText
 	                    value="#{msg.tableEditInvoice}"
 	                    styleClass="popupHeaderText"/>
-	            <ice:commandButton image="images/closepopup.gif" action="#{invoiceLister.closePopup}" immediate="true"/>
+	            <ice:commandButton image="images/closepopup.gif" action="#{invoiceLister.closePopup}"/>
         	</ice:panelGrid>
         	<!-- Header Popup (edit, new) End -->
 		</f:facet>
@@ -35,9 +35,7 @@
 				<ice:inputText styleClass="Input" value="#{invoiceLister.curInvoice.invoicenumber}"/>
 				<ice:outputLabel value="#{msg.tableSum}" styleClass="Text"/>			
 					
-				<ice:inputText id="inputSum" styleClass="Input" value="#{invoiceLister.curInvoice.sum }" partialSubmit="true">
-					<f:validator validatorId="sumValidator" for="inputSum" />
-				</ice:inputText>
+				<ice:inputText id="inputSum" styleClass="Input" value="#{invoiceLister.curInvoice.sum }" partialSubmit="true"></ice:inputText>
 				
 				<ice:outputLabel value="#{msg.tableEstimation}" styleClass="Text"/>
 				<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.estimation}"/>
@@ -60,7 +58,7 @@
 			</ice:panelGrid>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" styleClass="panelGridButtons">
 				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="#{msg.buttonSave}" action="#{invoiceLister.updateInvoice}"/>
-				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="#{msg.buttonCancel}" action="#{invoiceLister.closePopup}" immediate="true"/>
+				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="#{msg.buttonCancel}" action="#{invoiceLister.closePopup}" />
 			</ice:panelGrid>
 			<ice:panelGrid styleClass="panelGridSpace2">
 				<ice:outputText value=""/>

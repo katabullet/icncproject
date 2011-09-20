@@ -85,18 +85,23 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>invoicestateLister</managed-bean-name>
+		<managed-bean-name>userLister</managed-bean-name>
+		<managed-bean-class>at.icnc.om.backingbeans.UserBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>userLister</managed-bean-name>
+		<managed-bean-class>at.icnc.om.backingbeans.UserBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>invoiceStateLister</managed-bean-name>
 		<managed-bean-class>at.icnc.om.backingbeans.InvoicestateBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>intervalLister</managed-bean-name>
 		<managed-bean-class>at.icnc.om.backingbeans.IntervalBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
-		<managed-bean-name>userLister</managed-bean-name>
-		<managed-bean-class>at.icnc.om.backingbeans.UserBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>

@@ -90,6 +90,11 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
+		<managed-bean-name>userLister</managed-bean-name>
+		<managed-bean-class>at.icnc.om.backingbeans.UserBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
 		<managed-bean-name>invoicestateLister</managed-bean-name>
 		<managed-bean-class>at.icnc.om.backingbeans.InvoicestateBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
@@ -117,6 +122,21 @@
 	<managed-bean>
 		<managed-bean-name>customerstateLister</managed-bean-name>
 		<managed-bean-class>at.icnc.om.backingbeans.CustomerstateBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>costcentreLister</managed-bean-name>
+		<managed-bean-class>at.icnc.om.backingbeans.CostcentreBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>settlementLister</managed-bean-name>
+		<managed-bean-class>at.icnc.om.backingbeans.SettlementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>orderstateLister</managed-bean-name>
+		<managed-bean-class>at.icnc.om.backingbeans.OrderstateBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>

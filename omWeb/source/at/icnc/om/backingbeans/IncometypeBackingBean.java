@@ -7,7 +7,7 @@ import at.icnc.om.interfaces.Filterable;
 import com.icesoft.faces.component.ext.RowSelectorEvent;
 
 /**
- * Implementation of invoiceLister
+ * Implementation of incometypeLister
  * 
  * @author csh80, nkn80, cma80
  *
@@ -36,7 +36,7 @@ public class IncometypeBackingBean extends AbstractBean implements Filterable {
 					entityLister.getObjectList(TblIncometype.class));
 		}
 		
-		/* Makes the user know which invoice is selected (it is shaded) */
+		/* Makes the user know which incometype is selected (it is shaded) */
 		if (curIncometype != null) {
 			for(TblIncometype curItem : incometypeList) {				
 				if(curItem.getIdIncometype() == curIncometype.getIdIncometype()) {
@@ -146,7 +146,7 @@ public class IncometypeBackingBean extends AbstractBean implements Filterable {
 	 * resets all lists with db-content
 	 * closes all popups
 	 * goes back to first page
-	 * resets curInterval
+	 * resets curIncometype
 	 */
 	@Override
 	public void init() {

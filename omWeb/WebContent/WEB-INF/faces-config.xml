@@ -119,6 +119,11 @@
 		<managed-bean-class>at.icnc.om.backingbeans.CustomerstateBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>orderstateLister</managed-bean-name>
+		<managed-bean-class>at.icnc.om.backingbeans.OrderstateBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 	
 	<navigation-rule>
 		<display-name>login</display-name>

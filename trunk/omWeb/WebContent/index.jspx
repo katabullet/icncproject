@@ -52,7 +52,7 @@
             					<!-- Settlement -->
             					<ice:panelTab label="#{msg.tableSettlement}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					
+		           					<ui:include src="/detailpages/settlementpage.jspx"/>
 		           					
             					</ice:panelTab>
             					<!-- Interval -->
@@ -94,13 +94,13 @@
             					<!-- Incometype -->
             					<ice:panelTab label="#{msg.tableIncometype}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           				<ui:include src="/detailpages/incometypepage.jspx"></ui:include>
+		           					<ui:include src="/detailpages/incometypepage.jspx"/>
 		           					
             					</ice:panelTab>
             					<!-- Costcenter -->
             					<ice:panelTab label="#{msg.tableCostcenter}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					
+		           					<ui:include src="/detailpages/costcentrepage.jspx"/>
 		           					
             					</ice:panelTab>
             				</ice:panelTabSet>

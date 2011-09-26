@@ -5,10 +5,16 @@ import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
+import javax.faces.component.UIComponent;
+import javax.faces.component.UISelectItems;
+import javax.faces.component.html.HtmlSelectOneMenu;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.faces.model.SelectItemGroup;
 
 import at.icnc.om.entitybeans.TblConcern;
 import at.icnc.om.entitybeans.TblContactperson;
@@ -18,6 +24,7 @@ import at.icnc.om.entitybeans.TblInvoice;
 import at.icnc.om.entitybeans.TblUser;
 import at.icnc.om.interfaces.Filterable;
 
+import com.icesoft.faces.component.SelectOneMenuTag;
 import com.icesoft.faces.component.ext.RowSelectorEvent;
 
 /**
@@ -60,6 +67,15 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 	
 	// Variable to save selected Contactperson
 	private String contactperson;
+	
+	// Binding of SelectOneMenu with Customerstates
+	private HtmlSelectOneMenu bindingCustomerstates;
+	
+	// Binding of SelectOneMenu with Contactpersons
+	private HtmlSelectOneMenu bindingContactpersons;
+	
+	// Binding of SelectOneMenu with Concerns
+	private HtmlSelectOneMenu bindingConcerns;
 	
 	/* Field Declaration for Filter */
 	private String customernameFilter;
@@ -701,4 +717,58 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 	public String getSalesmanFilter() {
 		return salesmanFilter;
 	}	
+	
+	/**
+	 * Method to reset CustomerstateCombobox
+	 * Method is called from CustomerstateBackingBean
+	 */
+	public void resetCustomerstateCombobox(){
+		getBindingCustomerstates().getChildren().clear();
+		customerStateList = null;
+		getCustomerstateListDescription();
+	}
+	
+	/**
+	 * Method to reset ContactpersonCombobox
+	 * Method is called from ContactpersonBackingBean
+	 */
+	public void resetContactpersonCombobox(){
+		getBindingContactpersons().getChildren().clear();
+		contactpersonList = null;
+		getContactpersonListDescription();
+	}
+	
+	/**
+	 * Method to reset ConcernCombobox
+	 * Method is called from ConcernBackingBean
+	 */
+	public void resetConcernCombobox(){
+		getBindingConcerns().getChildren().clear();
+		concernList = null;
+		getConcernListDescription();
+	}
+
+	public void setBindingCustomerstates(HtmlSelectOneMenu bindingCustomerstates) {
+		this.bindingCustomerstates = bindingCustomerstates;
+	}
+
+	public HtmlSelectOneMenu getBindingCustomerstates() {
+		return bindingCustomerstates;
+	}
+
+	public void setBindingContactpersons(HtmlSelectOneMenu bindingContactpersons) {
+		this.bindingContactpersons = bindingContactpersons;
+	}
+
+	public HtmlSelectOneMenu getBindingContactpersons() {
+		return bindingContactpersons;
+	}
+
+	public void setBindingConcerns(HtmlSelectOneMenu bindingConcerns) {
+		this.bindingConcerns = bindingConcerns;
+	}
+
+	public HtmlSelectOneMenu getBindingConcerns() {
+		return bindingConcerns;
+	}
 }

@@ -3,6 +3,8 @@ package at.icnc.om.backingbeans;
 
 import java.util.ArrayList;
 
+import javax.faces.context.FacesContext;
+
 import at.icnc.om.entitybeans.TblConcern;
 import at.icnc.om.interfaces.Filterable;
 
@@ -139,6 +141,7 @@ public class ConcernBackingBean extends AbstractBean implements Filterable {
 	@Override
 	public void updateEntity() {
 		entityLister.UpdateObject(TblConcern.class, getCurConcern(), getCurConcern().getIdConcern());
+		resetCustomerstateCombobox();
 		refresh();		
 	}
 
@@ -206,5 +209,19 @@ public class ConcernBackingBean extends AbstractBean implements Filterable {
 			/*Method to close the Popup*/
 			changeFilterPopupRender();
 		}	
-	}	
+	}
+	
+	/**
+	 * Method to reset ConcernCombobox used in customerpopup
+	 */
+	public void resetCustomerstateCombobox(){
+		/* Reading values of customerLister out of requestMap (Map with all created Managed Beans */
+		CustomerBackingBean customerLister = (CustomerBackingBean) 
+											 FacesContext.getCurrentInstance()
+											 .getExternalContext().getRequestMap().get("customerLister");
+
+		if(customerLister != null){
+			customerLister.resetConcernCombobox();
+		}	
+	}
 }

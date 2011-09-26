@@ -266,5 +266,18 @@ public class ContactpersonBackingBean extends AbstractBean implements Filterable
 	public String getEmailFilter() {
 		return emailFilter;
 	}
+	
+	/**
+	 * Method to reset ContactpersonCombobox used in customerpopup
+	 */
+	public void resetContactpersonCombobox(){
+		/* Reading values of customerLister out of requestMap (Map with all created Managed Beans */
+		CustomerBackingBean customerLister = (CustomerBackingBean) 
+											 FacesContext.getCurrentInstance()
+											 .getExternalContext().getRequestMap().get("customerLister");
 
+		if(customerLister != null){
+			customerLister.resetContactpersonCombobox();
+		}	
+	}
 }

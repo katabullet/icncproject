@@ -3,6 +3,8 @@ package at.icnc.om.backingbeans;
 
 import java.util.ArrayList;
 
+import javax.faces.context.FacesContext;
+
 import at.icnc.om.entitybeans.TblConcern;
 import at.icnc.om.entitybeans.TblCustomerstate;
 import at.icnc.om.interfaces.Filterable;
@@ -192,5 +194,19 @@ public class CustomerstateBackingBean extends AbstractBean implements Filterable
 
 	public String getDescriptionCsFilter() {
 		return descriptionCsFilter;
+	}
+	
+	/**
+	 * Method to reset CustomerstateCombobox used in customerpopup
+	 */
+	public void resetCustomerstateCombobox(){
+		/* Reading values of customerLister out of requestMap (Map with all created Managed Beans */
+		CustomerBackingBean customerLister = (CustomerBackingBean) 
+											 FacesContext.getCurrentInstance()
+											 .getExternalContext().getRequestMap().get("customerLister");
+
+		if(customerLister != null){
+			customerLister.resetCustomerstateCombobox();
+		}	
 	}
 }

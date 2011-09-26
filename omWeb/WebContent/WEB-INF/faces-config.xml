@@ -60,11 +60,6 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>orderLister</managed-bean-name>
-		<managed-bean-class>at.icnc.om.backingbeans.TblOrderBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
 		<managed-bean-name>sitesBean</managed-bean-name>
 		<managed-bean-class>at.icnc.om.backingbeans.SitesBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
@@ -82,11 +77,6 @@
 	<managed-bean>
 		<managed-bean-name>incometypeLister</managed-bean-name>
 		<managed-bean-class>at.icnc.om.backingbeans.IncometypeBackingBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
-	<managed-bean>
-		<managed-bean-name>userLister</managed-bean-name>
-		<managed-bean-class>at.icnc.om.backingbeans.UserBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
@@ -140,8 +130,8 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>orderstateLister</managed-bean-name>
-		<managed-bean-class>at.icnc.om.backingbeans.OrderstateBackingBean</managed-bean-class>
+		<managed-bean-name>orderLister</managed-bean-name>
+		<managed-bean-class>at.icnc.om.backingbeans.OrderBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	

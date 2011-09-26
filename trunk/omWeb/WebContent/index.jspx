@@ -82,7 +82,7 @@
             					<!-- Order -->
             					<ice:panelTab label="#{msg.tableOrder}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					
+		           				<ui:include src="/detailpages/orderpage.jspx"></ui:include>	
 		           					
             					</ice:panelTab>
             					<!-- Orderstate -->

@@ -35,7 +35,26 @@ public class TblOrder extends Selectable implements Serializable {
 	public long getIdOrder() {
 		return this.idOrder;
 	}
+	
+	/**
+	 * Method which puts all Incometypes of an order
+	 * in one String to be displayed in the table
+	 */
 
+	private String incometypes;
+	
+	public String getIncometypesString() {
+		incometypes = "";
+		
+		for (TblIncometype item : tblIncometypes) {
+			incometypes = incometypes + item.getDescriptionIt() + ",";
+		}
+		
+		incometypes = incometypes.substring(0, incometypes.length() - 1);
+		
+		return this.incometypes;
+	}
+	
 	public void setIdOrder(long idOrder) {
 		this.idOrder = idOrder;
 	}

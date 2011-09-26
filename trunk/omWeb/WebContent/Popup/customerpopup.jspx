@@ -30,38 +30,54 @@
 		<f:facet name="body">
 		<!-- Labels + Inputtexts Popup (edit & new) Start -->
 		<ice:panelGroup>
-			<ice:panelGrid columns="2" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2">
+			<ice:panelGrid columns="3" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2 columnPopup3">
 								
 				<ice:outputLabel value="#{msg.tableCustomername}" styleClass="Text"/>
 				<ice:inputText styleClass="Input" value="#{customerLister.curCustomer.customername}"></ice:inputText>
+				<ice:panelGrid/>
 						
 				<ice:outputLabel value="#{msg.tableSAPCNR}" styleClass="Text"/>
 				<ice:inputText styleClass="Input" value="#{customerLister.curCustomer.sapcnr}"></ice:inputText>
+				<ice:panelGrid/>
 				
 				<ice:outputLabel value="#{msg.tableContactperson}" styleClass="Text"/>
-				<ice:selectOneMenu value="#{customerLister.contactperson}" styleClass="Input" valueChangeListener="#{customerLister.changeContactperson}">
+				<ice:selectOneMenu value="#{customerLister.contactperson}" 
+								   styleClass="Input" 
+								   valueChangeListener="#{customerLister.changeContactperson}"
+								   binding="#{customerLister.bindingContactpersons}">
 					  <f:selectItems value="#{customerLister.contactpersonListDescription}"/>
        			</ice:selectOneMenu>
-				
+				<ice:commandButton value="#{msg.tableCreateContactperson}" action="#{contactpersonLister.changePopupRenderNew}"/>
+								
 				<ice:outputLabel value="#{msg.tableCustomerState}" styleClass="Text"/>
-				<ice:selectOneMenu value="#{customerLister.curCustomerstate.descriptionCs}" styleClass="Input" valueChangeListener="#{customerLister.changeCustomerstate}">
+				<ice:selectOneMenu value="#{customerLister.curCustomerstate.descriptionCs}" 
+								   styleClass="Input" 
+								   valueChangeListener="#{customerLister.changeCustomerstate}"
+								   binding="#{customerLister.bindingCustomerstates}">
 					  <f:selectItems value="#{customerLister.customerstateListDescription}"/>
        			</ice:selectOneMenu>
+				<ice:commandButton value="#{msg.tableCreateCustomerstate}" action="#{customerstateLister.changePopupRenderNew}"/>
 				
 				<ice:outputLabel value="#{msg.tableCustomerStateDate}" styleClass="Text"/>
 				<ice:outputText styleClass="textPosition" value="#{customerLister.curCustomer.customerstatedate}">
 					<f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/>
 				</ice:outputText>
+				<ice:panelGrid/>
 				
 				<ice:outputLabel value="#{msg.tableConcernName}" styleClass="Text"/>
-				<ice:selectOneMenu value="#{customerLister.curConcern.concernname}" styleClass="Input" valueChangeListener="#{customerLister.changeConcern}">
+				<ice:selectOneMenu value="#{customerLister.curConcern.concernname}" 
+								   styleClass="Input" 
+								   valueChangeListener="#{customerLister.changeConcern}"
+								   binding="#{customerLister.bindingConcerns}">
 					  <f:selectItems value="#{customerLister.concernListDescription}"/>
        			</ice:selectOneMenu>
-				
+				<ice:commandButton value="#{msg.tableCreateConcern}" action="#{concernLister.changePopupRenderNew}"/>
+								
 				<ice:outputLabel value="#{msg.tableSalesman}" styleClass="Text"/>
 				<ice:selectOneMenu value="#{customerLister.curSalesman.username}" styleClass="Input" valueChangeListener="#{customerLister.changeSalesman}" required="false">
 					<f:selectItems value="#{customerLister.salesmanListDescription}"/>			
 				</ice:selectOneMenu>
+				<ice:panelGrid/>
 
 			</ice:panelGrid>
 			
@@ -80,4 +96,8 @@
 		</f:facet>
 	</ice:panelPopup>
 	
+	<!-- Includes of all popups that are needed -->
+	<ui:include src="customerstatepopup.jspx"></ui:include>
+	<ui:include src="concernpopup.jspx"></ui:include>
+	<ui:include src="contactpersonpopup.jspx"></ui:include>
 </html>

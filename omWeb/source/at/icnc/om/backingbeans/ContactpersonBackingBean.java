@@ -224,6 +224,7 @@ public class ContactpersonBackingBean extends AbstractBean implements Filterable
 	@Override
 	public void updateEntity() {
 		entityLister.UpdateObject(TblContactperson.class, getCurContactperson(), getCurContactperson().getIdContactperson());
+		resetContactpersonCombobox();
 		refresh();
 	}
 

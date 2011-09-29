@@ -168,6 +168,7 @@ public class CustomerstateBackingBean extends AbstractBean implements Filterable
 	@Override
 	public void deleteEntity() {
 		entityLister.DeleteObject(getCurCustomerstate().getIdCustomerstate(), TblCustomerstate.class);
+		resetCustomerstateCombobox();
 		refresh();
 	}
 

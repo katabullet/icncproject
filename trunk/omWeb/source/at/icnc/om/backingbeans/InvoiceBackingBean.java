@@ -15,6 +15,7 @@ import javax.ejb.EJB;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
+import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.ConverterException;
 import javax.faces.event.ValueChangeEvent;
@@ -52,6 +53,9 @@ public class InvoiceBackingBean extends AbstractBean {
 	
 	// Variable to save selected invoicestate
 	private TblInvoicestate curInvoicestate;
+	
+	// Binding of SelectOneMenu with Invoicestate
+	private HtmlSelectOneMenu bindingInvoicestate;
 	
 	/*
 	 * ______________________________________________________________________________
@@ -656,5 +660,23 @@ public class InvoiceBackingBean extends AbstractBean {
 		curInvoice = new TblInvoice();
 		getCurInvoice().setIdInvoice(0);
 		refresh();
+	}
+	
+	/**
+	 * Method to reset InvoicestateCombobox
+	 * Method is called from InvoicestateBackingBean
+	 */
+	public void resetInvoicestateCombobox(){
+		getBindingInvoicestate().getChildren().clear();
+		invoicestates = null;
+		getInvoicestateListDescription();
+	}
+
+	public void setBindingInvoicestate(HtmlSelectOneMenu bindingInvoicestate) {
+		this.bindingInvoicestate = bindingInvoicestate;
+	}
+
+	public HtmlSelectOneMenu getBindingInvoicestate() {
+		return bindingInvoicestate;
 	}
 }

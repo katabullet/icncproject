@@ -1,6 +1,9 @@
 package at.icnc.om.backingbeans;
 
 import java.util.ArrayList;
+
+import javax.faces.context.FacesContext;
+
 import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.interfaces.Filterable;
 
@@ -187,6 +190,7 @@ public class IncometypeBackingBean extends AbstractBean implements Filterable {
 	@Override
 	public void updateEntity() {
 		entityLister.UpdateObject(TblIncometype.class, curIncometype, curIncometype.getIdIncometype());
+		resetIncometypeCombobox();
 		refresh();
 	}
 	
@@ -205,5 +209,19 @@ public class IncometypeBackingBean extends AbstractBean implements Filterable {
 	/* Getter of curIncometype */
 	public TblIncometype getCurIncometype(){
 		return curIncometype;
+	}
+	
+	/**
+	 * Method to reset IncometypeCombobox used in settlementpopup
+	 */
+	public void resetIncometypeCombobox(){
+		/* Reading values of customerLister out of requestMap (Map with all created Managed Beans */
+		SettlementBackingBean settlementLister = (SettlementBackingBean) 
+											 FacesContext.getCurrentInstance()
+											 .getExternalContext().getRequestMap().get("settlementLister");
+
+		if(settlementLister != null){
+			settlementLister.resetIncometypeCombobox();
+		}	
 	}
 }

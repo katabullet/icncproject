@@ -178,6 +178,7 @@ public class CustomerstateBackingBean extends AbstractBean implements Filterable
 	@Override
 	public void updateEntity() {
 		entityLister.UpdateObject(TblCustomerstate.class, getCurCustomerstate(), getCurCustomerstate().getIdCustomerstate());
+		resetCustomerstateCombobox();
 		refresh();
 	}
 

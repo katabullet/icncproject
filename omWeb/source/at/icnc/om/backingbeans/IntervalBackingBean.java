@@ -2,6 +2,9 @@ package at.icnc.om.backingbeans;
 
 
 import java.util.ArrayList;
+
+import javax.faces.context.FacesContext;
+
 import at.icnc.om.entitybeans.TblInterval;
 import at.icnc.om.interfaces.Filterable;
 
@@ -205,6 +208,7 @@ public class IntervalBackingBean extends AbstractBean implements Filterable {
 	@Override
 	public void updateEntity() {
 		entityLister.UpdateObject(TblInterval.class, curInterval, curInterval.getIdInterval());
+		resetIntervalCombobox();
 		refresh();
 	}
 	
@@ -223,5 +227,19 @@ public class IntervalBackingBean extends AbstractBean implements Filterable {
 	/* Getter of curInterval */
 	public TblInterval getCurInterval(){
 		return curInterval;
+	}
+	
+	/**
+	 * Method to reset IntervalCombobox used in settlementpopup
+	 */
+	public void resetIntervalCombobox(){
+		/* Reading values of settlementLister out of requestMap (Map with all created Managed Beans */
+		SettlementBackingBean settlementLister = (SettlementBackingBean) 
+											 FacesContext.getCurrentInstance()
+											 .getExternalContext().getRequestMap().get("settlementLister");
+
+		if(settlementLister != null){
+			settlementLister.resetIntervalCombobox();
+		}	
 	}
 }

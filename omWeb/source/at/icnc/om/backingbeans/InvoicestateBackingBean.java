@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import com.icesoft.faces.component.ext.RowSelectorEvent;
@@ -175,6 +176,7 @@ public class InvoicestateBackingBean extends AbstractBean implements Filterable 
 	@Override
 	public void updateEntity() {
 		entityLister.UpdateObject(TblInvoicestate.class, getCurInvoicestate(), getCurInvoicestate().getIdInvoicestate());
+		resetInvoicestateCombobox();
 		refresh();
 	}
 
@@ -192,5 +194,19 @@ public class InvoicestateBackingBean extends AbstractBean implements Filterable 
 
 	public String getDescriptionIsFilter() {
 		return descriptionIsFilter;
+	}
+	
+	/**
+	 * Method to reset InvoicestateCombobox used in invoicepopup
+	 */
+	public void resetInvoicestateCombobox(){
+		/* Reading values of invoiceLister out of requestMap (Map with all created Managed Beans */
+		InvoiceBackingBean invoiceLister = (InvoiceBackingBean) 
+											 FacesContext.getCurrentInstance()
+											 .getExternalContext().getRequestMap().get("invoiceLister");
+
+		if(invoiceLister != null){
+			invoiceLister.resetInvoicestateCombobox();
+		}	
 	}
 }

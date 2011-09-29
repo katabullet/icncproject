@@ -30,19 +30,22 @@
 		<f:facet name="body">
 		<!-- Labels + Inputtexts Popup (edit & new) Start -->
 		<ice:panelGroup>
-			<ice:panelGrid columns="2" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2">
+			<ice:panelGrid columns="3" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2 columnPopup3">
 								
 				<ice:outputLabel value="#{msg.tableRuntime}" styleClass="Text"/>
 				<ice:inputText styleClass="Input" value="#{settlementLister.curSettlement.runtime}"></ice:inputText>
+				<ice:panelGrid/>
 				<ice:outputLabel value="#{msg.tableInterval}" styleClass="Text"/>
-				<ice:selectOneMenu value="#{settlementLister.interval}"  styleClass="Input" valueChangeListener="#{settlementLister.changeInterval}">
+				<ice:selectOneMenu value="#{settlementLister.interval}"  styleClass="Input" valueChangeListener="#{settlementLister.changeInterval}" binding="#{settlementLister.bindingInterval}">
 					  <f:selectItems value="#{settlementLister.intervalListDescription}"/>
        			</ice:selectOneMenu>
+       			<ice:commandButton value="#{msg.tableCreateInterval}" action="#{intervalLister.changePopupRenderNew}" styleClass="panelGridButtons"/>
 
        			<ice:outputLabel value="#{msg.tableIncometype}" styleClass="Text"/>
-				<ice:selectOneMenu value="#{settlementLister.incometype}"  styleClass="Input" valueChangeListener="#{settlementLister.changeIncometype}">
+				<ice:selectOneMenu value="#{settlementLister.incometype}"  styleClass="Input" valueChangeListener="#{settlementLister.changeIncometype}" binding="#{settlementLister.bindingIncometype}">
 					  <f:selectItems value="#{settlementLister.incometypeListDescription}"/>
        			</ice:selectOneMenu>
+       			<ice:commandButton value="#{msg.tableCreateIncometype}" action="#{incometypeLister.changePopupRenderNew}" styleClass="panelGridButtons"/>
 
 				<!-- <ice:outputLabel value="#{msg.tableEstimation}" styleClass="Text"/>
 				<ice:inputText styleClass="Input" value="#{settlementLister.curSettlement.tblInvoice.estimation}"></ice:inputText>	 -->
@@ -63,5 +66,9 @@
 		<!-- Labels + Inputtexts Popup (edit & new) End -->
 		</f:facet>
 	</ice:panelPopup>
+	
+	<!-- Includes of all popups that are needed -->
+	<ui:include src="intervalpopup.jspx"/>
+	<ui:include src="incometypepopup.jspx"/>
 	
 </html>

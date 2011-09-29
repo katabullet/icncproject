@@ -3,6 +3,7 @@ package at.icnc.om.backingbeans;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
@@ -42,6 +43,12 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	
 	// Variable to save selected Incometype
 	private String incometype;
+	
+	// Binding of SelectOneMenu with Interval
+	private HtmlSelectOneMenu bindingInterval;
+	
+	// Binding of SelectOneMenu with Incometype
+	private HtmlSelectOneMenu bindingIncometype;
 	
 	/* Field declaration for Filter */
 	private String settlementIDFrom;
@@ -175,7 +182,9 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	 */
 	@Override
 	public void changePopupRenderNew() {
+		/* New Settlement is initialized */
 		setCurSettlement(new TblSettlement());
+		/* ID of new settlement is set to 0 (important for EntityManager) */
 		getCurSettlement().setIdSettlement(0);
 		
 		getCurSettlement().setTblInterval((TblInterval) entityLister.getSingleObject("SELECT * FROM OMInterval WHERE rownum <= 1", TblInterval.class));
@@ -480,5 +489,41 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 
 	public String getSettlementIDTo() {
 		return settlementIDTo;
+	}
+	
+	/**
+	 * Method to reset IntervalCombobox
+	 * Method is called from IntervalBackingBean
+	 */
+	public void resetIntervalCombobox(){
+		getBindingInterval().getChildren().clear();
+		intervalList = null;
+		getIntervalListDescription();
+	}
+	
+	/**
+	 * Method to reset IncomtypeCombobox
+	 * Method is called from IncometypeBackingBean
+	 */
+	public void resetIncometypeCombobox(){
+		getBindingIncometype().getChildren().clear();
+		incometypeList = null;
+		getIncometypeListDescription();
+	}
+
+	public void setBindingInterval(HtmlSelectOneMenu bindingInterval) {
+		this.bindingInterval = bindingInterval;
+	}
+
+	public HtmlSelectOneMenu getBindingInterval() {
+		return bindingInterval;
+	}
+
+	public void setBindingIncometype(HtmlSelectOneMenu bindingIncometype) {
+		this.bindingIncometype = bindingIncometype;
+	}
+
+	public HtmlSelectOneMenu getBindingIncometype() {
+		return bindingIncometype;
 	}
 }

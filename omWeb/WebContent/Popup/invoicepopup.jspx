@@ -30,27 +30,33 @@
 		<f:facet name="body">
 		<!-- Labels + Inputtexts Popup (edit & new) Start -->
 		<ice:panelGroup>
-			<ice:panelGrid columns="2" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2">
+			<ice:panelGrid columns="3" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2 columnPopup3">
 				<ice:outputLabel value="#{msg.tableInvoicenumber}" styleClass="Text"/>
 				<ice:inputText styleClass="Input" value="#{invoiceLister.curInvoice.invoicenumber}"/>
-				<ice:outputLabel value="#{msg.tableSum}" styleClass="Text"/>			
-					
-				<ice:inputText id="inputSum" styleClass="Input" value="#{invoiceLister.curInvoice.sum }" partialSubmit="true"></ice:inputText>
-				
+				<ice:panelGrid/>
+				<ice:outputLabel value="#{msg.tableSum}" styleClass="Text"/>								
+				<ice:inputText id="inputSum" styleClass="Input" value="#{invoiceLister.curInvoice.sum }" partialSubmit="true"/>
+				<ice:panelGrid/>
 				<ice:outputLabel value="#{msg.tableEstimation}" styleClass="Text"/>
 				<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.estimation}"/>
+				<ice:panelGrid/>
 				<ice:outputLabel value="#{msg.tableDuedate}" styleClass="Text"/>
 				<ice:selectInputDate highlightValue="#{invoiceLister.curInvoice.duedate}" value="#{invoiceLister.curInvoice.duedate}" renderAsPopup="true"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
+       			<ice:panelGrid/>
        			<ice:outputLabel value="#{msg.tableInvoicestate}" styleClass="Text"/>
-       			<ice:selectOneMenu value="#{invoiceLister.curInvoice.tblInvoicestate.descriptionIs}"  styleClass="Input" valueChangeListener="#{invoiceLister.changeInvoicestate}">
+       			<ice:selectOneMenu value="#{invoiceLister.curInvoice.tblInvoicestate.descriptionIs}"  styleClass="Input" valueChangeListener="#{invoiceLister.changeInvoicestate}" binding="#{invoiceLister.bindingInvoicestate}">
 					  <f:selectItems value="#{invoiceLister.invoicestateListDescription}"/>
        			</ice:selectOneMenu>
+       			<ice:commandButton value="#{msg.tableCreateInvoicestate}" action="#{invoicestateLister.changePopupRenderNew}" styleClass="panelGridButtons"/>
        			<ice:outputLabel value="#{msg.tableOrdernumber}" styleClass="Text"/>
        			<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.tblSettlement.tblOrder.ordernumber}"/>
+       			<ice:panelGrid/>
        			<ice:outputLabel value="#{msg.tableIncometype}" styleClass="Text"/>
        			<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.tblSettlement.tblIncometype.descriptionIt}"/>
+       			<ice:panelGrid/>
        			<ice:outputLabel value="#{msg.tableSettlementnumber}" styleClass="Text"/>
-       			<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.tblSettlement.idSettlement}"/>		
+       			<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.tblSettlement.idSettlement}"/>	
+       			<ice:panelGrid/>	
 			</ice:panelGrid>
 			
 			<ice:panelGrid styleClass="panelGridSpace1">
@@ -68,4 +74,6 @@
 		</f:facet>
 	</ice:panelPopup>
 	
+	<!-- Includes of all popups that are needed -->
+	<ui:include src="invoicestatepopup.jspx"/>
 </html>

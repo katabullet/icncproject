@@ -235,6 +235,8 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 						getCurCustomer().getTblContactperson().getFirstname() + " " + 
 						getCurCustomer().getTblContactperson().getLastname();
 		
+		insertProtocol("Neuer Datensatz angelegt");
+		
 		changePopupRender();
 	}
 

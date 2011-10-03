@@ -191,6 +191,8 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		
 		getCurSettlement().setTblIncometype((TblIncometype) entityLister.getSingleObject("SELECT * FROM OMIncometype WHERE rownum <=1", TblIncometype.class));
 		
+		
+		insertProtocol("Neuer Datensatz angelegt");
 		changePopupRender();
 	}
 

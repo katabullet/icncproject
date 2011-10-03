@@ -1,7 +1,14 @@
 package at.icnc.om.backingbeans;
 
-import javax.ejb.EJB;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
+
+import at.icnc.om.entitybeans.TblProtocol;
+import at.icnc.om.entitybeans.TblUser;
 import at.icnc.om.interfaces.EntityListerLocal;
 import at.icnc.om.interfaces.Refreshable;
 
@@ -176,4 +183,32 @@ public abstract class AbstractBean implements Refreshable {
 		 * or save a new one on database
 		 */
 		public abstract void updateEntity();
+		
+		protected void insertProtocol(String message){
+			TblProtocol protocol = new TblProtocol();
+
+			protocol.setIdProtocol(0);
+			protocol.setChange(message);
+			protocol.setDate(new Date());
+			
+			UserBean user = getUserBean();
+			if(user != null){
+				
+				System.out.println("***************************************************************************** asdf ");
+				/*TblUser test = new TblUser();
+				test.setIdUser(1);
+				protocol.setTblUser(test);*/
+				protocol.setTblUser((TblUser) entityLister.getSingleObject("SELECT * FROM OMUser WHERE username = '" 
+														+ user.getUsername() + "'", TblUser.class));		
+			}
+			
+			entityLister.UpdateObject(TblProtocol.class, protocol, protocol.getIdProtocol());						
+		}
+		
+		protected UserBean getUserBean(){
+			UserBean result = (UserBean) FacesContext.getCurrentInstance()
+												.getExternalContext().getSessionMap().get("user");			
+			return result;
+		}
+		
 }

@@ -40,19 +40,20 @@ public class TblOrder extends Selectable implements Serializable {
 	 * Method which puts all Incometypes of an order
 	 * in one String to be displayed in the table
 	 */
-
-	private String incometypes;
-	
+	@Transient
 	public String getIncometypesString() {
-		incometypes = "";
+		String incometypes = "";
+		
 		
 		for (TblIncometype item : tblIncometypes) {
-			incometypes = incometypes + item.getDescriptionIt() + ",";
+			incometypes = incometypes + item.getDescriptionIt() + ", ";
 		}
 		
-		incometypes = incometypes.substring(0, incometypes.length() - 1);
-		
-		return this.incometypes;
+		if (incometypes != "") {
+			incometypes = incometypes
+					.substring(0, incometypes.lastIndexOf(','));
+		}
+		return incometypes;
 	}
 	
 	public void setIdOrder(long idOrder) {

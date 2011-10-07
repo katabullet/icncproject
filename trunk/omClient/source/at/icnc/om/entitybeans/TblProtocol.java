@@ -35,7 +35,7 @@ public class TblProtocol extends Selectable implements Serializable {
 	}
 
 
-	@Column(length=45)
+	@Column(length=45, name="MODIFICATION")
 	public String getChange() {
 		return this.change;
 	}
@@ -46,6 +46,7 @@ public class TblProtocol extends Selectable implements Serializable {
 
 
     @Temporal( TemporalType.DATE)
+    @Column(name="CHANGE_DATE")
 	public Date getDate() {
 		return this.date;
 	}

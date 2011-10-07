@@ -1,7 +1,5 @@
 package at.icnc.om.backingbeans;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.ejb.EJB;
@@ -190,19 +188,15 @@ public abstract class AbstractBean implements Refreshable {
 			protocol.setIdProtocol(0);
 			protocol.setChange(message);
 			protocol.setDate(new Date());
-			
+						
 			UserBean user = getUserBean();
 			if(user != null){
 				
-				System.out.println("***************************************************************************** asdf ");
-				/*TblUser test = new TblUser();
-				test.setIdUser(1);
-				protocol.setTblUser(test);*/
 				protocol.setTblUser((TblUser) entityLister.getSingleObject("SELECT * FROM OMUser WHERE username = '" 
-														+ user.getUsername() + "'", TblUser.class));		
+														+ user.getUsername().toString() + "'", TblUser.class));	
 			}
 			
-			entityLister.UpdateObject(TblProtocol.class, protocol, protocol.getIdProtocol());						
+			entityLister.UpdateObject(TblProtocol.class, protocol, protocol.getIdProtocol());	
 		}
 		
 		protected UserBean getUserBean(){

@@ -44,6 +44,11 @@ public abstract class AbstractBean implements Refreshable {
 	// Variable to write Error-Messages
 	protected String errorMessage;
 	
+	// Variables with actions for protocol
+	protected static final String deleteAction = "gelöscht";
+	protected static final String updateAction = "aktualisiert";
+	protected static final String createAction = "erzeugt";
+	
 	/*
 	 * Delete and Edit-Button visible
 	 */
@@ -197,6 +202,12 @@ public abstract class AbstractBean implements Refreshable {
 			}
 			
 			entityLister.UpdateObject(TblProtocol.class, protocol, protocol.getIdProtocol());	
+		}
+		
+		protected void insertProtocol(Class<?> entityClass, Long id, String action){
+			String entity = entityClass.getSimpleName().substring(3);
+			String message = entity + " mit ID " + id + " wurde " + action + ".";
+			insertProtocol(message);
 		}
 		
 		protected UserBean getUserBean(){

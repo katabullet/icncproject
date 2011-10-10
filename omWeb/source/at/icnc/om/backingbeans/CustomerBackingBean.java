@@ -5,26 +5,19 @@ import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 
-import javax.faces.component.UIComponent;
-import javax.faces.component.UISelectItems;
 import javax.faces.component.html.HtmlSelectOneMenu;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
-import javax.faces.model.SelectItemGroup;
 
 import at.icnc.om.entitybeans.TblConcern;
 import at.icnc.om.entitybeans.TblContactperson;
 import at.icnc.om.entitybeans.TblCustomer;
 import at.icnc.om.entitybeans.TblCustomerstate;
-import at.icnc.om.entitybeans.TblInvoice;
 import at.icnc.om.entitybeans.TblUser;
 import at.icnc.om.interfaces.Filterable;
 
-import com.icesoft.faces.component.SelectOneMenuTag;
 import com.icesoft.faces.component.ext.RowSelectorEvent;
 
 /**
@@ -106,10 +99,15 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 					entityLister.getObjectList(TblCustomer.class));
 		}
 		
+		
 		/* Makes the user know which invoice is selected (it is shaded) */
-		if (curCustomer != null) {
+		if (customerList != null) {
+			for(TblCustomer curCustomer : customerList){
+				curCustomer.setSelected(false);
+			}
+			
 			for(TblCustomer curItem : customerList) {				
-				if(curItem.getIdCustomer() == curCustomer.getIdCustomer()) {
+				if(curItem.getIdCustomer() == curCustomer.getIdCustomer() && getCurCustomer().getIdCustomer() != 0) {
 					curItem.setSelected(true);
 				}
 			}
@@ -235,8 +233,6 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 						getCurCustomer().getTblContactperson().getFirstname() + " " + 
 						getCurCustomer().getTblContactperson().getLastname();
 		
-		insertProtocol("Neuer Datensatz angelegt");
-		
 		changePopupRender();
 	}
 
@@ -257,6 +253,7 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 				contactperson = getCurCustomer().getTblContactperson().getIdContactperson() + " " + 
 								getCurCustomer().getTblContactperson().getFirstname() + " " + 
 								getCurCustomer().getTblContactperson().getLastname();
+				setCurContactperson(getCurCustomer().getTblContactperson());
 				setCurSalesman(curCustomer.getTblUser());
 				setVisible(true);
 			}
@@ -319,6 +316,7 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 	@Override
 	public void deleteEntity() {
 		entityLister.DeleteObject(curCustomer.getIdCustomer(), TblCustomer.class);
+		insertProtocol(TblCustomer.class, getCurCustomer().getIdCustomer(), deleteAction);
 		curCustomer = new TblCustomer();
 		curCustomer.setIdCustomer(0);
 		refresh();
@@ -329,6 +327,7 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 	 */
 	@Override
 	public void updateEntity() {
+		boolean entityNew = false;
 		if(getCurCustomer().getTblCustomerstate().getDescriptionCs() != curCustomerstate.getDescriptionCs()){
 			getCurCustomer().setCustomerstatedate(new Date());
 		}
@@ -338,7 +337,16 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 		
 		getCurCustomer().setTblUser(curSalesman);
 		
-		entityLister.UpdateObject(TblCustomer.class, curCustomer, curCustomer.getIdCustomer());
+		entityNew = (getCurCustomer().getIdCustomer() == 0);
+		
+		entityLister.UpdateObject(TblCustomer.class, curCustomer, curCustomer.getIdCustomer());				
+		
+		if(entityNew){
+			insertProtocol(TblCustomer.class, getCurCustomer().getIdCustomer(), createAction);
+		}else {
+			insertProtocol(TblCustomer.class, getCurCustomer().getIdCustomer(), updateAction);
+		}				
+		
 		refresh();
 	}
 

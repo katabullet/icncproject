@@ -39,13 +39,13 @@
 				<ice:selectOneMenu value="#{settlementLister.interval}"  styleClass="Input" valueChangeListener="#{settlementLister.changeInterval}" binding="#{settlementLister.bindingInterval}">
 					  <f:selectItems value="#{settlementLister.intervalListDescription}"/>
        			</ice:selectOneMenu>
-       			<ice:commandButton value="#{msg.tableCreateInterval}" action="#{intervalLister.changePopupRenderNew}" styleClass="panelGridButtons"/>
+       			<ice:commandButton image="images/plus.jpg" styleClass="buttons" action="#{intervalLister.changePopupRenderNew}"/>
 
        			<ice:outputLabel value="#{msg.tableIncometype}" styleClass="Text"/>
 				<ice:selectOneMenu value="#{settlementLister.incometype}"  styleClass="Input" valueChangeListener="#{settlementLister.changeIncometype}" binding="#{settlementLister.bindingIncometype}">
 					  <f:selectItems value="#{settlementLister.incometypeListDescription}"/>
        			</ice:selectOneMenu>
-       			<ice:commandButton value="#{msg.tableCreateIncometype}" action="#{incometypeLister.changePopupRenderNew}" styleClass="panelGridButtons"/>
+       			<ice:commandButton image="images/plus.jpg" styleClass="buttons" action="#{incometypeLister.changePopupRenderNew}"/>
 
 				<!-- <ice:outputLabel value="#{msg.tableEstimation}" styleClass="Text"/>
 				<ice:inputText styleClass="Input" value="#{settlementLister.curSettlement.tblInvoice.estimation}"></ice:inputText>	 -->

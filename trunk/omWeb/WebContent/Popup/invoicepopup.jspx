@@ -47,7 +47,7 @@
        			<ice:selectOneMenu value="#{invoiceLister.curInvoice.tblInvoicestate.descriptionIs}"  styleClass="Input" valueChangeListener="#{invoiceLister.changeInvoicestate}" binding="#{invoiceLister.bindingInvoicestate}">
 					  <f:selectItems value="#{invoiceLister.invoicestateListDescription}"/>
        			</ice:selectOneMenu>
-       			<ice:commandButton value="#{msg.tableCreateInvoicestate}" action="#{invoicestateLister.changePopupRenderNew}" styleClass="panelGridButtons"/>
+       			<ice:commandButton image="images/plus.jpg" styleClass="buttons" action="#{invoicestateLister.changePopupRenderNew}"/>
        			<ice:outputLabel value="#{msg.tableOrdernumber}" styleClass="Text"/>
        			<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.tblSettlement.tblOrder.ordernumber}"/>
        			<ice:panelGrid/>

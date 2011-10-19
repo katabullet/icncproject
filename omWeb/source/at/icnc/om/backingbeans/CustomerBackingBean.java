@@ -102,11 +102,9 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 		
 		/* Makes the user know which invoice is selected (it is shaded) */
 		if (customerList != null) {
-			for(TblCustomer curCustomer : customerList){
-				curCustomer.setSelected(false);
-			}
-			
-			for(TblCustomer curItem : customerList) {				
+						
+			for(TblCustomer curItem : customerList) {
+				curItem.setSelected(false);
 				if(curItem.getIdCustomer() == curCustomer.getIdCustomer() && getCurCustomer().getIdCustomer() != 0) {
 					curItem.setSelected(true);
 				}
@@ -231,7 +229,7 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 																"WHERE rownum <= 1", TblContactperson.class));
 		contactperson = getCurCustomer().getTblContactperson().getIdContactperson() + " " + 
 						getCurCustomer().getTblContactperson().getFirstname() + " " + 
-						getCurCustomer().getTblContactperson().getLastname();
+						getCurCustomer().getTblContactperson().getLastname();		
 		
 		changePopupRender();
 	}

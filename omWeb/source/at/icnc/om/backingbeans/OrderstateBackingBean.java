@@ -1,6 +1,8 @@
 package at.icnc.om.backingbeans;
 
 import java.util.ArrayList;
+
+import at.icnc.om.entitybeans.TblCustomer;
 import at.icnc.om.entitybeans.TblOrderstate;
 import at.icnc.om.interfaces.Filterable;
 
@@ -176,6 +178,7 @@ public class OrderstateBackingBean extends AbstractBean implements Filterable {
 	@Override
 	public void deleteEntity() {
 		entityLister.DeleteObject(curOrderstate.getIdOrderstate(), TblOrderstate.class);
+		insertProtocol(TblOrderstate.class, getCurOrderstate().getIdOrderstate(), deleteAction);
 		curOrderstate = new TblOrderstate();
 		curOrderstate.setIdOrderstate(0);
 		refresh();
@@ -186,7 +189,16 @@ public class OrderstateBackingBean extends AbstractBean implements Filterable {
 	 */
 	@Override
 	public void updateEntity() {
+		boolean entityNew = false;
+		entityNew = (getCurOrderstate().getIdOrderstate() == 0);
 		entityLister.UpdateObject(TblOrderstate.class, curOrderstate, curOrderstate.getIdOrderstate());
+		
+		if(entityNew){
+			insertProtocol(TblOrderstate.class, getCurOrderstate().getIdOrderstate(), createAction);
+		}else {
+			insertProtocol(TblOrderstate.class, getCurOrderstate().getIdOrderstate(), updateAction);
+		}
+		
 		refresh();
 	}
 	

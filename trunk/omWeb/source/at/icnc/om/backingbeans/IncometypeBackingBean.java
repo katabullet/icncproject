@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.faces.context.FacesContext;
 
+import at.icnc.om.entitybeans.TblCustomer;
 import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.interfaces.Filterable;
 
@@ -179,6 +180,7 @@ public class IncometypeBackingBean extends AbstractBean implements Filterable {
 	@Override
 	public void deleteEntity() {
 		entityLister.DeleteObject(curIncometype.getIdIncometype(), TblIncometype.class);
+		insertProtocol(TblIncometype.class, getCurIncometype().getIdIncometype(), deleteAction);
 		curIncometype = new TblIncometype();
 		curIncometype.setIdIncometype(0);
 		refresh();
@@ -189,8 +191,17 @@ public class IncometypeBackingBean extends AbstractBean implements Filterable {
 	 */
 	@Override
 	public void updateEntity() {
+		boolean entityNew = false;
+		entityNew = (getCurIncometype().getIdIncometype() == 0);
 		entityLister.UpdateObject(TblIncometype.class, curIncometype, curIncometype.getIdIncometype());
 		resetIncometypeCombobox();
+		
+		if(entityNew){
+			insertProtocol(TblIncometype.class, getCurIncometype().getIdIncometype(), createAction);
+		}else {
+			insertProtocol(TblIncometype.class, getCurIncometype().getIdIncometype(), updateAction);
+		}
+		
 		refresh();
 	}
 	

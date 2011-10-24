@@ -3,6 +3,7 @@ package at.icnc.om.backingbeans;
 import java.util.ArrayList;
 import com.icesoft.faces.component.ext.RowSelectorEvent;
 import at.icnc.om.entitybeans.TblCostcentre;
+import at.icnc.om.entitybeans.TblUser;
 import at.icnc.om.interfaces.Filterable;
 
 public class CostcentreBackingBean extends AbstractBean implements Filterable {
@@ -163,6 +164,7 @@ public class CostcentreBackingBean extends AbstractBean implements Filterable {
 	@Override
 	public void deleteEntity() {
 		entityLister.DeleteObject(getCurCostcentre().getIdCostcentre(), TblCostcentre.class);
+		insertProtocol(TblCostcentre.class, getCurCostcentre().getIdCostcentre(), deleteAction);
 		refresh();
 	}
 
@@ -171,7 +173,14 @@ public class CostcentreBackingBean extends AbstractBean implements Filterable {
 	 */
 	@Override
 	public void updateEntity() {
+		boolean entityNew = (getCurCostcentre().getIdCostcentre() == 0);
 		entityLister.UpdateObject(TblCostcentre.class, getCurCostcentre(), getCurCostcentre().getIdCostcentre());
+		
+		if(entityNew){
+			insertProtocol(TblCostcentre.class, getCurCostcentre().getIdCostcentre(), createAction);
+		}else {
+			insertProtocol(TblCostcentre.class, getCurCostcentre().getIdCostcentre(), updateAction);
+		}
 		refresh();
 	}
 

@@ -27,6 +27,7 @@ import at.icnc.om.entitybeans.TblInvoice;
 import at.icnc.om.entitybeans.TblInvoicestate;
 import at.icnc.om.entitybeans.TblOrder;
 import at.icnc.om.entitybeans.TblSettlement;
+import at.icnc.om.entitybeans.TblUser;
 import at.icnc.om.interfaces.EntityListerLocal;
 import at.icnc.om.interfaces.Refreshable;
 
@@ -609,6 +610,7 @@ public class InvoiceBackingBean extends AbstractBean {
 	@Override
 	public void deleteEntity(){
 		entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
+		insertProtocol(TblInvoice.class, getCurInvoice().getIdInvoice(), deleteAction);
 		refresh();
 	}
 	
@@ -619,6 +621,7 @@ public class InvoiceBackingBean extends AbstractBean {
 	public void updateEntity(){
 		curInvoice.setTblInvoicestate(curInvoicestate);
 		entityLister.UpdateObject(TblInvoice.class, curInvoice, curInvoice.getIdInvoice());
+		insertProtocol(TblInvoice.class, getCurInvoice().getIdInvoice(), updateAction);
 		refresh();
 	}
 	
@@ -628,6 +631,7 @@ public class InvoiceBackingBean extends AbstractBean {
 	public void updateInvoice(){
 		curInvoice.setTblInvoicestate(curInvoicestate);
 		entityLister.UpdateObject(TblInvoice.class, curInvoice, curInvoice.getIdInvoice());
+		insertProtocol(TblInvoice.class, getCurInvoice().getIdInvoice(), updateAction);
 		refresh();
 	}
 	

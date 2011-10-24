@@ -36,10 +36,9 @@
 		<!-- DataExporter End -->
 		  
 		<!-- Buttons Start -->
-     	<ice:panelGrid columns="5" columnClasses="buttons" style="width: 112px;">
+     	<ice:panelGrid columns="4" columnClasses="buttons" style="width: 112px;">
      		<ice:commandButton title="#{msg.buttonRefresh}" image="images/refresh.jpg" action="#{invoiceLister.init}"/>
      		<ice:commandButton title="#{msg.buttonFilter}" image="images/btn_filter_e.png" action="#{invoiceLister.changeFilterPopupRender}"/>
-      		<ice:commandButton title="#{msg.buttonNew}" image="images/btn_new_e.png" rendered="#{sitesBean.buttonRendered}" action="#{invoiceLister.changePopupRenderNew}"/>
       		<ice:commandButton title="#{msg.buttonEdit}" image="images/btn_edit_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{invoiceLister.visible}" action="#{invoiceLister.changePopupRender}"/>  					  	
      		<ice:commandButton title="#{msg.buttonDelete}" image="images/btn_delete_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{invoiceLister.visible}" action="#{invoiceLister.changeDeletePopupRender}"/>		           					  	
      	</ice:panelGrid>

@@ -12,6 +12,7 @@ import com.icesoft.faces.component.ext.RowSelectorEvent;
 import at.icnc.om.entitybeans.TblCustomerstate;
 import at.icnc.om.entitybeans.TblInvoice;
 import at.icnc.om.entitybeans.TblInvoicestate;
+import at.icnc.om.entitybeans.TblUser;
 import at.icnc.om.interfaces.EntityListerLocal;
 import at.icnc.om.interfaces.Filterable;
 import at.icnc.om.interfaces.TblInvoicestateLocal;
@@ -167,6 +168,7 @@ public class InvoicestateBackingBean extends AbstractBean implements Filterable 
 	@Override
 	public void deleteEntity() {
 		entityLister.DeleteObject(getCurInvoicestate().getIdInvoicestate(), TblInvoicestate.class);
+		insertProtocol(TblInvoicestate.class, getCurInvoicestate().getIdInvoicestate(), deleteAction);
 		refresh();
 	}
 
@@ -175,7 +177,15 @@ public class InvoicestateBackingBean extends AbstractBean implements Filterable 
 	 */
 	@Override
 	public void updateEntity() {
+		boolean entityNew = (getCurInvoicestate().getIdInvoicestate() == 0);
 		entityLister.UpdateObject(TblInvoicestate.class, getCurInvoicestate(), getCurInvoicestate().getIdInvoicestate());
+		
+		if(entityNew){
+			insertProtocol(TblInvoicestate.class, getCurInvoicestate().getIdInvoicestate(), createAction);
+		}else {
+			insertProtocol(TblInvoicestate.class, getCurInvoicestate().getIdInvoicestate(), updateAction);
+		}	
+		
 		resetInvoicestateCombobox();
 		refresh();
 	}

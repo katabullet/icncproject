@@ -33,5 +33,8 @@ public interface EntityListerLocal {
 
 	/* Function to get a filtered entity-list */
 	public Collection<?> getFilterList(Class<?> entityClass, String Class, String Joins, ArrayList<String> werte, ArrayList<String> spalte);
+	
+	/* Function to get a filtered entity-list */
+	public Collection<?> getReminderList(ArrayList<String> werte, ArrayList<String> spalte);
 
 }

@@ -142,7 +142,7 @@
             					<!-- Reminder -->
             					<ice:panelTab label="#{msg.tableReminder}" labelWidth="1098">
             					
-		           					
+		           					<ui:include src="/detailpages/reminderpage.jspx"/>
 		           					
             					</ice:panelTab>
             				</ice:panelTabSet>

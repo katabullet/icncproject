@@ -16,6 +16,7 @@ import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.entitybeans.TblInterval;
 import at.icnc.om.entitybeans.TblInvoice;
 import at.icnc.om.entitybeans.TblSettlement;
+import at.icnc.om.entitybeans.TblUser;
 import at.icnc.om.interfaces.Filterable;
 
 public class SettlementBackingBean extends AbstractBean implements Filterable {
@@ -103,7 +104,7 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		if(getSettlementIDFrom() != null && getSettlementIDFrom() != "" || getSettlementIDTo() != null && getSettlementIDTo() != ""){				
 			
 			/* Set a default Value if none is set */
-			if(settlementIDFrom == null) settlementIDFrom = "";
+			if(settlementIDFrom == null) settlementIDFrom = "0";
 			if(settlementIDTo == "" || settlementIDTo == null) settlementIDTo="999999";
 			
 			werte.add(settlementIDFrom + ":" + settlementIDTo);
@@ -253,6 +254,7 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	@Override
 	public void deleteEntity() {
 		entityLister.DeleteObject(getCurSettlement().getIdSettlement(), TblSettlement.class);
+		insertProtocol(TblSettlement.class, getCurSettlement().getIdSettlement(), deleteAction);
 		refresh();
 	}
 
@@ -261,9 +263,15 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	 */
 	@Override
 	public void updateEntity() {
-		
+		boolean entityNew = (getCurSettlement().getIdSettlement() == 0);
 		getCurSettlement().setTblInterval(curInterval);
 		getCurSettlement().setTblIncometype(curIncometype);
+		
+		if(entityNew){
+			insertProtocol(TblSettlement.class, getCurSettlement().getIdSettlement(), createAction);
+		}else {
+			insertProtocol(TblSettlement.class, getCurSettlement().getIdSettlement(), updateAction);
+		}
 		
 		entityLister.UpdateObject(TblSettlement.class, getCurSettlement(), getCurSettlement().getIdSettlement());
 		refresh();

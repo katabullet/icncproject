@@ -134,6 +134,11 @@
 		<managed-bean-class>at.icnc.om.backingbeans.OrderBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>evaluationCreater</managed-bean-name>
+		<managed-bean-class>at.icnc.om.backingbeans.EvaluationBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 	
 	<navigation-rule>
 		<display-name>login</display-name>

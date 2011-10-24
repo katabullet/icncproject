@@ -223,4 +223,32 @@ public class EntityListerImpl implements EntityListerLocal {
 		
 		return result;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Collection<?> getReminderList(ArrayList<String> werte, ArrayList<String> spalte) {
+		/* local list for all results */
+		Collection<?> result = new ArrayList<String>();
+		
+		/* Creates the SQL-Statement using QueryBuilder 
+		 * sqlStatement without any filters 
+		 */
+		String sqlStatement = QueryBuilder.CreateReminderStatement(spalte, werte);
+		
+		try {		
+			/* Uses create Query to create a Query
+			 * Query-Method getResultList is used
+			 */
+			//result.addAll(CreateQuery(sqlStatement, entityClass, CreateEM(PU)).getResultList());
+			
+			Query query = CreateEM(PU).createQuery(sqlStatement);
+			result.addAll(query.getResultList());
+			em.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {			
+			emf.close();
+		}	
+		
+		return result;
+	}
 }

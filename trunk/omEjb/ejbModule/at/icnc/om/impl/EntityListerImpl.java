@@ -199,5 +199,28 @@ public class EntityListerImpl implements EntityListerLocal {
 		return result;
 	}
 	
-	
+	/**
+     * 
+     */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Collection<?> getObjectList(String sqlStatement) {
+		/* local list for all results */
+		Collection<?> result = new ArrayList<Object>();
+		
+		try {		
+			/* Uses create Query to create a Query
+			 * Query-Method getResultList is used
+			 */
+			Query query = em.createQuery(sqlStatement);
+			result.addAll(query.getResultList());
+			em.close();
+		} catch (Exception e) {
+			
+		}finally {			
+			emf.close();
+		}	
+		
+		return result;
+	}
 }

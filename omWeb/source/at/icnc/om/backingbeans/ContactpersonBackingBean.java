@@ -1,39 +1,12 @@
 package at.icnc.om.backingbeans;
 
 
-import java.math.BigDecimal;
-import java.text.Format;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import javax.ejb.EJB;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.convert.ConverterException;
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.model.SelectItem;
-import javax.faces.validator.ValidatorException;
 
-import at.icnc.om.entitybeans.TblConcern;
 import at.icnc.om.entitybeans.TblContactperson;
-import at.icnc.om.entitybeans.TblCustomer;
-import at.icnc.om.entitybeans.TblIncometype;
-import at.icnc.om.entitybeans.TblInvoice;
-import at.icnc.om.entitybeans.TblInvoicestate;
-import at.icnc.om.entitybeans.TblOrder;
-import at.icnc.om.entitybeans.TblSettlement;
-import at.icnc.om.interfaces.EntityListerLocal;
 import at.icnc.om.interfaces.Filterable;
-import at.icnc.om.interfaces.Refreshable;
-
-import com.icesoft.faces.component.datapaginator.DataPaginator;
 
 import com.icesoft.faces.component.ext.RowSelectorEvent;
 
@@ -215,6 +188,7 @@ public class ContactpersonBackingBean extends AbstractBean implements Filterable
 	@Override
 	public void deleteEntity() {
 		entityLister.DeleteObject(getCurContactperson().getIdContactperson(), TblContactperson.class);
+		insertProtocol(TblContactperson.class, getCurContactperson().getIdContactperson(), deleteAction);
 		refresh();
 	}
 
@@ -223,7 +197,15 @@ public class ContactpersonBackingBean extends AbstractBean implements Filterable
 	 */
 	@Override
 	public void updateEntity() {
+		boolean entityNew = (getCurContactperson().getIdContactperson() == 0);
 		entityLister.UpdateObject(TblContactperson.class, getCurContactperson(), getCurContactperson().getIdContactperson());
+		
+		if(entityNew){
+			insertProtocol(TblContactperson.class, getCurContactperson().getIdContactperson(), createAction);
+		}else {
+			insertProtocol(TblContactperson.class, getCurContactperson().getIdContactperson(), updateAction);
+		}	
+		
 		resetContactpersonCombobox();
 		refresh();
 	}

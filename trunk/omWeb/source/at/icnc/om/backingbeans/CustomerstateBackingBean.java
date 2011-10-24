@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import javax.faces.context.FacesContext;
 
-import at.icnc.om.entitybeans.TblConcern;
+import at.icnc.om.entitybeans.TblCustomer;
 import at.icnc.om.entitybeans.TblCustomerstate;
 import at.icnc.om.interfaces.Filterable;
 
@@ -168,6 +168,7 @@ public class CustomerstateBackingBean extends AbstractBean implements Filterable
 	@Override
 	public void deleteEntity() {
 		entityLister.DeleteObject(getCurCustomerstate().getIdCustomerstate(), TblCustomerstate.class);
+		insertProtocol(TblCustomerstate.class, getCurCustomerstate().getIdCustomerstate(), deleteAction);
 		resetCustomerstateCombobox();
 		refresh();
 	}
@@ -177,7 +178,15 @@ public class CustomerstateBackingBean extends AbstractBean implements Filterable
 	 */
 	@Override
 	public void updateEntity() {
+		boolean entityNew = getCurCustomerstate().getIdCustomerstate() == 0;
 		entityLister.UpdateObject(TblCustomerstate.class, getCurCustomerstate(), getCurCustomerstate().getIdCustomerstate());
+		
+		if(entityNew){
+			insertProtocol(TblCustomer.class, getCurCustomerstate().getIdCustomerstate(), createAction);
+		}else {
+			insertProtocol(TblCustomer.class, getCurCustomerstate().getIdCustomerstate(), updateAction);
+		}	
+		
 		resetCustomerstateCombobox();
 		refresh();
 	}

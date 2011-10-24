@@ -44,6 +44,7 @@
 				<ice:selectInputDate highlightValue="#{invoiceLister.curInvoice.duedate}" value="#{invoiceLister.curInvoice.duedate}" renderAsPopup="true"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
        			<ice:panelGrid/>
        			<ice:outputLabel value="#{msg.tableInvoicestate}" styleClass="Text"/>
+       			<ice:panelGrid/>
        			<ice:selectOneMenu value="#{invoiceLister.curInvoice.tblInvoicestate.descriptionIs}"  styleClass="Input" valueChangeListener="#{invoiceLister.changeInvoicestate}" binding="#{invoiceLister.bindingInvoicestate}">
 					  <f:selectItems value="#{invoiceLister.invoicestateListDescription}"/>
        			</ice:selectOneMenu>

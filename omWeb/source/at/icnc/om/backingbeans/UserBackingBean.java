@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
+import at.icnc.om.entitybeans.TblConcern;
 import at.icnc.om.entitybeans.TblUser;
 import at.icnc.om.entitybeans.TblUserrole;
 import com.icesoft.faces.component.ext.RowSelectorEvent;
@@ -313,6 +314,7 @@ public class UserBackingBean extends AbstractBean {
 	@Override
 	public void deleteEntity(){
 		entityLister.DeleteObject(curUser.getIdUser(), TblUser.class);
+		insertProtocol(TblUser.class, getCurUser().getIdUser(), deleteAction);
 		refresh();
 	}
 	
@@ -321,8 +323,16 @@ public class UserBackingBean extends AbstractBean {
 	 */
 	@Override
 	public void updateEntity(){
+		boolean entityNew = (getCurUser().getIdUser() == 0);
 		curUser.setTblUserrole(curUserrole);
 		entityLister.UpdateObject(TblUser.class, curUser, curUser.getIdUser());
+		
+		if(entityNew){
+			insertProtocol(TblUser.class, getCurUser().getIdUser(), createAction);
+		}else {
+			insertProtocol(TblUser.class, getCurUser().getIdUser(), updateAction);
+		}	
+		
 		refresh();
 	}
 	

@@ -132,6 +132,9 @@ public class ConcernBackingBean extends AbstractBean implements Filterable {
 	@Override
 	public void deleteEntity() {
 		entityLister.DeleteObject(getCurConcern().getIdConcern(), TblConcern.class);
+		insertProtocol(TblConcern.class, getCurConcern().getIdConcern(), deleteAction);
+		setCurConcern(new TblConcern());
+		getCurConcern().setIdConcern(0);
 		refresh();
 	}
 
@@ -140,7 +143,15 @@ public class ConcernBackingBean extends AbstractBean implements Filterable {
 	 */
 	@Override
 	public void updateEntity() {
+		boolean entityNew = (getCurConcern().getIdConcern() == 0);
 		entityLister.UpdateObject(TblConcern.class, getCurConcern(), getCurConcern().getIdConcern());
+		
+		if(entityNew){
+			insertProtocol(TblConcern.class, getCurConcern().getIdConcern(), createAction);
+		}else {
+			insertProtocol(TblConcern.class, getCurConcern().getIdConcern(), updateAction);
+		}	
+		
 		resetCustomerstateCombobox();
 		refresh();		
 	}

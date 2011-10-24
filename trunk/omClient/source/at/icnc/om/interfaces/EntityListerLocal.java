@@ -16,6 +16,9 @@ public interface EntityListerLocal {
 	/* Function to return entityList without filters */
 	public Collection<?> getObjectList(Class<?> entityClass);
 	
+	/* Function to return entityList */
+	public Collection<?> getObjectList(String sqlStatement);
+	
 	/* Method to delete a specific entity */
 	public void DeleteObject(Long id, Class<?> entityClass);
 	

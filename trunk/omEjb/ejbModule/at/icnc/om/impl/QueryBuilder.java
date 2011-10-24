@@ -46,4 +46,27 @@ public class QueryBuilder {
 		
 		return sqlStatement;
 	}
+	
+	public static String CreateReminderStatement(ArrayList<String> filterColumn, ArrayList<String> filterValue){
+		String sqlStatement = "SELECT t FROM TblInvoice t INNER JOIN t.tblInvoicestate i";
+		if(filterColumn.get(0) != ""){
+			sqlStatement += " WHERE ";
+		for(int x = 0; x< filterColumn.size(); x++){
+			if(x !=0){
+				sqlStatement += " AND ";
+		}
+
+		if(x == 0)
+		{
+		sqlStatement += filterColumn.get(x) + " <= '" + filterValue.get(x)+"'";}
+
+		else{
+		sqlStatement += filterColumn.get(x) + " != '" + filterValue.get(x) + "'";// " = '" + filterValue.get(x) +"'";
+		}
+		}
+		}
+
+		System.out.println("------------" + sqlStatement);
+		return sqlStatement;
+		}
 }

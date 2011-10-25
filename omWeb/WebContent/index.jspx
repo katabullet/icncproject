@@ -44,7 +44,16 @@
             					selectedIndex="0">
             					
             			<!-- Evaluation -->
-        				<ice:panelTab label="#{msg.tableEvaluation}" labelWidth="#{sitesBean.tabWidth}"></ice:panelTab>
+        				<ice:panelTab label="#{msg.tableEvaluation}" labelWidth="#{sitesBean.tabWidth}">
+        					<ice:panelTabSet id="icePnlTbSet1" selectedIndex="0" tabPlacement="Bottom">
+            					<!-- Evaluation -->
+            					<ice:panelTab label="#{msg.tableEvaluation}" labelWidth="#{sitesBean.allTabWidth}">
+            						
+            						<ui:include src="/detailpages/evaluationpage.jspx"></ui:include>
+            						
+            					</ice:panelTab>
+            				</ice:panelTabSet>
+        				</ice:panelTab>
             			
             			<!--Settlement-->		
             			<ice:panelTab label="#{msg.tableSettlement}" labelWidth="#{sitesBean.tabWidth}" style="text-align: center;" >

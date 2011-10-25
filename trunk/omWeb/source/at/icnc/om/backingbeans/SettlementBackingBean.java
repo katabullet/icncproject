@@ -1,23 +1,23 @@
 package at.icnc.om.backingbeans;
 
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import com.icesoft.faces.component.ext.RowSelectorEvent;
-
-import at.icnc.om.entitybeans.TblConcern;
-import at.icnc.om.entitybeans.TblCostcentre;
-import at.icnc.om.entitybeans.TblCustomerstate;
 import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.entitybeans.TblInterval;
-import at.icnc.om.entitybeans.TblInvoice;
+import at.icnc.om.entitybeans.TblOrder;
 import at.icnc.om.entitybeans.TblSettlement;
-import at.icnc.om.entitybeans.TblUser;
 import at.icnc.om.interfaces.Filterable;
+
+import com.icesoft.faces.component.ext.RowSelectorEvent;
 
 public class SettlementBackingBean extends AbstractBean implements Filterable {
 	
@@ -30,6 +30,9 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	//List with all Incometype to avoid constant DB-Reading
 	private ArrayList<TblIncometype> incometypeList;
 	
+	// List with all Orders to avoid constant DB-Reading
+	private ArrayList<TblOrder> orderList;
+	
 	// Variable to save current Settlement
 	private TblSettlement curSettlement = new TblSettlement();
 	
@@ -39,17 +42,29 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	//Variable to save current Incometype
 	private TblIncometype curIncometype = new TblIncometype();
 	
+	// Variable to save current Order
+	private TblOrder curOrder = new TblOrder();
+	
 	// Variable to save selected Interval
 	private String interval;
 	
 	// Variable to save selected Incometype
 	private String incometype;
 	
+	// Variable to save selected Order
+	private String order;
+	
 	// Binding of SelectOneMenu with Interval
 	private HtmlSelectOneMenu bindingInterval;
 	
 	// Binding of SelectOneMenu with Incometype
 	private HtmlSelectOneMenu bindingIncometype;
+	
+	// Binding of SelectOneMenu with Order
+	private HtmlSelectOneMenu bindingOrder;
+	
+	// Variable to save Sum that has to be paid in interval
+	private BigDecimal settlementSum;
 	
 	/* Field declaration for Filter */
 	private String settlementIDFrom;
@@ -191,9 +206,7 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		getCurSettlement().setTblInterval((TblInterval) entityLister.getSingleObject("SELECT * FROM OMInterval WHERE rownum <= 1", TblInterval.class));
 		
 		getCurSettlement().setTblIncometype((TblIncometype) entityLister.getSingleObject("SELECT * FROM OMIncometype WHERE rownum <=1", TblIncometype.class));
-		
-		
-		insertProtocol("Neuer Datensatz angelegt");
+				
 		changePopupRender();
 	}
 
@@ -263,17 +276,23 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	 */
 	@Override
 	public void updateEntity() {
-		boolean entityNew = (getCurSettlement().getIdSettlement() == 0);
-		getCurSettlement().setTblInterval(curInterval);
-		getCurSettlement().setTblIncometype(curIncometype);
+
+		boolean entityNew = getCurSettlement().getIdSettlement() == 0;
+		getCurSettlement().setTblInterval(getCurInterval());
+		getCurSettlement().setTblIncometype(getCurIncometype());
+		getCurSettlement().setTblOrder(getCurOrder());
 		
+
+
+		entityLister.UpdateObject(TblSettlement.class, getCurSettlement(), getCurSettlement().getIdSettlement());
+
 		if(entityNew){
 			insertProtocol(TblSettlement.class, getCurSettlement().getIdSettlement(), createAction);
+			createInvoices(getCurSettlement());
 		}else {
 			insertProtocol(TblSettlement.class, getCurSettlement().getIdSettlement(), updateAction);
-		}
-		
-		entityLister.UpdateObject(TblSettlement.class, getCurSettlement(), getCurSettlement().getIdSettlement());
+		}	
+				
 		refresh();
 	}
 
@@ -304,6 +323,21 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	 * Method that Listens to Change Event of a combobox
 	 * if another element in the combobox is selected, the value in
 	 * curSettlement is set to the selected one
+	 * @param vce
+	 */
+	 public void changeOrder(ValueChangeEvent vce){
+		if(!filterpopupRender){
+			setCurIncometype((TblIncometype) entityLister.getSingleObject("SELECT * FROM OMOrder WHERE idOrder = '" +
+					vce.getNewValue().toString() + "'", TblOrder.class));
+		}else{
+			setIncometypeFilter(vce.getNewValue().toString());
+		}
+	} 
+	
+	/**
+	 * Method that Listens to Change Event of a combobox
+	 * if another element in the combobox is selected, the value in
+	 * curOrder is set to the selected one
 	 * @param vce
 	 */
 	public void changeIncometype(ValueChangeEvent vce){
@@ -347,6 +381,23 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 			incometype.add(new SelectItem(item.getDescriptionIt()));
 		}
 		return incometype;			
+	}
+	
+	/**
+	 * Function to create SelectItems of all Orders
+	 * Important for combobox (needs SelectItem, not objects of Incometype)
+	 * @return List of SelectItem 
+	 */
+	public ArrayList<SelectItem> getOrderListDescription(){
+		ArrayList<SelectItem> order = new ArrayList<SelectItem>();
+		if(filterpopupRender){
+			order.add(new SelectItem());
+		}
+		for (TblOrder item : getOrderList()) {
+			/* id of each order is added to SelectItem-List */
+			order.add(new SelectItem(item.getIdOrder()));
+		}
+		return order;			
 	}
 	
 	/**
@@ -411,6 +462,38 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		}		
 	
 		return incometypeList;
+	}
+	
+	/**
+	 * This function returns a list with all Orders
+	 * @return orderList
+	 */
+	@SuppressWarnings("unchecked")
+	private ArrayList<TblOrder> getOrderList(){
+		
+		/* Orders are only read out of DB if they were not read before 
+		 * avoids unnecessary data traffic 
+		 */		
+		if(orderList == null){
+			orderList = new ArrayList<TblOrder>();
+			orderList.addAll((ArrayList<TblOrder>) 
+					entityLister.getObjectList(TblOrder.class));
+		}
+		
+		/* If no order is selected, curOrder is set selected
+		 * otherwise the order is unselected
+		 */		
+		if(getCurOrder() != null){
+			for(TblOrder curItem : orderList){				
+				if(curItem.getIdOrder() == getCurOrder().getIdOrder()){
+					curItem.setSelected(true);
+				}
+			}
+		}else{
+			setCurOrder(orderList.get(0));
+		}		
+	
+		return orderList;
 	}
 	
 	public void setCurInterval(TblInterval curInterval) {
@@ -535,5 +618,68 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 
 	public HtmlSelectOneMenu getBindingIncometype() {
 		return bindingIncometype;
+	}
+
+	public void setSettlementSum(BigDecimal settlementSum) {
+		this.settlementSum = settlementSum;
+	}
+
+	public BigDecimal getSettlementSum() {
+		return settlementSum;
+	}
+	
+	private void createInvoices(TblSettlement curSettlement){
+		
+		BigDecimal runtime = curSettlement.getRuntime();
+		BigDecimal months = curSettlement.getTblInterval().getMonths();
+		
+		// Create new calender
+		Calendar cal = Calendar.getInstance();
+		//Set value of calender to current Date
+		cal.setTime(new Date()); 
+		// Save year in variable
+		int year = cal.get(Calendar.YEAR); 
+		int month = cal.get(Calendar.MONTH) + 2;
+		int day = 1;
+		
+		runtime = runtime.multiply(new BigDecimal(12));
+		Date firstDate = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+		String first = year + "/" + month + "/" + day;
+		
+		try {
+			firstDate = formatter.parse(first);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.print("******************************************************");
+		System.out.println(firstDate);
+	}
+
+
+	public void setBindingOrder(HtmlSelectOneMenu bindingOrder) {
+		this.bindingOrder = bindingOrder;
+	}
+
+	public HtmlSelectOneMenu getBindingOrder() {
+		return bindingOrder;
+	}
+
+	public void setOrder(String order) {
+		this.order = order;
+	}
+
+	public String getOrder() {
+		return order;
+	}
+
+	public void setCurOrder(TblOrder curOrder) {
+		this.curOrder = curOrder;
+	}
+
+	public TblOrder getCurOrder() {
+		return curOrder;
 	}
 }

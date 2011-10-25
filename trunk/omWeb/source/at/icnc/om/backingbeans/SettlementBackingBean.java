@@ -69,6 +69,8 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	/* Field declaration for Filter */
 	private String settlementIDFrom;
 	private String settlementIDTo;
+	private String ordernumberFrom;
+	private String ordernumberTo;
 	private String runtimeFilter;
 	private String estimationFrom;
 	private String estimationTo;
@@ -119,11 +121,24 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		if(getSettlementIDFrom() != null && getSettlementIDFrom() != "" || getSettlementIDTo() != null && getSettlementIDTo() != ""){				
 			
 			/* Set a default Value if none is set */
-			if(settlementIDFrom == null) settlementIDFrom = "0";
+			if(settlementIDFrom == "" ||settlementIDFrom == null) settlementIDFrom = "0";
 			if(settlementIDTo == "" || settlementIDTo == null) settlementIDTo="999999";
 			
 			werte.add(settlementIDFrom + ":" + settlementIDTo);
 			spalte.add("t.idSettlement");			
+		}
+		
+		if(getordernumberFrom() != null && getordernumberFrom() != "" || getordernumberTo() != null && getordernumberTo() != ""){				
+			
+			/* Set a default Value if none is set */
+			if(ordernumberFrom == "" || ordernumberFrom == null) ordernumberFrom = "0";
+			if(ordernumberTo == "" || ordernumberTo == null) ordernumberTo="999999";
+			
+			werte.add(ordernumberFrom + ":" + ordernumberTo);
+			spalte.add("o.ordernumber");
+			
+			/* Add a part to the Joinstatement */
+			joinStatement += " INNER JOIN t.tblOrder o";
 		}
 		
 		if(getRuntimeFilter() != null && getRuntimeFilter() != ""){				
@@ -534,6 +549,22 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 
 	public String getIncometypeFilter() {
 		return incometypeFilter;
+	}
+	
+	public void setordernumberFrom(String ordernumberFrom) {
+		this.ordernumberFrom = ordernumberFrom;
+	}
+
+	public String getordernumberFrom() {
+		return ordernumberFrom;
+	}
+	
+	public void setordernumberTo(String ordernumberTo) {
+		this.ordernumberTo = ordernumberTo;
+	}
+
+	public String getordernumberTo() {
+		return ordernumberTo;
 	}
 
 	public void setEstimationFrom(String estimationFrom) {

@@ -127,9 +127,9 @@
 	</ice:panelGroup>
 	
 	<!-- Includes Pop-Ups Start -->
-	<ui:include src="../Popup/invoicepopup.jspx"></ui:include>
+	<!-- <ui:include src="../Popup/invoicepopup.jspx"></ui:include>
     <ui:include src="../Popup/invoicefilterpopup.jspx"></ui:include>
-    <ui:include src="../Popup/invoicedeletepopup.jspx"></ui:include>
+    <ui:include src="../Popup/invoicedeletepopup.jspx"></ui:include>-->
     <!-- Includes Pop-Ups End -->
 	    
 	</div>

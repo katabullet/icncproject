@@ -39,6 +39,10 @@
 				<ice:inputText styleClass="Input" value="#{settlementLister.settlementIDFrom}"/>
 				<ice:inputText styleClass="Input" value="#{settlementLister.settlementIDTo}"/>
 				
+				<ice:outputLabel value="#{msg.tableOrder}" styleClass="Text"/>
+				<ice:inputText styleClass="Input" value="#{settlementLister.ordernumberFrom}"/>
+				<ice:inputText styleClass="Input" value="#{settlementLister.ordernumberTo}"/>
+				
 				<ice:outputLabel value="#{msg.tableRuntime}" styleClass="Text"/>
 				<ice:inputText styleClass="Input" value="#{settlementLister.runtimeFilter}"/>
 				<ice:panelGrid/>

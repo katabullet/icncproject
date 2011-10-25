@@ -47,7 +47,7 @@
 								   binding="#{customerLister.bindingContactpersons}">
 					  <f:selectItems value="#{customerLister.contactpersonListDescription}"/>
        			</ice:selectOneMenu>
-				<ice:commandButton image="images/plus.jpg" styleClass="buttons" action="#{contactpersonLister.changePopupRenderNew}"/>
+				<ice:commandButton image="images/plus.jpg" style="text-align: center;" action="#{contactpersonLister.changePopupRenderNew}"/>
 								
 				<ice:outputLabel value="#{msg.tableCustomerState}" styleClass="Text"/>
 				<ice:selectOneMenu value="#{customerLister.curCustomerstate.descriptionCs}" 
@@ -56,7 +56,7 @@
 								   binding="#{customerLister.bindingCustomerstates}">
 					  <f:selectItems value="#{customerLister.customerstateListDescription}"/>
        			</ice:selectOneMenu>
-				<ice:commandButton image="images/plus.jpg" styleClass="buttons" action="#{customerstateLister.changePopupRenderNew}"/>
+				<ice:commandButton image="images/plus.jpg" style="text-align: center;" action="#{customerstateLister.changePopupRenderNew}"/>
 				
 				<ice:outputLabel value="#{msg.tableCustomerStateDate}" styleClass="Text"/>
 				<ice:outputText styleClass="textPosition" value="#{customerLister.curCustomer.customerstatedate}">
@@ -71,7 +71,7 @@
 								   binding="#{customerLister.bindingConcerns}">
 					  <f:selectItems value="#{customerLister.concernListDescription}"/>
        			</ice:selectOneMenu>
-				<ice:commandButton image="images/plus.jpg" styleClass="buttons" action="#{concernLister.changePopupRenderNew}"/>
+				<ice:commandButton image="images/plus.jpg" style="text-align: center;" action="#{concernLister.changePopupRenderNew}"/>
 								
 				<ice:outputLabel value="#{msg.tableSalesman}" styleClass="Text"/>
 				<ice:selectOneMenu value="#{customerLister.curSalesman.username}" styleClass="Input" valueChangeListener="#{customerLister.changeSalesman}" required="false">

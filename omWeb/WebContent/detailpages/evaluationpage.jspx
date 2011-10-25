@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	template="/WEB-INF/templates/defaultTemplate.jspx">
+	
+	<ice:outputHead>
+	<ice:outputStyle href="./xmlhttp/css/rime/rime-portlet.css" />
+	<ice:outputStyle href="./styles/Sites.css" />
+	<ice:outputStyle href="./styles/popup.css" />
+	<ice:outputStyle href="./styles/Menu.css" />
+</ice:outputHead>
+	
+	<div style="height: 480px;">
+
+	<ice:panelGrid columns="2" columnClasses="Col1 Col2" styleClass="leiste">
+		
+		
+		  
+		
+     	
+    </ice:panelGrid>    	
+     	
+   	<ice:panelGroup style="height:30px" ></ice:panelGroup>
+	<ice:panelGroup style="margin: auto; width: 100%; text-align: center; ">     	
+			
+			<ice:outputChart id="axisOutputChart"
+							 type="bar"
+							 chartTitle="Umsatz pro Kunde"
+							 yaxisTitle="Kunde"
+							 xaxisTitle="Euro-Umsatz"
+							 xaxisLabels="#{evaluationCreater.labels}"
+							 labels="#{evaluationCreater.legendLabels}"
+							 colors="#{evaluationCreater.paints}"
+							 data="#{evaluationCreater.data}" 
+							 horizontal="true" />		
+			   		    
+	</ice:panelGroup>
+	
+		<!-- Includes Pop-Ups Start -->
+		<ui:include src="../Popup/concernpopup.jspx"></ui:include>
+	    <!-- Includes Pop-Ups End -->
+	    
+	</div>
+</html>

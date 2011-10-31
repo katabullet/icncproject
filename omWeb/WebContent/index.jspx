@@ -45,7 +45,7 @@
             					
             			<!-- Evaluation -->
         				<ice:panelTab label="#{msg.tableEvaluation}" labelWidth="#{sitesBean.tabWidth}">
-        					<ice:panelTabSet id="icePnlTbSet1" selectedIndex="0" tabPlacement="Bottom">
+        					<ice:panelTabSet id="icePnlTbSet0" selectedIndex="0" tabPlacement="Bottom">
             					<!-- Evaluation -->
             					<ice:panelTab label="#{msg.tableEvaluation}" labelWidth="#{sitesBean.allTabWidth}">
             						

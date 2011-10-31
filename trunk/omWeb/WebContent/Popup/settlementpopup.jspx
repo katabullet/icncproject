@@ -33,7 +33,7 @@
 			<ice:panelGrid columns="3" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2 columnPopup3">
 								
 				<ice:outputLabel value="#{msg.tableOrder}" styleClass="Text"/>
-				<ice:selectOneMenu value="#{settlementLister.order}"  styleClass="Input" valueChangeListener="#{settlementLister.changeOrder}" binding="#{settlementLister.bindingOrder}">
+				<ice:selectOneMenu value="#{settlementLister.curOrder.idOrder}"  styleClass="Input" valueChangeListener="#{settlementLister.changeOrder}" binding="#{settlementLister.bindingOrder}">
 					  <f:selectItems value="#{settlementLister.orderListDescription}"/>
        			</ice:selectOneMenu>
        			<ice:commandButton image="images/plus.jpg" style="text-align: center;" action="#{incometypeLister.changePopupRenderNew}"/>
@@ -42,18 +42,22 @@
 				<ice:inputText styleClass="Input" value="#{settlementLister.curSettlement.runtime}"></ice:inputText>
 				<ice:panelGrid/>
 				<ice:outputLabel value="#{msg.tableInterval}" styleClass="Text"/>
-				<ice:selectOneMenu value="#{settlementLister.interval}"  styleClass="Input" valueChangeListener="#{settlementLister.changeInterval}" binding="#{settlementLister.bindingInterval}">
+				<ice:selectOneMenu value="#{settlementLister.curInterval.descriptionIv}"  styleClass="Input" valueChangeListener="#{settlementLister.changeInterval}" binding="#{settlementLister.bindingInterval}">
 					  <f:selectItems value="#{settlementLister.intervalListDescription}"/>
        			</ice:selectOneMenu>
        			<ice:commandButton image="images/plus.jpg" style="text-align: center;" action="#{intervalLister.changePopupRenderNew}"/>
 
        			<ice:outputLabel value="#{msg.tableIncometype}" styleClass="Text"/>
-				<ice:selectOneMenu value="#{settlementLister.incometype}"  styleClass="Input" valueChangeListener="#{settlementLister.changeIncometype}" binding="#{settlementLister.bindingIncometype}">
+				<ice:selectOneMenu value="#{settlementLister.curIncometype.descriptionIt}"  styleClass="Input" valueChangeListener="#{settlementLister.changeIncometype}" binding="#{settlementLister.bindingIncometype}">
 					  <f:selectItems value="#{settlementLister.incometypeListDescription}"/>
        			</ice:selectOneMenu>
        			<ice:commandButton image="images/plus.jpg" style="text-align: center;" action="#{incometypeLister.changePopupRenderNew}"/>
-       			<ice:outputLabel value="Abrechnungssumme" styleClass="Text" />
+       			<ice:outputLabel value="#{msg.tableSettlementSum}" styleClass="Text" />
        			<ice:inputText styleClass="Input" value="#{settlementLister.settlementSum}" />
+       			<ice:panelGrid />
+       			
+       			<ice:outputLabel value="#{msg.tableContractStart}" styleClass="Text" />
+       			<ice:selectInputDate styleClass="Calendar" value="#{settlementLister.settlementDate}" renderAsPopup="true"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
        			<ice:panelGrid />
 
 				<!-- <ice:outputLabel value="#{msg.tableEstimation}" styleClass="Text"/>

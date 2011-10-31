@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Set;
 
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.event.ValueChangeEvent;
@@ -13,6 +14,8 @@ import javax.faces.model.SelectItem;
 
 import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.entitybeans.TblInterval;
+import at.icnc.om.entitybeans.TblInvoice;
+import at.icnc.om.entitybeans.TblInvoicestate;
 import at.icnc.om.entitybeans.TblOrder;
 import at.icnc.om.entitybeans.TblSettlement;
 import at.icnc.om.interfaces.Filterable;
@@ -65,6 +68,9 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	
 	// Variable to save Sum that has to be paid in interval
 	private BigDecimal settlementSum;
+	
+	// Variable to save Startdate of settlement (when the contract starts)
+	private Date settlementDate = new Date();
 	
 	/* Field declaration for Filter */
 	private String settlementIDFrom;
@@ -218,9 +224,10 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		/* ID of new settlement is set to 0 (important for EntityManager) */
 		getCurSettlement().setIdSettlement(0);
 		
-		getCurSettlement().setTblInterval((TblInterval) entityLister.getSingleObject("SELECT * FROM OMInterval WHERE rownum <= 1", TblInterval.class));
-		
-		getCurSettlement().setTblIncometype((TblIncometype) entityLister.getSingleObject("SELECT * FROM OMIncometype WHERE rownum <=1", TblIncometype.class));
+		setCurInterval((TblInterval) entityLister.getSingleObject("SELECT * " +
+										"FROM OMInterval WHERE rownum <= 1", TblInterval.class));
+		setCurIncometype((TblIncometype) entityLister.getSingleObject("SELECT * FROM OMIncometype " +
+										"WHERE rownum <=1", TblIncometype.class));
 				
 		changePopupRender();
 	}
@@ -239,9 +246,41 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		if(getCurSettlement() != null){			
 			if(getCurSettlement().getIdSettlement() == settlementList.get(re.getRow()).getIdSettlement()){
 				setCurSettlement(new TblSettlement());
+				setCurIncometype(null);
+				setCurInterval(null);
+				setCurOrder(null);
 				setVisible(false);
+				settlementSum = new BigDecimal(0);
+				settlementDate = new Date();
 			}else {
 				setCurSettlement(settlementList.get(re.getRow()));
+				setCurIncometype(getCurSettlement().getTblIncometype());
+				setCurInterval(getCurSettlement().getTblInterval());
+				setCurOrder(getCurSettlement().getTblOrder());
+				
+				if(getCurSettlement().getTblInvoices() != null){
+					try {
+						Object[] invoices = getCurSettlement().getTblInvoices().toArray();
+						settlementSum = ((TblInvoice) invoices[0]).getEstimation();
+						
+						settlementDate = ((TblInvoice) invoices[0]).getDuedate();
+						Calendar cal = Calendar.getInstance();
+						cal.setTime(settlementDate);
+						int month = cal.get(Calendar.MONTH);
+						int year = cal.get(Calendar.YEAR);
+						month -= getCurSettlement().getTblInterval().getMonths().intValue();
+						if(month < 0){
+							month += 12;
+							year -= 1;
+						}
+						cal.set(Calendar.MONTH, month);
+						cal.set(Calendar.YEAR, year);
+						setSettlementDate(cal.getTime());
+					} catch (Exception e) {
+						settlementSum = new BigDecimal(0);
+					}					
+				}
+				
 				setVisible(true);
 			}
 		}
@@ -295,18 +334,24 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		boolean entityNew = getCurSettlement().getIdSettlement() == 0;
 		getCurSettlement().setTblInterval(getCurInterval());
 		getCurSettlement().setTblIncometype(getCurIncometype());
-		getCurSettlement().setTblOrder(getCurOrder());
+		getCurSettlement().setTblOrder(getCurOrder());		
 		
-
-
 		entityLister.UpdateObject(TblSettlement.class, getCurSettlement(), getCurSettlement().getIdSettlement());
 
 		if(entityNew){
-			insertProtocol(TblSettlement.class, getCurSettlement().getIdSettlement(), createAction);
-			createInvoices(getCurSettlement());
+			insertProtocol(TblSettlement.class, getCurSettlement().getIdSettlement(), createAction);			
 		}else {
 			insertProtocol(TblSettlement.class, getCurSettlement().getIdSettlement(), updateAction);
 		}	
+		
+		if(settlementSum != ((TblInvoice) (getCurSettlement().getTblInvoices().toArray())[0]).getEstimation() || entityNew){
+			if(!entityNew){
+				for (TblInvoice curInvoice : getCurSettlement().getTblInvoices()) {
+					entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
+				}
+			}
+			createInvoices();
+		}
 				
 		refresh();
 	}
@@ -342,7 +387,7 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	 */
 	 public void changeOrder(ValueChangeEvent vce){
 		if(!filterpopupRender){
-			setCurIncometype((TblIncometype) entityLister.getSingleObject("SELECT * FROM OMOrder WHERE idOrder = '" +
+			setCurOrder((TblOrder) entityLister.getSingleObject("SELECT * FROM OMOrder WHERE id_Order = '" +
 					vce.getNewValue().toString() + "'", TblOrder.class));
 		}else{
 			setIncometypeFilter(vce.getNewValue().toString());
@@ -659,34 +704,58 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		return settlementSum;
 	}
 	
-	private void createInvoices(TblSettlement curSettlement){
+	private void createInvoices(){
 		
-		BigDecimal runtime = curSettlement.getRuntime();
+		BigDecimal runtime;
+		int standardRuntime = 10;
+		
+		if(getCurSettlement().getRuntime() == new BigDecimal(0)){
+			runtime = new BigDecimal(standardRuntime);
+		}else {
+			runtime = curSettlement.getRuntime();
+		}
+		
 		BigDecimal months = curSettlement.getTblInterval().getMonths();
 		
 		// Create new calender
 		Calendar cal = Calendar.getInstance();
 		//Set value of calender to current Date
-		cal.setTime(new Date()); 
+		cal.setTime(getSettlementDate()); 
 		// Save year in variable
 		int year = cal.get(Calendar.YEAR); 
-		int month = cal.get(Calendar.MONTH) + 2;
+		int month = cal.get(Calendar.MONTH) + 1;
 		int day = 1;
+				
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				
+		Date dueDate = new Date();
 		
-		runtime = runtime.multiply(new BigDecimal(12));
-		Date firstDate = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-		String first = year + "/" + month + "/" + day;
-		
-		try {
-			firstDate = formatter.parse(first);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		System.out.print("******************************************************");
-		System.out.println(firstDate);
+		for(int x = months.intValue(); x <= runtime.multiply(new BigDecimal(12)).intValue(); x += months.intValue()){
+			month += months.intValue();
+			if(month > 12){
+				year++;
+				month -= 12;
+			}
+			
+			String strDueDate = year + "-" + month + "-" + day;
+						
+			try {
+				dueDate = formatter.parse(strDueDate);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			TblInvoice curInvoice = new TblInvoice();
+			curInvoice.setDuedate(dueDate);
+			curInvoice.setEstimation(settlementSum);
+			curInvoice.setIdInvoice(0);
+			curInvoice.setTblSettlement(getCurSettlement());
+			curInvoice.setTblInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM OMinvoicestate WHERE rownum <= 1", TblInvoicestate.class));
+			curInvoice.setSum(new BigDecimal(0));
+			curInvoice.setInvoicenumber("");
+			
+			entityLister.UpdateObject(TblInvoice.class, curInvoice, curInvoice.getIdInvoice());
+		}		
 	}
 
 
@@ -712,5 +781,13 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 
 	public TblOrder getCurOrder() {
 		return curOrder;
+	}
+
+	public void setSettlementDate(Date settlementDate) {
+		this.settlementDate = settlementDate;
+	}
+
+	public Date getSettlementDate() {
+		return settlementDate;
 	}
 }

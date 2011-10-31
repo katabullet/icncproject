@@ -344,7 +344,9 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 			insertProtocol(TblSettlement.class, getCurSettlement().getIdSettlement(), updateAction);
 		}	
 		
-		if(settlementSum != ((TblInvoice) (getCurSettlement().getTblInvoices().toArray())[0]).getEstimation() || entityNew){
+		if(settlementSum != ((TblInvoice) (getCurSettlement().getTblInvoices().toArray())[0]).getEstimation()
+				|| entityNew
+				|| getCurSettlement().getRuntime() != settlementList.get(settlementList.indexOf(getCurSettlement())).getRuntime()){
 			if(!entityNew){
 				for (TblInvoice curInvoice : getCurSettlement().getTblInvoices()) {
 					entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);

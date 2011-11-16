@@ -163,7 +163,7 @@
             					<!-- Protocol -->
             					<ice:panelTab label="#{msg.tableProtocol}" labelWidth="1098">
             					
-		           					
+		           					<ui:include src="/detailpages/protocolpage.jspx"/>
 		           					
             					</ice:panelTab>
             				</ice:panelTabSet>

@@ -134,7 +134,7 @@
 	</ice:panelGroup>
 	
 	<!-- Includes Pop-Ups Start -->
-    <ui:include src="../Popup/reminderfilterpopup.jspx"></ui:include>
+    	<ui:include src="../Popup/reminderfilterpopup.jspx"/>
     <!-- Includes Pop-Ups End -->
 	    
 	</div>

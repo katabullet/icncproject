@@ -48,22 +48,18 @@
 	<ice:panelGroup style="margin: auto; width: 100%; text-align: center; ">     	
 								
 		<!-- Table reminder Start -->
-		<ice:dataTable value="#{reminderLister.reminderList}" var="item" id="reminder" rows="10" styleClass="table" style="margin: auto;">
+		<ice:dataTable value="#{protocolLister.protocolList}" var="item" id="reminder" rows="10" styleClass="table" style="margin: auto;">
 			<ice:column>
-				<f:facet name="header">#{msg.tableInvoice}</f:facet>
-				<ice:outputText styleClass="textPosition" value="#{item.invoicenumber}"/>
+				<f:facet name="header">#{msg.tableChange}</f:facet>
+				<ice:outputText styleClass="textPosition" value="#{item.change}"/>
 			</ice:column>
 			<ice:column>
-				<f:facet name="header">#{msg.tableCustomer}</f:facet>
-				<ice:outputText styleClass="textPosition" value="#{item.tblSettlement.tblOrder.tblCustomer.customername}"/>
+				<f:facet name="header">#{msg.tableDate}</f:facet>
+				<ice:outputText styleClass="textPosition" value="#{item.date}"/>
 			</ice:column>	
 			<ice:column>
-				<f:facet name="header">#{msg.tableDuedate}</f:facet>
-				<ice:outputText styleClass="textPosition" value="#{item.duedate}"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:outputText>
-			</ice:column>
-			<ice:column>
-				<f:facet name="header">#{msg.tableInvoicestate}</f:facet>
-				<ice:outputText styleClass="textPosition" value="#{item.tblInvoicestate.descriptionIs}"/>
+				<f:facet name="header">#{msg.loginUserName}</f:facet>
+				<ice:outputText styleClass="textPosition" value="#{item.tblUser.username}"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:outputText>
 			</ice:column>	
 		</ice:dataTable>
 		<!-- Table reminder End -->

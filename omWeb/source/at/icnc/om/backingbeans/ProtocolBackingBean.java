@@ -14,6 +14,7 @@ import javax.faces.model.SelectItem;
 import at.icnc.om.entitybeans.TblCustomerstate;
 import at.icnc.om.entitybeans.TblInvoice;
 import at.icnc.om.entitybeans.TblInvoicestate;
+import at.icnc.om.entitybeans.TblProtocol;
 import at.icnc.om.entitybeans.TblUser;
 import at.icnc.om.entitybeans.TblUserrole;
 import at.icnc.om.interfaces.Filterable;
@@ -26,16 +27,10 @@ import com.icesoft.faces.component.ext.RowSelectorEvent;
  * @author csh80, nkn80, cma80
  *
  */
-public class ReminderBackingBean extends AbstractBean implements Filterable {
+public class ProtocolBackingBean extends AbstractBean implements Filterable {
 	
 	// List with all Reminders to avoid constant DB-Reading
-	private ArrayList<TblInvoice> reminderList;
-	
-	// List with all invoicestates 
-	ArrayList<TblInvoicestate> invoicestates;
-	
-	// Variable to save selected invoicestate
-	private TblInvoicestate curInvoicestate;
+	private ArrayList<TblProtocol> protocolList;
 
 	/*
 	 * ______________________________________________________________________________
@@ -47,23 +42,13 @@ public class ReminderBackingBean extends AbstractBean implements Filterable {
 	 * @return reminderList
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayList<TblInvoice> getReminderList(){	
-		String status = "Erledigt";
-		Format format = new SimpleDateFormat("yyyy-MM-dd");
-		ArrayList<String> Spalte = new ArrayList<String>();
-		ArrayList<String> Werte = new ArrayList<String>();
-		
-		Spalte.add("t.duedate");
-		Spalte.add("i.descriptionIs");
-		
-		Werte.add(format.format(new Date()));
-		Werte.add(status);
+	public ArrayList<TblProtocol> getProtocolList(){	
 		
 		/*Try and Catch: Try to call the "getFilterList" Method and get the FilterList or catch to call the "init" Method*/
 		try {
-			if(reminderList == null){
-			reminderList = new ArrayList<TblInvoice>();		
-			reminderList.addAll((ArrayList<TblInvoice>)entityLister.getReminderList(Werte, Spalte));
+			if(protocolList == null){
+				protocolList = new ArrayList<TblProtocol>();		
+				protocolList.addAll((ArrayList<TblProtocol>)entityLister.getObjectList(TblProtocol.class));
 			}
 
 		} catch (Exception e) {
@@ -71,7 +56,7 @@ public class ReminderBackingBean extends AbstractBean implements Filterable {
 			init();			
 		}	
 		
-		return reminderList;
+		return protocolList;
 	}	
 	
 	/**
@@ -94,8 +79,7 @@ public class ReminderBackingBean extends AbstractBean implements Filterable {
 	 */	
 	@Override
 	public void refresh() {
-		reminderList = null;
-		invoicestate=null;
+		protocolList = null;
 		filterpopupRender = false;
 		setDeletePopupRender(false);
 	}
@@ -222,63 +206,21 @@ public class ReminderBackingBean extends AbstractBean implements Filterable {
 		/*Try and Catch: Try to call the "getFilterList" Method and get the FilterList or catch to call the "init" Method*/
 		try {
 			/*Deletes the current Table*/
-			reminderList.clear();
+			protocolList.clear();
 			
-			reminderList.addAll((ArrayList<TblInvoice>)entityLister.getFilterList(TblInvoice.class,"TblInvoice", joinStatement,werte, spalte));
+			protocolList.addAll((ArrayList<TblProtocol>)entityLister.getFilterList(TblProtocol.class,"TblProtocol", joinStatement,werte, spalte));
 
 			/*Method to close the Popup*/
 			changeFilterPopupRender();
 		} catch (Exception e) {
 			init();
-			reminderList.clear();
+			protocolList.clear();
 			
 			/*Method to close the Popup*/
 			changeFilterPopupRender();
 		}
 		
 	}	
-
-	/**
-	 * Function to create SelectItems of all Invoicestates plus an empty one
-	 * Important for combobox (needs SelectItem, not objects of invoicestates)
-	 * @return List of SelectItem 
-	 */
-	@SuppressWarnings("unchecked")
-	public ArrayList<SelectItem> getinvoicestateListDescriptionFilter(){
-		ArrayList<SelectItem> invoicestate = new ArrayList<SelectItem>();
-	
-		ArrayList<TblInvoicestate> iState = new ArrayList<TblInvoicestate>();
-		iState.addAll((ArrayList<TblInvoicestate>)
-				entityLister.getObjectList(TblInvoicestate.class));
-		/*An empty Item is added to SelectItem-List*/
-		invoicestate.add(new SelectItem());
-		for (TblInvoicestate item : iState) {
-			/* Description of each invoicestate is added to SelectItem-List */
-			invoicestate.add(new SelectItem(item.getDescriptionIs()));
-		}
-		return invoicestate;			
-	}
-	
-	/**
-	 * Method that Listens to Change Event of a combobox
-	 * if another element in the combobox is selected, the value in
-	 * curInvoicestate is set to the selected one
-	 * @param vce
-	 */
-	public void changeInvoicestate(ValueChangeEvent vce){
-		setCurInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM OMinvoicestate WHERE description_is = '" + 
-				vce.getNewValue().toString() + "'", TblInvoicestate.class));				
-	}
-
-	/* Setter of curInvoicestate */
-	public void setCurInvoicestate(TblInvoicestate curInvoicestate) {
-		this.curInvoicestate = curInvoicestate;
-	}
-
-	/* Getter of curInvoicestate */
-	public TblInvoicestate getCurInvoicestate() {
-		return curInvoicestate;
-	}
 
 	@Override
 	public void changePopupRenderNew() {

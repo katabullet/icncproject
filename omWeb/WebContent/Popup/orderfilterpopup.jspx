@@ -10,8 +10,8 @@
 	<ice:outputStyle href="./styles/Menu.css" />
 </ice:outputHead>
 	
-	<ice:panelPopup rendered="#{orderstateLister.filterPopupRender}"
-					visible="#{orderstateLister.filterPopupRender}"
+	<ice:panelPopup rendered="#{orderLister.filterPopupRender}"
+					visible="#{orderLister.filterPopupRender}"
 					modal="true"
 					draggable="false"
 					autoCentre="true"
@@ -20,9 +20,9 @@
 			<!-- Header Popup (filter) Start -->
 			<ice:panelGrid columns="2" styleClass="popupHeaderWrapper panelGridHeader" columnClasses="headerCol1 headerCol2">
 	            <ice:outputText	                    
-	                    value="#{msg.tableFilterOrderstate}"
+	                    value="#{msg.tableFilterOrder}"
 	                    styleClass="popupHeaderText"/>
-	            <ice:commandButton image="images/closepopup.gif" action="#{orderstateLister.closePopup}" immediate="true"/>
+	            <ice:commandButton image="images/closepopup.gif" action="#{orderLister.closePopup}" immediate="true"/>
         	</ice:panelGrid>
         	<!-- Header Popup (filter) End -->
 		</f:facet>
@@ -34,6 +34,7 @@
 				<ice:outputLabel value="#{msg.tableColumn}" styleClass="Text TextTitel"/>
 				<ice:outputLabel value="#{msg.tableCriterion}" styleClass="HeadText"/>
 				
+				<!-- Filterkriterien! -->
 				<ice:outputLabel value="#{msg.tableDescriptionOs}" styleClass="Text"/>
 				<ice:inputText styleClass="Input" value="#{orderstateLister.descriptionOs}"/>
 					
@@ -43,8 +44,8 @@
 				<ice:messages layout="list" errorClass="iceMsgError"></ice:messages>
 			</ice:panelGrid>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" styleClass="panelGridButtons">
-				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Filtern" action="#{orderstateLister.filterEntities}"/>
-				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{orderstateLister.closePopup}" immediate="true"/>
+				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Filtern" action="#{orderLister.filterEntities}"/>
+				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{orderLister.closePopup}" immediate="true"/>
 			</ice:panelGrid>
 			<ice:panelGrid styleClass="panelGridSpace2">
 				<ice:outputText value=""/>

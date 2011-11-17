@@ -56,6 +56,26 @@ public class TblOrder extends Selectable implements Serializable {
 		return incometypes;
 	}
 	
+	/**
+	 * Method which puts all Costcentres of an order
+	 * in one String to be displayed in the table
+	 */
+	@Transient
+	public String getCostcentresString() {
+		String costcentres = "";
+		
+		
+		for (TblCostcentre item : tblCostcentres) {
+			costcentres = costcentres + item.getDescriptionCc() + ", ";
+		}
+		
+		if (costcentres != "") {
+			costcentres = costcentres
+					.substring(0, costcentres.lastIndexOf(','));
+		}
+		return costcentres;
+	}
+	
 	public void setIdOrder(long idOrder) {
 		this.idOrder = idOrder;
 	}

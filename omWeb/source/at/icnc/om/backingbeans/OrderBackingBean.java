@@ -6,15 +6,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import at.icnc.om.entitybeans.TblCustomer;
 import at.icnc.om.entitybeans.TblCustomerstate;
+import at.icnc.om.entitybeans.TblInvoice;
+import at.icnc.om.entitybeans.TblInvoicestate;
 import at.icnc.om.entitybeans.TblOrder;
 import at.icnc.om.entitybeans.TblOrderstate;
 import at.icnc.om.entitybeans.TblCostcentre;
 import at.icnc.om.entitybeans.TblIncometype;
+import at.icnc.om.entitybeans.TblSettlement;
 import at.icnc.om.interfaces.Filterable;
 
 import com.icesoft.faces.component.ext.RowSelectorEvent;
@@ -56,6 +60,18 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 	
 	// Variable to save selected Orderstate
 	private TblOrderstate curOrderstate;
+	
+	// Binding of SelectOneMenu with Orderstate
+	private HtmlSelectOneMenu bindingOrderstate;
+	
+	// Binding of SelectOneMenu with Customer
+	private HtmlSelectOneMenu bindingCustomer;
+	
+	// Binding of SelectOneMenu with Incometypes
+	private HtmlSelectOneMenu bindingIncometype;
+	
+	// List to save current incometypes
+	private ArrayList<TblIncometype> curIncometypes;
 	
 	/**
 	 * This functions returns a list with all orders
@@ -215,9 +231,17 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 	 */
 	@Override
 	public void changePopupRenderNew() {
-		curOrder = new TblOrder();
-		curOrder.setIdOrder(0);
+		/* New order is initialized */ 
+		setCurOrder(new TblOrder());
+		/* ID of new order is set to 0 (important for EntityManager) */
+		getCurOrder().setIdOrder(0);
 		
+		/* Setting default values of new order */
+		getCurOrder().setOrderdate(new Date());
+		getCurOrder().setTravelcosts(0);
+		getCurOrder().setTblOrderstate((TblOrderstate) entityLister.getSingleObject("SELECT * FROM omorderstate WHERE rownum <= 1", TblOrderstate.class));
+		getCurOrder().setTblCustomer((TblCustomer) entityLister.getSingleObject("SELECT * FROM omcustomer WHERE rownum <= 1", TblCustomer.class));
+		/* Makes popup visible */
 		changePopupRender();
 	}
 
@@ -277,6 +301,7 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 	@Override
 	public void deleteEntity() {
 		entityLister.DeleteObject(curOrder.getIdOrder(), TblOrder.class);
+		insertProtocol(TblOrder.class, getCurOrder().getIdOrder(), deleteAction);
 		curOrder = new TblOrder();
 		curOrder.setIdOrder(0);
 		refresh();
@@ -287,10 +312,18 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 	 */
 	@Override
 	public void updateEntity() {
+		boolean entityNew = false;
 		getCurOrder().setTblOrderstate(curOrderstate);
 		/* Costcentre und Incometype setzen */
-		
+		entityNew = (getCurOrder().getIdOrder() == 0);
 		entityLister.UpdateObject(TblOrder.class, curOrder, curOrder.getIdOrder());
+		
+		if(entityNew){
+			insertProtocol(TblOrder.class, getCurOrder().getIdOrder(), createAction);
+		}else {
+			insertProtocol(TblOrder.class, getCurOrder().getIdOrder(), updateAction);
+		}
+		
 		refresh();
 	}
 	
@@ -331,10 +364,40 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 	 */
 	public void changeOrderstate(ValueChangeEvent vce){
 		if(!filterpopupRender){
-			setCurOrderstate((TblOrderstate) entityLister.getSingleObject("SELECT * FROM OMOrderstate WHERE description_os = '" +
+			setCurOrderstate((TblOrderstate) entityLister.getSingleObject("SELECT * FROM OMorderstate WHERE description_os = '" +
 					vce.getNewValue().toString() + "'", TblOrderstate.class));
 		}else{
 			setOrderstateFilter(vce.getNewValue().toString());
+		}
+	}
+	
+	/**
+	 * Method that Listens to Change Event of a combobox
+	 * if another element in the combobox is selected, the value in
+	 * curOrder is set to the selected one
+	 * @param vce
+	 */
+	/*public void changeIncometype(ValueChangeEvent vce){
+		if(!filterpopupRender){
+			setCurIncometypes((TblIncometype) entityLister.getSingleObject("SELECT * FROM OMorderstate WHERE description_os = '" +
+					vce.getNewValue().toString() + "'", TblOrderstate.class));
+		}else{
+			//setIncometypeFilter(vce.getNewValue().toString());
+		}
+	}*/
+	
+	/**
+	 * Method that Listens to Change Event of a combobox
+	 * if another element in the combobox is selected, the value in
+	 * curOrder is set to the selected one
+	 * @param vce
+	 */
+	public void changeCustomer(ValueChangeEvent vce){
+		if(!filterpopupRender){
+			setCurCustomer((TblCustomer) entityLister.getSingleObject("SELECT * FROM OMcustomer WHERE customername = '" +
+					vce.getNewValue().toString() + "'", TblCustomer.class));
+		}else{
+			setCustomerFilter(vce.getNewValue().toString());
 		}
 	}
 	
@@ -353,6 +416,40 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 			orderstates.add(new SelectItem(item.getDescriptionOs()));
 		}
 		return orderstates;			
+	}
+	
+	/**
+	 * Function to create SelectItems of all Incometypes
+	 * Important for combobox (needs SelectItem, not objects of Incometype)
+	 * @return List of SelectItem 
+	 */
+	public ArrayList<SelectItem> getIncometypeListDescription(){
+		ArrayList<SelectItem> incometypes = new ArrayList<SelectItem>();
+		if(filterpopupRender){
+			incometypes.add(new SelectItem());
+		}
+		for (TblIncometype item : getIncometypeList()) {
+			/* Description of each incometype is added to SelectItem-List */
+			incometypes.add(new SelectItem(item.getDescriptionIt()));
+		}
+		return incometypes;			
+	}
+	
+	/**
+	 * Function to create SelectItems of all Customers
+	 * Important for combobox (needs SelectItem, not objects of Customer)
+	 * @return List of SelectItem 
+	 */
+	public ArrayList<SelectItem> getCustomerListDescription(){
+		ArrayList<SelectItem> customers = new ArrayList<SelectItem>();
+		if(filterpopupRender){
+			customers.add(new SelectItem());
+		}
+		for (TblCustomer item : getCustomerList()) {
+			/* Description of each customer is added to SelectItem-List */
+			customers.add(new SelectItem(item.getCustomername()));
+		}
+		return customers;			
 	}
 	
 	/**
@@ -387,12 +484,94 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 		return orderstateList;
 	}
 	
+	/**
+	 * This function returns a list with all Incometypes
+	 * @return incometypeList
+	 */
+	@SuppressWarnings("unchecked")
+	private ArrayList<TblIncometype> getIncometypeList(){
+		
+		/* Incometypes are only read out of DB if they were not read before 
+		 * avoids unnecessary data traffic 
+		 */		
+		if(incometypeList == null){
+			incometypeList = new ArrayList<TblIncometype>();
+			incometypeList.addAll((ArrayList<TblIncometype>) 
+					entityLister.getObjectList(TblIncometype.class));
+		}
+		
+		/* If no incometype is selected, curIncometype is set to selected
+		 * otherwise the incometype is unselected
+		 */		
+		if(getCurIncometypes() != null){
+			for(TblIncometype curItem : incometypeList){				
+				for(TblIncometype item : getCurIncometypes()){
+					if(curItem.getIdIncometype() == item.getIdIncometype()){
+						curItem.setSelected(true);
+					}
+				}
+			}
+		}else{
+			setCurIncometypes(new ArrayList<TblIncometype>());
+		}		
+	
+		return incometypeList;
+	}
+	
+	/**
+	 * This function returns a list with all Customers
+	 * @return customerList
+	 */
+	@SuppressWarnings("unchecked")
+	private ArrayList<TblCustomer> getCustomerList(){
+		
+		/* Customers are only read out of DB if they were not read before 
+		 * avoids unnecessary data traffic 
+		 */		
+		if(customerList == null){
+			customerList = new ArrayList<TblCustomer>();
+			customerList.addAll((ArrayList<TblCustomer>) 
+					entityLister.getObjectList(TblCustomer.class));
+		}
+		
+		/* If no customer is selected, curCustomer is set to selected
+		 * otherwise the customer is unselected
+		 */		
+		if(getCurCustomer() != null){
+			for(TblCustomer curItem : customerList){				
+				if(curItem.getIdCustomer() == getCurCustomer().getIdCustomer()){
+					curItem.setSelected(true);
+				}
+			}
+		}else{
+			setCurCustomer(customerList.get(0));
+		}		
+	
+		return customerList;
+	}
+	
 	public void setCurOrderstate(TblOrderstate curOrderstate) {
 		this.curOrderstate = curOrderstate;
 	}
 
 	public TblOrderstate getCurOrderstate() {
 		return curOrderstate;
+	}
+	
+	public void setCurIncometypes(ArrayList<TblIncometype> curIncometypes) {
+		this.curIncometypes = curIncometypes;
+	}
+
+	public ArrayList<TblIncometype> getCurIncometypes() {
+		return curIncometypes;
+	}
+	
+	public void setCurCustomer(TblCustomer curCustomer) {
+		this.curCustomer = curCustomer;
+	}
+
+	public TblCustomer getCurCustomer() {
+		return curCustomer;
 	}
 	
 	public void setOrderstateFilter(String orderstateFilter) {
@@ -465,5 +644,59 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 	
 	public Date getOrderdatefromFilter() {
 		return orderdatefromFilter;
+	}
+	
+	/**
+	 * Method to reset OrderstateCombobox
+	 * Method is called from OrderstateBackingBean
+	 */
+	public void resetOrderstateCombobox(){
+		getBindingOrderstate().getChildren().clear();
+		orderstateList = null;
+		getOrderstateListDescription();
+	}
+
+	public void setBindingOrderstate(HtmlSelectOneMenu bindingOrderstate) {
+		this.bindingOrderstate = bindingOrderstate;
+	}
+
+	public HtmlSelectOneMenu getBindingOrderstate() {
+		return bindingOrderstate;
+	}
+	
+	/**
+	 * Method to reset IncometypesCombobox
+	 * Method is called from IncometypeBackingBean
+	 */
+	public void resetIncometypeCombobox(){
+		getBindingIncometype().getChildren().clear();
+		incometypeList = null;
+		getIncometypeListDescription();
+	}
+
+	public void setBindingIncometype(HtmlSelectOneMenu bindingIncometype) {
+		this.bindingIncometype = bindingIncometype;
+	}
+
+	public HtmlSelectOneMenu getBindingIncometype() {
+		return bindingIncometype;
+	}
+	
+	/**
+	 * Method to reset CustomerCombobox
+	 * Method is called from CustomerBackingBean
+	 */
+	public void resetCustomerCombobox(){
+		getBindingCustomer().getChildren().clear();
+		customerList = null;
+		getCustomerListDescription();
+	}
+
+	public void setBindingCustomer(HtmlSelectOneMenu bindingCustomer) {
+		this.bindingCustomer = bindingCustomer;
+	}
+
+	public HtmlSelectOneMenu getBindingCustomer() {
+		return bindingCustomer;
 	}
 }

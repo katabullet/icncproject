@@ -33,19 +33,31 @@
 			<ice:panelGrid columns="3" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2 columnPopup3">
 				
 				<ice:outputLabel value="#{msg.tableOrdernumber}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{orderLister.curOrder.ordernumber}"/>
+				<ice:inputText styleClass="Input" value="#{orderLister.curOrder.ordernumber}" partialSubmit="true"/>
 				<ice:panelGrid/>	
+				
 				<ice:outputLabel value="#{msg.tableOrderdate}" styleClass="Text"/>
-				<ice:selectInputDate highlightValue="#{orderLister.curOrder.orderdate}" value="#{orderLister.curOrder.orderdate}" renderAsPopup="true"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
+				<ice:selectInputDate highlightValue="#{orderLister.curOrder.orderdate}" 
+									 value="#{orderLister.curOrder.orderdate}" renderAsPopup="true"
+									 partialSubmit="true">
+					<f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/>
+				</ice:selectInputDate>
        			<ice:panelGrid/>	
+       			
        			<ice:outputLabel value="#{msg.tableTravelcosts}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{orderLister.curOrder.travelcosts}"/>
+				<ice:inputText styleClass="Input" value="#{orderLister.curOrder.travelcosts}" partialSubmit="true"/>
 				<ice:panelGrid/>
+				
        			<ice:outputLabel value="#{msg.tableCustomer}" styleClass="Text"/>
-       			<ice:selectOneMenu value="#{orderLister.curOrder.tblCustomer.customername}"  styleClass="Input" valueChangeListener="#{orderLister.changeCustomer}" binding="#{orderLister.bindingCustomer}">
+       			<ice:selectOneMenu value="#{orderLister.curOrder.tblCustomer.customername}" 
+       							   styleClass="Input" 
+       							   valueChangeListener="#{orderLister.changeCustomer}" 
+       							   binding="#{orderLister.bindingCustomer}"
+       							   partialSubmit="true">
 					  <f:selectItems value="#{orderLister.customerListDescription}"/>
        			</ice:selectOneMenu>
        			<ice:commandButton image="images/plus.jpg" action="#{customerLister.changePopupRenderNew}" styleClass="panelGridButtons"/>
+       			
        			<!-- Ertragsarten -->
        			<!-- <ice:outputLabel value="#{msg.tableIncometypes}" styleClass="Text"/>
        			<ice:selectManyMenu styleClass="Input" value="#{orderLister.curIncometypes}">

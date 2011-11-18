@@ -33,16 +33,16 @@
 			<ice:panelGrid columns="2" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2">
 								
 				<ice:outputLabel value="#{msg.tableContactpersonFirstname}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{contactpersonLister.curContactperson.firstname}"></ice:inputText>
+				<ice:inputText styleClass="Input" value="#{contactpersonLister.curContactperson.firstname}" partialSubmit="true"/>
 						
 				<ice:outputLabel value="#{msg.tableContactpersonLastname}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{contactpersonLister.curContactperson.lastname}"></ice:inputText>
+				<ice:inputText styleClass="Input" value="#{contactpersonLister.curContactperson.lastname}" partialSubmit="true"/>
 
 				<ice:outputLabel value="#{msg.tableContactpersonTelephone}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{contactpersonLister.curContactperson.telephone}"></ice:inputText>
+				<ice:inputText styleClass="Input" value="#{contactpersonLister.curContactperson.telephone}" partialSubmit="true"/>
 				
 				<ice:outputLabel value="#{msg.tableContactpersonEmail}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{contactpersonLister.curContactperson.email}"></ice:inputText>
+				<ice:inputText styleClass="Input" value="#{contactpersonLister.curContactperson.email}" partialSubmit="true"/>
 				
 			</ice:panelGrid>
 			

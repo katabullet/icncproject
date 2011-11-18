@@ -33,10 +33,10 @@
 			<ice:panelGrid columns="2" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2">
 								
 				<ice:outputLabel value="#{msg.tableConcernname}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{concernLister.curConcern.concernname}"></ice:inputText>
+				<ice:inputText styleClass="Input" value="#{concernLister.curConcern.concernname}" partialSubmit="true"></ice:inputText>
 						
 				<ice:outputLabel value="#{msg.tableConcernmatchcode}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{concernLister.curConcern.concernmatchcode}"></ice:inputText>
+				<ice:inputText styleClass="Input" value="#{concernLister.curConcern.concernmatchcode}" partialSubmit="true"></ice:inputText>
 
 			</ice:panelGrid>
 			

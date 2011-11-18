@@ -33,10 +33,11 @@
 			<ice:panelGrid columns="2" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2">
 								
 				<ice:outputLabel value="#{msg.tableDescriptionIv}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{intervalLister.curInterval.descriptionIv}"/>
+				<ice:inputText styleClass="Input" value="#{intervalLister.curInterval.descriptionIv}" partialSubmit="true"/>
 				
 				<ice:outputLabel value="#{msg.tableMonths}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{intervalLister.curInterval.months}" partialSubmit="true"/>		
+				<ice:inputText styleClass="Input" value="#{intervalLister.curInterval.months}" partialSubmit="true"/>	
+					
 			</ice:panelGrid>
 			
 			<ice:panelGrid styleClass="panelGridSpace1">

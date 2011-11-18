@@ -33,9 +33,10 @@
 			<ice:panelGrid columns="2" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2">
 				
 				<ice:outputLabel value="#{msg.tableCostcentrecode}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{costcentreLister.curCostcentre.costcentrecode}"></ice:inputText>				
+				<ice:inputText styleClass="Input" value="#{costcentreLister.curCostcentre.costcentrecode}" partialSubmit="true"/>	
+							
 				<ice:outputLabel value="#{msg.tableDescriptionCc}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{costcentreLister.curCostcentre.descriptionCc}"></ice:inputText>	
+				<ice:inputText styleClass="Input" value="#{costcentreLister.curCostcentre.descriptionCc}" partialSubmit="true"/>	
 				
 			</ice:panelGrid>
 			

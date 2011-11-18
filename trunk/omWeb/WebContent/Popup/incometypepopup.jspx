@@ -33,7 +33,8 @@
 			<ice:panelGrid columns="2" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2">
 				
 				<ice:outputLabel value="#{msg.tableDescriptionIt}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{incometypeLister.curIncometype.descriptionIt}" partialSubmit="true"/>		
+				<ice:inputText styleClass="Input" value="#{incometypeLister.curIncometype.descriptionIt}" partialSubmit="true"/>	
+					
 			</ice:panelGrid>
 			
 			<ice:panelGrid styleClass="panelGridSpace1">

@@ -31,19 +31,24 @@
 		<ice:panelGroup>
 			<ice:panelGrid columns="2" styleClass="panelPosition"
 				columnClasses="columnPopup1 columnPopup2">
+				
 				<ice:outputLabel value="#{msg.loginUserName}" styleClass="Text" />
 				<ice:inputText styleClass="Input"
-					value="#{userLister.curUser.username}" />
+					value="#{userLister.curUser.username}" partialSubmit="true"/>
+					
 				<ice:outputLabel value="#{msg.loginPassword}" styleClass="Text" />
 				<ice:inputText id="inputSum" styleClass="Input"
 					value="#{userLister.curUser.password}" partialSubmit="true" />
+					
 				<ice:outputLabel value="#{msg.tableUserrole}" styleClass="Text" />
 				<ice:selectOneMenu
 					value="#{userLister.curUser.tblUserrole.descriptionUr}"
 					styleClass="Input"
-					valueChangeListener="#{userLister.changeUserrole}">
+					valueChangeListener="#{userLister.changeUserrole}"
+					partialSubmit="true">
 					<f:selectItems value="#{userLister.userroleListDescription}" />
 				</ice:selectOneMenu>
+				
 			</ice:panelGrid>
 
 			<ice:panelGrid styleClass="panelGridSpace1">

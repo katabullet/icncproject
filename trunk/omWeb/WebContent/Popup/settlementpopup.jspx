@@ -33,36 +33,50 @@
 			<ice:panelGrid columns="3" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2 columnPopup3">
 								
 				<ice:outputLabel value="#{msg.tableOrder}" styleClass="Text"/>
-				<ice:selectOneMenu value="#{settlementLister.curOrder.idOrder}"  styleClass="Input" valueChangeListener="#{settlementLister.changeOrder}" binding="#{settlementLister.bindingOrder}">
+				<ice:selectOneMenu value="#{settlementLister.curOrder.idOrder}"  
+								   styleClass="Input" 
+								   valueChangeListener="#{settlementLister.changeOrder}" 
+								   binding="#{settlementLister.bindingOrder}"
+								   partialSubmit="true">
 					  <f:selectItems value="#{settlementLister.orderListDescription}"/>
        			</ice:selectOneMenu>
        			<ice:commandButton image="images/plus.jpg" style="text-align: center;" action="#{incometypeLister.changePopupRenderNew}"/>
 				
 				<ice:outputLabel value="#{msg.tableRuntime}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{settlementLister.curSettlement.runtime}"></ice:inputText>
+				<ice:inputText styleClass="Input" value="#{settlementLister.curSettlement.runtime}"  partialSubmit="true"/>
 				<ice:panelGrid/>
+				
 				<ice:outputLabel value="#{msg.tableInterval}" styleClass="Text"/>
-				<ice:selectOneMenu value="#{settlementLister.curInterval.descriptionIv}"  styleClass="Input" valueChangeListener="#{settlementLister.changeInterval}" binding="#{settlementLister.bindingInterval}">
+				<ice:selectOneMenu value="#{settlementLister.curInterval.descriptionIv}"  
+								   styleClass="Input" 
+								   valueChangeListener="#{settlementLister.changeInterval}" 
+								   binding="#{settlementLister.bindingInterval}" 
+								   partialSubmit="true">
 					  <f:selectItems value="#{settlementLister.intervalListDescription}"/>
        			</ice:selectOneMenu>
        			<ice:commandButton image="images/plus.jpg" style="text-align: center;" action="#{intervalLister.changePopupRenderNew}"/>
 
        			<ice:outputLabel value="#{msg.tableIncometype}" styleClass="Text"/>
-				<ice:selectOneMenu value="#{settlementLister.curIncometype.descriptionIt}"  styleClass="Input" valueChangeListener="#{settlementLister.changeIncometype}" binding="#{settlementLister.bindingIncometype}">
+				<ice:selectOneMenu value="#{settlementLister.curIncometype.descriptionIt}"  
+								   styleClass="Input" 
+								   valueChangeListener="#{settlementLister.changeIncometype}" 
+								   binding="#{settlementLister.bindingIncometype}" 
+								   partialSubmit="true">
 					  <f:selectItems value="#{settlementLister.incometypeListDescription}"/>
        			</ice:selectOneMenu>
        			<ice:commandButton image="images/plus.jpg" style="text-align: center;" action="#{incometypeLister.changePopupRenderNew}"/>
+       			
        			<ice:outputLabel value="#{msg.tableSettlementSum}" styleClass="Text" />
-       			<ice:inputText styleClass="Input" value="#{settlementLister.settlementSum}" />
+       			<ice:inputText styleClass="Input" value="#{settlementLister.settlementSum}" partialSubmit="true"/>
        			<ice:panelGrid />
        			
        			<ice:outputLabel value="#{msg.tableContractStart}" styleClass="Text" />
-       			<ice:selectInputDate styleClass="Calendar" value="#{settlementLister.settlementDate}" renderAsPopup="true"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
+       			<ice:selectInputDate styleClass="Calendar" value="#{settlementLister.settlementDate}" 
+       								 renderAsPopup="true" partialSubmit="true">
+       				<f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/>
+       			</ice:selectInputDate>
        			<ice:panelGrid />
 
-				<!-- <ice:outputLabel value="#{msg.tableEstimation}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{settlementLister.curSettlement.tblInvoice.estimation}"></ice:inputText>	 -->
-				
 			</ice:panelGrid>
 			
 			<ice:panelGrid styleClass="panelGridSpace1">
@@ -79,9 +93,5 @@
 		<!-- Labels + Inputtexts Popup (edit & new) End -->
 		</f:facet>
 	</ice:panelPopup>
-	
-	<!-- Includes of all popups that are needed -->
-	<ui:include src="intervalpopup.jspx"/>
-	<ui:include src="incometypepopup.jspx"/>
 	
 </html>

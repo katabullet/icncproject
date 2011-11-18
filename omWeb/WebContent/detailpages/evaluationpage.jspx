@@ -34,9 +34,6 @@
 					   		    
 	</ice:panelGroup>
 	
-		<!-- Includes Pop-Ups Start -->
-		<ui:include src="../Popup/concernpopup.jspx"></ui:include>
-	    <!-- Includes Pop-Ups End -->
 	    
 	</div>
 </html>

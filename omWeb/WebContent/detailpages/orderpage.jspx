@@ -147,12 +147,6 @@
 	        <!-- Paginator End -->
 	     		    
 	</ice:panelGroup>
-	
-		<!-- Includes Pop-Ups Start -->
-		<ui:include src="../Popup/orderpopup.jspx"></ui:include>
-	    <ui:include src="../Popup/orderfilterpopup.jspx"></ui:include>
-	    <ui:include src="../Popup/orderdeletepopup.jspx"></ui:include>
-	    <!-- Includes Pop-Ups End -->
 			           					
 </div>
 </html>

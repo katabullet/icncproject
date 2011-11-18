@@ -123,12 +123,6 @@
 	        <!-- Paginator End -->
 	     		    
 	</ice:panelGroup>
-	
-		<!-- Includes Pop-Ups Start -->
-		<ui:include src="../Popup/orderstatepopup.jspx"></ui:include>
-	    <ui:include src="../Popup/orderstatefilterpopup.jspx"></ui:include>
-	    <ui:include src="../Popup/orderstatedeletepopup.jspx"></ui:include>
-	    <!-- Includes Pop-Ups End -->
-			           					
+				           					
 </div>
 </html>

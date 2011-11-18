@@ -135,12 +135,6 @@
 	 
 	    </ice:panelGrid>    		    
 	</ice:panelGroup>
-	
-		<!-- Includes Pop-Ups Start -->
-		<ui:include src="../Popup/costcentrepopup.jspx"/>
-		<ui:include src="../Popup/costcentredeletepopup.jspx"/>
-		<ui:include src="../Popup/costcentrefilterpopup.jspx"/>
-	    <!-- Includes Pop-Ups End -->
-	    
+		    
 	</div>
 </html>

@@ -123,12 +123,6 @@
 	        <!-- Paginator End -->
 	     		    
 	</ice:panelGroup>
-	
-		<!-- Includes Pop-Ups Start -->
-		<ui:include src="../Popup/incometypepopup.jspx"></ui:include>
-	    <ui:include src="../Popup/incometypefilterpopup.jspx"></ui:include>
-	    <ui:include src="../Popup/incometypedeletepopup.jspx"></ui:include>
-	    <!-- Includes Pop-Ups End -->
-			           					
+				           					
 </div>
 </html>

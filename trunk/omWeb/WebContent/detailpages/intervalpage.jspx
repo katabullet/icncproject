@@ -132,12 +132,6 @@
 	 
 	    </ice:panelGrid>    		    
 	</ice:panelGroup>
-	
-		<!-- Includes Pop-Ups Start -->
-		<ui:include src="../Popup/intervalpopup.jspx"></ui:include>
-	    <ui:include src="../Popup/intervalfilterpopup.jspx"></ui:include>
-	    <ui:include src="../Popup/intervaldeletepopup.jspx"></ui:include>
-	    <!-- Includes Pop-Ups End -->
 	    
 	</div>
 </html>

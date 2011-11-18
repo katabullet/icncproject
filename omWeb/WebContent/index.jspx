@@ -41,7 +41,7 @@
     				<ice:panelGroup id="tabSetTabs"
                 				styleClass="exampleBox panelTabSetContainer iceTab">
     				<ice:panelTabSet id="icePnlTbSet"
-            					selectedIndex="0">
+            					selectedIndex="0" style="background-color: white;">
             					
             			<!-- Evaluation -->
         				<ice:panelTab label="#{msg.tableEvaluation}" labelWidth="#{sitesBean.tabWidth}">
@@ -61,25 +61,33 @@
             					<!-- Settlement -->
             					<ice:panelTab label="#{msg.tableSettlement}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           					<ui:include src="/detailpages/settlementpage.jspx"/>
+		           					<ui:include src="/detailpages/settlementpage.jspx"/>   
+		           					<ui:include src="/Popup/settlementdeletepopup.jspx"/>
+									<ui:include src="/Popup/settlementfilterpopup.jspx"/> 
 		           					
             					</ice:panelTab>
             					<!-- Interval -->
             					<ice:panelTab label="#{msg.tableInterval}" labelWidth="#{sitesBean.allTabWidth}">
             					
-            						<ui:include src="/detailpages/intervalpage.jspx"/>
+            						<ui:include src="/detailpages/intervalpage.jspx"/>  
+            						<ui:include src="/Popup/intervaldeletepopup.jspx"/>
+									<ui:include src="/Popup/intervalfilterpopup.jspx"/>
 
             					</ice:panelTab>
             					<!-- Invoice -->
             					<ice:panelTab label="#{msg.tableInvoice}" labelWidth="#{sitesBean.allTabWidth}">
             					
 									<ui:include src="/detailpages/invoicepage.jspx"/>
+									<ui:include src="/Popup/invoicedeletepopup.jspx"/>
+									<ui:include src="/Popup/invoicefilterpopup.jspx"/>
 		           					
             					</ice:panelTab>
             					<!-- InvoiceState -->
             					<ice:panelTab label="#{msg.tableInvoicestate}" labelWidth="#{sitesBean.allTabWidth}">
             					
 		           					<ui:include src="/detailpages/invoicestatepage.jspx"/>
+		           					<ui:include src="/Popup/invoicestatedeletepopup.jspx"/>
+									<ui:include src="/Popup/invoicestatefilterpopup.jspx"/>
 		           					
             					</ice:panelTab>
             				</ice:panelTabSet>
@@ -91,25 +99,33 @@
             					<!-- Order -->
             					<ice:panelTab label="#{msg.tableOrder}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           				<ui:include src="/detailpages/orderpage.jspx"></ui:include>	
+		           					<ui:include src="/detailpages/orderpage.jspx"/>
+		           					<ui:include src="/Popup/orderdeletepopup.jspx"/>
+									<ui:include src="/Popup/orderfilterpopup.jspx"/>
 		           					
             					</ice:panelTab>
             					<!-- Orderstate -->
             					<ice:panelTab label="#{msg.tableOrderstate}" labelWidth="#{sitesBean.allTabWidth}">
             					
-		           				<ui:include src="/detailpages/orderstatepage.jspx"></ui:include>	
+		           					<ui:include src="/detailpages/orderstatepage.jspx"/>	
+		           					<ui:include src="/Popup/orderstatedeletepopup.jspx"/>
+									<ui:include src="/Popup/orderstatefilterpopup.jspx"/>
 		           					
             					</ice:panelTab>
             					<!-- Incometype -->
             					<ice:panelTab label="#{msg.tableIncometype}" labelWidth="#{sitesBean.allTabWidth}">
             					
 		           					<ui:include src="/detailpages/incometypepage.jspx"/>
+		           					<ui:include src="/Popup/incometypedeletepopup.jspx"/>
+									<ui:include src="/Popup/incometypefilterpopup.jspx"/>
 		           					
             					</ice:panelTab>
             					<!-- Costcenter -->
             					<ice:panelTab label="#{msg.tableCostcenter}" labelWidth="#{sitesBean.allTabWidth}">
             					
 		           					<ui:include src="/detailpages/costcentrepage.jspx"/>
+		           					<ui:include src="/Popup/costcentredeletepopup.jspx"/>
+									<ui:include src="/Popup/costcentrefilterpopup.jspx"/>
 		           					
             					</ice:panelTab>
             				</ice:panelTabSet>
@@ -122,24 +138,32 @@
             					<ice:panelTab label="#{msg.tableCustomer}" labelWidth="#{sitesBean.allTabWidth}">
             					
 		           					<ui:include src="/detailpages/customerpage.jspx"/>
+		           					<ui:include src="/Popup/customerdeletepopup.jspx"/>
+									<ui:include src="/Popup/customerfilterpopup.jspx"/>
 		           					
             					</ice:panelTab>
             					<!-- Concern -->
             					<ice:panelTab label="#{msg.tableConcern}" labelWidth="#{sitesBean.allTabWidth}">
             					
 		           					<ui:include src="/detailpages/concernpage.jspx"/>
+		           					<ui:include src="/Popup/concerndeletepopup.jspx"/>
+		           					<ui:include src="/Popup/concernfilterpopup.jspx"/>
 		           					
             					</ice:panelTab>
             					<!-- Contactperson -->
             					<ice:panelTab label="#{msg.tableContactperson}" labelWidth="#{sitesBean.allTabWidth}">
             					
 		           					<ui:include src="/detailpages/contactpersonpage.jspx"/>
+		           					<ui:include src="/Popup/contactpersondeletepopup.jspx"/>
+									<ui:include src="/Popup/contactpersonfilterpopup.jspx"/>
 		           					
             					</ice:panelTab>
             					<!-- Contactstate -->
             					<ice:panelTab label="#{msg.tableCustomerState}" labelWidth="#{sitesBean.allTabWidth}">
             					
 		           					<ui:include src="/detailpages/customerstatepage.jspx"/>
+		           					<ui:include src="/Popup/customerstatedeletepopup.jspx"/>
+									<ui:include src="/Popup/customerstatefilterpopup.jspx"/>
 		           					
             					</ice:panelTab>            					       					
             				</ice:panelTabSet>
@@ -177,6 +201,12 @@
             					
 		           					<ui:include src="/detailpages/userpage.jspx"/>
 		           					
+		           					<!-- Includes of all Popups -->
+			           					<ui:include src="/Popup/userdeletepopup.jspx"></ui:include>
+			           					<ui:include src="/Popup/userfilterpopup.jspx"></ui:include>
+			           					<ui:include src="/Popup/userpopup.jspx"></ui:include>
+		           					<!-- Includes of all Popups -->
+		           					
             					</ice:panelTab>
             				</ice:panelTabSet>           				
         				</ice:panelTab>
@@ -184,6 +214,21 @@
         				
     				</ice:panelTabSet>
 					</ice:panelGroup>
+					
+					<!-- Includes of all Popups -->						
+						<ui:include src="/Popup/settlementpopup.jspx"/>						
+						<ui:include src="/Popup/intervalpopup.jspx"/>						
+						<ui:include src="/Popup/invoicepopup.jspx"/>						
+						<ui:include src="/Popup/invoicestatepopup.jspx"/>						
+						<ui:include src="/Popup/orderpopup.jspx"/>						
+						<ui:include src="/Popup/orderstatepopup.jspx"/>						
+						<ui:include src="/Popup/incometypepopup.jspx"/>						
+						<ui:include src="/Popup/costcentrepopup.jspx"/>						
+						<ui:include src="/Popup/customerpopup.jspx"/>
+						<ui:include src="/Popup/concernpopup.jspx"/>						
+						<ui:include src="/Popup/contactpersonpopup.jspx"/>						
+						<ui:include src="/Popup/customerstatepopup.jspx"/>
+					<!-- Includes of all Popups -->
 				
 				</ice:form>
 					
@@ -192,7 +237,7 @@
 				
 			</ice:panelBorder>
 	
-		</f:facet>
+		</f:facet>		
 
 	</ice:panelBorder>
 

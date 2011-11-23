@@ -17,7 +17,7 @@
 	
 		<!-- DataExporter Start -->
 		<ice:panelGroup styleClass="exampleBox dataScrollingContainer">
-		        <ice:selectOneMenu id="type" value="#{dataExporter.type}" partialSubmit="true"
+		        <ice:selectOneMenu value="#{dataExporter.type}" partialSubmit="true"
 		            valueChangeListener="#{dataExporter.typeChangeListener}" >
 		            <f:selectItem itemLabel="#{msg.tableExport}" itemValue=""/>
 		            <f:selectItem itemLabel="#{msg.tableExcel}" itemValue="excel"/>

@@ -9,50 +9,92 @@
 	<ice:outputStyle href="./styles/popup.css" />
 	<ice:outputStyle href="./styles/Menu.css" />
 </ice:outputHead>
-	
-	<ice:panelPopup rendered="#{orderLister.filterPopupRender}"
-					visible="#{orderLister.filterPopupRender}"
-					modal="true"
-					draggable="false"
-					autoCentre="true"
-					style="margin: auto;">					
-		<f:facet name="header">
-			<!-- Header Popup (filter) Start -->
-			<ice:panelGrid columns="2" styleClass="popupHeaderWrapper panelGridHeader" columnClasses="headerCol1 headerCol2">
-	            <ice:outputText	                    
-	                    value="#{msg.tableFilterOrder}"
-	                    styleClass="popupHeaderText"/>
-	            <ice:commandButton image="images/closepopup.gif" action="#{orderLister.closePopup}" immediate="true"/>
-        	</ice:panelGrid>
-        	<!-- Header Popup (filter) End -->
-		</f:facet>
-		<f:facet name="body">
+
+<ice:panelPopup rendered="#{orderLister.filterPopupRender}"
+	visible="#{orderLister.filterPopupRender}" modal="true"
+	draggable="false" autoCentre="true" style="margin: auto;">
+	<f:facet name="header">
+		<!-- Header Popup (filter) Start -->
+		<ice:panelGrid columns="2"
+			styleClass="popupHeaderWrapper panelGridHeader"
+			columnClasses="headerCol1 headerCol2">
+			<ice:outputText value="#{msg.tableFilterOrder}"
+				styleClass="popupHeaderText" />
+			<ice:commandButton image="images/closepopup.gif"
+				action="#{orderLister.closePopup}" immediate="true" />
+		</ice:panelGrid>
+		<!-- Header Popup (filter) End -->
+	</f:facet>
+	<f:facet name="body">
 		<!-- Labels + Inputtexts Popup (filter) Start -->
 		<ice:panelGroup>
-			<ice:panelGrid columns="2" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2Center columnPopup2Center">
+			<ice:panelGrid columns="3" styleClass="panelPosition"
+				columnClasses="columnPopup1 columnPopup2Center columnPopup2Center">
+
+				<ice:outputLabel value="#{msg.tableColumn}"
+					styleClass="Text TextTitel" />
+				<ice:outputLabel value="#{msg.tableCriterionStart}"
+					styleClass="HeadText" />
+				<ice:outputLabel value="#{msg.tableCriterionEnd}"
+					styleClass="HeadText" />
+
+				<ice:outputLabel value="#{msg.tableOrdernumber}" styleClass="Text" />
+				<ice:inputText styleClass="Input"
+					value="#{orderLister.ordernumberfromFilter}" />
+				<ice:inputText styleClass="Input"
+					value="#{orderLister.ordernumbertoFilter}" />
+
+				<ice:outputLabel value="#{msg.tableOrderdate}" styleClass="Text" />
+				<ice:selectInputDate styleClass="Calendar"
+					value="#{orderLister.orderdatefromFilter}" renderAsPopup="true">
+					<f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin" />
+				</ice:selectInputDate>
+				<ice:selectInputDate styleClass="Calendar"
+					value="#{orderLister.orderdatetoFilter}" renderAsPopup="true">
+					<f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin" />
+				</ice:selectInputDate>
+
+				<ice:outputLabel value="#{msg.tableTravelcosts}" styleClass="Text" />
+				<ice:inputText styleClass="Input"
+					value="#{orderLister.travelcostsFilter}" />
+				<ice:panelGrid/>
+
+				<ice:outputLabel value="#{msg.tableCustomername}" styleClass="Text" />
+				<ice:selectOneMenu value="#{orderLister.customerFilter}"
+					styleClass="Input"
+					valueChangeListener="#{orderLister.customernameChangeFilter}">
+					<f:selectItems value="#{orderLister.customerListDescription}" />
+				</ice:selectOneMenu>
+				<ice:panelGrid/>
+
+				<!-- Incometypes und Costcentres! -->
 				
-				<ice:outputLabel value="#{msg.tableColumn}" styleClass="Text TextTitel"/>
-				<ice:outputLabel value="#{msg.tableCriterion}" styleClass="HeadText"/>
-				
-				<!-- Filterkriterien! -->
-				<ice:outputLabel value="#{msg.tableDescriptionOs}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{orderstateLister.descriptionOs}"/>
-					
+				<ice:outputLabel value="#{msg.tableOrderstate}" styleClass="Text" />
+				<ice:selectOneMenu value="#{orderLister.orderstateFilter}"
+					styleClass="Input"
+					valueChangeListener="#{orderLister.orderstateChangeFilter}">
+					<f:selectItems value="#{orderLister.orderstateListDescription}" />
+				</ice:selectOneMenu>
+				<ice:panelGrid/>
+
 			</ice:panelGrid>
-			<ice:panelGrid/>
+			<ice:panelGrid />
 			<ice:panelGrid styleClass="panelGridSpace1">
 				<ice:messages layout="list" errorClass="iceMsgError"></ice:messages>
 			</ice:panelGrid>
-			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" styleClass="panelGridButtons">
-				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Filtern" action="#{orderLister.filterEntities}"/>
-				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{orderLister.closePopup}" immediate="true"/>
+			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1"
+				styleClass="panelGridButtons">
+				<ice:commandButton styleClass="Base_Text_Center buttonCol"
+					value="Filtern" action="#{orderLister.filterEntities}" />
+				<ice:commandButton styleClass="Base_Text_Center buttonCol"
+					value="Beenden" action="#{orderLister.closePopup}" immediate="true" />
 			</ice:panelGrid>
 			<ice:panelGrid styleClass="panelGridSpace2">
-				<ice:outputText value=""/>
+				<ice:outputText value="" />
 			</ice:panelGrid>
 		</ice:panelGroup>
 		<!-- Labels + Inputtexts Popup (filter) End -->
-		</f:facet>
-	</ice:panelPopup>
-	
+	</f:facet>
+</ice:panelPopup>
+
 </html>

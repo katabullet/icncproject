@@ -172,7 +172,7 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 			
 			if(orderstateFilter != null && orderstateFilter != ""){				
 				werte.add(orderstateFilter);
-				spalte.add("os.orderstate");
+				spalte.add("os.descriptionOs");
 				
 				/* Add a part to the Joinstatement */
 				joinStatement += " INNER JOIN t.tblOrderstate os";
@@ -196,7 +196,7 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 			
 			if(customerFilter != null && customerFilter != ""){			
 				werte.add(customerFilter);
-				spalte.add("c.customer");
+				spalte.add("c.customername");
 				
 				/* Add a part to the Joinstatement */
 				joinStatement += " INNER JOIN t.tblCustomer c";
@@ -399,6 +399,26 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 		}else{
 			setCustomerFilter(vce.getNewValue().toString());
 		}
+	}
+	
+	/**
+	 * Method that Listens to Change Event of a combobox
+	 * if another element in the combobox is selected, the value in
+	 * curCustomername is set to the selected one
+	 * @param vce
+	 */
+	public void CustomernameChangeFilter(ValueChangeEvent vce){
+		setCustomerFilter(vce.getNewValue().toString());	
+	}
+	
+	/**
+	 * Method that Listens to Change Event of a combobox
+	 * if another element in the combobox is selected, the value in
+	 * curCustomername is set to the selected one
+	 * @param vce
+	 */
+	public void OrderstateChangeFilter(ValueChangeEvent vce){
+		setOrderstateFilter(vce.getNewValue().toString());	
 	}
 	
 	/**

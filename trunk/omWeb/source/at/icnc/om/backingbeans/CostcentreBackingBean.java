@@ -174,7 +174,12 @@ public class CostcentreBackingBean extends AbstractBean implements Filterable {
 	@Override
 	public void updateEntity() {
 		boolean entityNew = (getCurCostcentre().getIdCostcentre() == 0);
-		entityLister.UpdateObject(TblCostcentre.class, getCurCostcentre(), getCurCostcentre().getIdCostcentre());
+		try {
+			entityLister.UpdateObject(TblCostcentre.class, getCurCostcentre(), getCurCostcentre().getIdCostcentre());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if(entityNew){
 			insertProtocol(TblCostcentre.class, getCurCostcentre().getIdCostcentre(), createAction);

@@ -178,7 +178,12 @@ public class InvoicestateBackingBean extends AbstractBean implements Filterable 
 	@Override
 	public void updateEntity() {
 		boolean entityNew = (getCurInvoicestate().getIdInvoicestate() == 0);
-		entityLister.UpdateObject(TblInvoicestate.class, getCurInvoicestate(), getCurInvoicestate().getIdInvoicestate());
+		try {
+			entityLister.UpdateObject(TblInvoicestate.class, getCurInvoicestate(), getCurInvoicestate().getIdInvoicestate());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if(entityNew){
 			insertProtocol(TblInvoicestate.class, getCurInvoicestate().getIdInvoicestate(), createAction);

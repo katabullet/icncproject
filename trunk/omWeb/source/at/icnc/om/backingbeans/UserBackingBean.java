@@ -325,7 +325,12 @@ public class UserBackingBean extends AbstractBean {
 	public void updateEntity(){
 		boolean entityNew = (getCurUser().getIdUser() == 0);
 		curUser.setTblUserrole(curUserrole);
-		entityLister.UpdateObject(TblUser.class, curUser, curUser.getIdUser());
+		try {
+			entityLister.UpdateObject(TblUser.class, curUser, curUser.getIdUser());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if(entityNew){
 			insertProtocol(TblUser.class, getCurUser().getIdUser(), createAction);

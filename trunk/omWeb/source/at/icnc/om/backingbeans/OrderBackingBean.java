@@ -316,7 +316,12 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 		getCurOrder().setTblOrderstate(curOrderstate);
 		/* Costcentre und Incometype setzen */
 		entityNew = (getCurOrder().getIdOrder() == 0);
-		entityLister.UpdateObject(TblOrder.class, curOrder, curOrder.getIdOrder());
+		try {
+			entityLister.UpdateObject(TblOrder.class, curOrder, curOrder.getIdOrder());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if(entityNew){
 			insertProtocol(TblOrder.class, getCurOrder().getIdOrder(), createAction);

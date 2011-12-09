@@ -207,7 +207,12 @@ public class IntervalBackingBean extends AbstractBean implements Filterable {
 	 */
 	@Override
 	public void updateEntity() {
-		entityLister.UpdateObject(TblInterval.class, curInterval, curInterval.getIdInterval());
+		try {
+			entityLister.UpdateObject(TblInterval.class, curInterval, curInterval.getIdInterval());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		resetIntervalCombobox();
 		refresh();
 	}

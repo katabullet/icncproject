@@ -193,7 +193,12 @@ public class IncometypeBackingBean extends AbstractBean implements Filterable {
 	public void updateEntity() {
 		boolean entityNew = false;
 		entityNew = (getCurIncometype().getIdIncometype() == 0);
-		entityLister.UpdateObject(TblIncometype.class, curIncometype, curIncometype.getIdIncometype());
+		try {
+			entityLister.UpdateObject(TblIncometype.class, curIncometype, curIncometype.getIdIncometype());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		resetIncometypeCombobox();
 		
 		if(entityNew){

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 
 import at.icnc.om.entitybeans.TblProtocol;
 import at.icnc.om.entitybeans.TblUser;
@@ -43,6 +44,12 @@ public abstract class AbstractBean implements Refreshable {
 	
 	// Variable to write Error-Messages
 	protected String errorMessage;
+	
+	// Variable to get dataexporter for csv-output
+	private DataExporter csvDataExporter = new DataExporter();
+	
+	// Variable to get dataexporter for excel-output
+	private DataExporter excelDataExporter = new DataExporter();
 	
 	// Variables with actions for protocol
 	protected static final String deleteAction = "gelöscht";
@@ -201,7 +208,11 @@ public abstract class AbstractBean implements Refreshable {
 														+ user.getUsername().toString() + "'", TblUser.class));	
 			}
 			
-			entityLister.UpdateObject(TblProtocol.class, protocol, protocol.getIdProtocol());	
+			try {
+				entityLister.UpdateObject(TblProtocol.class, protocol, protocol.getIdProtocol());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	
 		}
 		
 		protected void insertProtocol(Class<?> entityClass, Long id, String action){
@@ -215,5 +226,39 @@ public abstract class AbstractBean implements Refreshable {
 												.getExternalContext().getSessionMap().get("user");			
 			return result;
 		}
+
+		public DataExporter getCsvDataExporter() {
+			return csvDataExporter;
+		}
+
+		public DataExporter getExcelDataExporter() {
+			return excelDataExporter;
+		}
+		
+		public void typeChangeListener(ValueChangeEvent event){    	
+	        try {
+	        	String type = "";
+	        	if(event.getNewValue() != null){
+	        		type = event.getNewValue().toString();
+	        	}else {
+	        		csvDataExporter.setRendered(false);
+	        		excelDataExporter.setRendered(false);
+	        	}
+				if(type.contains("excel")){
+					csvDataExporter.setRendered(false);
+					excelDataExporter.setType(type);
+					excelDataExporter.setRendered(true);				
+				}else {
+					if(type.contains("csv")){
+						excelDataExporter.setRendered(false);
+						csvDataExporter.setRendered(true);
+						csvDataExporter.setType(type);
+					}
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	    }
 		
 }

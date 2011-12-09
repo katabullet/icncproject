@@ -7,6 +7,7 @@ public class SitesBean{
 	private int role = 4;
 	private  Integer width;
 	Boolean render = false;
+	private Boolean optimisticLock = false;
 	
 		public Integer getTabWidth(){
 
@@ -61,6 +62,18 @@ public class SitesBean{
 		
 		public Integer getAllTabWidth(){
 			return 237;
+		}
+
+		public void setOptimisticLock(Boolean optimisticLock) {
+			this.optimisticLock = optimisticLock;
+		}
+
+		public Boolean getOptimisticLock() {
+			return optimisticLock;
+		}
+		
+		public void closeOptimisticLock(){
+			this.setOptimisticLock(false);
 		}
 
 		/*public Integer getOrderTabWidth(){

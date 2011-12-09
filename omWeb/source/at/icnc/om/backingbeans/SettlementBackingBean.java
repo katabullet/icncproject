@@ -336,7 +336,12 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		getCurSettlement().setTblIncometype(getCurIncometype());
 		getCurSettlement().setTblOrder(getCurOrder());		
 		
-		entityLister.UpdateObject(TblSettlement.class, getCurSettlement(), getCurSettlement().getIdSettlement());
+		try {
+			entityLister.UpdateObject(TblSettlement.class, getCurSettlement(), getCurSettlement().getIdSettlement());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		if(entityNew){
 			insertProtocol(TblSettlement.class, getCurSettlement().getIdSettlement(), createAction);			
@@ -756,7 +761,12 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 			curInvoice.setSum(new BigDecimal(0));
 			curInvoice.setInvoicenumber("");
 			
-			entityLister.UpdateObject(TblInvoice.class, curInvoice, curInvoice.getIdInvoice());
+			try {
+				entityLister.UpdateObject(TblInvoice.class, curInvoice, curInvoice.getIdInvoice());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}		
 	}
 

@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.faces.component.html.HtmlSelectOneMenu;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.persistence.OptimisticLockException;
+import javax.persistence.PersistenceException;
 
 import at.icnc.om.entitybeans.TblConcern;
 import at.icnc.om.entitybeans.TblContactperson;
@@ -47,16 +50,16 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 	private ArrayList<TblUser> salesmanList;
 	
 	// Variable to save selected Customerstate
-	private TblCustomerstate curCustomerstate;
+	private TblCustomerstate curCustomerstate = new TblCustomerstate();
 	
 	// Variable to save selected Concern
-	private TblConcern curConcern;
+	private TblConcern curConcern = new TblConcern();
 	
 	// Variable to save selected Contactperson
-	private TblContactperson curContactperson;
+	private TblContactperson curContactperson = new TblContactperson();
 	
 	// Variable to save selected Salesman
-	private TblUser curSalesman;
+	private TblUser curSalesman = new TblUser();
 	
 	// Variable to save selected Contactperson
 	private String contactperson;
@@ -322,9 +325,10 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 
 	/**
 	 * Updates currently selected Customer
+	 * @throws Exception 
 	 */
 	@Override
-	public void updateEntity() {
+	public void updateEntity(){
 		boolean entityNew = false;
 		if(getCurCustomer().getTblCustomerstate().getDescriptionCs() != curCustomerstate.getDescriptionCs()){
 			getCurCustomer().setCustomerstatedate(new Date());
@@ -337,7 +341,24 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 		
 		entityNew = (getCurCustomer().getIdCustomer() == 0);
 		
-		entityLister.UpdateObject(TblCustomer.class, curCustomer, curCustomer.getIdCustomer());				
+		try{
+			entityLister.UpdateObject(TblCustomer.class, curCustomer, curCustomer.getIdCustomer());
+		}catch (Exception e) {
+			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+				/* Reaction to OptimisticLockException here in BackingBean
+				 * Message for user is important to make him/her know what is going on 
+				 * and why the selected entity is not updated 
+				 */
+				/* Reading values of sitesBean out of requestMap (Map with all created Managed Beans */
+				SitesBean sitesBean = (SitesBean) 
+													 FacesContext.getCurrentInstance()
+													 .getExternalContext().getSessionMap().get("sitesBean");
+
+				if(sitesBean != null){
+					sitesBean.setOptimisticLock(true);
+				}	
+			}
+		}						
 		
 		if(entityNew){
 			insertProtocol(TblCustomer.class, getCurCustomer().getIdCustomer(), createAction);
@@ -443,14 +464,16 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 	 */
 	public ArrayList<SelectItem> getConcernListDescription(){
 		ArrayList<SelectItem> concerns = new ArrayList<SelectItem>();
+		
 		if(filterpopupRender){
 			concerns.add(new SelectItem());
 		}
 		for (TblConcern item : getConcernList()) {
 			/* Concernname of each concern is added to SelectItem-List */
 			concerns.add(new SelectItem(item.getConcernname()));
-		}
-		return concerns;			
+		}				
+		
+		return concerns;
 	}
 	
 	/**
@@ -467,6 +490,7 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 			/* Data of each Contactperson is added to SelectItem-List */
 			contactpersons.add(new SelectItem(item.getIdContactperson() + " " + item.getFirstname() + " " + item.getLastname()));
 		}
+		
 		return contactpersons;			
 	}
 	
@@ -579,7 +603,7 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 		}else{
 			setCurConcern(concernList.get(0));
 		}		
-	
+		
 		return concernList;
 	}
 	
@@ -778,5 +802,5 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 
 	public HtmlSelectOneMenu getBindingConcerns() {
 		return bindingConcerns;
-	}
+	}	
 }

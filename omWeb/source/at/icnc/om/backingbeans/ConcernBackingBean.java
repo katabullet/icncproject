@@ -144,7 +144,12 @@ public class ConcernBackingBean extends AbstractBean implements Filterable {
 	@Override
 	public void updateEntity() {
 		boolean entityNew = (getCurConcern().getIdConcern() == 0);
-		entityLister.UpdateObject(TblConcern.class, getCurConcern(), getCurConcern().getIdConcern());
+		try {
+			entityLister.UpdateObject(TblConcern.class, getCurConcern(), getCurConcern().getIdConcern());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if(entityNew){
 			insertProtocol(TblConcern.class, getCurConcern().getIdConcern(), createAction);

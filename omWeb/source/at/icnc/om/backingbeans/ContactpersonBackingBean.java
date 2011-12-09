@@ -198,7 +198,12 @@ public class ContactpersonBackingBean extends AbstractBean implements Filterable
 	@Override
 	public void updateEntity() {
 		boolean entityNew = (getCurContactperson().getIdContactperson() == 0);
-		entityLister.UpdateObject(TblContactperson.class, getCurContactperson(), getCurContactperson().getIdContactperson());
+		try {
+			entityLister.UpdateObject(TblContactperson.class, getCurContactperson(), getCurContactperson().getIdContactperson());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if(entityNew){
 			insertProtocol(TblContactperson.class, getCurContactperson().getIdContactperson(), createAction);
@@ -253,7 +258,7 @@ public class ContactpersonBackingBean extends AbstractBean implements Filterable
 	/**
 	 * Method to reset ContactpersonCombobox used in customerpopup
 	 */
-	public void resetContactpersonCombobox(){
+	private void resetContactpersonCombobox(){
 		/* Reading values of customerLister out of requestMap (Map with all created Managed Beans */
 		CustomerBackingBean customerLister = (CustomerBackingBean) 
 											 FacesContext.getCurrentInstance()

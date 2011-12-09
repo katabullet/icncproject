@@ -607,17 +607,12 @@ public class InvoiceBackingBean extends AbstractBean {
 	@Override
 	public void updateEntity(){
 		curInvoice.setTblInvoicestate(curInvoicestate);
-		entityLister.UpdateObject(TblInvoice.class, curInvoice, curInvoice.getIdInvoice());
-		insertProtocol(TblInvoice.class, getCurInvoice().getIdInvoice(), updateAction);
-		refresh();
-	}
-	
-	/**
-	 * Updates currently selected invoice or creates new invoice
-	 */
-	public void updateInvoice(){
-		curInvoice.setTblInvoicestate(curInvoicestate);
-		entityLister.UpdateObject(TblInvoice.class, curInvoice, curInvoice.getIdInvoice());
+		try {
+			entityLister.UpdateObject(TblInvoice.class, curInvoice, curInvoice.getIdInvoice());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		insertProtocol(TblInvoice.class, getCurInvoice().getIdInvoice(), updateAction);
 		refresh();
 	}

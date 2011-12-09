@@ -191,7 +191,12 @@ public class OrderstateBackingBean extends AbstractBean implements Filterable {
 	public void updateEntity() {
 		boolean entityNew = false;
 		entityNew = (getCurOrderstate().getIdOrderstate() == 0);
-		entityLister.UpdateObject(TblOrderstate.class, curOrderstate, curOrderstate.getIdOrderstate());
+		try {
+			entityLister.UpdateObject(TblOrderstate.class, curOrderstate, curOrderstate.getIdOrderstate());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if(entityNew){
 			insertProtocol(TblOrderstate.class, getCurOrderstate().getIdOrderstate(), createAction);

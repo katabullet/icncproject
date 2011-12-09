@@ -179,12 +179,17 @@ public class CustomerstateBackingBean extends AbstractBean implements Filterable
 	@Override
 	public void updateEntity() {
 		boolean entityNew = getCurCustomerstate().getIdCustomerstate() == 0;
-		entityLister.UpdateObject(TblCustomerstate.class, getCurCustomerstate(), getCurCustomerstate().getIdCustomerstate());
+		try {
+			entityLister.UpdateObject(TblCustomerstate.class, getCurCustomerstate(), getCurCustomerstate().getIdCustomerstate());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if(entityNew){
-			insertProtocol(TblCustomer.class, getCurCustomerstate().getIdCustomerstate(), createAction);
+			insertProtocol(TblCustomerstate.class, getCurCustomerstate().getIdCustomerstate(), createAction);
 		}else {
-			insertProtocol(TblCustomer.class, getCurCustomerstate().getIdCustomerstate(), updateAction);
+			insertProtocol(TblCustomerstate.class, getCurCustomerstate().getIdCustomerstate(), updateAction);
 		}	
 		
 		resetCustomerstateCombobox();
@@ -210,7 +215,7 @@ public class CustomerstateBackingBean extends AbstractBean implements Filterable
 	/**
 	 * Method to reset CustomerstateCombobox used in customerpopup
 	 */
-	public void resetCustomerstateCombobox(){
+	private void resetCustomerstateCombobox(){
 		/* Reading values of customerLister out of requestMap (Map with all created Managed Beans */
 		CustomerBackingBean customerLister = (CustomerBackingBean) 
 											 FacesContext.getCurrentInstance()

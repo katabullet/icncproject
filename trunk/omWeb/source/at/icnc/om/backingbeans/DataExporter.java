@@ -3,6 +3,7 @@ package at.icnc.om.backingbeans;
 import java.util.Date;
 
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +19,10 @@ public class DataExporter {
     public DataExporter() {
         changeEffect = new Highlight("#fda505");
         //changeEffect.setFired(true);
+    }
+    
+    public void typeChangeListener(ValueChangeEvent event){
+        this.changeEffect.setFired(false);
     }
     
     public String getType() {

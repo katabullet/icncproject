@@ -26,7 +26,17 @@ public class QueryBuilder {
 					sqlStatement += filterColumn.get(x) + " BETWEEN '" + werte[0] + "' AND '" + werte[1] + "'";
 				}
 				else{
-					sqlStatement += filterColumn.get(x) + " LIKE '%" + filterValue.get(x) + "%'";// " = '" + filterValue.get(x) +"'";
+					String filtervalue ="";
+					
+					if(filterValue.get(x).contains("*"))
+					{
+							filtervalue = filterValue.get(x).replace("*", "%");
+					}
+					else
+					{
+						filtervalue = "%" + filterValue.get(x)+ "%";
+					}	
+					sqlStatement += filterColumn.get(x) + " LIKE '" + filtervalue + "'";// " = '" + filterValue.get(x) +"'";
 				}
 			}
 		}

@@ -2,6 +2,7 @@ package at.icnc.om.entitybeans;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -20,6 +21,8 @@ public class TblSettlement extends Selectable implements Serializable {
 	private TblIncometype tblIncometype;
 	private TblInterval tblInterval;
 	private TblOrder tblOrder;
+	// Variable for version for OptimisticLockException
+	private Integer version;
 
     public TblSettlement() {
     }
@@ -94,4 +97,15 @@ public class TblSettlement extends Selectable implements Serializable {
 		this.tblOrder = tblOrder;
 	}
 	
+	/*
+	 * Getter and Setter of Version for OptimisticLockException
+	 */
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	@Version
+	public Integer getVersion() {
+		return version;
+	}
 }

@@ -2,6 +2,7 @@ package at.icnc.om.entitybeans;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Set;
 
 
@@ -16,6 +17,8 @@ public class TblOrderstate extends Selectable implements Serializable {
 	private long idOrderstate;
 	private String descriptionOs;
 	private Set<TblOrder> tblOrders;
+	// Variable for version for OptimisticLockException
+	private Integer version;
 
     public TblOrderstate() {
     }
@@ -54,4 +57,15 @@ public class TblOrderstate extends Selectable implements Serializable {
 		this.tblOrders = tblOrders;
 	}
 	
+	/*
+	 * Getter and Setter of Version for OptimisticLockException
+	 */
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	@Version
+	public Integer getVersion() {
+		return version;
+	}
 }

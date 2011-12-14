@@ -2,6 +2,7 @@ package at.icnc.om.entitybeans;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Set;
 
 
@@ -19,6 +20,8 @@ public class TblContactperson extends Selectable implements Serializable {
 	private String lastname;
 	private String telephone;
 	private Set<TblCustomer> tblCustomers;
+	// Variable for version for OptimisticLockException
+	private Integer version;
 
     public TblContactperson() {
     }
@@ -87,4 +90,15 @@ public class TblContactperson extends Selectable implements Serializable {
 		this.tblCustomers = tblCustomers;
 	}
 	
+	/*
+	 * Getter and Setter of Version for OptimisticLockException
+	 */
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	@Version
+	public Integer getVersion() {
+		return version;
+	}
 }

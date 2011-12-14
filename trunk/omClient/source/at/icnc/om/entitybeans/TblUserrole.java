@@ -2,6 +2,7 @@ package at.icnc.om.entitybeans;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Set;
 
 
@@ -16,6 +17,8 @@ public class TblUserrole extends Selectable implements Serializable {
 	private long idUserrole;
 	private String descriptionUr;
 	private Set<TblUser> tblUsers;
+	// Variable for version for OptimisticLockException
+	private Integer version;
 
     public TblUserrole() {
     }
@@ -54,4 +57,15 @@ public class TblUserrole extends Selectable implements Serializable {
 		this.tblUsers = tblUsers;
 	}
 	
+	/*
+	 * Getter and Setter of Version for OptimisticLockException
+	 */
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	@Version
+	public Integer getVersion() {
+		return version;
+	}
 }

@@ -2,6 +2,7 @@ package at.icnc.om.entitybeans;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Set;
 
 
@@ -17,6 +18,8 @@ public class TblCostcentre extends Selectable implements Serializable {
 	private String costcentrecode;
 	private String descriptionCc;
 	private Set<TblOrder> tblOrders;
+	// Variable for version for OptimisticLockException
+	private Integer version;
 
     public TblCostcentre() {
     }
@@ -65,4 +68,15 @@ public class TblCostcentre extends Selectable implements Serializable {
 		this.tblOrders = tblOrders;
 	}
 	
+	/*
+	 * Getter and Setter of Version for OptimisticLockException
+	 */
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	@Version
+	public Integer getVersion() {
+		return version;
+	}
 }

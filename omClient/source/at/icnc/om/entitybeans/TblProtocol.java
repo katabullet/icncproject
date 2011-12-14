@@ -2,6 +2,7 @@ package at.icnc.om.entitybeans;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -17,6 +18,8 @@ public class TblProtocol extends Selectable implements Serializable {
 	private String change;
 	private Date date;
 	private TblUser tblUser;
+	// Variable for version for OptimisticLockException
+	private Integer version;
 
     public TblProtocol() {
     }
@@ -67,4 +70,15 @@ public class TblProtocol extends Selectable implements Serializable {
 		this.tblUser = tblUser;
 	}
 	
+	/*
+	 * Getter and Setter of Version for OptimisticLockException
+	 */
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	@Version
+	public Integer getVersion() {
+		return version;
+	}
 }

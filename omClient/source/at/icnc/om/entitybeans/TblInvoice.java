@@ -2,6 +2,7 @@ package at.icnc.om.entitybeans;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -22,6 +23,8 @@ public class TblInvoice extends Selectable implements Serializable {
 	private TblInvoicestate tblInvoicestate;
 	private TblSettlement tblSettlement;
 	private BigDecimal estimation;
+	// Variable for version for OptimisticLockException
+	private Integer version;
 
     public TblInvoice() {
     }
@@ -102,4 +105,15 @@ public class TblInvoice extends Selectable implements Serializable {
 		this.tblSettlement = tblSettlement;
 	}
 	
+	/*
+	 * Getter and Setter of Version for OptimisticLockException
+	 */
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	@Version
+	public Integer getVersion() {
+		return version;
+	}
 }

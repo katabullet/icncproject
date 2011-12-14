@@ -2,6 +2,7 @@ package at.icnc.om.entitybeans;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -18,6 +19,8 @@ public class TblInterval extends Selectable implements Serializable {
 	private String descriptionIv;
 	private BigDecimal months;
 	private Set<TblSettlement> tblSettlements;
+	// Variable for version for OptimisticLockException
+	private Integer version;
 
     public TblInterval() {
     }
@@ -66,4 +69,15 @@ public class TblInterval extends Selectable implements Serializable {
 		this.tblSettlements = tblSettlements;
 	}
 	
+	/*
+	 * Getter and Setter of Version for OptimisticLockException
+	 */
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	@Version
+	public Integer getVersion() {
+		return version;
+	}
 }

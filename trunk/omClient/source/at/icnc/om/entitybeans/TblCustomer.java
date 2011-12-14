@@ -1,9 +1,23 @@
 package at.icnc.om.entitybeans;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 
 /**
@@ -23,6 +37,8 @@ public class TblCustomer extends Selectable implements Serializable {
 	private TblCustomerstate tblCustomerstate;
 	private TblUser tblUser;
 	private Set<TblOrder> tblOrders;
+	// Variable for version for OptimisticLockException
+	private Integer version;
 
     public TblCustomer() {
     }
@@ -129,4 +145,15 @@ public class TblCustomer extends Selectable implements Serializable {
 		this.tblOrders = tblOrders;
 	}
 	
+	/*
+	 * Getter and Setter of Version for OptimisticLockException
+	 */
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	@Version
+	public Integer getVersion() {
+		return version;
+	}
 }

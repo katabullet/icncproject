@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.faces.component.html.HtmlSelectOneMenu;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
@@ -319,8 +320,20 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 		try {
 			entityLister.UpdateObject(TblOrder.class, curOrder, curOrder.getIdOrder());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+				/* Reaction to OptimisticLockException here in BackingBean
+				 * Message for user is important to make him/her know what is going on 
+				 * and why the selected entity is not updated 
+				 */
+				/* Reading values of sitesBean out of requestMap (Map with all created Managed Beans */
+				SitesBean sitesBean = (SitesBean) 
+													 FacesContext.getCurrentInstance()
+													 .getExternalContext().getSessionMap().get("sitesBean");
+
+				if(sitesBean != null){
+					sitesBean.setOptimisticLock(true);
+				}	
+			}
 		}
 		
 		if(entityNew){

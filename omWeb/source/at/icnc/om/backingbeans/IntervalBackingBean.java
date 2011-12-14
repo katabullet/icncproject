@@ -210,8 +210,20 @@ public class IntervalBackingBean extends AbstractBean implements Filterable {
 		try {
 			entityLister.UpdateObject(TblInterval.class, curInterval, curInterval.getIdInterval());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+				/* Reaction to OptimisticLockException here in BackingBean
+				 * Message for user is important to make him/her know what is going on 
+				 * and why the selected entity is not updated 
+				 */
+				/* Reading values of sitesBean out of requestMap (Map with all created Managed Beans */
+				SitesBean sitesBean = (SitesBean) 
+													 FacesContext.getCurrentInstance()
+													 .getExternalContext().getSessionMap().get("sitesBean");
+
+				if(sitesBean != null){
+					sitesBean.setOptimisticLock(true);
+				}	
+			}
 		}
 		resetIntervalCombobox();
 		refresh();

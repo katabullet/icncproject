@@ -230,6 +230,7 @@
 						<ui:include src="/Popup/customerstatepopup.jspx"/>
 						<ui:include src="/Popup/reminderpopup.jspx"/>
 						<ui:include src="/Popup/optimisticlockpopup.jspx"/>
+						<ui:include src="../Popup/protocolfilterpopup.jspx"/>
 					<!-- Includes of all Popups -->
 				
 				</ice:form>

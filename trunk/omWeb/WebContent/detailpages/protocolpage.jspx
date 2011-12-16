@@ -128,10 +128,6 @@
 	 
 	    </ice:panelGrid>    		    
 	</ice:panelGroup>
-	
-	<!-- Includes Pop-Ups Start -->
-    <ui:include src="../Popup/protocolfilterpopup.jspx"></ui:include>
-    <!-- Includes Pop-Ups End -->
 	    
 	</div>
 </html>

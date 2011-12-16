@@ -1,6 +1,5 @@
 package at.icnc.om.backingbeans;
 
-
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,22 +22,22 @@ import com.icesoft.faces.component.ext.RowSelectorEvent;
  * Implementation of invoiceLister
  * 
  * @author csh80, nkn80, cma80
- *
+ * 
  */
 public class ReminderBackingBean extends AbstractBean implements Filterable {
-	
+
 	// Variable to save selected Reminder
 	private TblInvoice curReminder = new TblInvoice();
-	
+
 	// List with all Reminders to avoid constant DB-Reading
 	private ArrayList<TblInvoice> reminderList;
-	
-	// List with all invoicestates 
+
+	// List with all invoicestates
 	ArrayList<TblInvoicestate> invoicestates;
-	
+
 	// Variable to save selected invoicestate
 	private TblInvoicestate curInvoicestate;
-	
+
 	// Binding of SelectOneMenu with Invoicestate
 	private HtmlSelectOneMenu bindingInvoicestate;
 
@@ -46,69 +45,70 @@ public class ReminderBackingBean extends AbstractBean implements Filterable {
 	 * ______________________________________________________________________________
 	 * EntityLister functions
 	 */
-	
+
 	/**
 	 * This functions returns a list with all reminders
+	 * 
 	 * @return reminderList
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayList<TblInvoice> getReminderList(){	
+	public ArrayList<TblInvoice> getReminderList() {
 		String status = "Erledigt";
 		Format format = new SimpleDateFormat("yyyy-MM-dd");
 		ArrayList<String> Spalte = new ArrayList<String>();
 		ArrayList<String> Werte = new ArrayList<String>();
-		
+
 		Spalte.add("t.duedate");
 		Spalte.add("i.descriptionIs");
-		
+
 		Werte.add(format.format(new Date()));
 		Werte.add(status);
-		
-		/*Try and Catch: Try to call the "getFilterList" Method and get the FilterList or catch to call the "init" Method*/
+
+		/*
+		 * Try and Catch: Try to call the "getFilterList" Method and get the
+		 * FilterList or catch to call the "init" Method
+		 */
 		try {
-			if(reminderList == null){
-			reminderList = new ArrayList<TblInvoice>();		
-			reminderList.addAll((ArrayList<TblInvoice>)entityLister.getReminderList(Werte, Spalte));
+			if (reminderList == null) {
+				reminderList = new ArrayList<TblInvoice>();
+				reminderList.addAll((ArrayList<TblInvoice>) entityLister
+						.getReminderList(Werte, Spalte));
 			}
 
 		} catch (Exception e) {
 
-			init();			
-		}	
-		
+			init();
+		}
+
 		return reminderList;
-	}	
-	
+	}
+
 	/**
-	 * init Method
-	 * resets all lists with db-content
-	 * closes all popups
-	 * goes back to first page
-	 * resets curInvoice
+	 * init Method resets all lists with db-content closes all popups goes back
+	 * to first page resets curInvoice
 	 */
 	@Override
-	public void init() {		
+	public void init() {
 		paginator.gotoFirstPage();
 		resetFilter();
 		refresh();
 	}
 
 	/**
-	 * Lists with DB-content are set NULL to
-	 * make sure they are read from DB
-	 */	
+	 * Lists with DB-content are set NULL to make sure they are read from DB
+	 */
 	@Override
 	public void refresh() {
 		reminderList = null;
-		invoicestate=null;
+		invoicestate = null;
 		filterpopupRender = false;
 		popupRender = false;
 		setDeletePopupRender(false);
 		visible = false;
-		
+
 	}
-	
-	//Fields for the Filter
+
+	// Fields for the Filter
 	private Integer invoicenumberFrom;
 	private Integer invoicenumberTo;
 	private String customername;
@@ -169,135 +169,146 @@ public class ReminderBackingBean extends AbstractBean implements Filterable {
 	@Override
 	public void filterEntities() {
 		getReminderList();
-		
-		//Filter List
+
+		// Filter List
 		ArrayList<TblInvoice> reminderFilterList = new ArrayList<TblInvoice>();
-		
-		/*Start Methods which check if the Fields are set and add them to the ArrayLists*/
-		if(invoicenumberFrom != null && invoicenumberFrom !=0 || invoicenumberTo!= null && invoicenumberTo!=0){
-			
-			/*Start - Set a default Value if none is set*/
-			if(invoicenumberFrom==null) invoicenumberFrom=0;
-			if(invoicenumberTo == null) invoicenumberTo=999999;
-			/*End - Set a default Value if none is set*/
-			
+
+		/*
+		 * Start Methods which check if the Fields are set and add them to the
+		 * ArrayLists
+		 */
+		if (invoicenumberFrom != null && invoicenumberFrom != 0
+				|| invoicenumberTo != null && invoicenumberTo != 0) {
+
+			/* Start - Set a default Value if none is set */
+			if (invoicenumberFrom == null)
+				invoicenumberFrom = 0;
+			if (invoicenumberTo == null)
+				invoicenumberTo = 999999;
+			/* End - Set a default Value if none is set */
+
 			for (TblInvoice item : reminderList) {
-				
-				if(Integer.parseInt(item.getInvoicenumber())>=invoicenumberFrom && Integer.parseInt(item.getInvoicenumber())<=invoicenumberTo)
-				{
-					reminderFilterList.add(item);	
+
+				if (Integer.parseInt(item.getInvoicenumber()) >= invoicenumberFrom
+						&& Integer.parseInt(item.getInvoicenumber()) <= invoicenumberTo) {
+					reminderFilterList.add(item);
 				}
 			}
 			reminderList.clear();
 			reminderList.addAll(reminderFilterList);
 		}
 
-		if(customername != null && customername!="" && customername !="*"){
-			
-			if(!reminderFilterList.isEmpty())
-			{
-				reminderFilterList.clear();				
+		if (customername != null && customername != "" && customername != "*") {
+
+			if (!reminderFilterList.isEmpty()) {
+				reminderFilterList.clear();
 			}
-			
+
 			for (TblInvoice item : reminderList) {
-				
-				if(customername.contains("*"))
-				{
-					if(customername.startsWith("*")&& !customername.endsWith("*"))
-					{
-						customername= customername.substring(1,customername.length());
-						if(item.getTblSettlement().getTblOrder().getTblCustomer().getCustomername().endsWith(customername))
-						{
-							reminderFilterList.add(item);	
+
+				if (customername.contains("*")) {
+					if (customername.startsWith("*")
+							&& !customername.endsWith("*")) {
+						customername = customername.substring(1,
+								customername.length());
+						if (item.getTblSettlement().getTblOrder()
+								.getTblCustomer().getCustomername()
+								.endsWith(customername)) {
+							reminderFilterList.add(item);
 						}
-						customername = "*"+customername;
-					}					
-					else if(customername.endsWith("*")&& !customername.startsWith("*"))						
-					{
-						customername= customername.substring(0,customername.length()-1);
-						if(item.getTblSettlement().getTblOrder().getTblCustomer().getCustomername().startsWith(customername))
-						{
-							reminderFilterList.add(item);	
+						customername = "*" + customername;
+					} else if (customername.endsWith("*")
+							&& !customername.startsWith("*")) {
+						customername = customername.substring(0,
+								customername.length() - 1);
+						if (item.getTblSettlement().getTblOrder()
+								.getTblCustomer().getCustomername()
+								.startsWith(customername)) {
+							reminderFilterList.add(item);
 						}
-						customername = customername+"*";
-					}
-					else if(customername.endsWith("*")&& customername.startsWith("*"))
-					{
-						customername = customername.substring(1, customername.length()-1);
-						if(item.getTblSettlement().getTblOrder().getTblCustomer().getCustomername().contains(customername))
-						{
-							reminderFilterList.add(item);							
+						customername = customername + "*";
+					} else if (customername.endsWith("*")
+							&& customername.startsWith("*")) {
+						customername = customername.substring(1,
+								customername.length() - 1);
+						if (item.getTblSettlement().getTblOrder()
+								.getTblCustomer().getCustomername()
+								.contains(customername)) {
+							reminderFilterList.add(item);
 						}
-						customername = "*"+customername+"*";
-						
-					}
-					else
-					{
+						customername = "*" + customername + "*";
+
+					} else {
 						String[] filtervalues = new String[2];
-						filtervalues[0] = customername.substring(0,customername.indexOf("*"));
-						filtervalues[1] = customername.substring(customername.indexOf("*")+1, customername.length());
-						
-						if(item.getTblSettlement().getTblOrder().getTblCustomer().getCustomername().startsWith(filtervalues[0]) && item.getTblSettlement().getTblOrder().getTblCustomer().getCustomername().endsWith(filtervalues[1]))
-						{
-							reminderFilterList.add(item);							
+						filtervalues[0] = customername.substring(0,
+								customername.indexOf("*"));
+						filtervalues[1] = customername.substring(
+								customername.indexOf("*") + 1,
+								customername.length());
+
+						if (item.getTblSettlement().getTblOrder()
+								.getTblCustomer().getCustomername()
+								.startsWith(filtervalues[0])
+								&& item.getTblSettlement().getTblOrder()
+										.getTblCustomer().getCustomername()
+										.endsWith(filtervalues[1])) {
+							reminderFilterList.add(item);
 						}
-					}						
-				}
-				else
-				{
-					if(item.getTblSettlement().getTblOrder().getTblCustomer().getCustomername().contains(customername))
-					{
-						reminderFilterList.add(item);							
 					}
-					
+				} else {
+					if (item.getTblSettlement().getTblOrder().getTblCustomer()
+							.getCustomername().contains(customername)) {
+						reminderFilterList.add(item);
+					}
+
 				}
-				
+
 			}
 			reminderList.clear();
 			reminderList.addAll(reminderFilterList);
-			
+
 		}
-		
-		if(duedateFrom != null || duedateTo != null){
-			
-			if(!reminderFilterList.isEmpty())
-			{
-				reminderFilterList.clear();				
+
+		if (duedateFrom != null || duedateTo != null) {
+
+			if (!reminderFilterList.isEmpty()) {
+				reminderFilterList.clear();
 			}
-			
-			/*Start - Set a default Value if none is set*/
-			if(duedateFrom==null)
+
+			/* Start - Set a default Value if none is set */
+			if (duedateFrom == null)
 				try {
 					duedateFrom = dateFormat.parse("1999-01-01");
 				} catch (ParseException e) {
 				}
-			if(duedateTo==null)
+			if (duedateTo == null)
 				try {
 					duedateTo = dateFormat.parse("3000-01-01");
 				} catch (ParseException e) {
 				}
-				
+
 			for (TblInvoice item : reminderList) {
-				if((item.getDuedate().after(duedateFrom) && item.getDuedate().before(duedateTo)) || item.getDuedate().compareTo(duedateFrom)==0 ||  item.getDuedate().compareTo(duedateTo)==0)
-				{
+				if ((item.getDuedate().after(duedateFrom) && item.getDuedate()
+						.before(duedateTo))
+						|| item.getDuedate().compareTo(duedateFrom) == 0
+						|| item.getDuedate().compareTo(duedateTo) == 0) {
 					reminderFilterList.add(item);
-					
+
 				}
 			}
 			reminderList.clear();
 			reminderList.addAll(reminderFilterList);
 		}
-		
-		if(invoicestate != null && invoicestate!=""){
-			
-			if(!reminderFilterList.isEmpty())
-			{
-				reminderFilterList.clear();				
+
+		if (invoicestate != null && invoicestate != "") {
+
+			if (!reminderFilterList.isEmpty()) {
+				reminderFilterList.clear();
 			}
-			
+
 			for (TblInvoice item : reminderList) {
-				if(item.getTblInvoicestate().getDescriptionIs().contains(invoicestate))
-				{
+				if (item.getTblInvoicestate().getDescriptionIs()
+						.contains(invoicestate)) {
 					reminderFilterList.add(item);
 				}
 			}
@@ -305,71 +316,81 @@ public class ReminderBackingBean extends AbstractBean implements Filterable {
 			reminderList.addAll(reminderFilterList);
 		}
 		changeFilterPopupRender();
-		
-	}	
-	
+
+	}
+
 	/**
 	 * Function to create SelectItems of all Incometypes plus an empty one
 	 * Important for combobox (needs SelectItem, not objects of incometype)
-	 * @return List of SelectItem 
+	 * 
+	 * @return List of SelectItem
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayList<SelectItem> getinvoicestateListDescription(){
+	public ArrayList<SelectItem> getinvoicestateListDescription() {
 		ArrayList<SelectItem> invoicestateDescription = new ArrayList<SelectItem>();
-	
+
 		ArrayList<TblInvoicestate> invoicestate = new ArrayList<TblInvoicestate>();
-		invoicestate.addAll((Collection<? extends TblInvoicestate>) 
-				entityLister.getObjectList(TblInvoicestate.class));
-		/*An empty Item is added to SelectItem-List*/
+		invoicestate
+				.addAll((Collection<? extends TblInvoicestate>) entityLister
+						.getObjectList(TblInvoicestate.class));
+		/* An empty Item is added to SelectItem-List */
 		invoicestateDescription.add(new SelectItem());
 		for (TblInvoicestate item : invoicestate) {
 			/* Description of each invoicestate is added to SelectItem-List */
-			invoicestateDescription.add(new SelectItem(item.getDescriptionIs()));
+			invoicestateDescription
+					.add(new SelectItem(item.getDescriptionIs()));
 		}
-		return invoicestateDescription;			
+		return invoicestateDescription;
 	}
-	
+
 	/**
 	 * Function to create SelectItems of all Invoicestates plus an empty one
 	 * Important for combobox (needs SelectItem, not objects of invoicestates)
-	 * @return List of SelectItem 
+	 * 
+	 * @return List of SelectItem
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayList<SelectItem> getinvoicestateListDescriptionFilter(){
+	public ArrayList<SelectItem> getinvoicestateListDescriptionFilter() {
 		ArrayList<SelectItem> invoicestate = new ArrayList<SelectItem>();
-	
+
 		ArrayList<TblInvoicestate> iState = new ArrayList<TblInvoicestate>();
-		iState.addAll((ArrayList<TblInvoicestate>)
-				entityLister.getObjectList(TblInvoicestate.class));
-		/*An empty Item is added to SelectItem-List*/
+		iState.addAll((ArrayList<TblInvoicestate>) entityLister
+				.getObjectList(TblInvoicestate.class));
+		/* An empty Item is added to SelectItem-List */
 		invoicestate.add(new SelectItem());
 		for (TblInvoicestate item : iState) {
 			/* Description of each invoicestate is added to SelectItem-List */
 			invoicestate.add(new SelectItem(item.getDescriptionIs()));
 		}
-		return invoicestate;			
+		return invoicestate;
 	}
-	
+
 	/**
-	 * Method that Listens to Change Event of a combobox
-	 * if another element in the combobox is selected, the value in
-	 * curInvoicestate is set to the selected one
+	 * Method that Listens to Change Event of a combobox if another element in
+	 * the combobox is selected, the value in curInvoicestate is set to the
+	 * selected one
+	 * 
 	 * @param vce
 	 */
-	public void changeInvoicestate(ValueChangeEvent vce){
-		setCurInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM OMinvoicestate WHERE description_is = '" + 
-				vce.getNewValue().toString() + "'", TblInvoicestate.class));				
+	public void changeInvoicestate(ValueChangeEvent vce) {
+		setCurInvoicestate((TblInvoicestate) entityLister.getSingleObject(
+				"SELECT * FROM OMinvoicestate WHERE description_is = '"
+						+ vce.getNewValue().toString() + "'",
+				TblInvoicestate.class));
 	}
-	
+
 	/**
-	 * Method that Listens to Change Event of a combobox
-	 * if another element in the combobox is selected, the value in
-	 * curInvoicestate is set to the selected one
+	 * Method that Listens to Change Event of a combobox if another element in
+	 * the combobox is selected, the value in curInvoicestate is set to the
+	 * selected one
+	 * 
 	 * @param vce
 	 */
-	public void changeInvoicestateFilter(ValueChangeEvent vce){
-		setCurInvoicestate((TblInvoicestate) entityLister.getSingleObject("SELECT * FROM OMinvoicestate WHERE description_is = '" + 
-				vce.getNewValue().toString() + "'", TblInvoicestate.class));				
+	public void changeInvoicestateFilter(ValueChangeEvent vce) {
+		setCurInvoicestate((TblInvoicestate) entityLister.getSingleObject(
+				"SELECT * FROM OMinvoicestate WHERE description_is = '"
+						+ vce.getNewValue().toString() + "'",
+				TblInvoicestate.class));
 	}
 
 	/* Setter of curInvoicestate */
@@ -385,30 +406,32 @@ public class ReminderBackingBean extends AbstractBean implements Filterable {
 	@Override
 	public void changePopupRenderNew() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void rowEvent(RowSelectorEvent re) {
-		
-		/* If no invoices is selected, curInvoice is set to selected
-		 * otherwise the invoice is unselected
+
+		/*
+		 * If no invoices is selected, curInvoice is set to selected otherwise
+		 * the invoice is unselected
 		 */
-		if(getCurReminder() != null){			
-			if(getCurReminder().getIdInvoice() == reminderList.get(re.getRow()).getIdInvoice()){
+		if (getCurReminder() != null) {
+			if (getCurReminder().getIdInvoice() == reminderList
+					.get(re.getRow()).getIdInvoice()) {
 				setCurReminder(new TblInvoice());
 				setVisible(false);
-			}else {
+			} else {
 				setCurReminder(reminderList.get(re.getRow()));
 				setVisible(true);
 			}
 		}
-		
-	}	
+
+	}
 
 	@Override
 	public void deleteEntity() {
-		
+
 	}
 
 	@Override
@@ -435,14 +458,15 @@ public class ReminderBackingBean extends AbstractBean implements Filterable {
 		insertProtocol(TblInvoice.class, getCurReminder().getIdInvoice(), updateAction);
 		refresh();
 	}
-	public void resetFilter(){
+
+	public void resetFilter() {
 		try {
 			invoicenumberFrom = null;
 			invoicenumberTo = null;
 			customername = "";
 			duedateFrom = dateFormat.parse("1999-01-01");
 			duedateTo = dateFormat.parse("3000-01-01");
-			invoicestate="";
+			invoicestate = "";
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

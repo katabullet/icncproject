@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
+import at.icnc.om.entitybeans.TblContactperson;
 import at.icnc.om.entitybeans.TblCustomer;
 import at.icnc.om.entitybeans.TblCustomerstate;
 import at.icnc.om.entitybeans.TblInvoice;
@@ -74,6 +75,10 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 	// List to save current incometypes
 	private ArrayList<TblIncometype> curIncometypes;
 	
+	//Field Declaration for Salesmanquery
+	String username="";
+	String join ="INNER JOIN t.tblCustomer c INNER JOIN c.tblUser u";
+	
 	/**
 	 * This functions returns a list with all orders
 	 * @return orderList
@@ -86,8 +91,22 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 		 */
 		if (orderList == null) {
 			orderList = new ArrayList<TblOrder>();
+			
+		if(UserBean.userrole!=5){
 			orderList.addAll((ArrayList<TblOrder>) 
 					entityLister.getObjectList(TblOrder.class));
+			
+		}
+		else
+		{
+			UserBean user = (UserBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+			if(user!=null){
+				username =user.getUsername();
+			}
+			
+			orderList.addAll((ArrayList<TblOrder>)
+					entityLister.getObjectListSalesman(TblOrder.class,"TblOrder", username , join));			
+		}
 		}
 		
 		/* Makes the user know which order is selected (it is shaded) */
@@ -134,6 +153,17 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 			ArrayList<String> spalte= new ArrayList<String>();
 			/*Field with contains the Joinstatement*/
 			String joinStatement="";
+			
+			if(UserBean.userrole==5){
+				
+				UserBean user = (UserBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+				if(user!=null){
+					username =user.getUsername();
+				}
+				joinStatement=" "+join;
+				werte.add(username);
+				spalte.add("u.username");
+			}
 			
 			/*Start Methods which check if the Fields are set and add them to the ArrayLists*/
 			if(orderdatefromFilter != null || orderdatetoFilter != null){
@@ -199,8 +229,10 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 				werte.add(customerFilter);
 				spalte.add("c.customername");
 				
+				if(UserBean.userrole!=5){
 				/* Add a part to the Joinstatement */
 				joinStatement += " INNER JOIN t.tblCustomer c";
+				}
 			}
 			
 			/*End Methods which check if the Fields are set and add them to the ArrayLists*/

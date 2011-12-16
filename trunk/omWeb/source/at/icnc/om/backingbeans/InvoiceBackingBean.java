@@ -46,6 +46,10 @@ public class InvoiceBackingBean extends AbstractBean {
 	// Binding of SelectOneMenu with Invoicestate
 	private HtmlSelectOneMenu bindingInvoicestate;
 	
+	//Field Declaration for Salesmanquery
+	String username="";
+	String join ="INNER JOIN t.tblSettlement s INNER JOIN s.tblOrder o INNER JOIN o.tblCustomer c INNER JOIN c.tblUser u";
+	
 	/*
 	 * ______________________________________________________________________________
 	 * EntityLister functions
@@ -63,8 +67,20 @@ public class InvoiceBackingBean extends AbstractBean {
 		 */
 		if (invoiceList == null) {
 			invoiceList = new ArrayList<TblInvoice>();
+			if(UserBean.userrole !=5){
 			invoiceList.addAll((ArrayList<TblInvoice>) 
 					entityLister.getObjectList(TblInvoice.class));
+			}
+			else
+			{
+				UserBean user = (UserBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+				if(user!=null){
+					username =user.getUsername();
+				}
+				
+				invoiceList.addAll((ArrayList<TblInvoice>)
+						entityLister.getObjectListSalesman(TblInvoice.class,"TblInvoice", username , join));			
+			}
 		}
 		
 		/* Makes the user know which invoice is selected (it is shaded) */
@@ -464,6 +480,17 @@ public class InvoiceBackingBean extends AbstractBean {
 		/*Field with contains the Joinstatement*/
 		String joinStatement="";
 		
+		if(UserBean.userrole==5){
+			
+			UserBean user = (UserBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+			if(user!=null){
+				username =user.getUsername();
+			}
+			joinStatement=" "+join;
+			werte.add(username);
+			spalte.add("u.username");
+		}
+		
 		/*Start Methods which check if the Fields are set and add them to the ArrayLists*/
 		if(invoicenumberFrom != null && invoicenumberFrom!=0 || invoicenumberTo != null && invoicenumberTo!=0){
 			
@@ -530,8 +557,10 @@ public class InvoiceBackingBean extends AbstractBean {
 			werte.add(ordernumber);
 			spalte.add("o.ordernumber");
 			
+			if(UserBean.userrole!=5){
 			/*Add a part of the Joinstatement*/
 			joinStatement +=" INNER JOIN t.tblSettlement s INNER JOIN s.tblOrder o";
+			}
 		}
 		
 		if(incometype != null && incometype != ""){

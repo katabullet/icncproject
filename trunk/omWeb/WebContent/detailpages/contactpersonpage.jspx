@@ -39,9 +39,9 @@
      	<ice:panelGrid columns="5" columnClasses="buttons" style="width: 112px;">
      		<ice:commandButton title="#{msg.buttonRefresh}" image="images/refresh.jpg" action="#{contactpersonLister.init}"/>
      		<ice:commandButton title="#{msg.buttonFilter}" image="images/btn_filter_e.png" action="#{contactpersonLister.changeFilterPopupRender}"/>
-      		<ice:commandButton title="#{msg.buttonNew}" image="images/btn_new_e.png" rendered="#{sitesBean.buttonRendered}" action="#{contactpersonLister.changePopupRenderNew}"/>
-      		<ice:commandButton title="#{msg.buttonEdit}" image="images/btn_edit_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{contactpersonLister.visible}" action="#{contactpersonLister.changePopupRender}"/>  					  	
-     		<ice:commandButton title="#{msg.buttonDelete}" image="images/btn_delete_e.png" rendered="#{sitesBean.buttonRendered}" visible="#{contactpersonLister.visible}" action="#{contactpersonLister.changeDeletePopupRender}"/>		           					  	
+      		<ice:commandButton title="#{msg.buttonNew}" image="images/btn_new_e.png" rendered="#{sitesBean.salesmanButtonRendered}" action="#{contactpersonLister.changePopupRenderNew}"/>
+      		<ice:commandButton title="#{msg.buttonEdit}" image="images/btn_edit_e.png" rendered="#{sitesBean.salesmanButtonRendered}" visible="#{contactpersonLister.visible}" action="#{contactpersonLister.changePopupRender}"/>  					  	
+     		<ice:commandButton title="#{msg.buttonDelete}" image="images/btn_delete_e.png" rendered="#{sitesBean.salesmanButtonRendered}" visible="#{contactpersonLister.visible}" action="#{contactpersonLister.changeDeletePopupRender}"/>		           					  	
      	</ice:panelGrid>
      	<!-- Buttons End -->
      	

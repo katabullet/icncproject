@@ -13,7 +13,7 @@ public class QueryBuilder {
 	
 	public static String CreateSelectStatement(String table, String Joins, ArrayList<String> filterColumn, 
 									ArrayList<String> filterValue){
-		String sqlStatement = "SELECT t FROM " + table + " t" + Joins;
+		String sqlStatement = "SELECT DISTINCT t FROM " + table + " t" + Joins;
 		if(filterColumn.get(0) != ""){
 			sqlStatement += " WHERE ";
 			for(int x = 0; x< filterColumn.size(); x++){
@@ -53,6 +53,14 @@ public class QueryBuilder {
 		table = entityClass.getSimpleName();
 		table = projectPrefix + table.substring(3);
 		sqlStatement += table;
+		
+		return sqlStatement;
+	}
+	
+	public static String CreateSelectStatement(String Class, String username, String join){
+		String sqlStatement = "";
+		
+		sqlStatement = "SELECT DISTINCT t FROM " + Class + " t " + join +" WHERE u.username = '" + username + "'";
 		
 		return sqlStatement;
 	}

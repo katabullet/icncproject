@@ -9,14 +9,10 @@ import java.util.Collection;
 import java.util.Date;
 
 import javax.faces.component.html.HtmlSelectOneMenu;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import org.eclipse.persistence.annotations.Convert;
-import org.eclipse.persistence.internal.jpa.parsing.BetweenNode;
-
-import at.icnc.om.entitybeans.TblCustomer;
-import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.entitybeans.TblInvoice;
 import at.icnc.om.entitybeans.TblInvoicestate;
 import at.icnc.om.interfaces.Filterable;
@@ -418,7 +414,24 @@ public class ReminderBackingBean extends AbstractBean implements Filterable {
 	@Override
 	public void updateEntity() {
 		curReminder.setTblInvoicestate(curInvoicestate);
-		entityLister.UpdateObject(TblInvoice.class, curReminder, curReminder.getIdInvoice());
+		try {
+			entityLister.UpdateObject(TblInvoice.class, curReminder, curReminder.getIdInvoice());
+		} catch (Exception e) {
+			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+				/* Reaction to OptimisticLockException here in BackingBean
+				 * Message for user is important to make him/her know what is going on 
+				 * and why the selected entity is not updated 
+				 */
+				/* Reading values of sitesBean out of requestMap (Map with all created Managed Beans */
+				SitesBean sitesBean = (SitesBean) 
+													 FacesContext.getCurrentInstance()
+													 .getExternalContext().getSessionMap().get("sitesBean");
+
+				if(sitesBean != null){
+					sitesBean.setOptimisticLock(true);
+				}	
+			}
+		}
 		insertProtocol(TblInvoice.class, getCurReminder().getIdInvoice(), updateAction);
 		refresh();
 	}

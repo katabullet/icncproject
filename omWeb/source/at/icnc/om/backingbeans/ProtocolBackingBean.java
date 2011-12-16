@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+
+import jxl.write.DateFormat;
 
 import at.icnc.om.entitybeans.TblCustomerstate;
 import at.icnc.om.entitybeans.TblInvoice;
@@ -31,6 +34,18 @@ public class ProtocolBackingBean extends AbstractBean implements Filterable {
 	
 	// List with all Reminders to avoid constant DB-Reading
 	private ArrayList<TblProtocol> protocolList;
+	
+	// Variable to save selected users
+	private TblUser curUser;
+	
+	// Binding of SelectOneMenu with Users
+	private HtmlSelectOneMenu bindingUser;
+	
+	// Variable to save selected protocol
+	private Object curActivity;
+	
+	// Binding of SelectOneMenu with Protocol
+	private HtmlSelectOneMenu bindingActivity;
 
 	/*
 	 * ______________________________________________________________________________
@@ -85,62 +100,45 @@ public class ProtocolBackingBean extends AbstractBean implements Filterable {
 	}
 	
 	//Fields for the Filter
-	private Integer invoicenumberFrom;
-	private Integer invoicenumberTo;
-	private String customername;
-	private Date duedateFrom;
-	private Date duedateTo;
-	private String invoicestate;
+	private String activity;
+	private Date datefrom;
+	private Date dateto;
+	private String username;
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	private Format format = new SimpleDateFormat("yyyy-MM-dd");
-
-	public void setInvoicenumberFrom(Integer invoicenumberFrom) {
-		this.invoicenumberFrom = invoicenumberFrom;
+	
+	public void setActivity(String activity) {
+		this.activity = activity;
 	}
 
-	public Integer getInvoicenumberFrom() {
-		return invoicenumberFrom;
+	public String getActivity() {
+		return activity;
 	}
 
-	public void setInvoicenumberTo(Integer invoicenumberTo) {
-		this.invoicenumberTo = invoicenumberTo;
+	public void setDatefrom(Date datefrom) {
+		this.datefrom = datefrom;
 	}
 
-	public Integer getInvoicenumberTo() {
-		return invoicenumberTo;
+	public Date getDatefrom() {
+		return datefrom;
+	}
+	
+	public void setDateto(Date dateto) {
+		this.dateto = dateto;
 	}
 
-	public void setCustomername(String customername) {
-		this.customername = customername;
+	public Date getDateto() {
+		return dateto;
 	}
 
-	public String getCustomername() {
-		return customername;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public void setDuedateFrom(Date duedateFrom) {
-		this.duedateFrom = duedateFrom;
+	public String getUsername() {
+		return username;
 	}
 
-	public Date getDuedateFrom() {
-		return duedateFrom;
-	}
-
-	public void setDuedateTo(Date duedateTo) {
-		this.duedateTo = duedateTo;
-	}
-
-	public Date getDuedateTo() {
-		return duedateTo;
-	}
-
-	public void setInvoicestate(String invoicestate) {
-		this.invoicestate = invoicestate;
-	}
-
-	public String getInvoicestate() {
-		return invoicestate;
-	}
 
 	@Override
 	public void filterEntities() {
@@ -154,51 +152,39 @@ public class ProtocolBackingBean extends AbstractBean implements Filterable {
 		String joinStatement="";
 		
 		/*Start Methods which check if the Fields are set and add them to the ArrayLists*/
-		if(invoicenumberFrom != null || invoicenumberTo!= null){
+		if(activity!=null && activity!=""){
 			
-			/*Start - Set a default Value if none is set*/
-			if(invoicenumberFrom==null) invoicenumberFrom=0;
-			if(invoicenumberTo == null) invoicenumberTo=999999;
-			/*End - Set a default Value if none is set*/
+			activity = "*" + activity.toLowerCase() + "*";
 			
-			werte.add(invoicenumberFrom + ":" + invoicenumberTo);
-			spalte.add("t.invoicenumber");
-		}
-
-		if(customername != null && customername!=""){
-			
-			werte.add(customername);
-			spalte.add("c.customername");
-			
-			/*Add a part of the Joinstatement*/
-			joinStatement +=" INNER JOIN t.tblSettlement s INNER JOIN s.tblOrder o INNER JOIN o.tblCustomer c";
+			werte.add(activity);
+			spalte.add("t.change");
 		}
 		
-		if(duedateFrom != null || duedateTo != null){
+		if(datefrom != null || dateto != null){
 			
 			/*Start - Set a default Value if none is set*/
-			if(duedateFrom==null)
+			if(datefrom==null)
 				try {
-					duedateFrom = dateFormat.parse("1999-01-01");
+					datefrom = dateFormat.parse("1999-01-01");
 				} catch (ParseException e) {
 				}
-			if(duedateTo==null)
+			if(dateto==null)
 				try {
-					duedateTo = dateFormat.parse("3000-01-01");
+					dateto = dateFormat.parse("3000-01-01");
 				} catch (ParseException e) {
 				}
 			/*Start - Set a default Value if none is set*/
 			
-			werte.add(format.format(duedateFrom) + ":" + format.format(duedateTo));
-			spalte.add("t.duedate");
+			werte.add(format.format(datefrom) + ":" + format.format(dateto));
+			spalte.add("t.date");
 		}
 		
-		if(invoicestate != null && invoicestate!=""){
-			werte.add(invoicestate);
-			spalte.add("i.descriptionIs");
+		if(username != null && username!=""){
+			werte.add(username);
+			spalte.add("u.username");
 			
 			/*Add a part of the Joinstatement*/
-			joinStatement +=" INNER JOIN t.tblInvoicestate i";
+			joinStatement +=" INNER JOIN t.tblUser u";
 		}
 
 		/*End Methods which check if the Fields are set and add them to the ArrayLists*/
@@ -247,14 +233,103 @@ public class ProtocolBackingBean extends AbstractBean implements Filterable {
 	}
 	public void resetFilter(){
 		try {
-			invoicenumberFrom = null;
-			invoicenumberTo = null;
-			customername = "";
-			duedateFrom = dateFormat.parse("1999-01-01");
-			duedateTo = dateFormat.parse("3000-01-01");
-			invoicestate="";
+			activity = null;
+			datefrom = dateFormat.parse("1999-01-01");
+			dateto = dateFormat.parse("3000-01-01");
+			username="";
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Function to create SelectItems of all Activities plus an empty one
+	 * Important for combobox (needs SelectItem, not objects of Activities)
+	 * @return List of SelectItem 
+	 */
+	@SuppressWarnings("unchecked")
+	public ArrayList<SelectItem> getActivityList(){
+		ArrayList<SelectItem> activityDescription = new ArrayList<SelectItem>();
+		
+		activityDescription.add(new SelectItem(""));
+		activityDescription.add(new SelectItem("Erzeugt"));
+		activityDescription.add(new SelectItem("Aktualisiert"));
+		activityDescription.add(new SelectItem("Gelöscht"));
+		
+		return activityDescription;			
+	}
+	
+	/**
+	 * Method that Listens to Change Event of a combobox
+	 * if another element in the combobox is selected, the value in
+	 * curUser is set to the selected one
+	 * @param vce
+	 */
+	public void changeActivity(ValueChangeEvent vce){
+		setCurActivity(vce.getNewValue());				
+	}
+	
+	/**
+	 * Function to create SelectItems of all Users plus an empty one
+	 * Important for combobox (needs SelectItem, not objects of Users)
+	 * @return List of SelectItem 
+	 */
+	@SuppressWarnings("unchecked")
+	public ArrayList<SelectItem> getUserList(){
+		ArrayList<SelectItem> user = new ArrayList<SelectItem>();
+		
+		ArrayList<TblUser> iState = new ArrayList<TblUser>();
+		iState.addAll((ArrayList<TblUser>)
+				entityLister.getObjectList(TblUser.class));
+		/*An empty Item is added to SelectItem-List*/
+		user.add(new SelectItem());
+		for (TblUser item : iState) {
+			/* Name of each User is added to SelectItem-List */
+			user.add(new SelectItem(item.getUsername()));
+		}
+		return user;			
+	}
+	
+	/**
+	 * Method that Listens to Change Event of a combobox
+	 * if another element in the combobox is selected, the value in
+	 * curUser is set to the selected one
+	 * @param vce
+	 */
+	public void changeUser(ValueChangeEvent vce){
+		setCurUser((TblUser) entityLister.getSingleObject("SELECT * FROM OMuser WHERE username = '" + 
+				vce.getNewValue().toString() + "'", TblUser.class));				
+	}
+
+	public void setCurUser(TblUser curUser) {
+		this.curUser = curUser;
+	}
+
+	public TblUser getCurUser() {
+		return curUser;
+	}
+
+	public void setBindingUser(HtmlSelectOneMenu bindingUser) {
+		this.bindingUser = bindingUser;
+	}
+
+	public HtmlSelectOneMenu getBindingUser() {
+		return bindingUser;
+	}
+
+	public void setCurActivity(Object curActivity) {
+		this.curActivity = curActivity;
+	}
+
+	public Object getCurActivity() {
+		return curActivity;
+	}
+
+	public void setBindingActivity(HtmlSelectOneMenu bindingActivity) {
+		this.bindingActivity = bindingActivity;
+	}
+
+	public HtmlSelectOneMenu getBindingActivity() {
+		return bindingActivity;
 	}
 }

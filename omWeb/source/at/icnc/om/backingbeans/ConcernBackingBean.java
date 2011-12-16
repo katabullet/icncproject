@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.faces.context.FacesContext;
 
 import at.icnc.om.entitybeans.TblConcern;
+import at.icnc.om.entitybeans.TblCustomer;
 import at.icnc.om.interfaces.Filterable;
 
 import com.icesoft.faces.component.ext.RowSelectorEvent;
@@ -28,6 +29,10 @@ public class ConcernBackingBean extends AbstractBean implements Filterable {
 	private String concernnameFilter;
 	private String concernmatchcodeFilter;
 	
+	//Field Declaration for Salesmanquery
+	String username="";
+	String join ="INNER JOIN t.tblCustomers c INNER JOIN c.tblUser u";
+	
 	/**
 	 * This functions returns a list with all invoices
 	 * @return invoiceList
@@ -40,8 +45,21 @@ public class ConcernBackingBean extends AbstractBean implements Filterable {
 		 */
 		if (concernList == null) {
 			concernList = new ArrayList<TblConcern>();
+			
+			if(UserBean.userrole!=5){
 			concernList.addAll((ArrayList<TblConcern>) 
 					entityLister.getObjectList(TblConcern.class));
+			}
+			else
+			{
+				UserBean user = (UserBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+				if(user!=null){
+					username =user.getUsername();
+				}
+				
+				concernList.addAll((ArrayList<TblConcern>)
+						entityLister.getObjectListSalesman(TblConcern.class,"TblConcern", username , join));			
+			}
 		}
 		
 		/* Makes the user know which concern is selected (it is shaded) */
@@ -207,6 +225,16 @@ public class ConcernBackingBean extends AbstractBean implements Filterable {
 		/*ArrayList which managed the filter columns*/
 		ArrayList<String> spalte= new ArrayList<String>();
 		
+			if(UserBean.userrole==5){
+			
+			UserBean user = (UserBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+			if(user!=null){
+				username =user.getUsername();
+			}
+			werte.add(username);
+			spalte.add("u.username");
+		}	
+		
 		/*Start Methods which check if the Fields are set and add them to the ArrayLists*/
 		if(getConcernnameFilter() != null && getConcernnameFilter() != ""){				
 			werte.add(getConcernnameFilter());
@@ -224,7 +252,7 @@ public class ConcernBackingBean extends AbstractBean implements Filterable {
 			/*Deletes the current Table*/
 			concernList.clear();
 			
-			concernList.addAll((ArrayList<TblConcern>) entityLister.getFilterList(TblConcern.class, "TblConcern", "", werte, spalte));
+			concernList.addAll((ArrayList<TblConcern>) entityLister.getFilterList(TblConcern.class, "TblConcern", " "+join, werte, spalte));
 			
 			/*Method to close the Popup*/
 			changeFilterPopupRender();

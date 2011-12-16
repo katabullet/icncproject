@@ -16,6 +16,9 @@ public interface EntityListerLocal {
 	/* Function to return entityList without filters */
 	public Collection<?> getObjectList(Class<?> entityClass);
 	
+	/*Function to return entityList per Salesman*/
+	public Collection<?> getObjectListSalesman(Class<?> entityClass, String Class, String username, String join);
+	
 	/* Function to return entityList */
 	public Collection<?> getObjectList(String sqlStatement);
 	

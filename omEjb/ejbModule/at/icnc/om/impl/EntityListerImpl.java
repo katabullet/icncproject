@@ -63,6 +63,39 @@ public class EntityListerImpl implements EntityListerLocal {
 		return result;
 	}
 	
+	 /**
+     * Returns a list of all entities of the defined entityClass
+     * @param entityClass class of specific entity (entityname.class)
+     */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Collection<?> getObjectListSalesman(Class<?> entityClass, String Class, String username, String join) {
+		/* local list for all results */
+		Collection<?> result = new ArrayList<Object>();
+		
+		/* Creates the SQL-Statement using QueryBuilder 
+		 * sqlStatement without any filters 
+		 */
+		String sqlStatement = QueryBuilder.CreateSelectStatement(Class, username, join);
+		
+		try {		
+			/* Uses create Query to create a Query
+			 * Query-Method getResultList is used
+			 */
+			//result.addAll(CreateQuery(sqlStatement, entityClass, CreateEM(PU)).getResultList());
+			
+			Query query = CreateEM(PU).createQuery(sqlStatement);
+			result.addAll(query.getResultList());
+			em.close();
+		} catch (Exception e) {
+			
+		}finally {			
+			emf.close();
+		}	
+		
+		return result;
+	}
+	
 	public Object getSingleObject(Class<?> entityClass){
 		Object result = new Object();
 		String sqlStatement = QueryBuilder.CreateSelectStatement(entityClass);

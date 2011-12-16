@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
+import at.icnc.om.entitybeans.TblContactperson;
 import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.entitybeans.TblInterval;
 import at.icnc.om.entitybeans.TblInvoice;
@@ -84,6 +85,10 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	private String intervalFilter;
 	private String incometypeFilter;
 	
+	//Field Declaration for Salesmanquery
+	String username="";
+	String join ="INNER JOIN t.tblOrder o INNER JOIN o.tblCustomer c INNER JOIN c.tblUser u";
+	
 	/**
 	 * This functions returns a list with all Settlements
 	 * @return settlementList
@@ -96,8 +101,21 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		 */
 		if (settlementList == null) {
 			settlementList = new ArrayList<TblSettlement>();
+			
+			if(UserBean.userrole!=5){
 			settlementList.addAll((ArrayList<TblSettlement>) 
 					entityLister.getObjectList(TblSettlement.class));
+			}
+			else
+			{
+				UserBean user = (UserBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+				if(user!=null){
+					username =user.getUsername();
+				}
+				
+				settlementList.addAll((ArrayList<TblSettlement>)
+						entityLister.getObjectListSalesman(TblSettlement.class,"TblSettlement", username , join));			
+			}
 		}
 		
 		/* Makes the user know which Settlement is selected (it is shaded) */
@@ -124,6 +142,17 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		/*Field with contains the Joinstatement*/
 		String joinStatement="";
 		
+		if(UserBean.userrole==5){
+			
+			UserBean user = (UserBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+			if(user!=null){
+				username =user.getUsername();
+			}
+			joinStatement=" "+join;
+			werte.add(username);
+			spalte.add("u.username");
+		}
+		
 		/*Start Methods which check if the Fields are set and add them to the ArrayLists*/
 		if(getSettlementIDFrom() != null && getSettlementIDFrom() != "" || getSettlementIDTo() != null && getSettlementIDTo() != ""){				
 			
@@ -144,8 +173,10 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 			werte.add(ordernumberFrom + ":" + ordernumberTo);
 			spalte.add("o.ordernumber");
 			
+			if(UserBean.userrole!=5){
 			/* Add a part to the Joinstatement */
 			joinStatement += " INNER JOIN t.tblOrder o";
+			}
 		}
 		
 		if(getRuntimeFilter() != null && getRuntimeFilter() != ""){				

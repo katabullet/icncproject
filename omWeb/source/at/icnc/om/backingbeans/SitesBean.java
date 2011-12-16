@@ -31,7 +31,12 @@ public class SitesBean{
 				case 4:
 				{
 					width = 248;
-				}				
+				}
+				break;
+				case 5:
+				{
+					width = 248;
+				}
 					break;
 			}
 			return  width;
@@ -57,6 +62,12 @@ public class SitesBean{
 		public Boolean getButtonRendered()
 		{
 			render = role>3 ? false:true;
+			return render;
+		}
+		
+		public Boolean getSalesmanButtonRendered()
+		{
+			render = role>3 && role<5 ? false:true;
 			return render;
 		}
 		

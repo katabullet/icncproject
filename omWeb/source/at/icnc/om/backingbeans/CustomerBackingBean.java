@@ -86,6 +86,11 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	private Format format = new SimpleDateFormat("yyyy-MM-dd");
 	
+	//Field Declaration for Salesmanquery
+	String username="";
+	String join ="INNER JOIN t.tblUser u";
+
+	
 	/**
 	 * This functions returns a list with all intervals
 	 * @return intervalinvoiceList
@@ -98,8 +103,22 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 		 */
 		if (customerList == null) {
 			customerList = new ArrayList<TblCustomer>();
-			customerList.addAll((ArrayList<TblCustomer>) 
+			
+			if(UserBean.userrole !=5){
+				customerList.addAll((ArrayList<TblCustomer>) 
 					entityLister.getObjectList(TblCustomer.class));
+			}
+			else
+			{
+				UserBean user = (UserBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+				if(user!=null){
+					username =user.getUsername();
+				}
+				
+				customerList.addAll((ArrayList<TblCustomer>)
+						entityLister.getObjectListSalesman(TblCustomer.class,"TblCustomer", username , join));			
+			}
+			
 		}
 		
 		
@@ -124,6 +143,18 @@ public class CustomerBackingBean extends AbstractBean implements Filterable {
 		ArrayList<String> spalte= new ArrayList<String>();
 		/*Field with contains the Joinstatement*/
 		String joinStatement="";
+		
+		if(UserBean.userrole==5){
+			
+			UserBean user = (UserBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+			if(user!=null){
+				username =user.getUsername();
+			}
+			
+			joinStatement = " "+join;
+			werte.add(username);
+			spalte.add("u.username");
+		}
 		
 		/*Start Methods which check if the Fields are set and add them to the ArrayLists*/
 		if(sapCnrFrom != null && sapCnrFrom != "" || sapCnrTo != null && sapCnrTo != ""){

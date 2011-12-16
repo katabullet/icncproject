@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.faces.context.FacesContext;
 
+import at.icnc.om.entitybeans.TblConcern;
 import at.icnc.om.entitybeans.TblContactperson;
 import at.icnc.om.interfaces.Filterable;
 
@@ -30,6 +31,10 @@ public class ContactpersonBackingBean extends AbstractBean implements Filterable
 	private String telephoneFilter;
 	private String emailFilter;
 	
+	//Field Declaration for Salesmanquery
+	String username="";
+	String join ="INNER JOIN t.tblCustomers c INNER JOIN c.tblUser u";
+	
 	/**
 	 * This functions returns a list with all contactpersons
 	 * @return contactpersonList
@@ -42,8 +47,21 @@ public class ContactpersonBackingBean extends AbstractBean implements Filterable
 		 */
 		if (contactpersonList == null) {
 			contactpersonList = new ArrayList<TblContactperson>();
+			
+			if(UserBean.userrole !=5){
 			contactpersonList.addAll((ArrayList<TblContactperson>) 
 					entityLister.getObjectList(TblContactperson.class));
+			}
+			else
+			{
+				UserBean user = (UserBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+				if(user!=null){
+					username =user.getUsername();
+				}
+				
+				contactpersonList.addAll((ArrayList<TblContactperson>)
+						entityLister.getObjectListSalesman(TblContactperson.class,"TblContactperson", username , join));			
+			}
 		}
 		
 		/* Makes the user know which contactperson is selected (it is shaded) */
@@ -67,6 +85,16 @@ public class ContactpersonBackingBean extends AbstractBean implements Filterable
 		ArrayList<String> werte = new ArrayList<String>();
 		/*ArrayList which managed the filter columns*/
 		ArrayList<String> spalte= new ArrayList<String>();
+		
+		if(UserBean.userrole==5){
+			
+			UserBean user = (UserBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+			if(user!=null){
+				username =user.getUsername();
+			}
+			werte.add(username);
+			spalte.add("u.username");
+		}
 		
 		/*Start Methods which check if the Fields are set and add them to the ArrayLists*/
 		if(getFirstnameFilter() != null && getFirstnameFilter() != ""){				
@@ -95,7 +123,7 @@ public class ContactpersonBackingBean extends AbstractBean implements Filterable
 			/*Deletes the current Table*/
 			contactpersonList.clear();
 			
-			contactpersonList.addAll((ArrayList<TblContactperson>) entityLister.getFilterList(TblContactperson.class, "TblContactperson", "", werte, spalte));
+			contactpersonList.addAll((ArrayList<TblContactperson>) entityLister.getFilterList(TblContactperson.class, "TblContactperson", " "+join, werte, spalte));
 			
 			/*Method to close the Popup*/
 			changeFilterPopupRender();

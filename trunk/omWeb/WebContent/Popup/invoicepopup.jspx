@@ -60,7 +60,7 @@
        							   partialSubmit="true">
 					  <f:selectItems value="#{invoiceLister.invoicestateListDescription}"/>
        			</ice:selectOneMenu>
-       			<ice:commandButton image="images/plus.jpg" style="text-align: center;" action="#{invoicestateLister.changePopupRenderNew}"/>
+       			<ice:commandButton image="images/plus.jpg" action="#{invoicestateLister.changePopupRenderNew}"/>
        			
        			<ice:outputLabel value="#{msg.tableOrdernumber}" styleClass="Text"/>
        			<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.tblSettlement.tblOrder.ordernumber}"/>

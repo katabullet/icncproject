@@ -18,8 +18,6 @@ public class TblProtocol extends Selectable implements Serializable {
 	private String change;
 	private Date date;
 	private TblUser tblUser;
-	// Variable for version for OptimisticLockException
-	private Integer version;
 
     public TblProtocol() {
     }
@@ -68,17 +66,5 @@ public class TblProtocol extends Selectable implements Serializable {
 
 	public void setTblUser(TblUser tblUser) {
 		this.tblUser = tblUser;
-	}
-	
-	/*
-	 * Getter and Setter of Version for OptimisticLockException
-	 */
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
-
-	@Version
-	public Integer getVersion() {
-		return version;
 	}
 }

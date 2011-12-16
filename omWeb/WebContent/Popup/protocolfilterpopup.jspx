@@ -10,8 +10,8 @@
 	<ice:outputStyle href="./styles/Menu.css" />
 </ice:outputHead>
 	
-	<ice:panelPopup rendered="#{reminderLister.filterPopupRender}"
-					visible="#{reminderLister.filterPopupRender}"
+	<ice:panelPopup rendered="#{protocolLister.filterPopupRender}"
+					visible="#{protocolLister.filterPopupRender}"
 					modal="true"
 					draggable="false"
 					autoCentre="true"
@@ -20,9 +20,9 @@
 			<!-- Header Popup (filter) Start -->
 			<ice:panelGrid columns="2" styleClass="popupHeaderWrapper panelGridHeader" columnClasses="headerCol1 headerCol2">
 	            <ice:outputText	                    
-	                    value="#{msg.tableFilterReminder}"
+	                    value="#{msg.tableFilterProtocol}"
 	                    styleClass="popupHeaderText"/>
-	            <ice:commandButton image="images/closepopup.gif" action="#{reminderLister.closePopup}" immediate="true"/>
+	            <ice:commandButton image="images/closepopup.gif" action="#{protocolLister.closePopup}" immediate="true"/>
         	</ice:panelGrid>
         	<!-- Header Popup (filter) End -->
 		</f:facet>
@@ -33,21 +33,19 @@
 				
 				<ice:outputLabel value="#{msg.tableColumn}" styleClass="Text TextTitel"/>
 				<ice:outputLabel value="#{msg.tableCriterionStart}" styleClass="HeadText"/>
-				<ice:outputLabel value="#{msg.tableCriterionEnd}" styleClass="HeadText"/>
-				<ice:outputLabel value="#{msg.tableInvoicenumber}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{reminderLister.invoicenumberFrom}"/>
-				<ice:inputText styleClass="Input" value="#{reminderLister.invoicenumberTo}"/>
-				<ice:outputLabel value="#{msg.tableCustomer}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{reminderLister.customername}"/>
-				<ice:panelGrid/>
-				<ice:outputLabel value="#{msg.tableDuedate}" styleClass="Text"/>
-				<ice:selectInputDate styleClass="Calendar" value="#{reminderLister.duedateFrom}" renderAsPopup="true"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
-				<ice:selectInputDate styleClass="Calendar" value="#{reminderLister.duedateTo}" renderAsPopup="true"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
-				<ice:outputLabel value="#{msg.tableInvoicestate}" styleClass="Text"/>
-				<ice:selectOneMenu value="#{reminderLister.invoicestate}"  styleClass="Input" valueChangeListener="#{reminderLister.changeInvoicestateFilter}">
-					  <f:selectItems value="#{reminderLister.invoicestateListDescriptionFilter}"/>
+				<ice:outputLabel value="#{msg.tableCriterionEnd}" styleClass="HeadText"/>				
+				<ice:outputLabel value="#{msg.tableChange}" styleClass="Text"/>
+				<ice:selectOneMenu value="#{protocolLister.activity}"  styleClass="Input" valueChangeListener="#{protocolLister.changeActivity}">
+					  <f:selectItems value="#{protocolLister.activityList}"/>
        			</ice:selectOneMenu>
-				
+       			<ice:panelGrid/>
+       			<ice:outputLabel value="#{msg.tableDate}" styleClass="Text"/>
+				<ice:selectInputDate styleClass="Calendar" value="#{protocolLister.datefrom}" renderAsPopup="true"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
+				<ice:selectInputDate styleClass="Calendar" value="#{protocolLister.dateto}" renderAsPopup="true"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
+				<ice:outputLabel value="#{msg.loginUserName}" styleClass="Text"/>
+				<ice:selectOneMenu value="#{protocolLister.username}"  styleClass="Input" valueChangeListener="#{protocolLister.changeUser}">
+					  <f:selectItems value="#{protocolLister.userList}"/>
+       			</ice:selectOneMenu>
 									
 			</ice:panelGrid>
 			<ice:panelGrid/>
@@ -55,8 +53,8 @@
 				<ice:messages layout="list" errorClass="iceMsgError"></ice:messages>
 			</ice:panelGrid>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" styleClass="panelGridButtons">
-				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Filtern" action="#{reminderLister.filterEntities}"/>
-				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{reminderLister.closePopup}" immediate="true"/>
+				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="Filtern" action="#{protocolLister.filterEntities}"/>
+				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="Beenden" action="#{protocolLister.closePopup}" immediate="true"/>
 			</ice:panelGrid>
 			<ice:panelGrid styleClass="panelGridSpace2">
 				<ice:outputText value=""/>

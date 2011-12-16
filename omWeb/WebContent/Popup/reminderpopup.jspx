@@ -1,0 +1,65 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	template="/WEB-INF/templates/defaultTemplate.jspx">
+<ice:outputHead>
+	<ice:outputStyle href="./xmlhttp/css/rime/rime.css" />
+	<ice:outputStyle href="./styles/Sites.css" />
+	<ice:outputStyle href="./styles/popup.css" />
+	<ice:outputStyle href="./styles/Menu.css" />
+</ice:outputHead>
+	
+	<ice:panelPopup rendered="#{reminderLister.popupRender}"
+					visible="#{reminderLister.popupRender}"
+					modal="true"
+					draggable="false"
+					autoCentre="true"
+					style="margin: auto;">					
+		<f:facet name="header">
+			<!-- Header Popup (edit, new) Start -->
+			<ice:panelGrid columns="2" styleClass="popupHeaderWrapper panelGridHeader" columnClasses="headerCol1 headerCol2">
+	            <!-- ToDo: Dynamisch: Neu/Aendern -->
+	            <ice:outputText
+	                    value="#{msg.tableEditReminder}"
+	                    styleClass="popupHeaderText"/>
+	            <ice:commandButton image="images/closepopup.gif" action="#{reminderLister.closePopup}"/>
+        	</ice:panelGrid>
+        	<!-- Header Popup (edit, new) End -->
+		</f:facet>
+		<f:facet name="body">
+		<!-- Labels + Inputtexts Popup (edit & new) Start -->
+		<ice:panelGroup>
+			<ice:panelGrid columns="3" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2 columnPopup3">
+				<ice:outputLabel value="#{msg.tableInvoicenumber}" styleClass="Text"/>
+				<ice:outputLabel styleClass="Input" value="#{reminderLister.curReminder.invoicenumber}"/>
+				<ice:panelGrid/>
+				<ice:outputLabel value="#{msg.tableCustomer }" styleClass="Text"/>
+				<ice:outputLabel styleClass="Input" value="#{reminderLister.curReminder.tblSettlement.tblOrder.tblCustomer.customername}"/>
+				<ice:panelGrid/>
+				<ice:outputLabel value="#{msg.tableDuedate}" styleClass="Text"/>
+				<ice:outputLabel value="#{reminderLister.curReminder.duedate}"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:outputLabel>
+       			<ice:panelGrid/>
+       			<ice:outputLabel value="#{msg.tableInvoicestate}" styleClass="Text"/>
+       			<ice:selectOneMenu value="#{reminderLister.curReminder.tblInvoicestate.descriptionIs}"  styleClass="Input" valueChangeListener="#{reminderLister.changeInvoicestate}" binding="#{reminderLister.bindingInvoicestate}">
+					  <f:selectItems value="#{reminderLister.invoicestateListDescription}"/>
+       			</ice:selectOneMenu>
+       			<ice:commandButton image="images/plus.jpg" style="text-align: center;" action="#{invoicestateLister.changePopupRenderNew}"/>	
+			</ice:panelGrid>
+			
+			<ice:panelGrid styleClass="panelGridSpace1">
+				<ice:messages layout="list" errorClass="iceMsgError"/>
+			</ice:panelGrid>
+			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" styleClass="panelGridButtons">
+				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="#{msg.buttonSave}" action="#{reminderLister.updateEntity}"/>
+				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="#{msg.buttonCancel}" action="#{reminderLister.closePopup}" />
+			</ice:panelGrid>
+			<ice:panelGrid styleClass="panelGridSpace2">
+				<ice:outputText value=""/>
+			</ice:panelGrid>
+		</ice:panelGroup>
+		<!-- Labels + Inputtexts Popup (edit & new) End -->
+		</f:facet>
+	</ice:panelPopup>
+	
+</html>

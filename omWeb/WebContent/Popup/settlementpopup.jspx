@@ -40,7 +40,7 @@
 								   partialSubmit="true">
 					  <f:selectItems value="#{settlementLister.orderListDescription}"/>
        			</ice:selectOneMenu>
-       			<ice:commandButton image="images/plus.jpg" style="text-align: center;" action="#{incometypeLister.changePopupRenderNew}"/>
+       			<ice:commandButton image="images/plus.jpg" action="#{incometypeLister.changePopupRenderNew}"/>
 				
 				<ice:outputLabel value="#{msg.tableRuntime}" styleClass="Text"/>
 				<ice:inputText styleClass="Input" value="#{settlementLister.curSettlement.runtime}"  partialSubmit="true"/>
@@ -54,7 +54,7 @@
 								   partialSubmit="true">
 					  <f:selectItems value="#{settlementLister.intervalListDescription}"/>
        			</ice:selectOneMenu>
-       			<ice:commandButton image="images/plus.jpg" style="text-align: center;" action="#{intervalLister.changePopupRenderNew}"/>
+       			<ice:commandButton image="images/plus.jpg" action="#{intervalLister.changePopupRenderNew}"/>
 
        			<ice:outputLabel value="#{msg.tableIncometype}" styleClass="Text"/>
 				<ice:selectOneMenu value="#{settlementLister.curIncometype.descriptionIt}"  
@@ -64,7 +64,7 @@
 								   partialSubmit="true">
 					  <f:selectItems value="#{settlementLister.incometypeListDescription}"/>
        			</ice:selectOneMenu>
-       			<ice:commandButton image="images/plus.jpg" style="text-align: center;" action="#{incometypeLister.changePopupRenderNew}"/>
+       			<ice:commandButton image="images/plus.jpg" action="#{incometypeLister.changePopupRenderNew}"/>
        			
        			<ice:outputLabel value="#{msg.tableSettlementSum}" styleClass="Text" />
        			<ice:inputText styleClass="Input" value="#{settlementLister.settlementSum}" partialSubmit="true"/>

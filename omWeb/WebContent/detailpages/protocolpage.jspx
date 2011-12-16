@@ -25,7 +25,7 @@
 		        </ice:selectOneMenu>
 		        <br/>
 		       <ice:panelGroup effect="#{dataExporter.changeEffect}" style="width:180px;">
-		            <ice:dataExporter for="reminder"
+		            <ice:dataExporter for="protocol"
 		                label="#{msg.tableDataExporter1} #{dataExporter.type} #{msg.tableDataExporter2}"
 		                type="#{dataExporter.type}"
 		                popupBlockerLabel="#{msg.tablePopupBlocker}"
@@ -36,9 +36,9 @@
 		<!-- DataExporter End -->
 		
 		<!-- Buttons Start -->
-     	<ice:panelGrid columns="2" columnClasses="buttons" style="width: 112px;">
-     		<ice:commandButton title="#{msg.buttonRefresh}" image="images/refresh.jpg" action="#{reminderLister.init}"/>
-     		<ice:commandButton title="#{msg.buttonFilter}" image="images/btn_filter_e.png" action="#{reminderLister.changeFilterPopupRender}"/>
+     	<ice:panelGrid columns="2" columnClasses="buttons" style="width: 60px;">
+     		<ice:commandButton title="#{msg.buttonRefresh}" image="images/refresh.jpg" action="#{protocolLister.init}"/>
+     		<ice:commandButton title="#{msg.buttonFilter}" image="images/btn_filter_e.png" action="#{protocolLister.changeFilterPopupRender}"/>
       	</ice:panelGrid>
      	<!-- Buttons End -->
      	
@@ -48,7 +48,7 @@
 	<ice:panelGroup style="margin: auto; width: 100%; text-align: center; ">     	
 								
 		<!-- Table reminder Start -->
-		<ice:dataTable value="#{protocolLister.protocolList}" var="item" id="reminder" rows="10" styleClass="table" style="margin: auto;">
+		<ice:dataTable value="#{protocolLister.protocolList}" var="item" id="protocol" rows="10" styleClass="table" style="margin: auto;">
 			<ice:column>
 				<f:facet name="header">#{msg.tableChange}</f:facet>
 				<ice:outputText styleClass="textPosition" value="#{item.change}"/>
@@ -69,13 +69,13 @@
 		<ice:panelGrid columns="1" styleClass="scrollerTable2 paginator" columnClasses="standardTable_ColumnCentered">
 
 			<!-- Paginator Start -->
-	        <ice:dataPaginator for="reminder"
+	        <ice:dataPaginator for="protocol"
 	                         fastStep="10"
 	                         pageCountVar="pageCount"
 	                         pageIndexVar="pageIndex"
 	                         paginator="true"
 	                         style="margin: auto;"
-	                         binding="#{reminderLister.paginator}">
+	                         binding="#{protocolLister.paginator}">
 	 				
 	 				<!-- Paginator Navigation Start -->
 	                <f:facet name="first" >
@@ -105,7 +105,7 @@
 	 
 	        </ice:dataPaginator>
 	 
-	        <ice:dataPaginator for="reminder"
+	        <ice:dataPaginator for="protocol"
 	                        rowsCountVar="rowsCount"
 	                        displayedRowsCountVar="displayedRowsCountVar"
 	                        firstRowIndexVar="firstRowIndex"
@@ -130,7 +130,7 @@
 	</ice:panelGroup>
 	
 	<!-- Includes Pop-Ups Start -->
-    <ui:include src="../Popup/reminderfilterpopup.jspx"></ui:include>
+    <ui:include src="../Popup/protocolfilterpopup.jspx"></ui:include>
     <!-- Includes Pop-Ups End -->
 	    
 	</div>

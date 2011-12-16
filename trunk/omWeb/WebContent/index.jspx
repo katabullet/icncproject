@@ -228,7 +228,8 @@
 						<ui:include src="/Popup/concernpopup.jspx"/>						
 						<ui:include src="/Popup/contactpersonpopup.jspx"/>						
 						<ui:include src="/Popup/customerstatepopup.jspx"/>
-						<ui:include src="/Popup/optimisticlockpopup.jspx"></ui:include>
+						<ui:include src="/Popup/reminderpopup.jspx"/>
+						<ui:include src="/Popup/optimisticlockpopup.jspx"/>
 					<!-- Includes of all Popups -->
 				
 				</ice:form>

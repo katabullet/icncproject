@@ -8,7 +8,9 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.OptimisticLockException;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import at.icnc.om.interfaces.EntityListerLocal;
@@ -177,14 +179,15 @@ public class EntityListerImpl implements EntityListerLocal {
 	 * @param id id of the selected entity
 	 * @param entityClass Classtype of the selected entity (entityname.class)
 	 * @param updated the object that will be added or updated
+	 * @throws Exception 
 	 */
-	public void UpdateObject(Class<?> entityClass, Object updated, Long id){
+	public void UpdateObject(Class<?> entityClass, Object updated, Long id) throws Exception {
 		
 		try {
 			CreateEM(PU);
 			
 			if(em.find(entityClass, id) != null){
-				em.merge(updated);
+					em.merge(updated);						
 			}else{
 				em.persist(updated);
 			}	
@@ -192,7 +195,9 @@ public class EntityListerImpl implements EntityListerLocal {
 			em.flush();
 			em.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			if(e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+				throw new Exception("OptimisticLockException", e.getCause());
+			}
 		}finally{
 			emf.close();
 		}

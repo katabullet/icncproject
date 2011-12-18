@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.ejb.Local;
+import javax.persistence.OptimisticLockException;
 
 /**
  * Local Interface for EntityListerImpl
@@ -26,7 +27,7 @@ public interface EntityListerLocal {
 	public void DeleteObject(Long id, Class<?> entityClass);
 	
 	/* Method to update a specific entity */
-	public void UpdateObject(Class<?> entityClass, Object updated, Long id);
+	public void UpdateObject(Class<?> entityClass, Object updated, Long id) throws Exception;
 	
 	/* Function to get a single entity */
 	public Object getSingleObject(Class<?> entityClass);

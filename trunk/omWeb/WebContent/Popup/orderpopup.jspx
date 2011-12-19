@@ -45,7 +45,8 @@
        			<ice:panelGrid/>	
        			
        			<ice:outputLabel value="#{msg.tableTravelcosts}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{orderLister.curOrder.travelcosts}" partialSubmit="true"/>
+				<!-- <ice:inputText styleClass="Input" value="#{orderLister.curOrder.travelcosts}" partialSubmit="true"/> -->
+				<ice:selectBooleanCheckbox value="#{orderLister.curOrder.travelcostsBoolean}"/>
 				<ice:panelGrid/>
 				
        			<ice:outputLabel value="#{msg.tableCustomer}" styleClass="Text"/>
@@ -58,20 +59,35 @@
        			</ice:selectOneMenu>
        			<ice:commandButton image="images/plus.jpg" action="#{customerLister.changePopupRenderNew}" styleClass="panelGridButtons"/>
        			
-       			<!-- Ertragsarten -->
-       			<!-- <ice:outputLabel value="#{msg.tableIncometypes}" styleClass="Text"/>
-       			<ice:selectManyMenu styleClass="Input" value="#{orderLister.curIncometypes}">
-					  <f:selectItems value="#{orderLister.incometypeListDescription}"/>
-       			</ice:selectManyMenu>
-       			<ice:commandButton image="images/plus.jpg" action="#{incometypeLister.changePopupRenderNew}" styleClass="panelGridButtons"/>
-       			-->
-       			<!-- Kostenstellen -->
-       			<!-- <ice:outputLabel value="#{msg.tableOrderstate}" styleClass="Text"/>
+       			<!-- Incometypes -->
+       			<ice:outputLabel value="#{msg.tableIncometypes}" styleClass="Text"/>
+                <ice:selectManyMenu id="SlctIncometypes"  style="height:75px;"
+                                value="#{orderLister.selectedIncometypes}"
+                                partialSubmit="true"
+                                valueChangeListener="#{orderLister.changeIncometype}">
+                      <f:selectItems id="SlcIncometypeItms"
+                                value="#{orderLister.incometypeListDescription}"/>
+                </ice:selectManyMenu>
+                <ice:panelGrid/>
+                
+                <!-- Costcentres -->
+       			<ice:outputLabel value="#{msg.tableDescriptionCc}" styleClass="Text"/>
+                <ice:selectManyMenu id="SlctCostcentres"  style="height:75px;"
+                                value="#{orderLister.selectedCostcentres}"
+                                partialSubmit="true"
+                                valueChangeListener="#{orderLister.changeCostcentre}">
+                      <f:selectItems id="SlcCostcentreItms"
+                                value="#{orderLister.costcentreListDescription}"/>
+                </ice:selectManyMenu>
+                <ice:panelGrid/>
+       			
+       			<!-- Orderstates -->
+       			<ice:outputLabel value="#{msg.tableOrderstate}" styleClass="Text"/>
        			<ice:selectOneMenu value="#{orderLister.curOrderstate.descriptionOs}"  styleClass="Input" valueChangeListener="#{orderLister.changeOrderstate}" binding="#{orderLister.bindingOrderstate}">
 					  <f:selectItems value="#{orderLister.orderstateListDescription}"/>
        			</ice:selectOneMenu>
        			<ice:commandButton image="images/plus.jpg" action="#{orderstateLister.changePopupRenderNew}" styleClass="panelGridButtons"/>
-				-->
+				
 			</ice:panelGrid>			
 			<ice:panelGrid styleClass="panelGridSpace1">
 				<ice:messages layout="list" errorClass="iceMsgError"></ice:messages>

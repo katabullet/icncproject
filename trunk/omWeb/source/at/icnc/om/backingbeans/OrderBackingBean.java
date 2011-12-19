@@ -5,22 +5,20 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
-
+import at.icnc.om.entitybeans.TblCostcentre;
+import at.icnc.om.entitybeans.TblContactperson;
 import at.icnc.om.entitybeans.TblContactperson;
 import at.icnc.om.entitybeans.TblCustomer;
-import at.icnc.om.entitybeans.TblCustomerstate;
-import at.icnc.om.entitybeans.TblInvoice;
-import at.icnc.om.entitybeans.TblInvoicestate;
+import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.entitybeans.TblOrder;
 import at.icnc.om.entitybeans.TblOrderstate;
-import at.icnc.om.entitybeans.TblCostcentre;
-import at.icnc.om.entitybeans.TblIncometype;
-import at.icnc.om.entitybeans.TblSettlement;
 import at.icnc.om.interfaces.Filterable;
 
 import com.icesoft.faces.component.ext.RowSelectorEvent;
@@ -74,6 +72,8 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 	
 	// List to save current incometypes
 	private ArrayList<TblIncometype> curIncometypes;
+	private String[] selectedIncometypes;	
+	private String[] selectedCostcentres;
 	
 	//Field Declaration for Salesmanquery
 	String username="";
@@ -268,6 +268,7 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 		setCurOrder(new TblOrder());
 		/* ID of new order is set to 0 (important for EntityManager) */
 		getCurOrder().setIdOrder(0);
+		setSelectedIncometypes(null);
 		
 		/* Setting default values of new order */
 		getCurOrder().setOrderdate(new Date());
@@ -295,8 +296,11 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 			}else {
 				curOrder = orderList.get(re.getRow());
 				setVisible(true);
+				setCurOrderstate(curOrder.getTblOrderstate());
 			}
 		}
+		setSelectedIncometypes(null);
+		setSelectedCostcentres(null);
 	}
 
 	/**
@@ -347,7 +351,21 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 	public void updateEntity() {
 		boolean entityNew = false;
 		getCurOrder().setTblOrderstate(curOrderstate);
+		getCurOrder().setTblCustomer(getCurCustomer());
+		
 		/* Costcentre und Incometype setzen */
+		List<TblIncometype> selectedIt = new ArrayList<TblIncometype>();
+		for(String item : getSelectedIncometypes()){
+			selectedIt.add((TblIncometype) entityLister.getSingleObject("SELECT * FROM OMIncometype WHERE description_it = '" + item + "'", TblIncometype.class));
+		}
+		getCurOrder().setTblIncometypes(new HashSet<TblIncometype>(selectedIt));
+		
+		List<TblCostcentre> selectedCc = new ArrayList<TblCostcentre>();
+		for(String item : getSelectedCostcentres()){
+			selectedCc.add((TblCostcentre) entityLister.getSingleObject("SELECT * FROM OMCostcentre WHERE description_cc = '" + item + "'", TblCostcentre.class));
+		}
+		getCurOrder().setTblCostcentres(new HashSet<TblCostcentre>(selectedCc));
+		
 		entityNew = (getCurOrder().getIdOrder() == 0);
 		try {
 			entityLister.UpdateObject(TblOrder.class, curOrder, curOrder.getIdOrder());
@@ -424,17 +442,30 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 	/**
 	 * Method that Listens to Change Event of a combobox
 	 * if another element in the combobox is selected, the value in
-	 * curOrder is set to the selected one
+	 * selectedIncometypes is set to the selected ones
 	 * @param vce
 	 */
-	/*public void changeIncometype(ValueChangeEvent vce){
+	public void changeIncometype(ValueChangeEvent vce){
 		if(!filterpopupRender){
-			setCurIncometypes((TblIncometype) entityLister.getSingleObject("SELECT * FROM OMorderstate WHERE description_os = '" +
-					vce.getNewValue().toString() + "'", TblOrderstate.class));
+			setSelectedIncometypes((String[]) vce.getNewValue());
 		}else{
 			//setIncometypeFilter(vce.getNewValue().toString());
 		}
-	}*/
+	}
+	
+	/**
+	 * Method that Listens to Change Event of a combobox
+	 * if another element in the combobox is selected, the value in
+	 * selectedCostcentres is set to the selected ones
+	 * @param vce
+	 */
+	public void changeCostcentre(ValueChangeEvent vce){
+		if(!filterpopupRender){
+			setSelectedCostcentres((String[]) vce.getNewValue());
+		}else{
+			//setIncometypeFilter(vce.getNewValue().toString());
+		}
+	}
 	
 	/**
 	 * Method that Listens to Change Event of a combobox
@@ -498,11 +529,51 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 		if(filterpopupRender){
 			incometypes.add(new SelectItem());
 		}
+		String[] selectedIt = new String[getIncometypeList().size()];
+		int x = 0;
+		//ArrayList<String> selectedIt = new ArrayList<String>();
 		for (TblIncometype item : getIncometypeList()) {
+			
+			if(getCurOrder().getIncometypesString().contains(item.getDescriptionIt())){
+				//selectedIt.add(item.getDescriptionIt());
+				selectedIt[x] = item.getDescriptionIt();
+				x++;
+			}
 			/* Description of each incometype is added to SelectItem-List */
 			incometypes.add(new SelectItem(item.getDescriptionIt()));
 		}
+		if(getSelectedIncometypes() == null){
+			setSelectedIncometypes(selectedIt);
+		}
 		return incometypes;			
+	}
+	
+	/**
+	 * Function to create SelectItems of all Costcentres
+	 * Important for combobox (needs SelectItem, not objects of Costcentre)
+	 * @return List of SelectItem 
+	 */
+	public ArrayList<SelectItem> getCostcentreListDescription(){
+		ArrayList<SelectItem> costcentres = new ArrayList<SelectItem>();
+		if(filterpopupRender){
+			costcentres.add(new SelectItem());
+		}
+		String[] selectedCc = new String[getCostcentreList().size()];
+		int x = 0;
+		//ArrayList<String> selectedIt = new ArrayList<String>();
+		for (TblCostcentre item : getCostcentreList()) {
+			if(getCurOrder().getCostcentresString().contains(item.getDescriptionCc())){
+				selectedCc[x] = item.getDescriptionCc();
+				x++;
+			}
+			
+			/* Description of each costcentre is added to SelectItem-List */
+			costcentres.add(new SelectItem(item.getDescriptionCc()));
+		}
+		if(getSelectedCostcentres() == null){
+			setSelectedCostcentres(selectedCc);
+		}
+		return costcentres;			
 	}
 	
 	/**
@@ -586,6 +657,25 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 		}		
 	
 		return incometypeList;
+	}
+	
+	/**
+	 * This function returns a list with all Costcentres
+	 * @return costcentreList
+	 */
+	@SuppressWarnings("unchecked")
+	private ArrayList<TblCostcentre> getCostcentreList(){
+		
+		/* Costcentres are only read out of DB if they were not read before 
+		 * avoids unnecessary data traffic 
+		 */		
+		if(costcentreList == null){
+			costcentreList = new ArrayList<TblCostcentre>();
+			costcentreList.addAll((ArrayList<TblCostcentre>) 
+					entityLister.getObjectList(TblCostcentre.class));
+		}
+	
+		return costcentreList;
 	}
 	
 	/**
@@ -769,4 +859,20 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 	public HtmlSelectOneMenu getBindingCustomer() {
 		return bindingCustomer;
 	}
+	
+	public void setSelectedIncometypes(String[] selectedIncometypes) {
+		this.selectedIncometypes = selectedIncometypes;
+	}
+
+	public String[] getSelectedIncometypes() {
+		return selectedIncometypes;
+	}
+
+	public void setSelectedCostcentres(String[] selectedCostcentres) {
+		this.selectedCostcentres = selectedCostcentres;
+	}
+	
+	public String[] getSelectedCostcentres() {
+		return selectedCostcentres;
+	}	
 }

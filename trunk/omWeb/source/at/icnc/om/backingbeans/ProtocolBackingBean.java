@@ -200,10 +200,6 @@ public class ProtocolBackingBean extends AbstractBean implements Filterable {
 			changeFilterPopupRender();
 		} catch (Exception e) {
 			init();
-			protocolList.clear();
-			
-			/*Method to close the Popup*/
-			changeFilterPopupRender();
 		}
 		
 	}	

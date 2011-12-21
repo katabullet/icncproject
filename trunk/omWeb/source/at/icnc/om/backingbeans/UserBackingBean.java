@@ -295,12 +295,6 @@ public class UserBackingBean extends AbstractBean {
 			changeFilterPopupRender();
 		} catch (Exception e) {
 			init();
-			
-			/*Deletes the current Table*/
-			userList.clear();
-			
-			/*Method to close the Popup*/
-			changeFilterPopupRender();
 		}	
 
 	}	

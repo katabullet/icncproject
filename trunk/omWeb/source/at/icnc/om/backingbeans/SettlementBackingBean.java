@@ -227,9 +227,7 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		} catch (Exception e) {
 			
 			init();
-			
-			/*Method to close the Popup*/
-			changeFilterPopupRender();
+
 		}	
 	}
 	

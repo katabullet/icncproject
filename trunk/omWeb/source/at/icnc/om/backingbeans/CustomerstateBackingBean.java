@@ -84,12 +84,6 @@ public class CustomerstateBackingBean extends AbstractBean implements Filterable
 			changeFilterPopupRender();
 		} catch (Exception e) {
 			init();
-			
-			/*Deletes the current Table*/
-			customerstateList.clear();
-			
-			/*Method to close the Popup*/
-			changeFilterPopupRender();
 		}	
 	}
 	

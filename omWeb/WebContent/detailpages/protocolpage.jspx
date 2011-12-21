@@ -36,7 +36,7 @@
 		<!-- DataExporter End -->
 		
 		<!-- Buttons Start -->
-     	<ice:panelGrid columns="2" columnClasses="buttons" style="width: 60px;">
+     	<ice:panelGrid columns="2" columnClasses="buttons" styleClass="buttonsPlace">
      		<ice:commandButton title="#{msg.buttonRefresh}" image="images/refresh.jpg" action="#{protocolLister.init}"/>
      		<ice:commandButton title="#{msg.buttonFilter}" image="images/btn_filter_e.png" action="#{protocolLister.changeFilterPopupRender}"/>
       	</ice:panelGrid>

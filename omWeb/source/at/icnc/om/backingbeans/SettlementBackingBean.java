@@ -225,10 +225,8 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 			/*Method to close the Popup*/
 			changeFilterPopupRender();
 		} catch (Exception e) {
-			init();
 			
-			/*Deletes the current Table*/
-			settlementList.clear();
+			init();
 			
 			/*Method to close the Popup*/
 			changeFilterPopupRender();
@@ -341,10 +339,10 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	@Override
 	public void refresh() {
 		visible = !(getCurSettlement().getIdSettlement() == 0);
-		settlementList = null;
+		settlementList=null;
 		popupRender = false;
-		filterpopupRender = false;
 		setDeletePopupRender(false);
+		filterpopupRender=false;
 	}
 
 	/**

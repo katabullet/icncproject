@@ -82,12 +82,6 @@ public class CostcentreBackingBean extends AbstractBean implements Filterable {
 			changeFilterPopupRender();
 		} catch (Exception e) {
 			init();
-			
-			/*Deletes the current Table*/
-			costcentreList.clear();
-			
-			/*Method to close the Popup*/
-			changeFilterPopupRender();
 		}	
 	}
 	

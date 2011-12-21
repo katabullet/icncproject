@@ -103,12 +103,6 @@ public class OrderstateBackingBean extends AbstractBean implements Filterable {
 				changeFilterPopupRender();
 			} catch (Exception e) {
 				init();
-				
-				/*Deletes the current Table*/
-				orderstateList.clear();
-				
-				/*Method to close the Popup*/
-				changeFilterPopupRender();
 			}	
 		}
 		

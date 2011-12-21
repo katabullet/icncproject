@@ -84,12 +84,6 @@ public class InvoicestateBackingBean extends AbstractBean implements Filterable 
 			changeFilterPopupRender();
 		} catch (Exception e) {
 			init();
-			
-			/*Deletes the current Table*/
-			invoicestateList.clear();
-			
-			/*Method to close the Popup*/
-			changeFilterPopupRender();
 		}	
 	}
 	

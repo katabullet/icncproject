@@ -596,12 +596,6 @@ public class InvoiceBackingBean extends AbstractBean {
 			changeFilterPopupRender();
 		} catch (Exception e) {
 			init();
-			
-			/*Deletes the current Table*/
-			invoiceList.clear();
-			
-			/*Method to close the Popup*/
-			changeFilterPopupRender();
 		}	
 
 	}	

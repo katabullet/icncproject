@@ -103,12 +103,6 @@ public class IncometypeBackingBean extends AbstractBean implements Filterable {
 				changeFilterPopupRender();
 			} catch (Exception e) {
 				init();
-				
-				/*Deletes the current Table*/
-				incometypeList.clear();
-				
-				/*Method to close the Popup*/
-				changeFilterPopupRender();
 			}	
 		}
 		

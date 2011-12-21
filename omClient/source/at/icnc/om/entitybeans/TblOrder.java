@@ -5,6 +5,7 @@ import javax.persistence.*;
 
 import java.util.Date;
 import java.util.Set;
+import at.icnc.om.entitybeans.TblSettlement;
 
 
 /**
@@ -48,13 +49,14 @@ public class TblOrder extends Selectable implements Serializable {
 		String incometypes = "";
 		
 		
-		for (TblIncometype item : tblIncometypes) {
-			incometypes = incometypes + item.getDescriptionIt() + ", ";
-		}
-		
-		if (incometypes != "") {
-			incometypes = incometypes
-					.substring(0, incometypes.lastIndexOf(','));
+		if (tblIncometypes != null) {
+			for (TblIncometype item : tblIncometypes) {
+				incometypes = incometypes + item.getDescriptionIt() + ", ";
+			}
+			if (incometypes != "") {
+				incometypes = incometypes.substring(0,
+						incometypes.lastIndexOf(','));
+			}
 		}
 		return incometypes;
 	}
@@ -68,13 +70,14 @@ public class TblOrder extends Selectable implements Serializable {
 		String costcentres = "";
 		
 		
-		for (TblCostcentre item : tblCostcentres) {
-			costcentres = costcentres + item.getDescriptionCc() + ", ";
-		}
-		
-		if (costcentres != "") {
-			costcentres = costcentres
-					.substring(0, costcentres.lastIndexOf(','));
+		if (tblCostcentres != null) {
+			for (TblCostcentre item : tblCostcentres) {
+				costcentres = costcentres + item.getDescriptionCc() + ", ";
+			}
+			if (costcentres != "") {
+				costcentres = costcentres.substring(0,
+						costcentres.lastIndexOf(','));
+			}
 		}
 		return costcentres;
 	}
@@ -198,5 +201,15 @@ public class TblOrder extends Selectable implements Serializable {
 	@Version
 	public Integer getVersion() {
 		return version;
+	}
+
+	@Transient
+	public void setTravelcostsBoolean(Boolean travelcostsBoolean) {
+		this.travelcosts = (travelcostsBoolean) ? 1 : 0;
+	}
+
+	@Transient
+	public Boolean getTravelcostsBoolean() {
+		return (travelcosts == 1);
 	}
 }

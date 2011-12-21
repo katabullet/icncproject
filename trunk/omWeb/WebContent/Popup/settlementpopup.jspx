@@ -12,9 +12,9 @@
 	
 	<ice:panelPopup rendered="#{settlementLister.popupRender}"
 					visible="#{settlementLister.popupRender}"
+					autoCentre="true"
 					modal="true"
 					draggable="false"
-					autoCentre="true"
 					style="margin: auto;">					
 		<f:facet name="header">
 			<!-- Header Popup (edit, new) Start -->

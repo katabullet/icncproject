@@ -62,6 +62,10 @@ width: 28px;
 text-align:center;
 }
 
+.buttonsPlace{
+width: 60px;
+}
+
 .table{
 margin: auto;
 margin-left: auto;

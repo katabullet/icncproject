@@ -216,7 +216,7 @@
 					</ice:panelGroup>
 					
 					<!-- Includes of all Popups -->						
-						<ui:include src="/Popup/settlementpopup.jspx"/>						
+						<ui:include src="/Popup/settlementpopup.jspx"/>					
 						<ui:include src="/Popup/intervalpopup.jspx"/>						
 						<ui:include src="/Popup/invoicepopup.jspx"/>						
 						<ui:include src="/Popup/invoicestatepopup.jspx"/>						

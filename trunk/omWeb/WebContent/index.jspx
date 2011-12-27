@@ -43,6 +43,24 @@
     				<ice:panelTabSet id="icePnlTbSet"
             					selectedIndex="0" style="background-color: white;">
             					
+            		<!-- Includes of all Popups -->						
+						<ui:include src="/Popup/settlementpopup.jspx"/>					
+						<ui:include src="/Popup/intervalpopup.jspx"/>						
+						<ui:include src="/Popup/invoicepopup.jspx"/>						
+						<ui:include src="/Popup/invoicestatepopup.jspx"/>						
+						<ui:include src="/Popup/orderpopup.jspx"/>						
+						<ui:include src="/Popup/orderstatepopup.jspx"/>						
+						<ui:include src="/Popup/incometypepopup.jspx"/>						
+						<ui:include src="/Popup/costcentrepopup.jspx"/>						
+						<ui:include src="/Popup/customerpopup.jspx"/>
+						<ui:include src="/Popup/concernpopup.jspx"/>						
+						<ui:include src="/Popup/contactpersonpopup.jspx"/>						
+						<ui:include src="/Popup/customerstatepopup.jspx"/>
+						<ui:include src="/Popup/reminderpopup.jspx"/>
+						<ui:include src="/Popup/optimisticlockpopup.jspx"/>
+						<ui:include src="/Popup/protocolfilterpopup.jspx"/>
+					<!-- Includes of all Popups -->
+            					
             			<!-- Evaluation -->
         				<ice:panelTab label="#{msg.tableEvaluation}" labelWidth="#{sitesBean.tabWidth}">
         					<ice:panelTabSet id="icePnlTbSet0" selectedIndex="0" tabPlacement="Bottom">
@@ -214,30 +232,8 @@
         				
     				</ice:panelTabSet>
 					</ice:panelGroup>
-					
-					<!-- Includes of all Popups -->						
-						<ui:include src="/Popup/settlementpopup.jspx"/>					
-						<ui:include src="/Popup/intervalpopup.jspx"/>						
-						<ui:include src="/Popup/invoicepopup.jspx"/>						
-						<ui:include src="/Popup/invoicestatepopup.jspx"/>						
-						<ui:include src="/Popup/orderpopup.jspx"/>						
-						<ui:include src="/Popup/orderstatepopup.jspx"/>						
-						<ui:include src="/Popup/incometypepopup.jspx"/>						
-						<ui:include src="/Popup/costcentrepopup.jspx"/>						
-						<ui:include src="/Popup/customerpopup.jspx"/>
-						<ui:include src="/Popup/concernpopup.jspx"/>						
-						<ui:include src="/Popup/contactpersonpopup.jspx"/>						
-						<ui:include src="/Popup/customerstatepopup.jspx"/>
-						<ui:include src="/Popup/reminderpopup.jspx"/>
-						<ui:include src="/Popup/optimisticlockpopup.jspx"/>
-						<ui:include src="/Popup/protocolfilterpopup.jspx"/>
-					<!-- Includes of all Popups -->
-				
-				</ice:form>
-					
+				</ice:form>					
 				</f:facet>
-		
-				
 			</ice:panelBorder>
 	
 		</f:facet>		

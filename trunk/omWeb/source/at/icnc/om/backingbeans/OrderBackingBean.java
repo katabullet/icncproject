@@ -8,13 +8,13 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.faces.component.html.HtmlSelectManyMenu;
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+
 import at.icnc.om.entitybeans.TblCostcentre;
-import at.icnc.om.entitybeans.TblContactperson;
-import at.icnc.om.entitybeans.TblContactperson;
 import at.icnc.om.entitybeans.TblCustomer;
 import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.entitybeans.TblOrder;
@@ -52,12 +52,6 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 	// Variable to save selected Customer
 	private TblCustomer curCustomer;
 	
-	// Variable to save selected Incometype
-	private TblIncometype curIncometype;
-	
-	// Variable to save selected Costcentre
-	private TblCostcentre curCostcentre;
-	
 	// Variable to save selected Orderstate
 	private TblOrderstate curOrderstate;
 	
@@ -67,8 +61,11 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 	// Binding of SelectOneMenu with Customer
 	private HtmlSelectOneMenu bindingCustomer;
 	
-	// Binding of SelectOneMenu with Incometypes
-	private HtmlSelectOneMenu bindingIncometype;
+	// Binding of SelectManyMenu with Incometypes
+	private HtmlSelectManyMenu bindingIncometype;
+	
+	// Binding of SelectManyManu with Costcentres
+	private HtmlSelectManyMenu bindingCostcentres;
 	
 	// List to save current incometypes
 	private ArrayList<TblIncometype> curIncometypes;
@@ -131,10 +128,10 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 		private String ordernumbertoFilter;
 		private Date orderdatefromFilter;
 		private Date orderdatetoFilter;
-		private String travelcostsFilter;
+		private Boolean travelcostsFilter = false;
 		private String customerFilter;
-		private String incometypesFilter;
-		private String costcentresFilter;
+		private String[] incometypesFilter;	
+		private String[] costcentresFilter;
 		private String orderstateFilter;
 		private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		private Format format = new SimpleDateFormat("yyyy-MM-dd");
@@ -152,15 +149,15 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 			/*ArrayList which managed the filter columns*/
 			ArrayList<String> spalte= new ArrayList<String>();
 			/*Field with contains the Joinstatement*/
-			String joinStatement="";
+			String joinStatement ="";
 			
 			if(UserBean.userrole==5){
 				
 				UserBean user = (UserBean)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
 				if(user!=null){
-					username =user.getUsername();
+					username = user.getUsername();
 				}
-				joinStatement=" "+join;
+				joinStatement =" " + join;
 				werte.add(username);
 				spalte.add("u.username");
 			}
@@ -187,10 +184,10 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 				spalte.add("t.orderdate");
 			}
 			
-			if(travelcostsFilter != null && travelcostsFilter != ""){
-				werte.add(travelcostsFilter);
+			/* if(travelcostsFilter != null){
+				werte.add(travelcostsFilter ? "1" : "0");
 				spalte.add("t.travelcosts");
-			}
+			}*/
 			
 			if(ordernumberfromFilter != null && ordernumberfromFilter != "" || ordernumbertoFilter != null && ordernumbertoFilter != ""){
 				/* Set a default Value if none is set */
@@ -209,21 +206,36 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 				joinStatement += " INNER JOIN t.tblOrderstate os";
 			}
 			
-			/* if(incometypesFilter != null && incometypesFilter != ""){				
-				werte.add(incometypesFilter);
-				spalte.add("it.incometype"); */
+			try {
+				if(incometypesFilter[0] != "");
+			} catch (Exception e) {
+				incometypesFilter = new String[1];
+				incometypesFilter[0] = "";
+			}
+			if(incometypesFilter != null && incometypesFilter[0] != ""){
+				for(String curIt : incometypesFilter){
+					werte.add(curIt);
+					spalte.add("it.descriptionIt");
+				}
 				
-				/* Add a part to the Joinstatement */
-				/* joinStatement += " INNER JOIN t.tblIncometype it";
+				joinStatement += " INNER JOIN t.tblIncometypes it";
 			}
 			
-			if(costcentresFilter != null && costcentresFilter != ""){				
-				werte.add(costcentresFilter);
-				spalte.add("cc.costcentre");*/
+			try {
+				if(costcentresFilter[0] != "");
+			} catch (Exception e) {
+				costcentresFilter = new String[1];
+				costcentresFilter[0] = "";
+			}
+			if(costcentresFilter != null && costcentresFilter[0] != ""){	
+				for(String curCc : costcentresFilter){
+					werte.add(curCc);
+					spalte.add("cc.descriptionCc");
+				}
 				
 				/* Add a part to the Joinstatement */
-				/*joinStatement += " INNER JOIN t.tblCostcentre cc";
-			}*/
+				joinStatement += " INNER JOIN t.tblCostcentres cc";
+			}
 			
 			if(customerFilter != null && customerFilter != ""){			
 				werte.add(customerFilter);
@@ -331,8 +343,14 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 	 */
 	@Override
 	public void deleteEntity() {
-		entityLister.DeleteObject(curOrder.getIdOrder(), TblOrder.class);
-		insertProtocol(TblOrder.class, getCurOrder().getIdOrder(), deleteAction);
+		try {
+			entityLister.DeleteObject(curOrder.getIdOrder(), TblOrder.class);
+			insertProtocol(TblOrder.class, getCurOrder().getIdOrder(), deleteAction);
+		} catch (Exception e) {
+			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+				handleOptimisticLockException();
+			}
+		}
 		curOrder = new TblOrder();
 		curOrder.setIdOrder(0);
 		refresh();
@@ -363,29 +381,16 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 		entityNew = (getCurOrder().getIdOrder() == 0);
 		try {
 			entityLister.UpdateObject(TblOrder.class, curOrder, curOrder.getIdOrder());
+			if(entityNew){
+				insertProtocol(TblOrder.class, getCurOrder().getIdOrder(), createAction);
+			}else {
+				insertProtocol(TblOrder.class, getCurOrder().getIdOrder(), updateAction);
+			}
 		} catch (Exception e) {
 			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
-				/* Reaction to OptimisticLockException here in BackingBean
-				 * Message for user is important to make him/her know what is going on 
-				 * and why the selected entity is not updated 
-				 */
-				/* Reading values of sitesBean out of requestMap (Map with all created Managed Beans */
-				SitesBean sitesBean = (SitesBean) 
-													 FacesContext.getCurrentInstance()
-													 .getExternalContext().getSessionMap().get("sitesBean");
-
-				if(sitesBean != null){
-					sitesBean.setOptimisticLock(true);
-				}	
+				handleOptimisticLockException();
 			}
 		}
-		
-		if(entityNew){
-			insertProtocol(TblOrder.class, getCurOrder().getIdOrder(), createAction);
-		}else {
-			insertProtocol(TblOrder.class, getCurOrder().getIdOrder(), updateAction);
-		}
-		
 		refresh();
 	}
 	
@@ -396,12 +401,14 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 		try {
 			ordernumberfromFilter = "";
 			ordernumbertoFilter = "";
-			travelcostsFilter = "";
+			travelcostsFilter = false;
 			customerFilter = "";
-			incometypesFilter = "";
+			incometypesFilter = new String[1];
+			incometypesFilter[0] = "";
 			orderdatefromFilter = dateFormat.parse("1999-01-01");
 			orderdatetoFilter = dateFormat.parse("3000-01-01");
-			costcentresFilter = "";
+			costcentresFilter = new String[1];
+			costcentresFilter[0] = "";
 			orderstateFilter = "";
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -429,7 +436,9 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 			setCurOrderstate((TblOrderstate) entityLister.getSingleObject("SELECT * FROM OMorderstate WHERE description_os = '" +
 					vce.getNewValue().toString() + "'", TblOrderstate.class));
 		}else{
-			setOrderstateFilter(vce.getNewValue().toString());
+			if(vce.getNewValue() != null){
+				setOrderstateFilter(vce.getNewValue().toString());
+			}
 		}
 	}
 	
@@ -443,7 +452,9 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 		if(!filterpopupRender){
 			setSelectedIncometypes((String[]) vce.getNewValue());
 		}else{
-			//setIncometypeFilter(vce.getNewValue().toString());
+			if(vce.getNewValue() != null){
+				setIncometypesFilter((String[]) vce.getNewValue());
+			}
 		}
 	}
 	
@@ -457,7 +468,9 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 		if(!filterpopupRender){
 			setSelectedCostcentres((String[]) vce.getNewValue());
 		}else{
-			//setIncometypeFilter(vce.getNewValue().toString());
+			if(vce.getNewValue() != null){
+				setCostcentresFilter((String[]) vce.getNewValue());
+			}
 		}
 	}
 	
@@ -472,28 +485,10 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 			setCurCustomer((TblCustomer) entityLister.getSingleObject("SELECT * FROM OMcustomer WHERE customername = '" +
 					vce.getNewValue().toString() + "'", TblCustomer.class));
 		}else{
-			setCustomerFilter(vce.getNewValue().toString());
+			if(vce.getNewValue() != null){
+				setCustomerFilter(vce.getNewValue().toString());
+			}
 		}
-	}
-	
-	/**
-	 * Method that Listens to Change Event of a combobox
-	 * if another element in the combobox is selected, the value in
-	 * curCustomername is set to the selected one
-	 * @param vce
-	 */
-	public void CustomernameChangeFilter(ValueChangeEvent vce){
-		setCustomerFilter(vce.getNewValue().toString());	
-	}
-	
-	/**
-	 * Method that Listens to Change Event of a combobox
-	 * if another element in the combobox is selected, the value in
-	 * curCustomername is set to the selected one
-	 * @param vce
-	 */
-	public void OrderstateChangeFilter(ValueChangeEvent vce){
-		setOrderstateFilter(vce.getNewValue().toString());	
 	}
 	
 	/**
@@ -521,7 +516,7 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 	public ArrayList<SelectItem> getIncometypeListDescription(){
 		ArrayList<SelectItem> incometypes = new ArrayList<SelectItem>();
 		if(filterpopupRender){
-			incometypes.add(new SelectItem());
+			incometypes.add(new SelectItem(""));
 		}
 		String[] selectedIt = new String[getIncometypeList().size()];
 		int x = 0;
@@ -550,7 +545,7 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 	public ArrayList<SelectItem> getCostcentreListDescription(){
 		ArrayList<SelectItem> costcentres = new ArrayList<SelectItem>();
 		if(filterpopupRender){
-			costcentres.add(new SelectItem());
+			costcentres.add(new SelectItem(""));
 		}
 		String[] selectedCc = new String[getCostcentreList().size()];
 		int x = 0;
@@ -752,19 +747,19 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 		return ordernumbertoFilter;
 	}
 	
-	public void setCostcentresFilter(String costcentresFilter) {
+	public void setCostcentresFilter(String[] costcentresFilter) {
 		this.costcentresFilter = costcentresFilter;
 	}
 	
-	public String getCostcentresFilter() {
+	public String[] getCostcentresFilter() {
 		return costcentresFilter;
 	}
 	
-	public void setIncometypesFilter(String incometypesFilter) {
+	public void setIncometypesFilter(String[] incometypesFilter) {
 		this.incometypesFilter = incometypesFilter;
 	}
 	
-	public String getIncometypesFilter() {
+	public String[] getIncometypesFilter() {
 		return incometypesFilter;
 	}
 	
@@ -776,11 +771,11 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 		return customerFilter;
 	}
 	
-	public void setTravelcostsFilter(String travelcostsFilter) {
+	public void setTravelcostsFilter(Boolean travelcostsFilter) {
 		this.travelcostsFilter = travelcostsFilter;
 	}
 	
-	public String getTravelcostsFilter() {
+	public Boolean getTravelcostsFilter() {
 		return travelcostsFilter;
 	}
 	
@@ -828,11 +823,11 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 		getIncometypeListDescription();
 	}
 
-	public void setBindingIncometype(HtmlSelectOneMenu bindingIncometype) {
+	public void setBindingIncometype(HtmlSelectManyMenu bindingIncometype) {
 		this.bindingIncometype = bindingIncometype;
 	}
 
-	public HtmlSelectOneMenu getBindingIncometype() {
+	public HtmlSelectManyMenu getBindingIncometype() {
 		return bindingIncometype;
 	}
 	
@@ -844,6 +839,16 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 		getBindingCustomer().getChildren().clear();
 		customerList = null;
 		getCustomerListDescription();
+	}
+	
+	/**
+	 * Method to reset SelectManyMenuCostcentres
+	 * Method is called from CostcentreBackingBean
+	 */
+	public void resetCostcentresSelectManyMenu(){
+		getBindingCostcentres().getChildren().clear();
+		costcentreList = null;
+		getCostcentreListDescription();
 	}
 
 	public void setBindingCustomer(HtmlSelectOneMenu bindingCustomer) {
@@ -868,5 +873,13 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 	
 	public String[] getSelectedCostcentres() {
 		return selectedCostcentres;
+	}
+
+	public void setBindingCostcentres(HtmlSelectManyMenu bindingCostcentres) {
+		this.bindingCostcentres = bindingCostcentres;
+	}
+
+	public HtmlSelectManyMenu getBindingCostcentres() {
+		return bindingCostcentres;
 	}	
 }

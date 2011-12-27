@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import javax.faces.context.FacesContext;
 
-import at.icnc.om.entitybeans.TblCustomer;
 import at.icnc.om.entitybeans.TblCustomerstate;
 import at.icnc.om.interfaces.Filterable;
 
@@ -161,8 +160,14 @@ public class CustomerstateBackingBean extends AbstractBean implements Filterable
 	 */
 	@Override
 	public void deleteEntity() {
-		entityLister.DeleteObject(getCurCustomerstate().getIdCustomerstate(), TblCustomerstate.class);
-		insertProtocol(TblCustomerstate.class, getCurCustomerstate().getIdCustomerstate(), deleteAction);
+		try {
+			entityLister.DeleteObject(getCurCustomerstate().getIdCustomerstate(), TblCustomerstate.class);
+			insertProtocol(TblCustomerstate.class, getCurCustomerstate().getIdCustomerstate(), deleteAction);
+		} catch (Exception e) {
+			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+				handleOptimisticLockException();
+			}
+		}
 		resetCustomerstateCombobox();
 		refresh();
 	}
@@ -175,29 +180,16 @@ public class CustomerstateBackingBean extends AbstractBean implements Filterable
 		boolean entityNew = getCurCustomerstate().getIdCustomerstate() == 0;
 		try {
 			entityLister.UpdateObject(TblCustomerstate.class, getCurCustomerstate(), getCurCustomerstate().getIdCustomerstate());
+			if(entityNew){
+				insertProtocol(TblCustomerstate.class, getCurCustomerstate().getIdCustomerstate(), createAction);
+			}else {
+				insertProtocol(TblCustomerstate.class, getCurCustomerstate().getIdCustomerstate(), updateAction);
+			}
 		} catch (Exception e) {
 			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
-				/* Reaction to OptimisticLockException here in BackingBean
-				 * Message for user is important to make him/her know what is going on 
-				 * and why the selected entity is not updated 
-				 */
-				/* Reading values of sitesBean out of requestMap (Map with all created Managed Beans */
-				SitesBean sitesBean = (SitesBean) 
-													 FacesContext.getCurrentInstance()
-													 .getExternalContext().getSessionMap().get("sitesBean");
-
-				if(sitesBean != null){
-					sitesBean.setOptimisticLock(true);
-				}	
+				handleOptimisticLockException();	
 			}
 		}
-		
-		if(entityNew){
-			insertProtocol(TblCustomerstate.class, getCurCustomerstate().getIdCustomerstate(), createAction);
-		}else {
-			insertProtocol(TblCustomerstate.class, getCurCustomerstate().getIdCustomerstate(), updateAction);
-		}	
-		
 		resetCustomerstateCombobox();
 		refresh();
 	}

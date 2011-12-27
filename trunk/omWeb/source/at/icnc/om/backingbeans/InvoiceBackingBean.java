@@ -7,19 +7,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import at.icnc.om.entitybeans.TblIncometype;
+import at.icnc.om.entitybeans.TblInterval;
 import at.icnc.om.entitybeans.TblInvoice;
 import at.icnc.om.entitybeans.TblInvoicestate;
 import at.icnc.om.entitybeans.TblOrder;
 import at.icnc.om.entitybeans.TblSettlement;
-import at.icnc.om.entitybeans.TblUser;
-import at.icnc.om.interfaces.EntityListerLocal;
-import at.icnc.om.interfaces.Refreshable;
 
 import com.icesoft.faces.component.ext.RowSelectorEvent;
 
@@ -620,8 +619,16 @@ public class InvoiceBackingBean extends AbstractBean {
 	
 	@Override
 	public void deleteEntity(){
-		entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
-		insertProtocol(TblInvoice.class, getCurInvoice().getIdInvoice(), deleteAction);
+		try {
+			entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
+			insertProtocol(TblInvoice.class, getCurInvoice().getIdInvoice(), deleteAction);
+		} catch (Exception e) {
+			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+				handleOptimisticLockException();
+			}
+		}
+		curInvoice = new TblInvoice();
+		getCurInvoice().setIdInvoice(0);
 		refresh();
 	}
 	
@@ -630,23 +637,19 @@ public class InvoiceBackingBean extends AbstractBean {
 	 */
 	@Override
 	public void updateEntity(){
+		boolean entityNew = false;
+		entityNew = (curInvoice.getIdInvoice() == 0);
 		curInvoice.setTblInvoicestate(curInvoicestate);
 		try {
 			entityLister.UpdateObject(TblInvoice.class, curInvoice, curInvoice.getIdInvoice());
+			if(entityNew){
+				insertProtocol(TblInvoice.class, curInvoice.getIdInvoice(), createAction);
+			}else {
+				insertProtocol(TblInvoice.class, curInvoice.getIdInvoice(), updateAction);
+			}
 		} catch (Exception e) {
 			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
-				/* Reaction to OptimisticLockException here in BackingBean
-				 * Message for user is important to make him/her know what is going on 
-				 * and why the selected entity is not updated 
-				 */
-				/* Reading values of sitesBean out of requestMap (Map with all created Managed Beans */
-				SitesBean sitesBean = (SitesBean) 
-													 FacesContext.getCurrentInstance()
-													 .getExternalContext().getSessionMap().get("sitesBean");
-
-				if(sitesBean != null){
-					sitesBean.setOptimisticLock(true);
-				}	
+				handleOptimisticLockException();
 			}
 		}
 		insertProtocol(TblInvoice.class, getCurInvoice().getIdInvoice(), updateAction);
@@ -671,17 +674,6 @@ public class InvoiceBackingBean extends AbstractBean {
 		
 		/* Makes popup visible */
 		changePopupRender();
-	}
-	
-	
-	/**
-	 * Deletes currently selected invoice
-	 */
-	public void deleteInvoice(){
-		entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
-		curInvoice = new TblInvoice();
-		getCurInvoice().setIdInvoice(0);
-		refresh();
 	}
 	
 	/**

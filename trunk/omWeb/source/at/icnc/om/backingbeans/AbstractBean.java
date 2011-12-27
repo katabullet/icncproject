@@ -260,5 +260,18 @@ public abstract class AbstractBean implements Refreshable {
 				e.printStackTrace();
 			}
 	    }
-		
+	public void handleOptimisticLockException(){
+		/* Reaction to OptimisticLockException here in BackingBean
+		 * Message for user is important to make him/her know what is going on 
+		 * and why the selected entity is not updated/deleted
+		 */
+		/* Reading values of sitesBean out of requestMap (Map with all created Managed Beans */
+		SitesBean sitesBean = (SitesBean) 
+											 FacesContext.getCurrentInstance()
+											 .getExternalContext().getSessionMap().get("sitesBean");
+
+		if(sitesBean != null){
+			sitesBean.setOptimisticLock(true);
+		}
+	}
 }

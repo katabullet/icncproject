@@ -8,9 +8,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import at.icnc.om.entitybeans.TblConcern;
 import at.icnc.om.entitybeans.TblUser;
 import at.icnc.om.entitybeans.TblUserrole;
+
 import com.icesoft.faces.component.ext.RowSelectorEvent;
 
 /**
@@ -309,8 +309,16 @@ public class UserBackingBean extends AbstractBean {
 	
 	@Override
 	public void deleteEntity(){
-		entityLister.DeleteObject(curUser.getIdUser(), TblUser.class);
-		insertProtocol(TblUser.class, getCurUser().getIdUser(), deleteAction);
+		try {
+			entityLister.DeleteObject(curUser.getIdUser(), TblUser.class);
+			insertProtocol(TblUser.class, getCurUser().getIdUser(), deleteAction);
+		} catch (Exception e) {
+			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+				handleOptimisticLockException();
+			}
+		}
+		curUser = new TblUser();
+		getCurUser().setIdUser(0);
 		refresh();
 	}
 	
@@ -323,29 +331,16 @@ public class UserBackingBean extends AbstractBean {
 		curUser.setTblUserrole(curUserrole);
 		try {
 			entityLister.UpdateObject(TblUser.class, curUser, curUser.getIdUser());
+			if(entityNew){
+				insertProtocol(TblUser.class, getCurUser().getIdUser(), createAction);
+			}else {
+				insertProtocol(TblUser.class, getCurUser().getIdUser(), updateAction);
+			}	
 		} catch (Exception e) {
 			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
-				/* Reaction to OptimisticLockException here in BackingBean
-				 * Message for user is important to make him/her know what is going on 
-				 * and why the selected entity is not updated 
-				 */
-				/* Reading values of sitesBean out of requestMap (Map with all created Managed Beans */
-				SitesBean sitesBean = (SitesBean) 
-													 FacesContext.getCurrentInstance()
-													 .getExternalContext().getSessionMap().get("sitesBean");
-
-				if(sitesBean != null){
-					sitesBean.setOptimisticLock(true);
-				}	
+				handleOptimisticLockException();
 			}
 		}
-		
-		if(entityNew){
-			insertProtocol(TblUser.class, getCurUser().getIdUser(), createAction);
-		}else {
-			insertProtocol(TblUser.class, getCurUser().getIdUser(), updateAction);
-		}	
-		
 		refresh();
 	}
 	
@@ -366,17 +361,6 @@ public class UserBackingBean extends AbstractBean {
 		setUserPopupName("Benutzer erstellen");
 		/* Makes popup visible */
 		changePopupRender();
-	}
-	
-	
-	/**
-	 * Deletes currently selected invoice
-	 */
-	public void deleteUser(){
-		entityLister.DeleteObject(curUser.getIdUser(), TblUser.class);
-		curUser = new TblUser();
-		getCurUser().setIdUser(0);
-		refresh();
 	}
 	
 	//Field to define the Popup name

@@ -55,24 +55,43 @@
 				</ice:selectInputDate>
 
 				<ice:outputLabel value="#{msg.tableTravelcosts}" styleClass="Text" />
-				<ice:inputText styleClass="Input"
-					value="#{orderLister.travelcostsFilter}" />
+				<ice:selectBooleanCheckbox value="#{orderLister.travelcostsFilter}"/>
 				<ice:panelGrid/>
 
 				<ice:outputLabel value="#{msg.tableCustomername}" styleClass="Text" />
 				<ice:selectOneMenu value="#{orderLister.customerFilter}"
 					styleClass="Input"
-					valueChangeListener="#{orderLister.customernameChangeFilter}">
+					valueChangeListener="#{orderLister.changeCustomer}">
 					<f:selectItems value="#{orderLister.customerListDescription}" />
 				</ice:selectOneMenu>
 				<ice:panelGrid/>
 
-				<!-- Incometypes und Costcentres! -->
-				
+				<!-- Incometypes -->
+       			<ice:outputLabel value="#{msg.tableIncometypes}" styleClass="Text"/>
+                <ice:selectManyMenu id="SlctIncometypes"  style="height:75px;"
+                                value="#{orderLister.incometypesFilter}"
+                                partialSubmit="true"
+                                valueChangeListener="#{orderLister.changeIncometype}">
+                      <f:selectItems id="SlcIncometypeItms"
+                                value="#{orderLister.incometypeListDescription}"/>
+                </ice:selectManyMenu>
+                <ice:panelGrid/>
+                
+                <!-- Costcentres -->
+       			<ice:outputLabel value="#{msg.tableDescriptionCc}" styleClass="Text"/>
+                <ice:selectManyMenu id="SlctCostcentres"  style="height:75px;"
+                                value="#{orderLister.costcentresFilter}"
+                                partialSubmit="true"
+                                valueChangeListener="#{orderLister.changeCostcentre}">
+                      <f:selectItems id="SlcCostcentreItms"
+                                value="#{orderLister.costcentreListDescription}"/>
+                </ice:selectManyMenu>
+                <ice:panelGrid/>
+                
 				<ice:outputLabel value="#{msg.tableOrderstate}" styleClass="Text" />
 				<ice:selectOneMenu value="#{orderLister.orderstateFilter}"
 					styleClass="Input"
-					valueChangeListener="#{orderLister.orderstateChangeFilter}">
+					valueChangeListener="#{orderLister.changeOrderstate}">
 					<f:selectItems value="#{orderLister.orderstateListDescription}" />
 				</ice:selectOneMenu>
 				<ice:panelGrid/>

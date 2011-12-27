@@ -39,7 +39,7 @@
 				<ice:outputText value=""/>
 			</ice:panelGrid>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" styleClass="panelGridButtons">
-				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="#{msg.buttonDelete}" action="#{userLister.deleteUser}"/>
+				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="#{msg.buttonDelete}" action="#{userLister.deleteEntity}"/>
 				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="#{msg.buttonCancel}" action="#{userLister.closePopup}"/>
 			</ice:panelGrid>
 			<ice:panelGrid styleClass="panelGridSpace2">

@@ -8,9 +8,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.OptimisticLockException;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import at.icnc.om.interfaces.EntityListerLocal;
@@ -119,7 +117,6 @@ public class EntityListerImpl implements EntityListerLocal {
 			result = CreateQuery(sqlStatement, entityClass, CreateEM(PU)).getSingleResult();
 			em.close();
 		} catch (Exception e) {
-			// TODO: handle exception
 			emf.close();
 		}
 		
@@ -159,8 +156,7 @@ public class EntityListerImpl implements EntityListerLocal {
 	 * @param id id of the selected entity
 	 * @param entityClass Classtype of the selected entity (entityname.class)
 	 */
-	public void DeleteObject(Long id, Class<?> entityClass){
-		
+	public void DeleteObject(Long id, Class<?> entityClass) throws Exception {		
 		try {
 			CreateEM(PU);
 			Object curObject = entityClass.cast(em.find(entityClass, id));
@@ -168,7 +164,9 @@ public class EntityListerImpl implements EntityListerLocal {
 			em.flush();
 			em.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			if(e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+				throw new Exception("OptimisticLockException", e.getCause());
+			}
 		}finally{
 			emf.close();
 		}
@@ -181,8 +179,7 @@ public class EntityListerImpl implements EntityListerLocal {
 	 * @param updated the object that will be added or updated
 	 * @throws Exception 
 	 */
-	public void UpdateObject(Class<?> entityClass, Object updated, Long id) throws Exception {
-		
+	public void UpdateObject(Class<?> entityClass, Object updated, Long id) throws Exception {	
 		try {
 			CreateEM(PU);
 			
@@ -218,6 +215,9 @@ public class EntityListerImpl implements EntityListerLocal {
 		 * sqlStatement without any filters 
 		 */
 		String sqlStatement = QueryBuilder.CreateSelectStatement(Class, Joins, spalte, werte);
+		//sqlStatement = "SELECT DISTINCT t FROM TblOrder t INNER JOIN t.tblIncometypes it WHERE it.descriptionIt in('Transaktion', 'Projekt')";
+		System.out.println("*****************************");
+		System.out.println(sqlStatement);
 		
 		try {		
 			/* Uses create Query to create a Query

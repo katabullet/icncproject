@@ -17,20 +17,26 @@
 		
 		<!-- DataExporter Start -->
 		<ice:panelGroup styleClass="exampleBox dataScrollingContainer">
-			<ice:selectOneMenu value="#{dataExporter.type}" partialSubmit="true"
-		            valueChangeListener="#{dataExporter.typeChangeListener}" >
+			<ice:selectOneMenu value="#{customerstateLister.excelDataExporter.type}" partialSubmit="true"
+		            valueChangeListener="#{customerstateLister.typeChangeListener}" >
 		            <f:selectItem itemLabel="#{msg.tableExport}" itemValue=""/>
 		            <f:selectItem itemLabel="#{msg.tableExcel}" itemValue="excel"/>
 		            <f:selectItem itemLabel="#{msg.tableCSV}" itemValue="csv"/>
 		        </ice:selectOneMenu>
-		        <br/>
-		       <ice:panelGroup effect="#{dataExporter.changeEffect}" style="width:180px;">
+		        <br/>		                
+		       <ice:panelGroup style="width:180px;">
 		            <ice:dataExporter for="customerstate"
-		                label="#{msg.tableDataExporter1} #{dataExporter.type} #{msg.tableDataExporter2}"
-		                type="#{dataExporter.type}"
+		                label="#{msg.tableDataExporter1} excel #{msg.tableDataExporter2}"
+		                type="excel"
 		                popupBlockerLabel="#{msg.tablePopupBlocker}"
-		                clickToCreateFileText="#{msg.tableDataExporter12} #{dataExporter.type} #{msg.tableDataExporter2}"
-		                ignorePagination="true"/>
+		                clickToCreateFileText="#{msg.tableDataExporter12} excel #{msg.tableDataExporter2}"
+		                ignorePagination="true" rendered="#{customerstateLister.excelDataExporter.rendered}"/>
+		            <ice:dataExporter for="customerstate"
+		                label="#{msg.tableDataExporter1} csv #{msg.tableDataExporter2}"
+		                type="csv"
+		                popupBlockerLabel="#{msg.tablePopupBlocker}"
+		                clickToCreateFileText="#{msg.tableDataExporter12} csv #{msg.tableDataExporter2}"
+		                ignorePagination="true" rendered="#{customerstateLister.csvDataExporter.rendered}" outputTypeHandler="#{customerstateLister.csvDataExporter.csvHandler}"/>
 		       </ice:panelGroup>
 		</ice:panelGroup>	 			           					
 		<!-- DataExporter End -->

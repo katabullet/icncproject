@@ -24,7 +24,7 @@ public interface EntityListerLocal {
 	public Collection<?> getObjectList(String sqlStatement);
 	
 	/* Method to delete a specific entity */
-	public void DeleteObject(Long id, Class<?> entityClass);
+	public void DeleteObject(Long id, Class<?> entityClass) throws Exception;
 	
 	/* Method to update a specific entity */
 	public void UpdateObject(Class<?> entityClass, Object updated, Long id) throws Exception;

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.faces.context.FacesContext;
 
-import at.icnc.om.entitybeans.TblCustomer;
 import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.interfaces.Filterable;
 
@@ -173,8 +172,14 @@ public class IncometypeBackingBean extends AbstractBean implements Filterable {
 	 */
 	@Override
 	public void deleteEntity() {
-		entityLister.DeleteObject(curIncometype.getIdIncometype(), TblIncometype.class);
-		insertProtocol(TblIncometype.class, getCurIncometype().getIdIncometype(), deleteAction);
+		try {
+			entityLister.DeleteObject(curIncometype.getIdIncometype(), TblIncometype.class);
+			insertProtocol(TblIncometype.class, getCurIncometype().getIdIncometype(), deleteAction);
+		} catch (Exception e) {
+			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+				handleOptimisticLockException();
+			}
+		}
 		curIncometype = new TblIncometype();
 		curIncometype.setIdIncometype(0);
 		refresh();
@@ -189,30 +194,17 @@ public class IncometypeBackingBean extends AbstractBean implements Filterable {
 		entityNew = (getCurIncometype().getIdIncometype() == 0);
 		try {
 			entityLister.UpdateObject(TblIncometype.class, curIncometype, curIncometype.getIdIncometype());
+			if(entityNew){
+				insertProtocol(TblIncometype.class, getCurIncometype().getIdIncometype(), createAction);
+			}else {
+				insertProtocol(TblIncometype.class, getCurIncometype().getIdIncometype(), updateAction);
+			}
 		} catch (Exception e) {
 			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
-				/* Reaction to OptimisticLockException here in BackingBean
-				 * Message for user is important to make him/her know what is going on 
-				 * and why the selected entity is not updated 
-				 */
-				/* Reading values of sitesBean out of requestMap (Map with all created Managed Beans */
-				SitesBean sitesBean = (SitesBean) 
-													 FacesContext.getCurrentInstance()
-													 .getExternalContext().getSessionMap().get("sitesBean");
-
-				if(sitesBean != null){
-					sitesBean.setOptimisticLock(true);
-				}	
+				handleOptimisticLockException();
 			}
 		}
 		resetIncometypeCombobox();
-		
-		if(entityNew){
-			insertProtocol(TblIncometype.class, getCurIncometype().getIdIncometype(), createAction);
-		}else {
-			insertProtocol(TblIncometype.class, getCurIncometype().getIdIncometype(), updateAction);
-		}
-		
 		refresh();
 	}
 	
@@ -245,5 +237,12 @@ public class IncometypeBackingBean extends AbstractBean implements Filterable {
 		if(settlementLister != null){
 			settlementLister.resetIncometypeCombobox();
 		}	
+		
+		OrderBackingBean orderLister = (OrderBackingBean) 
+										FacesContext.getCurrentInstance().getExternalContext()
+										.getRequestMap().get("orderLister");
+		if(orderLister != null) {
+			orderLister.resetIncometypeCombobox();
+		}
 	}
 }

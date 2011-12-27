@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.faces.context.FacesContext;
 
-import at.icnc.om.entitybeans.TblCustomer;
 import at.icnc.om.entitybeans.TblOrderstate;
 import at.icnc.om.interfaces.Filterable;
 
@@ -173,8 +172,14 @@ public class OrderstateBackingBean extends AbstractBean implements Filterable {
 	 */
 	@Override
 	public void deleteEntity() {
-		entityLister.DeleteObject(curOrderstate.getIdOrderstate(), TblOrderstate.class);
-		insertProtocol(TblOrderstate.class, getCurOrderstate().getIdOrderstate(), deleteAction);
+		try {
+			entityLister.DeleteObject(curOrderstate.getIdOrderstate(), TblOrderstate.class);
+			insertProtocol(TblOrderstate.class, getCurOrderstate().getIdOrderstate(), deleteAction);
+		} catch (Exception e) {
+			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+				handleOptimisticLockException();
+			}
+		}
 		curOrderstate = new TblOrderstate();
 		curOrderstate.setIdOrderstate(0);
 		refresh();
@@ -189,29 +194,16 @@ public class OrderstateBackingBean extends AbstractBean implements Filterable {
 		entityNew = (getCurOrderstate().getIdOrderstate() == 0);
 		try {
 			entityLister.UpdateObject(TblOrderstate.class, curOrderstate, curOrderstate.getIdOrderstate());
+			if(entityNew){
+				insertProtocol(TblOrderstate.class, getCurOrderstate().getIdOrderstate(), createAction);
+			}else {
+				insertProtocol(TblOrderstate.class, getCurOrderstate().getIdOrderstate(), updateAction);
+			}
 		} catch (Exception e) {
 			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
-				/* Reaction to OptimisticLockException here in BackingBean
-				 * Message for user is important to make him/her know what is going on 
-				 * and why the selected entity is not updated 
-				 */
-				/* Reading values of sitesBean out of requestMap (Map with all created Managed Beans */
-				SitesBean sitesBean = (SitesBean) 
-													 FacesContext.getCurrentInstance()
-													 .getExternalContext().getSessionMap().get("sitesBean");
-
-				if(sitesBean != null){
-					sitesBean.setOptimisticLock(true);
-				}	
+				handleOptimisticLockException();
 			}
 		}
-		
-		if(entityNew){
-			insertProtocol(TblOrderstate.class, getCurOrderstate().getIdOrderstate(), createAction);
-		}else {
-			insertProtocol(TblOrderstate.class, getCurOrderstate().getIdOrderstate(), updateAction);
-		}
-		
 		refresh();
 	}
 	
@@ -230,5 +222,19 @@ public class OrderstateBackingBean extends AbstractBean implements Filterable {
 	/* Getter of curOrderstate */
 	public TblOrderstate getCurOrderstate(){
 		return curOrderstate;
+	}
+	
+	/**
+	 * Method to reset OrderstateCombobox used in orderpopup
+	 */
+	public void resetCustomerCombobox(){
+		/* Reading values of orderlister out of requestMap (Map with all created Managed Beans */
+		OrderBackingBean orderLister = (OrderBackingBean) 
+											 FacesContext.getCurrentInstance()
+											 .getExternalContext().getRequestMap().get("orderLister");
+
+		if(orderLister != null){
+			orderLister.resetOrderstateCombobox();
+		}	
 	}
 }

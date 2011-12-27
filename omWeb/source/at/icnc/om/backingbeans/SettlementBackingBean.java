@@ -6,14 +6,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Set;
 
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
-import at.icnc.om.entitybeans.TblContactperson;
 import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.entitybeans.TblInterval;
 import at.icnc.om.entitybeans.TblInvoice;
@@ -224,10 +222,8 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 			
 			/*Method to close the Popup*/
 			changeFilterPopupRender();
-		} catch (Exception e) {
-			
+		} catch (Exception e) {			
 			init();
-
 		}	
 	}
 	
@@ -348,8 +344,25 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	 */
 	@Override
 	public void deleteEntity() {
-		entityLister.DeleteObject(getCurSettlement().getIdSettlement(), TblSettlement.class);
-		insertProtocol(TblSettlement.class, getCurSettlement().getIdSettlement(), deleteAction);
+		for (TblInvoice curInvoice : getCurSettlement().getTblInvoices()) {
+			try {
+				entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
+				insertProtocol(TblInvoice.class, curInvoice.getIdInvoice(), deleteAction);
+			} catch (Exception e) {
+				if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+					handleOptimisticLockException();
+				}
+			}
+		}
+		getCurSettlement().getTblInvoices().clear();
+		try {
+			entityLister.DeleteObject(getCurSettlement().getIdSettlement(), TblSettlement.class);
+			insertProtocol(TblSettlement.class, getCurSettlement().getIdSettlement(), deleteAction);
+		} catch (Exception e) {
+			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+				handleOptimisticLockException();
+			}
+		}
 		refresh();
 	}
 
@@ -366,6 +379,11 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		
 		try {
 			entityLister.UpdateObject(TblSettlement.class, getCurSettlement(), getCurSettlement().getIdSettlement());
+			if(entityNew){
+				insertProtocol(TblSettlement.class, getCurSettlement().getIdSettlement(), createAction);			
+			}else {
+				insertProtocol(TblSettlement.class, getCurSettlement().getIdSettlement(), updateAction);
+			}
 		} catch (Exception e) {
 			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
 				/* Reaction to OptimisticLockException here in BackingBean
@@ -382,24 +400,59 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 				}	
 			}
 		}
-
-		if(entityNew){
-			insertProtocol(TblSettlement.class, getCurSettlement().getIdSettlement(), createAction);			
-		}else {
-			insertProtocol(TblSettlement.class, getCurSettlement().getIdSettlement(), updateAction);
-		}	
 		
-		if(settlementSum != ((TblInvoice) (getCurSettlement().getTblInvoices().toArray())[0]).getEstimation()
-				|| entityNew
-				|| getCurSettlement().getRuntime() != settlementList.get(settlementList.indexOf(getCurSettlement())).getRuntime()){
-			if(!entityNew){
+		if(getCurSettlement().getTblInvoices() != null) {
+			if(settlementSum != ((TblInvoice) (getCurSettlement().getTblInvoices().toArray())[0]).getEstimation()){
 				for (TblInvoice curInvoice : getCurSettlement().getTblInvoices()) {
-					entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
+					try {
+						entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
+					} catch (Exception e) {
+						if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+							/* Reaction to OptimisticLockException here in BackingBean
+							 * Message for user is important to make him/her know what is going on 
+							 * and why the selected entity is not deleted 
+							 */
+							/* Reading values of sitesBean out of requestMap (Map with all created Managed Beans */
+							SitesBean sitesBean = (SitesBean) 
+																 FacesContext.getCurrentInstance()
+																 .getExternalContext().getSessionMap().get("sitesBean");
+
+							if(sitesBean != null){
+								sitesBean.setOptimisticLock(true);
+							}	
+						}
+					}
 				}
+				createInvoices();
 			}
-			createInvoices();
+		}else {
+			if(entityNew || getCurSettlement().getRuntime() != settlementList.get(settlementList.indexOf(getCurSettlement())).getRuntime()){
+				if(!entityNew){
+					for (TblInvoice curInvoice : getCurSettlement().getTblInvoices()) {
+						try {
+							entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
+						} catch (Exception e) {
+							if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+								/* Reaction to OptimisticLockException here in BackingBean
+								 * Message for user is important to make him/her know what is going on 
+								 * and why the selected entity is not deleted 
+								 */
+								/* Reading values of sitesBean out of requestMap (Map with all created Managed Beans */
+								SitesBean sitesBean = (SitesBean) 
+																	 FacesContext.getCurrentInstance()
+																	 .getExternalContext().getSessionMap().get("sitesBean");
+
+								if(sitesBean != null){
+									sitesBean.setOptimisticLock(true);
+								}	
+							}
+						}
+					}
+				}
+				createInvoices();
+			}
 		}
-				
+		
 		refresh();
 	}
 

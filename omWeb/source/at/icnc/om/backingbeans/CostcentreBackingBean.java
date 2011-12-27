@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import javax.faces.context.FacesContext;
 
-import com.icesoft.faces.component.ext.RowSelectorEvent;
 import at.icnc.om.entitybeans.TblCostcentre;
-import at.icnc.om.entitybeans.TblUser;
 import at.icnc.om.interfaces.Filterable;
+
+import com.icesoft.faces.component.ext.RowSelectorEvent;
 
 public class CostcentreBackingBean extends AbstractBean implements Filterable {
 	
@@ -160,8 +160,14 @@ public class CostcentreBackingBean extends AbstractBean implements Filterable {
 	 */
 	@Override
 	public void deleteEntity() {
-		entityLister.DeleteObject(getCurCostcentre().getIdCostcentre(), TblCostcentre.class);
-		insertProtocol(TblCostcentre.class, getCurCostcentre().getIdCostcentre(), deleteAction);
+		try {
+			entityLister.DeleteObject(getCurCostcentre().getIdCostcentre(), TblCostcentre.class);
+			insertProtocol(TblCostcentre.class, getCurCostcentre().getIdCostcentre(), deleteAction);
+		} catch (Exception e) {
+			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+				handleOptimisticLockException();	
+			}
+		}
 		refresh();
 	}
 
@@ -173,28 +179,17 @@ public class CostcentreBackingBean extends AbstractBean implements Filterable {
 		boolean entityNew = (getCurCostcentre().getIdCostcentre() == 0);
 		try {
 			entityLister.UpdateObject(TblCostcentre.class, getCurCostcentre(), getCurCostcentre().getIdCostcentre());
+			if(entityNew){
+				insertProtocol(TblCostcentre.class, getCurCostcentre().getIdCostcentre(), createAction);
+			}else {
+				insertProtocol(TblCostcentre.class, getCurCostcentre().getIdCostcentre(), updateAction);
+			}
 		} catch (Exception e) {
 			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
-				/* Reaction to OptimisticLockException here in BackingBean
-				 * Message for user is important to make him/her know what is going on 
-				 * and why the selected entity is not updated 
-				 */
-				/* Reading values of sitesBean out of requestMap (Map with all created Managed Beans */
-				SitesBean sitesBean = (SitesBean) 
-													 FacesContext.getCurrentInstance()
-													 .getExternalContext().getSessionMap().get("sitesBean");
-
-				if(sitesBean != null){
-					sitesBean.setOptimisticLock(true);
-				}	
+				handleOptimisticLockException();
 			}
 		}
 		
-		if(entityNew){
-			insertProtocol(TblCostcentre.class, getCurCostcentre().getIdCostcentre(), createAction);
-		}else {
-			insertProtocol(TblCostcentre.class, getCurCostcentre().getIdCostcentre(), updateAction);
-		}
 		refresh();
 	}
 
@@ -220,5 +215,18 @@ public class CostcentreBackingBean extends AbstractBean implements Filterable {
 
 	public String getCostcentrecodeFilter() {
 		return costcentrecodeFilter;
+	}
+	
+	/**
+	 * Method to reset CostcentreSelectManyMenu used in orderpopup
+	 */
+	public void resetCostcentreSelectManyMenu(){
+		/* Reading values of orderLister out of requestMap (Map with all created Managed Beans */		
+		OrderBackingBean orderLister = (OrderBackingBean) 
+										FacesContext.getCurrentInstance().getExternalContext()
+										.getRequestMap().get("orderLister");
+		if(orderLister != null) {
+			orderLister.resetCostcentresSelectManyMenu();
+		}
 	}
 }

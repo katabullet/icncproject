@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import javax.faces.context.FacesContext;
 
-import at.icnc.om.entitybeans.TblConcern;
 import at.icnc.om.entitybeans.TblContactperson;
 import at.icnc.om.interfaces.Filterable;
 
@@ -209,8 +208,14 @@ public class ContactpersonBackingBean extends AbstractBean implements Filterable
 	 */
 	@Override
 	public void deleteEntity() {
-		entityLister.DeleteObject(getCurContactperson().getIdContactperson(), TblContactperson.class);
-		insertProtocol(TblContactperson.class, getCurContactperson().getIdContactperson(), deleteAction);
+		try {
+			entityLister.DeleteObject(getCurContactperson().getIdContactperson(), TblContactperson.class);
+			insertProtocol(TblContactperson.class, getCurContactperson().getIdContactperson(), deleteAction);
+		} catch (Exception e) {
+			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+				handleOptimisticLockException();		
+			}
+		}
 		refresh();
 	}
 
@@ -224,18 +229,7 @@ public class ContactpersonBackingBean extends AbstractBean implements Filterable
 			entityLister.UpdateObject(TblContactperson.class, getCurContactperson(), getCurContactperson().getIdContactperson());
 		} catch (Exception e) {
 			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
-				/* Reaction to OptimisticLockException here in BackingBean
-				 * Message for user is important to make him/her know what is going on 
-				 * and why the selected entity is not updated 
-				 */
-				/* Reading values of sitesBean out of requestMap (Map with all created Managed Beans */
-				SitesBean sitesBean = (SitesBean) 
-													 FacesContext.getCurrentInstance()
-													 .getExternalContext().getSessionMap().get("sitesBean");
-
-				if(sitesBean != null){
-					sitesBean.setOptimisticLock(true);
-				}	
+				handleOptimisticLockException();	
 			}
 		}
 		

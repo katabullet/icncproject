@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import javax.faces.context.FacesContext;
 
 import at.icnc.om.entitybeans.TblConcern;
-import at.icnc.om.entitybeans.TblCustomer;
 import at.icnc.om.interfaces.Filterable;
 
 import com.icesoft.faces.component.ext.RowSelectorEvent;
@@ -149,8 +148,11 @@ public class ConcernBackingBean extends AbstractBean implements Filterable {
 	 */
 	@Override
 	public void deleteEntity() {
-		entityLister.DeleteObject(getCurConcern().getIdConcern(), TblConcern.class);
-		insertProtocol(TblConcern.class, getCurConcern().getIdConcern(), deleteAction);
+		try {
+			entityLister.DeleteObject(getCurConcern().getIdConcern(), TblConcern.class);
+			insertProtocol(TblConcern.class, getCurConcern().getIdConcern(), deleteAction);
+		} catch (Exception e) {
+		}
 		setCurConcern(new TblConcern());
 		getCurConcern().setIdConcern(0);
 		refresh();
@@ -164,28 +166,16 @@ public class ConcernBackingBean extends AbstractBean implements Filterable {
 		boolean entityNew = (getCurConcern().getIdConcern() == 0);
 		try {
 			entityLister.UpdateObject(TblConcern.class, getCurConcern(), getCurConcern().getIdConcern());
+			if(entityNew){
+				insertProtocol(TblConcern.class, getCurConcern().getIdConcern(), createAction);
+			}else {
+				insertProtocol(TblConcern.class, getCurConcern().getIdConcern(), updateAction);
+			}	
 		} catch (Exception e) {
 			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
-				/* Reaction to OptimisticLockException here in BackingBean
-				 * Message for user is important to make him/her know what is going on 
-				 * and why the selected entity is not updated 
-				 */
-				/* Reading values of sitesBean out of requestMap (Map with all created Managed Beans */
-				SitesBean sitesBean = (SitesBean) 
-													 FacesContext.getCurrentInstance()
-													 .getExternalContext().getSessionMap().get("sitesBean");
-
-				if(sitesBean != null){
-					sitesBean.setOptimisticLock(true);
-				}	
+				handleOptimisticLockException();	
 			}
-		}
-		
-		if(entityNew){
-			insertProtocol(TblConcern.class, getCurConcern().getIdConcern(), createAction);
-		}else {
-			insertProtocol(TblConcern.class, getCurConcern().getIdConcern(), updateAction);
-		}	
+		}		
 		
 		resetCustomerstateCombobox();
 		refresh();		

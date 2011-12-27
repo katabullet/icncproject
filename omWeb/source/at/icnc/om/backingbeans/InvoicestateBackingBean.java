@@ -1,21 +1,13 @@
 package at.icnc.om.backingbeans;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
-import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
+
+import at.icnc.om.entitybeans.TblInvoicestate;
+import at.icnc.om.interfaces.Filterable;
 
 import com.icesoft.faces.component.ext.RowSelectorEvent;
-
-import at.icnc.om.entitybeans.TblCustomerstate;
-import at.icnc.om.entitybeans.TblInvoice;
-import at.icnc.om.entitybeans.TblInvoicestate;
-import at.icnc.om.entitybeans.TblUser;
-import at.icnc.om.interfaces.EntityListerLocal;
-import at.icnc.om.interfaces.Filterable;
-import at.icnc.om.interfaces.TblInvoicestateLocal;
 
 public class InvoicestateBackingBean extends AbstractBean implements Filterable {
 	
@@ -161,8 +153,14 @@ public class InvoicestateBackingBean extends AbstractBean implements Filterable 
 	 */
 	@Override
 	public void deleteEntity() {
-		entityLister.DeleteObject(getCurInvoicestate().getIdInvoicestate(), TblInvoicestate.class);
-		insertProtocol(TblInvoicestate.class, getCurInvoicestate().getIdInvoicestate(), deleteAction);
+		try {
+			entityLister.DeleteObject(getCurInvoicestate().getIdInvoicestate(), TblInvoicestate.class);
+			insertProtocol(TblInvoicestate.class, getCurInvoicestate().getIdInvoicestate(), deleteAction);
+		} catch (Exception e) {
+			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+				handleOptimisticLockException();
+			}
+		}
 		refresh();
 	}
 
@@ -174,29 +172,16 @@ public class InvoicestateBackingBean extends AbstractBean implements Filterable 
 		boolean entityNew = (getCurInvoicestate().getIdInvoicestate() == 0);
 		try {
 			entityLister.UpdateObject(TblInvoicestate.class, getCurInvoicestate(), getCurInvoicestate().getIdInvoicestate());
+			if(entityNew){
+				insertProtocol(TblInvoicestate.class, getCurInvoicestate().getIdInvoicestate(), createAction);
+			}else {
+				insertProtocol(TblInvoicestate.class, getCurInvoicestate().getIdInvoicestate(), updateAction);
+			}
 		} catch (Exception e) {
 			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
-				/* Reaction to OptimisticLockException here in BackingBean
-				 * Message for user is important to make him/her know what is going on 
-				 * and why the selected entity is not updated 
-				 */
-				/* Reading values of sitesBean out of requestMap (Map with all created Managed Beans */
-				SitesBean sitesBean = (SitesBean) 
-													 FacesContext.getCurrentInstance()
-													 .getExternalContext().getSessionMap().get("sitesBean");
-
-				if(sitesBean != null){
-					sitesBean.setOptimisticLock(true);
-				}	
+				handleOptimisticLockException();
 			}
 		}
-		
-		if(entityNew){
-			insertProtocol(TblInvoicestate.class, getCurInvoicestate().getIdInvoicestate(), createAction);
-		}else {
-			insertProtocol(TblInvoicestate.class, getCurInvoicestate().getIdInvoicestate(), updateAction);
-		}	
-		
 		resetInvoicestateCombobox();
 		refresh();
 	}

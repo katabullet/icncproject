@@ -64,22 +64,24 @@
                 <ice:selectManyMenu id="SlctIncometypes"  style="height:75px;"
                                 value="#{orderLister.selectedIncometypes}"
                                 partialSubmit="true"
-                                valueChangeListener="#{orderLister.changeIncometype}">
+                                valueChangeListener="#{orderLister.changeIncometype}"
+                                binding="#{orderLister.bindingIncometype}">
                       <f:selectItems id="SlcIncometypeItms"
                                 value="#{orderLister.incometypeListDescription}"/>
                 </ice:selectManyMenu>
-                <ice:panelGrid/>
+                <ice:commandButton image="images/plus.jpg" action="#{incometypeLister.changePopupRenderNew}" styleClass="panelGridButtons"/>
                 
                 <!-- Costcentres -->
        			<ice:outputLabel value="#{msg.tableDescriptionCc}" styleClass="Text"/>
                 <ice:selectManyMenu id="SlctCostcentres"  style="height:75px;"
                                 value="#{orderLister.selectedCostcentres}"
                                 partialSubmit="true"
-                                valueChangeListener="#{orderLister.changeCostcentre}">
+                                valueChangeListener="#{orderLister.changeCostcentre}"
+                                binding="#{orderLister.bindingCostcentres}">
                       <f:selectItems id="SlcCostcentreItms"
                                 value="#{orderLister.costcentreListDescription}"/>
                 </ice:selectManyMenu>
-                <ice:panelGrid/>
+                <ice:commandButton image="images/plus.jpg" action="#{costcentreLister.changePopupRenderNew}" styleClass="panelGridButtons"/>
        			
        			<!-- Orderstates -->
        			<ice:outputLabel value="#{msg.tableOrderstate}" styleClass="Text"/>

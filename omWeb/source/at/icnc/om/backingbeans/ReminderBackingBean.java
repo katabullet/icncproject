@@ -40,6 +40,8 @@ public class ReminderBackingBean extends AbstractBean implements Filterable {
 
 	// Binding of SelectOneMenu with Invoicestate
 	private HtmlSelectOneMenu bindingInvoicestate;
+	
+	private Integer anzahl=0;
 
 	/*
 	 * ______________________________________________________________________________
@@ -80,6 +82,7 @@ public class ReminderBackingBean extends AbstractBean implements Filterable {
 			init();
 		}
 
+		
 		return reminderList;
 	}
 
@@ -486,5 +489,34 @@ public class ReminderBackingBean extends AbstractBean implements Filterable {
 
 	public HtmlSelectOneMenu getBindingInvoicestate() {
 		return bindingInvoicestate;
+	}
+
+	public void setAnzahl(Integer anzahl) {
+		this.anzahl = anzahl;
+	}
+
+	public Integer getAnzahl() {
+		
+		String status = "Erledigt";
+		Format format = new SimpleDateFormat("yyyy-MM-dd");
+		ArrayList<String> Spalte = new ArrayList<String>();
+		ArrayList<String> Werte = new ArrayList<String>();
+
+		Spalte.add("t.duedate");
+		Spalte.add("i.descriptionIs");
+
+		Werte.add(format.format(new Date()));
+		Werte.add(status);
+		
+		try {
+				ArrayList<TblInvoice>reminderListanzahl = new ArrayList<TblInvoice>();
+				reminderListanzahl.addAll((ArrayList<TblInvoice>) entityLister
+						.getReminderList(Werte, Spalte));
+				anzahl = reminderListanzahl.size();
+
+		} catch (Exception e) {
+		}
+		
+		return anzahl;
 	}
 }

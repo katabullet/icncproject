@@ -71,6 +71,7 @@
                 <ice:selectManyMenu id="SlctIncometypes"  style="height:75px;"
                                 value="#{orderLister.incometypesFilter}"
                                 partialSubmit="true"
+                                styleClass="Input"
                                 valueChangeListener="#{orderLister.changeIncometype}">
                       <f:selectItems id="SlcIncometypeItms"
                                 value="#{orderLister.incometypeListDescription}"/>
@@ -82,6 +83,7 @@
                 <ice:selectManyMenu id="SlctCostcentres"  style="height:75px;"
                                 value="#{orderLister.costcentresFilter}"
                                 partialSubmit="true"
+                                styleClass="Input"
                                 valueChangeListener="#{orderLister.changeCostcentre}">
                       <f:selectItems id="SlcCostcentreItms"
                                 value="#{orderLister.costcentreListDescription}"/>

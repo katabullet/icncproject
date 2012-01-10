@@ -188,7 +188,7 @@
         				</ice:panelTab>
         				
         				<!-- Reminder -->
-        				<ice:panelTab label="#{msg.tableReminder}" labelWidth="#{sitesBean.tabWidth}" rendered="#{sitesBean.rendered5}">
+        				<ice:panelTab label="#{msg.tableReminder} (#{reminderLister.anzahl})" labelWidth="#{sitesBean.tabWidth}" rendered="#{sitesBean.rendered5}">
         					<ice:panelTabSet id="icePnlTbSet4" selectedIndex="0" tabPlacement="Bottom">
             					<!-- Reminder -->
             					<ice:panelTab label="#{msg.tableReminder}" labelWidth="1098">

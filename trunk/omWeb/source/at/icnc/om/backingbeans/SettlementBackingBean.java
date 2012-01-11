@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
+import at.icnc.om.entitybeans.TblCostcentre;
 import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.entitybeans.TblInterval;
 import at.icnc.om.entitybeans.TblInvoice;
@@ -33,6 +34,9 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	//List with all Incometype to avoid constant DB-Reading
 	private ArrayList<TblIncometype> incometypeList;
 	
+	// List with all costcentres to avoid constant DB-Reading
+	private ArrayList<TblCostcentre> costcentreList;
+	
 	// List with all Orders to avoid constant DB-Reading
 	private ArrayList<TblOrder> orderList;
 	
@@ -44,6 +48,9 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	
 	//Variable to save current Incometype
 	private TblIncometype curIncometype = new TblIncometype();
+	
+	// Variable to save current Costcentre
+	private TblCostcentre curCostcentre = new TblCostcentre();
 	
 	// Variable to save current Order
 	private TblOrder curOrder = new TblOrder();
@@ -66,6 +73,9 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	// Binding of SelectOneMenu with Order
 	private HtmlSelectOneMenu bindingOrder;
 	
+	// Binding of SelectOneMenu with Costcentre
+	private HtmlSelectOneMenu bindingCostcentre;
+	
 	// Variable to save Sum that has to be paid in interval
 	private BigDecimal settlementSum;
 	
@@ -82,6 +92,7 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	private String estimationTo;
 	private String intervalFilter;
 	private String incometypeFilter;
+	private String costcentreFilter;
 	
 	//Field Declaration for Salesmanquery
 	String username="";
@@ -198,6 +209,13 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 			joinStatement += " INNER JOIN t.tblIncometype inc";
 		}
 		
+		if(getCostcentreFilter() != null && getCostcentreFilter() != ""){
+			werte.add(getCostcentreFilter());
+			spalte.add("cc.descriptionCc");
+			
+			joinStatement += " INNER JOIN t.tblCostcentre cc";
+		}
+		
 		//if(getEstimationFrom() != null && getEstimationFrom() != "" || getEstimationTo() != null && getEstimationTo() != ""){
 			
 			/* Set a default Value if none is set */
@@ -236,6 +254,7 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		setRuntimeFilter("");
 		setIntervalFilter("");
 		setIncometypeFilter("");
+		setCostcentreFilter("");
 	}
 
 	/**
@@ -281,6 +300,9 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 				setCurIncometype(getCurSettlement().getTblIncometype());
 				setCurInterval(getCurSettlement().getTblInterval());
 				setCurOrder(getCurSettlement().getTblOrder());
+				setCurCostcentre(getCurSettlement().getTblCostcentre());
+				resetIncometypeCombobox();
+				resetCostcentreCombobox();
 				
 				if(getCurSettlement().getTblInvoices() != null){
 					try {
@@ -376,6 +398,7 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		getCurSettlement().setTblInterval(getCurInterval());
 		getCurSettlement().setTblIncometype(getCurIncometype());
 		getCurSettlement().setTblOrder(getCurOrder());		
+		getCurSettlement().setTblCostcentre(getCurCostcentre());
 		
 		try {
 			entityLister.UpdateObject(TblSettlement.class, getCurSettlement(), getCurSettlement().getIdSettlement());
@@ -402,7 +425,13 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		}
 		
 		if(getCurSettlement().getTblInvoices() != null) {
-			if(settlementSum != ((TblInvoice) (getCurSettlement().getTblInvoices().toArray())[0]).getEstimation()){
+			BigDecimal estimation = new BigDecimal(0);
+			try {
+				estimation = ((TblInvoice) (getCurSettlement().getTblInvoices().toArray()[0])).getEstimation();
+			} catch (Exception e) {
+			}
+			
+			if(settlementSum != estimation){
 				for (TblInvoice curInvoice : getCurSettlement().getTblInvoices()) {
 					try {
 						entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
@@ -467,7 +496,7 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	/**
 	 * Method that Listens to Change Event of a combobox
 	 * if another element in the combobox is selected, the value in
-	 * curSettlement is set to the selected one
+	 * curInterval is set to the selected one
 	 * @param vce
 	 */
 	public void changeInterval(ValueChangeEvent vce){
@@ -482,6 +511,21 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	/**
 	 * Method that Listens to Change Event of a combobox
 	 * if another element in the combobox is selected, the value in
+	 * curCostcentre is set to the selected one
+	 * @param vce
+	 */
+	public void changeCostcentre(ValueChangeEvent vce){
+		if(!filterpopupRender){
+			setCurCostcentre((TblCostcentre) entityLister.getSingleObject("SELECT * FROM OMCostcentre WHERE description_cc ='" +
+					vce.getNewValue().toString() + "'", TblCostcentre.class));
+		}else{
+			setCostcentreFilter(vce.getNewValue().toString());
+		}
+	}
+	
+	/**
+	 * Method that Listens to Change Event of a combobox
+	 * if another element in the combobox is selected, the value in
 	 * curSettlement is set to the selected one
 	 * @param vce
 	 */
@@ -489,6 +533,8 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		if(!filterpopupRender){
 			setCurOrder((TblOrder) entityLister.getSingleObject("SELECT * FROM OMOrder WHERE id_Order = '" +
 					vce.getNewValue().toString() + "'", TblOrder.class));
+			resetIncometypeCombobox();
+			resetCostcentreCombobox();
 		}else{
 			setIncometypeFilter(vce.getNewValue().toString());
 		}
@@ -541,6 +587,23 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 			incometype.add(new SelectItem(item.getDescriptionIt()));
 		}
 		return incometype;			
+	}
+	
+	/**
+	 * Function to create SelectItems of all Costcentres
+	 * Important for combobox (needs SelectItem, not objects of TblCostcentre)
+	 * @return List of SelectItem 
+	 */
+	public ArrayList<SelectItem> getCostcentreListDescription(){
+		ArrayList<SelectItem> costcentre = new ArrayList<SelectItem>();
+		if(filterpopupRender){
+			costcentre.add(new SelectItem());
+		}
+		for (TblCostcentre item : getCostcentreList()) {
+			/* Description of each incometype is added to SelectItem-List */
+			costcentre.add(new SelectItem(item.getDescriptionCc()));
+		}
+		return costcentre;			
 	}
 	
 	/**
@@ -604,8 +667,12 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		 */		
 		if(incometypeList == null){
 			incometypeList = new ArrayList<TblIncometype>();
-			incometypeList.addAll((ArrayList<TblIncometype>) 
+			if(getCurOrder() != null && getCurOrder().getTblIncometypes() != null && !filterpopupRender){
+				incometypeList.addAll(getCurOrder().getTblIncometypes());
+			}else {
+				incometypeList.addAll((ArrayList<TblIncometype>) 
 					entityLister.getObjectList(TblIncometype.class));
+			}
 		}
 		
 		/* If no incometype is selected, curIncometype is set to selected
@@ -625,6 +692,42 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	}
 	
 	/**
+	 * This function returns a list with all Costcentres
+	 * @return costcentreList
+	 */
+	@SuppressWarnings("unchecked")
+	private ArrayList<TblCostcentre> getCostcentreList(){
+		
+		/* Costcentres are only read out of DB if they were not read before 
+		 * avoids unnecessary data traffic 
+		 */		
+		if(costcentreList == null){
+			costcentreList = new ArrayList<TblCostcentre>();
+			if(getCurOrder() != null && getCurOrder().getTblCostcentres() != null && !filterpopupRender){
+				costcentreList.addAll(getCurOrder().getTblCostcentres());
+			}else {
+				costcentreList.addAll((ArrayList<TblCostcentre>) 
+					entityLister.getObjectList(TblCostcentre.class));
+			}
+		}
+		
+		/* If no incometype is selected, curIncometype is set to selected
+		 * otherwise the incometype is unselected
+		 */		
+		if(getCurCostcentre() != null){
+			for(TblIncometype curItem : incometypeList){				
+				if(curItem.getIdIncometype() == getCurIncometype().getIdIncometype()){
+					curItem.setSelected(true);
+				}
+			}
+		}else{
+			setCurIncometype(incometypeList.get(0));
+		}		
+	
+		return costcentreList;
+	}
+	
+	/**
 	 * This function returns a list with all Orders
 	 * @return orderList
 	 */
@@ -638,7 +741,11 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 			orderList = new ArrayList<TblOrder>();
 			orderList.addAll((ArrayList<TblOrder>) 
 					entityLister.getObjectList(TblOrder.class));
-		}
+			
+			if(orderList.size() != 0 ){
+				setCurOrder(orderList.get(0));
+			}
+		}		
 		
 		/* If no order is selected, curOrder is set selected
 		 * otherwise the order is unselected
@@ -771,6 +878,15 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	}
 	
 	/**
+	 * Method to reset CostcentreCombobox
+	 */
+	public void resetCostcentreCombobox(){
+		getBindingCostcentre().getChildren().clear();
+		costcentreList = null;
+		getCostcentreListDescription();
+	}
+	
+	/**
 	 * Method to reset IncomtypeCombobox
 	 * Method is called from IncometypeBackingBean
 	 */
@@ -894,5 +1010,29 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 
 	public Date getSettlementDate() {
 		return settlementDate;
+	}
+
+	public void setCurCostcentre(TblCostcentre curCostcentre) {
+		this.curCostcentre = curCostcentre;
+	}
+
+	public TblCostcentre getCurCostcentre() {
+		return curCostcentre;
+	}
+
+	public void setBindingCostcentre(HtmlSelectOneMenu bindingCostcentre) {
+		this.bindingCostcentre = bindingCostcentre;
+	}
+
+	public HtmlSelectOneMenu getBindingCostcentre() {
+		return bindingCostcentre;
+	}
+
+	public void setCostcentreFilter(String costcentreFilter) {
+		this.costcentreFilter = costcentreFilter;
+	}
+
+	public String getCostcentreFilter() {
+		return costcentreFilter;
 	}
 }

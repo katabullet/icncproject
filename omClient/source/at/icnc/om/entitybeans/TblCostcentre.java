@@ -18,6 +18,7 @@ public class TblCostcentre extends Selectable implements Serializable {
 	private String costcentrecode;
 	private String descriptionCc;
 	private Set<TblOrder> tblOrders;
+	private Set<TblSettlement> tblSettlements;
 	// Variable for version for OptimisticLockException
 	private Integer version;
 
@@ -66,6 +67,16 @@ public class TblCostcentre extends Selectable implements Serializable {
 
 	public void setTblOrders(Set<TblOrder> tblOrders) {
 		this.tblOrders = tblOrders;
+	}
+	
+	//bi-directional many-to-one association to TblSettlement
+	@OneToMany(mappedBy="tblCostcentre")
+	public Set<TblSettlement> getTblSettlements() {
+		return this.tblSettlements;
+	}
+
+	public void setTblSettlements(Set<TblSettlement> tblSettlements) {
+		this.tblSettlements = tblSettlements;
 	}
 	
 	/*

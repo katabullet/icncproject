@@ -23,6 +23,7 @@ public class TblSettlement extends Selectable implements Serializable {
 	private TblOrder tblOrder;
 	// Variable for version for OptimisticLockException
 	private Integer version;
+	private TblCostcentre tblCostcentre;
 
     public TblSettlement() {
     }
@@ -95,6 +96,16 @@ public class TblSettlement extends Selectable implements Serializable {
 
 	public void setTblOrder(TblOrder tblOrder) {
 		this.tblOrder = tblOrder;
+	}
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="FK_COSTCENTRE")
+	public TblCostcentre getTblCostcentre() {
+		return this.tblCostcentre;
+	}
+
+	public void setTblCostcentre(TblCostcentre tblCostcentre) {
+		this.tblCostcentre = tblCostcentre;
 	}
 	
 	/*

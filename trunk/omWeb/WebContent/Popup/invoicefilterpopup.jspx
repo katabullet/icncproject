@@ -34,33 +34,41 @@
 				<ice:outputLabel value="#{msg.tableColumn}" styleClass="Text TextTitel"/>
 				<ice:outputLabel value="#{msg.tableCriterionStart}" styleClass="HeadText"/>
 				<ice:outputLabel value="#{msg.tableCriterionEnd}" styleClass="HeadText"/>
+				
 				<ice:outputLabel value="#{msg.tableInvoicenumber}" styleClass="Text"/>
 				<ice:inputText styleClass="Input" value="#{invoiceLister.invoicenumberFrom}"/>
 				<ice:inputText styleClass="Input" value="#{invoiceLister.invoicenumberTo}"/>
+				
 				<ice:outputLabel value="#{msg.tableSum}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{invoiceLister.sumFrom}"/>
-				<ice:inputText styleClass="Input" value="#{invoiceLister.sumTo}"/>
+				<ice:inputText styleClass="Input" value="#{invoiceLister.sumFrom}" partialSubmit="true"/>
+				<ice:inputText styleClass="Input" value="#{invoiceLister.sumTo}" partialSubmit="true"/>
+				
 				<ice:outputLabel value="#{msg.tableEstimation}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{invoiceLister.estimatateFrom}"/>
-				<ice:inputText styleClass="Input" value="#{invoiceLister.estimatateTo}"/>
+				<ice:inputText styleClass="Input" value="#{invoiceLister.estimatateFrom}" partialSubmit="true"/>
+				<ice:inputText styleClass="Input" value="#{invoiceLister.estimatateTo}" partialSubmit="true"/>
+				
 				<ice:outputLabel value="#{msg.tableDuedate}" styleClass="Text"/>
-				<ice:selectInputDate styleClass="Calendar" value="#{invoiceLister.duedateFrom}" renderAsPopup="true"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
-				<ice:selectInputDate styleClass="Calendar" value="#{invoiceLister.duedateTo}" renderAsPopup="true"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
+				<ice:selectInputDate styleClass="Calendar" value="#{invoiceLister.duedateFrom}" renderAsPopup="true" partialSubmit="true"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
+				<ice:selectInputDate styleClass="Calendar" value="#{invoiceLister.duedateTo}" renderAsPopup="true" partialSubmit="true"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:selectInputDate>
+       			
        			<ice:outputLabel value="#{msg.tableInvoicestate}" styleClass="Text"/>
        			<ice:selectOneMenu value="#{invoiceLister.invoicestate}"  styleClass="Input" valueChangeListener="#{invoiceLister.InvoicestateChangeFilter}">
 					  <f:selectItems value="#{invoiceLister.invoicestateListDescriptionFilter}"/>
        			</ice:selectOneMenu>
        			<ice:panelGrid/>
+       			
        			<ice:outputLabel value="#{msg.tableOrdernumber}" styleClass="Text"/>
        			<ice:selectOneMenu value="#{invoiceLister.ordernumber}"  styleClass="Input" valueChangeListener="#{invoiceLister.OrderChangeFilter}">
 					  <f:selectItems value="#{invoiceLister.orderListDescription}"/>
        			</ice:selectOneMenu>
        			<ice:panelGrid/>
+       			
        			<ice:outputLabel value="#{msg.tableIncometype}" styleClass="Text"/>
        			<ice:selectOneMenu value="#{invoiceLister.incometype}"  styleClass="Input" valueChangeListener="#{invoiceLister.IncometypeChangeFilter}">
 					  <f:selectItems value="#{invoiceLister.incometypeListDescription}"/>
        			</ice:selectOneMenu>
        			<ice:panelGrid/>
+       			
        			<ice:outputLabel value="#{msg.tableSettlementnumber}" styleClass="Text"/>
        			<ice:selectOneMenu value="#{invoiceLister.settlementnumber}"  styleClass="Input" valueChangeListener="#{invoiceLister.SettlementChangeFilter}">
 					  <f:selectItems value="#{invoiceLister.settlementListDescription}"/>

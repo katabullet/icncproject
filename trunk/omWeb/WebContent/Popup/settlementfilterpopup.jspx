@@ -36,15 +36,15 @@
 				<ice:outputLabel value="#{msg.tableCriterionEnd}" styleClass="HeadText"/>
 				
 				<ice:outputLabel value="#{msg.tableSettlementID}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{settlementLister.settlementIDFrom}"/>
-				<ice:inputText styleClass="Input" value="#{settlementLister.settlementIDTo}"/>
+				<ice:inputText styleClass="Input" value="#{settlementLister.settlementIDFrom}" partialSubmit="true"/>
+				<ice:inputText styleClass="Input" value="#{settlementLister.settlementIDTo}" partialSubmit="true"/>
 				
 				<ice:outputLabel value="#{msg.tableOrder}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{settlementLister.ordernumberFrom}"/>
-				<ice:inputText styleClass="Input" value="#{settlementLister.ordernumberTo}"/>
+				<ice:inputText styleClass="Input" value="#{settlementLister.ordernumberFrom}" partialSubmit="true"/>
+				<ice:inputText styleClass="Input" value="#{settlementLister.ordernumberTo}" partialSubmit="true"/>
 				
 				<ice:outputLabel value="#{msg.tableRuntime}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{settlementLister.runtimeFilter}"/>
+				<ice:inputText styleClass="Input" value="#{settlementLister.runtimeFilter}" partialSubmit="true"/>
 				<ice:panelGrid/>
 				
 				<ice:outputLabel value="#{msg.tableInterval}" styleClass="Text"/>
@@ -59,10 +59,12 @@
        			</ice:selectOneMenu>
        			<ice:panelGrid/>
        			
-       			<!-- <ice:outputLabel value="#{msg.tableEstimation}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{settlementLister.estimationFrom}"/>
-				<ice:inputText styleClass="Input" value="#{settlementLister.estimationTo}"/> -->
-									
+       			<ice:outputLabel value="#{msg.tableCostcenter}" styleClass="Text"/>
+				<ice:selectOneMenu value="#{settlementLister.costcentreFilter}"  styleClass="Input" valueChangeListener="#{settlementLister.changeCostcentre}">
+					  <f:selectItems value="#{settlementLister.costcentreListDescription}"/>
+       			</ice:selectOneMenu>
+       			<ice:panelGrid/>
+       			
 			</ice:panelGrid>
 			<ice:panelGrid/>
 			<ice:panelGrid styleClass="panelGridSpace1">

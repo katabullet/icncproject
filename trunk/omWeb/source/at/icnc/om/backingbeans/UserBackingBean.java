@@ -356,23 +356,9 @@ public class UserBackingBean extends AbstractBean {
 		
 		/* Setting default values of new user */
 		getCurUser().setTblUserrole((TblUserrole)entityLister.getSingleObject("SELECT * From omuserrole WHERE rownum <=1", TblUserrole.class));
-		
-		/*Set the Popupname*/
-		setUserPopupName("Benutzer erstellen");
+
 		/* Makes popup visible */
 		changePopupRender();
-	}
-	
-	//Field to define the Popup name
-	private String UserPopupName="Benutzer bearbeiten";
-	
-	//Setter method to set the Popup name
-	public void setUserPopupName(String userPopupName) {
-		UserPopupName = userPopupName;
-	}
-	//Getter method to get the Popup name
-	public String getUserPopupName() {
-		return UserPopupName;
 	}
 	
 }

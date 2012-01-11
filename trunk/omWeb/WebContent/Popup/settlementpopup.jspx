@@ -22,7 +22,10 @@
 	            <!-- ToDo: Dynamisch: Neu/Aendern -->
 	            <ice:outputText
 	                    value="#{msg.tableEditSettlement}"
-	                    styleClass="popupHeaderText"/>
+	                    styleClass="popupHeaderText" rendered="#{settlementLister.curSettlement.idSettlement gt 0}"/>
+	            <ice:outputText
+	                    value="#{msg.tableCreateSettlement}"
+	                    styleClass="popupHeaderText" rendered="#{settlementLister.curSettlement.idSettlement eq 0}"/>	                    
 	            <ice:commandButton image="images/closepopup.gif" action="#{settlementLister.closePopup}"/>
         	</ice:panelGrid>
         	<!-- Header Popup (edit, new) End -->
@@ -60,11 +63,21 @@
 				<ice:selectOneMenu value="#{settlementLister.curIncometype.descriptionIt}"  
 								   styleClass="Input" 
 								   valueChangeListener="#{settlementLister.changeIncometype}" 
-								   binding="#{settlementLister.bindingIncometype}" 
+								   binding="#{settlementLister.bindingIncometype}"
 								   partialSubmit="true">
 					  <f:selectItems value="#{settlementLister.incometypeListDescription}"/>
        			</ice:selectOneMenu>
-       			<ice:commandButton image="images/plus.jpg" action="#{incometypeLister.changePopupRenderNew}"/>
+       			<ice:panelGrid />
+       			
+       			<ice:outputLabel value="#{msg.tableCostcenter}" styleClass="Text"/>
+				<ice:selectOneMenu value="#{settlementLister.curCostcentre.descriptionCc}"  
+								   styleClass="Input" 
+								   valueChangeListener="#{settlementLister.changeCostcentre}" 
+								   binding="#{settlementLister.bindingCostcentre}"
+								   partialSubmit="true">
+					  <f:selectItems value="#{settlementLister.costcentreListDescription}"/>
+       			</ice:selectOneMenu>
+       			<ice:panelGrid />
        			
        			<ice:outputLabel value="#{msg.tableSettlementSum}" styleClass="Text" />
        			<ice:inputText styleClass="Input" value="#{settlementLister.settlementSum}" partialSubmit="true"/>

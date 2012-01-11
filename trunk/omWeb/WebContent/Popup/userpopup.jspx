@@ -18,9 +18,15 @@
 		<ice:panelGrid columns="2"
 			styleClass="popupHeaderWrapper panelGridHeader"
 			columnClasses="headerCol1 headerCol2">
-			<!-- ToDo: Dynamisch: Neu/Aendern -->
-			<ice:outputText value="#{userLister.userPopupName}"
-				styleClass="popupHeaderText" />
+			
+			 <!-- ToDo: Dynamisch: Neu/Aendern -->
+	            <ice:outputText
+	                    value="#{msg.tableEditUser}"
+	                    styleClass="popupHeaderText" rendered="#{userLister.curUser.idUser gt 0}"/>
+	            <ice:outputText
+	                    value="#{msg.tableCreateUser}"
+	                    styleClass="popupHeaderText" rendered="#{userLister.curUser.idUser eq 0}"/>
+
 			<ice:commandButton image="images/closepopup.gif"
 				action="#{userLister.closePopup}"/>
 		</ice:panelGrid>

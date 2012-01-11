@@ -19,10 +19,15 @@
 		<f:facet name="header">
 			<!-- Header Popup (edit, new) Start -->
 			<ice:panelGrid columns="2" styleClass="popupHeaderWrapper panelGridHeader" columnClasses="headerCol1 headerCol2">
-	            <!-- ToDo: Dynamisch: Neu/Aendern -->
+			
+			<!-- ToDo: Dynamisch: Neu/Aendern -->
 	            <ice:outputText
 	                    value="#{msg.tableEditContactperson}"
-	                    styleClass="popupHeaderText"/>
+	                    styleClass="popupHeaderText" rendered="#{contactpersonLister.curContactperson.idContactperson gt 0}"/>
+	            <ice:outputText
+	                    value="#{msg.tableCreateContactperson}"
+	                    styleClass="popupHeaderText" rendered="#{contactpersonLister.curContactperson.idContactperson eq 0}"/>
+
 	            <ice:commandButton image="images/closepopup.gif" action="#{contactpersonLister.closePopup}"/>
         	</ice:panelGrid>
         	<!-- Header Popup (edit, new) End -->

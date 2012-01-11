@@ -38,7 +38,7 @@
 				<ice:inputText styleClass="Input" value="#{intervalLister.descriptionIv}"/>
 				
 				<ice:outputLabel value="#{msg.tableMonths}" styleClass="Text"/>
-				<ice:inputText styleClass="Input" value="#{intervalLister.months}"/>
+				<ice:inputText styleClass="Input" value="#{intervalLister.months}" partialSubmit="true"/>
 					
 			</ice:panelGrid>
 			<ice:panelGrid/>

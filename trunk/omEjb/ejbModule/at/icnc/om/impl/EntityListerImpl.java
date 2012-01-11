@@ -215,15 +215,11 @@ public class EntityListerImpl implements EntityListerLocal {
 		 * sqlStatement without any filters 
 		 */
 		String sqlStatement = QueryBuilder.CreateSelectStatement(Class, Joins, spalte, werte);
-		//sqlStatement = "SELECT DISTINCT t FROM TblOrder t INNER JOIN t.tblIncometypes it WHERE it.descriptionIt in('Transaktion', 'Projekt')";
-		System.out.println("*****************************");
-		System.out.println(sqlStatement);
 		
 		try {		
 			/* Uses create Query to create a Query
 			 * Query-Method getResultList is used
 			 */
-			//result.addAll(CreateQuery(sqlStatement, entityClass, CreateEM(PU)).getResultList());
 			
 			Query query = CreateEM(PU).createQuery(sqlStatement);
 			result.addAll(query.getResultList());

@@ -19,10 +19,15 @@
 		<f:facet name="header">
 			<!-- Header Popup (edit, new) Start -->
 			<ice:panelGrid columns="2" styleClass="popupHeaderWrapper panelGridHeader" columnClasses="headerCol1 headerCol2">
-	            <!-- ToDo: Dynamisch: Neu/Aendern -->
+			
+			<!-- ToDo: Dynamisch: Neu/Aendern -->
 	            <ice:outputText
 	                    value="#{msg.tableEditOrder}"
-	                    styleClass="popupHeaderText"/>
+	                    styleClass="popupHeaderText" rendered="#{orderLister.curOrder.idOrder gt 0}"/>
+	            <ice:outputText
+	                    value="#{msg.tableCreateOrder}"
+	                    styleClass="popupHeaderText" rendered="#{orderLister.curOrder.idOrder eq 0}"/>
+
 	            <ice:commandButton image="images/closepopup.gif" action="#{orderLister.closePopup}"/>
         	</ice:panelGrid>
         	<!-- Header Popup (edit, new) End -->
@@ -64,6 +69,7 @@
                 <ice:selectManyMenu id="SlctIncometypes"  style="height:75px;"
                                 value="#{orderLister.selectedIncometypes}"
                                 partialSubmit="true"
+                                styleClass="Input"
                                 valueChangeListener="#{orderLister.changeIncometype}"
                                 binding="#{orderLister.bindingIncometype}">
                       <f:selectItems id="SlcIncometypeItms"
@@ -76,6 +82,7 @@
                 <ice:selectManyMenu id="SlctCostcentres"  style="height:75px;"
                                 value="#{orderLister.selectedCostcentres}"
                                 partialSubmit="true"
+                                styleClass="Input"
                                 valueChangeListener="#{orderLister.changeCostcentre}"
                                 binding="#{orderLister.bindingCostcentres}">
                       <f:selectItems id="SlcCostcentreItms"
@@ -90,6 +97,60 @@
        			</ice:selectOneMenu>
        			<ice:commandButton image="images/plus.jpg" action="#{orderstateLister.changePopupRenderNew}" styleClass="panelGridButtons"/>
 				
+				
+				<!-- Fileupload -->
+				<ice:outputLabel value="Fileupload"/>
+				 <ice:inputFile id="inputFileName" width="600" 
+
+                       actionListener="#{inputFileController.uploadFile}"
+                        />
+                       <!-- autoUpload="#{inputFileController.autoUpload}"-->
+                       <ice:panelGrid/>
+                       <ice:panelGrid/>
+				 <ice:outputProgress value="#{inputFileController.fileProgress}"
+                            styleClass="uploadProgressBar"/>
+            
+            <ice:panelGrid/> 
+            <ice:panelGrid/>                 
+            <ice:dataTable
+                width="450px"
+                value="#{inputFileController.fileList}"
+                var="file">
+            <ice:column>
+                <f:facet name="header">
+                    <ice:outputLabel
+                            value="#{msgs['page.inputFile.history.name.label']}"/>
+                </f:facet>
+                <ice:outputText value="#{file.fileInfo.fileName}"/>
+            </ice:column>
+            <ice:column>
+                <f:facet name="header">
+                    <ice:outputLabel
+                            value="#{msgs['page.inputFile.history.size.label']}"/>
+                </f:facet>
+                <ice:outputText value="#{file.sizeFormatted}"/>
+            </ice:column>
+            <ice:column>
+                <f:facet name="header">
+                    <ice:outputText
+                            value="#{msgs['page.inputFile.history.content.label']}"/>
+                </f:facet>
+                <ice:outputText value="#{file.fileInfo.contentType}"/>
+            </ice:column>
+            <ice:column>
+                <f:facet name="header">
+                    <ice:outputText
+                            value="#{msgs['page.inputFile.history.remove.label']}"/>
+                </f:facet>
+                <ice:commandLink
+                        value="#{msgs['page.inputFile.history.remove.label']}"
+                        actionListener="#{inputFileController.removeUploadedFile}">
+                    <f:param name="fileName" value="#{file.fileInfo.fileName}"/>
+                </ice:commandLink>
+            </ice:column>
+        </ice:dataTable>
+        
+        
 			</ice:panelGrid>			
 			<ice:panelGrid styleClass="panelGridSpace1">
 				<ice:messages layout="list" errorClass="iceMsgError"></ice:messages>

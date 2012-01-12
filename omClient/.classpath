@@ -37,5 +37,6 @@
 	<classpathentry kind="lib" path="/omEar/build/libraries/el-api.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/common"/>
 	<classpathentry kind="lib" path="/omEar/build/libraries/InetJaas.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Knünz Nina/Documents/Schule/Maturaprojekt/Praktisch/commons-fileupload-1.2.2-bin/commons-fileupload-1.2.2/lib/commons-fileupload-1.2.2.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

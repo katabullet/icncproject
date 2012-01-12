@@ -15,5 +15,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="/omEar/EarContent/lib/eclipselink.jar"/>
 	<classpathentry kind="lib" path="/omEar/EarContent/lib/javax.persistence_1.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Knünz Nina/Documents/Schule/Maturaprojekt/Praktisch/commons-fileupload-1.2.2-bin/commons-fileupload-1.2.2/lib/commons-fileupload-1.2.2.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

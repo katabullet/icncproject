@@ -32,6 +32,10 @@
     <param-name>facelets.LIBRARIES</param-name>
     <param-value>/WEB-INF/taglib/inet.taglib.xml</param-value>
   </context-param>
+   <context-param>
+            <param-name>com.icesoft.faces.uploadDirectory</param-name>
+            <param-value>upload</param-value>
+    </context-param>
   <listener>
     <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
   </listener>
@@ -58,6 +62,13 @@
     <servlet-class>com.icesoft.faces.webapp.xmlhttp.BlockingServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+  <!-- file upload Servlet -->
+    <servlet>
+         <servlet-name>uploadServlet</servlet-name>
+         <servlet-class>com.icesoft.faces.component.inputfile.FileUploadServlet</servlet-class>
+         <load-on-startup> 1 </load-on-startup>
+    </servlet>
+  
 <!--   
   <servlet>
     <servlet-name>InitializerServlet</servlet-name>
@@ -81,6 +92,10 @@
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>/faces/*</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+         <servlet-name>uploadServlet</servlet-name>
+         <url-pattern>/uploadHtml</url-pattern>
+    </servlet-mapping>
   <session-config>
     <session-timeout>30</session-timeout>
   </session-config>

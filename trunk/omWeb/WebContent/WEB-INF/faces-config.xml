@@ -149,6 +149,11 @@
 		<managed-bean-class>at.icnc.om.backingbeans.ProtocolBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>inputFileController</managed-bean-name>
+		<managed-bean-class>at.icnc.om.backingbeans.InputFileController</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
 	
 	<navigation-rule>
 		<display-name>login</display-name>

@@ -25,6 +25,8 @@ public class TblOrder extends Selectable implements Serializable {
 	private Set<TblIncometype> tblIncometypes;
 	private TblOrderstate tblOrderstate;
 	private Set<TblSettlement> tblSettlements;
+	private TblDocument omdocument;
+	private Set<TblDocument> omdocuments;
 	// Variable for version for OptimisticLockException
 	private Integer version;
 
@@ -211,5 +213,25 @@ public class TblOrder extends Selectable implements Serializable {
 	@Transient
 	public Boolean getTravelcostsBoolean() {
 		return (travelcosts == 1);
+	}
+	//bi-directional one-to-one association to TblDocument
+	@OneToOne(mappedBy="omorder1", fetch=FetchType.LAZY)
+	public TblDocument getOmdocument() {
+		return this.omdocument;
+	}
+
+	public void setOmdocument(TblDocument omdocument) {
+		this.omdocument = omdocument;
+	}
+	
+
+	//bi-directional many-to-one association to TblDocument
+	@OneToMany(mappedBy="omorder2")
+	public Set<TblDocument> getOmdocuments() {
+		return this.omdocuments;
+	}
+
+	public void setOmdocuments(Set<TblDocument> omdocuments) {
+		this.omdocuments = omdocuments;
 	}
 }

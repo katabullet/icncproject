@@ -16,6 +16,7 @@ import javax.faces.model.SelectItem;
 
 import at.icnc.om.entitybeans.TblCostcentre;
 import at.icnc.om.entitybeans.TblCustomer;
+import at.icnc.om.entitybeans.TblDocument;
 import at.icnc.om.entitybeans.TblIncometype;
 import at.icnc.om.entitybeans.TblOrder;
 import at.icnc.om.entitybeans.TblOrderstate;
@@ -91,8 +92,7 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 			
 		if(UserBean.userrole!=5){
 			orderList.addAll((ArrayList<TblOrder>) 
-					entityLister.getObjectList(TblOrder.class));
-			
+					entityLister.getObjectList(TblOrder.class)); 		
 		}
 		else
 		{

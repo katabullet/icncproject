@@ -32,14 +32,21 @@
 		<ice:panelGroup>
 			<ice:panelGrid columns="3" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2 columnPopup3">
 				<ice:outputLabel value="#{msg.tableInvoicenumber}" styleClass="Text"/>
-				<ice:outputLabel styleClass="Input" value="#{reminderLister.curReminder.invoicenumber}"/>
+				<ice:inputText styleClass="Input" value="#{reminderLister.curReminder.invoicenumber}" partialSubmit="true"/>
 				<ice:panelGrid/>
-				<ice:outputLabel value="#{msg.tableCustomer }" styleClass="Text"/>
+				<ice:outputLabel value="#{msg.tableCustomer}" styleClass="Text"/>
 				<ice:outputLabel styleClass="Input" value="#{reminderLister.curReminder.tblSettlement.tblOrder.tblCustomer.customername}"/>
-				<ice:panelGrid/>
+				<ice:panelGrid/>				
 				<ice:outputLabel value="#{msg.tableDuedate}" styleClass="Text"/>
-				<ice:outputLabel value="#{reminderLister.curReminder.duedate}"><f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/></ice:outputLabel>
-       			<ice:panelGrid/>
+				<ice:selectInputDate highlightValue="#{reminderLister.curReminder.duedate}" 
+									 value="#{reminderLister.curReminder.duedate}" renderAsPopup="true"
+									 partialSubmit="true">
+					<f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Berlin"/>
+				</ice:selectInputDate>
+       			<ice:panelGrid/>			
+       			<ice:outputLabel value="#{msg.tableSum}" styleClass="Text"/>								
+				<ice:inputText id="inputSum" styleClass="Input" value="#{reminderLister.curReminder.sum}" partialSubmit="true"/>
+				<ice:panelGrid/>	
        			<ice:outputLabel value="#{msg.tableInvoicestate}" styleClass="Text"/>
        			<ice:selectOneMenu value="#{reminderLister.curReminder.tblInvoicestate.descriptionIs}"  styleClass="Input" valueChangeListener="#{reminderLister.changeInvoicestate}" binding="#{reminderLister.bindingInvoicestate}">
 					  <f:selectItems value="#{reminderLister.invoicestateListDescription}"/>

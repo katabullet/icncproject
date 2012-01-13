@@ -31,7 +31,7 @@
 		<!-- Labels + Inputtexts Popup (edit & new) Start -->
 		<ice:panelGroup>
 			<ice:panelGrid>
-				<ice:outputText>Bla bla bla ein Fehler </ice:outputText>
+				<ice:outputText value="#{msg.optimisticLockMessage}"/>
 			</ice:panelGrid>
 			
 			<ice:panelGrid styleClass="panelGridSpace1">

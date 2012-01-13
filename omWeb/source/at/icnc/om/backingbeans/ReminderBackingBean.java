@@ -108,7 +108,7 @@ public class ReminderBackingBean extends AbstractBean implements Filterable {
 		popupRender = false;
 		setDeletePopupRender(false);
 		visible = false;
-
+		setCurReminder(new TblInvoice());
 	}
 
 	// Fields for the Filter
@@ -336,6 +336,9 @@ public class ReminderBackingBean extends AbstractBean implements Filterable {
 		invoicestate
 				.addAll((Collection<? extends TblInvoicestate>) entityLister
 						.getObjectList(TblInvoicestate.class));
+		if(curInvoicestate == null){
+			setCurInvoicestate(getCurReminder().getTblInvoicestate());
+		}
 		/* An empty Item is added to SelectItem-List */
 		invoicestateDescription.add(new SelectItem());
 		for (TblInvoicestate item : invoicestate) {

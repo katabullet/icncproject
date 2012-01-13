@@ -395,6 +395,8 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 				handleOptimisticLockException();
 			}
 		}
+		
+		resetOrderCombobox();
 		refresh();
 	}
 	
@@ -886,4 +888,18 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 	public HtmlSelectManyMenu getBindingCostcentres() {
 		return bindingCostcentres;
 	}	
+	
+	/**
+	 * Method to reset OrderCombobox used in settlementpopup
+	 */
+	public void resetOrderCombobox(){
+		/* Reading values of settlementLister out of requestMap (Map with all created Managed Beans */
+		SettlementBackingBean settlementLister = (SettlementBackingBean) 
+											 FacesContext.getCurrentInstance()
+											 .getExternalContext().getRequestMap().get("settlementLister");
+
+		if(settlementLister != null){
+			settlementLister.resetOrderCombobox();
+		}	
+	}
 }

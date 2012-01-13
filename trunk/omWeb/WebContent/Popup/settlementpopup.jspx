@@ -36,7 +36,7 @@
 			<ice:panelGrid columns="3" styleClass="panelPosition" columnClasses="columnPopup1 columnPopup2 columnPopup3">
 								
 				<ice:outputLabel value="#{msg.tableOrder}" styleClass="Text"/>
-				<ice:selectOneMenu value="#{settlementLister.curOrder.idOrder}"  
+				<ice:selectOneMenu value="#{settlementLister.curOrder.ordernumber}"  
 								   styleClass="Input" 
 								   valueChangeListener="#{settlementLister.changeOrder}" 
 								   binding="#{settlementLister.bindingOrder}"

@@ -48,7 +48,7 @@
 					
 				<ice:outputLabel value="#{msg.tableUserrole}" styleClass="Text" />
 				<ice:selectOneMenu
-					value="#{userLister.curUser.tblUserrole.descriptionUr}"
+					value="#{userLister.curUserrole.descriptionUr}"
 					styleClass="Input"
 					valueChangeListener="#{userLister.changeUserrole}"
 					partialSubmit="true">

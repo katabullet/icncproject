@@ -113,8 +113,11 @@ public class InvoicestateBackingBean extends AbstractBean implements Filterable 
 				setCurInvoicestate(new TblInvoicestate());
 				setVisible(false);
 			}else {
+				setVisible(false);
 				setCurInvoicestate(invoicestateList.get(re.getRow()));
-				setVisible(true);
+				if(!getCurInvoicestate().getDescriptionIs().contains("Erledigt")){
+					setVisible(true);
+				}
 			}
 		}
 	}

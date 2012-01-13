@@ -272,6 +272,7 @@ public abstract class AbstractBean implements Refreshable {
 
 		if(sitesBean != null){
 			sitesBean.setOptimisticLock(true);
+			refresh();
 		}
 	}
 }

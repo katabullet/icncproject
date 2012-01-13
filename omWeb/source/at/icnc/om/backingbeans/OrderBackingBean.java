@@ -213,12 +213,15 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 				incometypesFilter[0] = "";
 			}
 			if(incometypesFilter != null && incometypesFilter[0] != ""){
+				String incometypes = "";
 				for(String curIt : incometypesFilter){
-					werte.add(curIt);
-					spalte.add("it.descriptionIt");
+					incometypes += curIt + ":";
 				}
+				incometypes = incometypes.substring(0, incometypes.length() - 1);
+				werte.add(incometypes);
+				spalte.add("it.descriptionIt");				
 				
-				joinStatement += " INNER JOIN t.tblIncometypes it";
+				joinStatement += " LEFT JOIN t.tblIncometypes it";
 			}
 			
 			try {
@@ -227,14 +230,17 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 				costcentresFilter = new String[1];
 				costcentresFilter[0] = "";
 			}
-			if(costcentresFilter != null && costcentresFilter[0] != ""){	
+			if(costcentresFilter != null && costcentresFilter[0] != ""){
+				String costcentres = "";
 				for(String curCc : costcentresFilter){
-					werte.add(curCc);
-					spalte.add("cc.descriptionCc");
+					costcentres += curCc + ":";
 				}
+				costcentres = costcentres.substring(0, costcentres.length() - 1);
+				werte.add(costcentres);
+				spalte.add("cc.descriptionCc");
 				
 				/* Add a part to the Joinstatement */
-				joinStatement += " INNER JOIN t.tblCostcentres cc";
+				joinStatement += " LEFT JOIN t.tblCostcentres cc";
 			}
 			
 			if(customerFilter != null && customerFilter != ""){			
@@ -261,9 +267,7 @@ public class OrderBackingBean extends AbstractBean implements Filterable {
 			} catch (Exception e) {
 				init();
 			}	
-		}
-		
-		
+		}		
 
 	/**
 	 * Method to open popup to create new Order

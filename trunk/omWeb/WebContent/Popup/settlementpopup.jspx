@@ -43,7 +43,7 @@
 								   partialSubmit="true">
 					  <f:selectItems value="#{settlementLister.orderListDescription}"/>
        			</ice:selectOneMenu>
-       			<ice:commandButton image="images/plus.jpg" action="#{incometypeLister.changePopupRenderNew}"/>
+       			<ice:commandButton image="images/plus.jpg" action="#{orderLister.changePopupRenderNew}"/>
 				
 				<ice:outputLabel value="#{msg.tableRuntime}" styleClass="Text"/>
 				<ice:inputText styleClass="Input" value="#{settlementLister.curSettlement.runtime}"  partialSubmit="true"/>

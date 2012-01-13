@@ -303,6 +303,7 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 				setCurCostcentre(getCurSettlement().getTblCostcentre());
 				resetIncometypeCombobox();
 				resetCostcentreCombobox();
+				resetOrderCombobox();
 				
 				if(getCurSettlement().getTblInvoices() != null){
 					try {
@@ -399,6 +400,13 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		getCurSettlement().setTblIncometype(getCurIncometype());
 		getCurSettlement().setTblOrder(getCurOrder());		
 		getCurSettlement().setTblCostcentre(getCurCostcentre());
+		
+		int standardRuntime = 10;
+		BigDecimal zero = new BigDecimal(0);
+		
+		if(getCurSettlement().getRuntime().equals(zero)){
+			getCurSettlement().setRuntime(new BigDecimal(standardRuntime));
+		}
 		
 		try {
 			entityLister.UpdateObject(TblSettlement.class, getCurSettlement(), getCurSettlement().getIdSettlement());
@@ -531,7 +539,7 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	 */
 	 public void changeOrder(ValueChangeEvent vce){
 		if(!filterpopupRender){
-			setCurOrder((TblOrder) entityLister.getSingleObject("SELECT * FROM OMOrder WHERE id_Order = '" +
+			setCurOrder((TblOrder) entityLister.getSingleObject("SELECT * FROM OMOrder WHERE ordernumber = '" +
 					vce.getNewValue().toString() + "'", TblOrder.class));
 			resetIncometypeCombobox();
 			resetCostcentreCombobox();
@@ -618,7 +626,7 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		}
 		for (TblOrder item : getOrderList()) {
 			/* id of each order is added to SelectItem-List */
-			order.add(new SelectItem(item.getIdOrder()));
+			order.add(new SelectItem(item.getOrdernumber()));
 		}
 		return order;			
 	}
@@ -878,6 +886,16 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	}
 	
 	/**
+	 * Method to reset OrderCombobox
+	 * Method is called from OrderBackingBean
+	 */
+	public void resetOrderCombobox(){
+		getBindingOrder().getChildren().clear();
+		orderList = null;
+		getOrderListDescription();
+	}
+	
+	/**
 	 * Method to reset CostcentreCombobox
 	 */
 	public void resetCostcentreCombobox(){
@@ -922,14 +940,9 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	
 	private void createInvoices(){
 		
-		BigDecimal runtime;
-		int standardRuntime = 10;
+		BigDecimal runtime;		
 		
-		if(getCurSettlement().getRuntime() == new BigDecimal(0)){
-			runtime = new BigDecimal(standardRuntime);
-		}else {
-			runtime = curSettlement.getRuntime();
-		}
+		runtime = getCurSettlement().getRuntime();
 		
 		BigDecimal months = curSettlement.getTblInterval().getMonths();
 		

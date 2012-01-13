@@ -353,10 +353,11 @@ public class UserBackingBean extends AbstractBean {
 		setCurUser(new TblUser());
 		/* ID of new user is set to 0 (important for EntityManager) */
 		getCurUser().setIdUser(0);
+		getCurUser().setUsername("Username");
 		
 		/* Setting default values of new user */
-		getCurUser().setTblUserrole((TblUserrole)entityLister.getSingleObject("SELECT * From omuserrole WHERE rownum <=1", TblUserrole.class));
-
+		setCurUserrole((TblUserrole)entityLister.getSingleObject("SELECT * From omUserrole WHERE rownum <=1", TblUserrole.class));
+		
 		/* Makes popup visible */
 		changePopupRender();
 	}

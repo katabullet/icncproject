@@ -44,7 +44,7 @@
        			<ice:selectOneMenu value="#{reminderLister.curReminder.tblInvoicestate.descriptionIs}"  styleClass="Input" valueChangeListener="#{reminderLister.changeInvoicestate}" binding="#{reminderLister.bindingInvoicestate}">
 					  <f:selectItems value="#{reminderLister.invoicestateListDescription}"/>
        			</ice:selectOneMenu>
-       			<ice:commandButton image="images/plus.jpg" style="text-align: center;" action="#{invoicestateLister.changePopupRenderNew}"/>	
+       			<ice:commandButton image="images/plus.jpg" action="#{invoicestateLister.changePopupRenderNew}"/>	
 			</ice:panelGrid>
 			
 			<ice:panelGrid styleClass="panelGridSpace1">

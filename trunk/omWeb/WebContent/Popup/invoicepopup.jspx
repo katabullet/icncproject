@@ -46,7 +46,7 @@
 				<ice:panelGrid/>
 				
 				<ice:outputLabel value="#{msg.tableEstimation}" styleClass="Text"/>
-				<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.estimation}"/>
+				<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.estimation}" partialSubmit="true"/>
 				<ice:panelGrid/>
 				
 				<ice:outputLabel value="#{msg.tableDuedate}" styleClass="Text"/>
@@ -68,15 +68,15 @@
        			<ice:commandButton image="images/plus.jpg" action="#{invoicestateLister.changePopupRenderNew}"/>
        			
        			<ice:outputLabel value="#{msg.tableOrdernumber}" styleClass="Text"/>
-       			<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.tblSettlement.tblOrder.ordernumber}"/>
+       			<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.tblSettlement.tblOrder.ordernumber}" partialSubmit="true"/>
        			<ice:panelGrid/>
        			
        			<ice:outputLabel value="#{msg.tableIncometype}" styleClass="Text"/>
-       			<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.tblSettlement.tblIncometype.descriptionIt}"/>
+       			<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.tblSettlement.tblIncometype.descriptionIt}" partialSubmit="true"/>
        			<ice:panelGrid/>
        			
        			<ice:outputLabel value="#{msg.tableSettlementnumber}" styleClass="Text"/>
-       			<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.tblSettlement.idSettlement}"/>	
+       			<ice:outputLabel styleClass="Input" value="#{invoiceLister.curInvoice.tblSettlement.idSettlement}" partialSubmit="true"/>	
        			<ice:panelGrid/>
        				
 			</ice:panelGrid>
@@ -85,7 +85,7 @@
 				<ice:messages layout="list" errorClass="iceMsgError"></ice:messages>
 			</ice:panelGrid>
 			<ice:panelGrid columns="2" columnClasses="headerCol2 headerCol1" styleClass="panelGridButtons">
-				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="#{msg.buttonSave}" action="#{invoiceLister.updateInvoice}"/>
+				<ice:commandButton styleClass="Base_Text_Center buttonCol" value="#{msg.buttonSave}" action="#{invoiceLister.updateEntity}"/>
 				<ice:commandButton  styleClass="Base_Text_Center buttonCol" value="#{msg.buttonCancel}" action="#{invoiceLister.closePopup}" />
 			</ice:panelGrid>
 			<ice:panelGrid styleClass="panelGridSpace2">

@@ -52,11 +52,11 @@ public class EntityListerImpl implements EntityListerLocal {
 			/* Uses create Query to create a Query
 			 * Query-Method getResultList is used
 			 */
-			result.addAll(CreateQuery(sqlStatement, entityClass, CreateEM(PU)).getResultList());
-			em.close();
+			result.addAll(CreateQuery(sqlStatement, entityClass, CreateEM(PU)).getResultList());			
 		} catch (Exception e) {
 			
-		}finally {			
+		}finally {
+			em.close();
 			emf.close();
 		}	
 		
@@ -85,11 +85,11 @@ public class EntityListerImpl implements EntityListerLocal {
 			//result.addAll(CreateQuery(sqlStatement, entityClass, CreateEM(PU)).getResultList());
 			
 			Query query = CreateEM(PU).createQuery(sqlStatement);
-			result.addAll(query.getResultList());
-			em.close();
+			result.addAll(query.getResultList());			
 		} catch (Exception e) {
 			
 		}finally {			
+			em.close();
 			emf.close();
 		}	
 		
@@ -101,9 +101,9 @@ public class EntityListerImpl implements EntityListerLocal {
 		String sqlStatement = QueryBuilder.CreateSelectStatement(entityClass);
 		
 		try {
-			result = CreateQuery(sqlStatement, entityClass, CreateEM(PU)).getSingleResult();
-			em.close();
+			result = CreateQuery(sqlStatement, entityClass, CreateEM(PU)).getSingleResult();			
 		} catch (Exception e) {
+			em.close();
 			emf.close();
 		}
 		
@@ -114,9 +114,9 @@ public class EntityListerImpl implements EntityListerLocal {
 		Object result = new Object();
 		
 		try {
-			result = CreateQuery(sqlStatement, entityClass, CreateEM(PU)).getSingleResult();
-			em.close();
+			result = CreateQuery(sqlStatement, entityClass, CreateEM(PU)).getSingleResult();			
 		} catch (Exception e) {
+			em.close();
 			emf.close();
 		}
 		
@@ -161,13 +161,13 @@ public class EntityListerImpl implements EntityListerLocal {
 			CreateEM(PU);
 			Object curObject = entityClass.cast(em.find(entityClass, id));
 			em.remove(curObject);
-			em.flush();
-			em.close();
+			em.flush();			
 		} catch (Exception e) {
 			if(e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
 				throw new Exception("OptimisticLockException", e.getCause());
 			}
 		}finally{
+			em.close();
 			emf.close();
 		}
 	}	
@@ -190,12 +190,12 @@ public class EntityListerImpl implements EntityListerLocal {
 			}	
 			
 			em.flush();
-			em.close();
 		} catch (Exception e) {
 			if(e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
 				throw new Exception("OptimisticLockException", e.getCause());
 			}
 		}finally{
+			em.close();
 			emf.close();
 		}
 	}	
@@ -222,12 +222,12 @@ public class EntityListerImpl implements EntityListerLocal {
 			 */
 			
 			Query query = CreateEM(PU).createQuery(sqlStatement);
-			result.addAll(query.getResultList());
-			em.close();
+			result.addAll(query.getResultList());			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {			
-			emf.close();
+		}finally {
+			em.close();
+			emf.close();			
 		}	
 		
 		return result;
@@ -246,12 +246,13 @@ public class EntityListerImpl implements EntityListerLocal {
 			/* Uses create Query to create a Query
 			 * Query-Method getResultList is used
 			 */
+			CreateEM(PU);
 			Query query = em.createQuery(sqlStatement);
-			result.addAll(query.getResultList());
-			em.close();
+			result.addAll(query.getResultList());			
 		} catch (Exception e) {
 			
 		}finally {			
+			em.close();
 			emf.close();
 		}	
 		
@@ -275,11 +276,11 @@ public class EntityListerImpl implements EntityListerLocal {
 			//result.addAll(CreateQuery(sqlStatement, entityClass, CreateEM(PU)).getResultList());
 			
 			Query query = CreateEM(PU).createQuery(sqlStatement);
-			result.addAll(query.getResultList());
-			em.close();
+			result.addAll(query.getResultList());			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {			
+			em.close();
 			emf.close();
 		}	
 		

@@ -19,6 +19,7 @@ import at.icnc.om.entitybeans.TblInvoice;
 import at.icnc.om.entitybeans.TblInvoicestate;
 import at.icnc.om.entitybeans.TblOrder;
 import at.icnc.om.entitybeans.TblSettlement;
+import at.icnc.om.entitybeans.TblUser;
 import at.icnc.om.interfaces.Filterable;
 
 import com.icesoft.faces.component.ext.RowSelectorEvent;
@@ -51,6 +52,9 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	
 	// Variable to save current Costcentre
 	private TblCostcentre curCostcentre = new TblCostcentre();
+	
+	private ArrayList<TblCostcentre> costcentres = new ArrayList<TblCostcentre>();
+	private ArrayList<TblIncometype> incometypes = new ArrayList<TblIncometype>();
 	
 	// Variable to save current Order
 	private TblOrder curOrder = new TblOrder();
@@ -111,8 +115,8 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		if (settlementList == null) {
 			settlementList = new ArrayList<TblSettlement>();
 			
-			if(UserBean.userrole!=5){
-			settlementList.addAll((ArrayList<TblSettlement>) 
+			if(UserBean.userrole != 5){
+				settlementList.addAll((ArrayList<TblSettlement>) 
 					entityLister.getObjectList(TblSettlement.class));
 			}
 			else
@@ -128,15 +132,15 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		}
 		
 		/* Makes the user know which Settlement is selected (it is shaded) */
-		if (getCurSettlement() != null) {
+		if (curSettlement != null) {
 			for(TblSettlement curItem : settlementList) {				
-				if(curItem.getIdSettlement() ==  getCurSettlement().getIdSettlement()) {
+				if(curItem.getIdSettlement() ==  curSettlement.getIdSettlement()) {
 					curItem.setSelected(true);
 				}
 			}
 		}		
 		
-		return settlementList;
+		return settlementList;		
 	}	
 	
 	/**
@@ -282,56 +286,64 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	 */
 	@Override
 	public void rowEvent(RowSelectorEvent re) {
-		
-		/* If no settlement is selected, curSettlement is set to selected
-		 * otherwise the settlement is unselected
+				
+		/* If no order is selected, curOrderstate is set to selected
+		 * otherwise the order is unselected
 		 */
-		if(getCurSettlement() != null){			
-			if(getCurSettlement().getIdSettlement() == settlementList.get(re.getRow()).getIdSettlement()){
+		if(curSettlement != null){			
+			if(curSettlement.getIdSettlement() == settlementList.get(re.getRow()).getIdSettlement()){
 				setCurSettlement(new TblSettlement());
-				setCurIncometype(null);
-				setCurInterval(null);
-				setCurOrder(null);
 				setVisible(false);
 				settlementSum = new BigDecimal(0);
 				settlementDate = new Date();
 			}else {
-				setCurSettlement(settlementList.get(re.getRow()));
-				setCurIncometype(getCurSettlement().getTblIncometype());
-				setCurInterval(getCurSettlement().getTblInterval());
-				setCurOrder(getCurSettlement().getTblOrder());
-				setCurCostcentre(getCurSettlement().getTblCostcentre());
-				resetIncometypeCombobox();
-				resetCostcentreCombobox();
-				resetOrderCombobox();
+				curSettlement = settlementList.get(re.getRow());				
+				curIncometype = settlementList.get(re.getRow()).getTblIncometype();
+				curInterval = settlementList.get(re.getRow()).getTblInterval();
+				curOrder = settlementList.get(re.getRow()).getTblOrder();
+				curCostcentre = settlementList.get(re.getRow()).getTblCostcentre();
+				/* costcentres = new ArrayList<TblCostcentre>(settlementList.get(re.getRow()).getTblOrder().getTblCostcentres());
+				incometypes = new ArrayList<TblIncometype>(settlementList.get(re.getRow()).getTblOrder().getTblIncometypes()); */
 				
-				if(getCurSettlement().getTblInvoices() != null){
-					try {
-						Object[] invoices = getCurSettlement().getTblInvoices().toArray();
-						settlementSum = ((TblInvoice) invoices[0]).getEstimation();
-						
-						settlementDate = ((TblInvoice) invoices[0]).getDuedate();
-						Calendar cal = Calendar.getInstance();
-						cal.setTime(settlementDate);
-						int month = cal.get(Calendar.MONTH);
-						int year = cal.get(Calendar.YEAR);
-						month -= getCurSettlement().getTblInterval().getMonths().intValue();
-						if(month < 0){
-							month += 12;
-							year -= 1;
-						}
-						cal.set(Calendar.MONTH, month);
-						cal.set(Calendar.YEAR, year);
-						setSettlementDate(cal.getTime());
-					} catch (Exception e) {
-						settlementSum = new BigDecimal(0);
-					}					
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
+				try {
+					settlementDate = dateFormat.parse("31.12.3000");
+				} catch (ParseException e) {
 				}
 				
+				for(TblInvoice curInvoice : getCurSettlement().getTblInvoices()){
+					if(((TblInvoice) curInvoice).getDuedate().compareTo(getSettlementDate()) < 0){
+						setSettlementSum(new BigDecimal(((TblInvoice) curInvoice).getEstimation().intValueExact()));
+						settlementSum = new BigDecimal(curInvoice.getEstimation().intValueExact());
+						settlementDate = curInvoice.getDuedate();
+						setSettlementDate(curInvoice.getDuedate());
+					}
+				}
+				
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(settlementDate);
+				int month = cal.get(Calendar.MONTH);
+				int year = cal.get(Calendar.YEAR);
+				month -= getCurSettlement().getTblInterval().getMonths().intValueExact();
+				while(month < 0){
+					month += 12;
+					year -= 1;
+				} 
+				
+				cal.set(Calendar.DAY_OF_MONTH, 1);
+				cal.set(Calendar.MONTH, month);
+				cal.set(Calendar.YEAR, year);
+				
+				settlementDate = cal.getTime();
+				
+				resetCostcentreCombobox();
+				resetIncometypeCombobox();
+				resetOrderCombobox(); 
 				setVisible(true);
 			}
-		}
-	}
+		}		
+		
+	}				
 
 	/**
 	 * init Method
@@ -367,16 +379,24 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 	 */
 	@Override
 	public void deleteEntity() {
-		for (TblInvoice curInvoice : getCurSettlement().getTblInvoices()) {
-			try {
+		try {
+			/*ArrayList which managed the filter values*/
+			ArrayList<String> werte = new ArrayList<String>();
+			/*ArrayList which managed the filter columns*/
+			ArrayList<String> spalte= new ArrayList<String>();
+			werte.add(String.valueOf(getCurSettlement().getIdSettlement()));
+			spalte.add("s.idSettlement");
+			
+			ArrayList<TblInvoice> invoices = (ArrayList<TblInvoice>) entityLister.getFilterList(TblInvoice.class, "TblInvoice", " INNER JOIN t.tblSettlement s", werte, spalte);
+			for (TblInvoice curInvoice : invoices) {			
 				entityLister.DeleteObject(curInvoice.getIdInvoice(), TblInvoice.class);
-				insertProtocol(TblInvoice.class, curInvoice.getIdInvoice(), deleteAction);
-			} catch (Exception e) {
-				if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
-					handleOptimisticLockException();
-				}
+			}
+		} catch (Exception e) {
+			if (e.getCause() instanceof org.eclipse.persistence.exceptions.OptimisticLockException){
+				handleOptimisticLockException();
 			}
 		}
+		
 		getCurSettlement().getTblInvoices().clear();
 		try {
 			entityLister.DeleteObject(getCurSettlement().getIdSettlement(), TblSettlement.class);
@@ -386,6 +406,8 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 				handleOptimisticLockException();
 			}
 		}
+		
+		setVisible(false);
 		refresh();
 	}
 
@@ -723,13 +745,14 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 		 * otherwise the incometype is unselected
 		 */		
 		if(getCurCostcentre() != null){
-			for(TblIncometype curItem : incometypeList){				
-				if(curItem.getIdIncometype() == getCurIncometype().getIdIncometype()){
+			for(TblCostcentre curItem : costcentreList){				
+				if(curItem.getIdCostcentre() == getCurCostcentre().getIdCostcentre()){
 					curItem.setSelected(true);
 				}
 			}
 		}else{
-			setCurIncometype(incometypeList.get(0));
+			setCurCostcentre(costcentreList.get(0));
+			//setCurIncometype(incometypeList.get(0));
 		}		
 	
 		return costcentreList;

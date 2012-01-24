@@ -120,7 +120,7 @@ public class TblOrder extends Selectable implements Serializable {
 
 
 	//bi-directional many-to-many association to TblCostcentre
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 		name="OMORDER_HAS_COSTCENTRE"
 		, joinColumns={
@@ -152,7 +152,7 @@ public class TblOrder extends Selectable implements Serializable {
 	
 
 	//bi-directional many-to-many association to TblIncometype
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 		name="OMORDER_HAS_INCOMETYPE"
 		, joinColumns={

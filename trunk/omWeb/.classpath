@@ -13,6 +13,7 @@
 	<classpathentry kind="lib" path="build/libraries/servlet-api.jar"/>
 	<classpathentry kind="lib" path="build/libraries/jboss-web-service.jar"/>
 	<classpathentry kind="lib" path="build/libraries/jsp-api.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-fileupload-1.2.2.jar"/>
 	<classpathentry kind="src" path="/omEjb"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
 		<attributes>
@@ -26,6 +27,5 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/common"/>
 	<classpathentry kind="lib" path="/omEar/build/libraries/InetJaas.jar"/>
 	<classpathentry kind="src" path="/omClient"/>
-	<classpathentry kind="lib" path="C:/Users/Knünz Nina/Documents/Schule/Maturaprojekt/Praktisch/commons-fileupload-1.2.2-bin/commons-fileupload-1.2.2/lib/commons-fileupload-1.2.2.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

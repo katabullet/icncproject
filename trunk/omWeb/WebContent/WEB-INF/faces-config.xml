@@ -43,6 +43,27 @@
 		<validator-id>sumValidator</validator-id>
 		<validator-class>at.icnc.om.validators.InvoiceValidator</validator-class>
 	</validator>
+	
+	
+	<managed-bean>
+        <managed-bean-name>documentManager</managed-bean-name>
+        <managed-bean-class>
+            org.icepdf.examples.jsf.viewer.view.DocumentManager
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <!-- set default demo file to load,  file must be present in demo folder -->
+        <managed-property>
+            <property-name>documentDemoFile</property-name>
+            <value>ICEpdf Developers Guide.pdf</value>
+        </managed-property>
+        <!-- demo version has configurable font engine -->
+        <managed-property>
+            <property-name>demo</property-name>
+            <value>true</value>
+        </managed-property>
+    </managed-bean>
+	
+	
 	<managed-bean>
 		<managed-bean-name>searchStructureProvider</managed-bean-name>
 		<managed-bean-class>inet.module.mdm.jsf.beans.SearchStructureProvider</managed-bean-class>
@@ -172,7 +193,7 @@
 		<display-name>logout</display-name>
 		<from-view-id>/index.jspx</from-view-id>
 		<navigation-case>
-			<from-outcome>null</from-outcome>
+			<from-outcome>logout</from-outcome>
 			<to-view-id>/login.jspx</to-view-id>
 		</navigation-case>
 	</navigation-rule>

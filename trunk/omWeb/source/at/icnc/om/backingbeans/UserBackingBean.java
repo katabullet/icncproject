@@ -115,6 +115,7 @@ public class UserBackingBean extends AbstractBean {
 				setVisible(false);
 			}else {
 				setCurUser(userList.get(re.getRow()));
+				setCurUserrole(getCurUser().getTblUserrole());
 				setVisible(true);
 			}
 		}

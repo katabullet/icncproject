@@ -53,7 +53,7 @@ public class TblSettlement extends Selectable implements Serializable {
 
 
 	//bi-directional many-to-one association to TblInvoice
-	@OneToMany(mappedBy="tblSettlement")
+	@OneToMany(mappedBy="tblSettlement",fetch=FetchType.EAGER)
 	public Set<TblInvoice> getTblInvoices() {
 		return this.tblInvoices;
 	}
@@ -76,7 +76,7 @@ public class TblSettlement extends Selectable implements Serializable {
 	
 
 	//bi-directional many-to-one association to TblInterval
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="FK_INTERVAL")
 	public TblInterval getTblInterval() {
 		return this.tblInterval;
@@ -88,7 +88,7 @@ public class TblSettlement extends Selectable implements Serializable {
 	
 
 	//bi-directional many-to-one association to TblOrder
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="FK_ORDER")
 	public TblOrder getTblOrder() {
 		return this.tblOrder;

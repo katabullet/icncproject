@@ -26,6 +26,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
@@ -54,7 +55,7 @@ public class DocumentManager implements DisposableBean {
     private DocumentState currentDocumentState;
 
     // list of demo files if present
-    private static final String DEMO_DIRECTORY = "/upload/";
+    private static final String DEMO_DIRECTORY = "/upload";
     private static ArrayList<DocumentState> demoFilePaths;
     private int fileUploadProgress;
     private boolean uploadDialogVisibility;
@@ -112,15 +113,22 @@ public class DocumentManager implements DisposableBean {
         }
 
         // check for demo file in path as an id, we reuse the document state
-        for (DocumentState documentSate : demoFilePaths) {
+       /* for (DocumentState documentSate : demoFilePaths) {
             if (documentSate.getDocumentName().equals(demoFileName)) {
                 currentDocumentState = documentSate;
             }
+        }*/
+        
+        
+        for(DocumentState documentState : demoFilePaths){
+        	currentDocumentState = documentState;
         }
 
+        
         // see if we can open the document.
         try {
-            currentDocumentState.openDocument(documentDemoCache);
+        	currentDocumentState.openDocument(documentDemoCache);
+            //currentDocumentState.openDocument(documentDemoCache);
         } catch (Throwable e) {
             logger.log(Level.WARNING, "Error loading file default file: ", e);
         }
@@ -444,24 +452,39 @@ public class DocumentManager implements DisposableBean {
         // it is agnostic about it's environment (portlet vs servlet).
         HttpSession session = FacesUtils.getHttpSession(false);
         ServletContext context = session.getServletContext();
-        String demoFilesPath; // = context.getRealPath(DEMO_DIRECTORY);
-        demoFilesPath = "http://127.0.0.1:8080/om/upload/";
+        String demoFilesPath = context.getRealPath(DEMO_DIRECTORY);
+        demoFilesPath = "/upload/";
+        //demoFilesPath = "http://127.0.0.1:8080/om/upload/";
 
         // get listing of pdf files that might be in this folder.
+        //demoFilesPath = demoFilesPath.substring(demoFilesPath.indexOf("http://"));
         File directory = new File(demoFilesPath);
         String[] fontPaths;
+
+    	System.out.println("***********************");
+    	System.out.println(directory.canRead());
+    	System.out.println(directory.getAbsolutePath());
+    	
         demoFilePaths = new ArrayList<DocumentState>(5);
         if (directory.canRead()) {
             fontPaths = directory.list();
             for (String pdfFile : fontPaths) {
                 if (pdfFile != null &&
                         pdfFile.endsWith(".pdf")) {
-                    demoFilePaths.add(new DocumentState(
-                            directory.getAbsolutePath() + File.separatorChar +
-                                    pdfFile, true));
+                    try {
+						demoFilePaths.add(new DocumentState(
+						        directory.getCanonicalPath().toString() + File.separatorChar +
+						                pdfFile));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
                 }
             }
         }
+        System.out.println("************************");
+        demoFilePaths.get(0).setStateChanged(true);
+        System.out.println();
     }
 
     private void refreshDocumentState() {

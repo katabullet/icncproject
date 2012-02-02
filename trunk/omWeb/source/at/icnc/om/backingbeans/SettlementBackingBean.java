@@ -275,6 +275,8 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 										"FROM OMInterval WHERE rownum <= 1", TblInterval.class));
 		setCurIncometype((TblIncometype) entityLister.getSingleObject("SELECT * FROM OMIncometype " +
 										"WHERE rownum <=1", TblIncometype.class));
+		
+		setCurOrder((TblOrder) entityLister.getSingleObject("SELECT * FROM OMOrder WHERE rownum <= 1", TblOrder.class));
 				
 		changePopupRender();
 	}
@@ -300,7 +302,7 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 				curSettlement = settlementList.get(re.getRow());				
 				curIncometype = settlementList.get(re.getRow()).getTblIncometype();
 				curInterval = settlementList.get(re.getRow()).getTblInterval();
-				curOrder = settlementList.get(re.getRow()).getTblOrder();
+				setCurOrder(getCurSettlement().getTblOrder());
 				curCostcentre = settlementList.get(re.getRow()).getTblCostcentre();
 				/* costcentres = new ArrayList<TblCostcentre>(settlementList.get(re.getRow()).getTblOrder().getTblCostcentres());
 				incometypes = new ArrayList<TblIncometype>(settlementList.get(re.getRow()).getTblOrder().getTblIncometypes()); */
@@ -774,7 +776,7 @@ public class SettlementBackingBean extends AbstractBean implements Filterable {
 					entityLister.getObjectList(TblOrder.class));
 			
 			if(orderList.size() != 0 ){
-				setCurOrder(orderList.get(0));
+				//setCurOrder(orderList.get(0));
 			}
 		}		
 		

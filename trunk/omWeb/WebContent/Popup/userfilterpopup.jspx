@@ -35,7 +35,7 @@
 				<ice:outputLabel value="#{msg.tableCriterion}" styleClass="HeadText"/>
 				<ice:outputLabel value="#{msg.loginUserName}" styleClass="Text"/>
 				<ice:inputText styleClass="Input" value="#{userLister.username}"/>
-       			<ice:outputLabel value="#{msg.tableInvoicestate}" styleClass="Text"/>
+       			<ice:outputLabel value="#{msg.tableUserrole}" styleClass="Text"/>
        			<ice:selectOneMenu value="#{userLister.userrole}"  styleClass="Input" valueChangeListener="#{userLister.UserroleChangeFilter}">
 					  <f:selectItems value="#{userLister.userroleListDescriptionFilter}"/>
        			</ice:selectOneMenu>	

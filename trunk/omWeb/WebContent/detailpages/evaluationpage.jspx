@@ -20,17 +20,14 @@
    	<ice:panelGroup style="height:30px" ></ice:panelGroup>
 	<ice:panelGroup style="margin: auto; width: 100%; text-align: center; ">     	
 			
-			<ice:outputChart id="axisOutputChart"
-							 type="bar"
-							 chartTitle="Umsatz pro Kunde"
-							 yaxisTitle="Kunde"
-							 xaxisTitle="Euro-Umsatz"
-							 xaxisLabels="#{evaluationCreater.labels}"
-							 labels="#{evaluationCreater.legendLabels}"
-							 colors="#{evaluationCreater.paints}"
-							 data="#{evaluationCreater.data}" 
-							 horizontal="true" renderOnSubmit="true" />		
-							 
+			 
+			 
+			 
+	
+		<ui:include src="../WEB-INF/includes/content/document.jspx"></ui:include>
+    
+    			 
+			 
 					   		    
 	</ice:panelGroup>
 	

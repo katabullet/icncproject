@@ -97,59 +97,7 @@
        			</ice:selectOneMenu>
        			<ice:commandButton image="images/plus.jpg" action="#{orderstateLister.changePopupRenderNew}" styleClass="panelGridButtons"/>
 				
-				
-				<!-- Fileupload -->
-				<ice:outputLabel value="Fileupload"/>
-				 <ice:inputFile id="inputFileName" width="600" 
-
-                       actionListener="#{inputFileController.uploadFile}"
-                        />
-                       <!-- autoUpload="#{inputFileController.autoUpload}"-->
-                       <ice:panelGrid/>
-                       <ice:panelGrid/>
-				 <ice:outputProgress value="#{inputFileController.fileProgress}"
-                            styleClass="uploadProgressBar"/>
-            
-            <ice:panelGrid/> 
-            <ice:panelGrid/>                 
-            <ice:dataTable
-                width="450px"
-                value="#{inputFileController.fileList}"
-                var="file">
-            <ice:column>
-                <f:facet name="header">
-                    <ice:outputLabel
-                            value="#{msgs['page.inputFile.history.name.label']}"/>
-                </f:facet>
-                <ice:outputText value="#{file.fileInfo.fileName}"/>
-            </ice:column>
-            <ice:column>
-                <f:facet name="header">
-                    <ice:outputLabel
-                            value="#{msgs['page.inputFile.history.size.label']}"/>
-                </f:facet>
-                <ice:outputText value="#{file.sizeFormatted}"/>
-            </ice:column>
-            <ice:column>
-                <f:facet name="header">
-                    <ice:outputText
-                            value="#{msgs['page.inputFile.history.content.label']}"/>
-                </f:facet>
-                <ice:outputText value="#{file.fileInfo.contentType}"/>
-            </ice:column>
-            <ice:column>
-                <f:facet name="header">
-                    <ice:outputText
-                            value="#{msgs['page.inputFile.history.remove.label']}"/>
-                </f:facet>
-                <ice:commandLink
-                        value="#{msgs['page.inputFile.history.remove.label']}"
-                        actionListener="#{inputFileController.removeUploadedFile}">
-                    <f:param name="fileName" value="#{file.fileInfo.fileName}"/>
-                </ice:commandLink>
-            </ice:column>
-        </ice:dataTable>
-        
+				     
         
 			</ice:panelGrid>			
 			<ice:panelGrid styleClass="panelGridSpace1">

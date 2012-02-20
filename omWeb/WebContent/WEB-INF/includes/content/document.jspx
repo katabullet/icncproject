@@ -23,58 +23,18 @@
 
         <!-- current page image snapshot -->
         <ice:panelGroup styleClass="documentPageView">
-            <ice:graphicImage
-                    rendered="#{documentManager.currentDocumentState != null}"
-                    
-                    value="/pdfRenderer/?documentId=#{documentManager.currentDocumentState.documentId}" />
+            <iframe id="iframe1" src="http://solutions.inet-logistics.com/InfoViewApp/logon.jsp" 
+            style="#{backingBean.oneStyle}" 
+            height="400" width="1100" frameborder="0" />
+             <!-- <ice:graphicImage
+                    rendered="#{not empty documentManager.currentDocumentState}" 
+                    height="400" width="800"                   
+                    url="../../../imageCapture1_#{documentManager.currentDocumentState.documentId}.png"
+                    alt="Hallo!" /> -->
+                    <!-- <img src="#{documentManager.currentDocumentState.documentId}" /> -->
             <ice:messages />
 
         </ice:panelGroup>
-
-        <!-- file upload dialog -->
-        
-            <ice:panelPopup draggable="false" modal="true"
-                            styleClass="documentUpload"
-                            visible="#{documentManager.uploadDialogVisibility}"
-                            autoCentre="true">
-                <f:facet name="header">
-                    <ice:panelGroup styleClass="popupHeaderWrapper">
-                        <ice:outputText
-                                value="Upload PDF Document"
-                                styleClass="popupHeaderText"/>
-                        <ice:commandButton type="button"
-                               image="./css/images/popupclose.gif"
-                               actionListener="#{documentManager.toggleUploadDialogVisibility}"
-                               styleClass="popupHeaderImage"
-                               title="#{msgs['command.fileupload.dialog.close.label']}"
-                               alt="#{msgs['command.fileupload.dialog.close.label']}"/>
-                    </ice:panelGroup>
-                </f:facet>
-                <f:facet name="body">
-                    <ice:panelGroup style="width:400px;overflow:hidden;">
-
-                        <!-- file upload usage with progress callback. -->
-                        <ice:inputFile
-                                uniqueFolder="true"
-                                progressListener="#{documentManager.fileUploadProgress}"
-                                actionListener="#{documentManager.fileUploadMonitor}"/>
-
-                        <!-- progress bar, percent value is updated via progressListener-->
-                        <ice:outputProgress
-                                value="#{documentManager.fileUploadProgress}"
-                                styleClass="uploadProgressBar"/>
-
-                        <!-- Display File Upload messages -->
-                        <ice:panelGroup style="height:25px;">
-                           <h:messages />
-                        </ice:panelGroup>
-                        <ice:panelGroup styleClass="floatRight" >
-                            <ice:commandButton
-                                    actionListener="#{documentManager.toggleUploadDialogVisibility}"
-                                    value="OK" />
-                        </ice:panelGroup>
-                    </ice:panelGroup>
-                </f:facet>
-            </ice:panelPopup>
+       
     </ice:panelGroup>
 </ui:composition>
